@@ -1,0 +1,10 @@
+{
+    "files.exclude": {
+        "**/.next": true,
+        "**/node_modules": true,
+        "**/.vscode": true,
+        "**/AGENTS.md": true,
+        "**/CLAUDE.md": true,
+        "**/README.md": true
+    }
+}
