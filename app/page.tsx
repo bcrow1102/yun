@@ -1,9 +1,33 @@
+import Link from "next/link";
 import JobCard from "@/app/components/JobCard";
 import TempleStayCard from "@/app/components/TempleStayCard";
 import BottomNav from "@/app/components/BottomNav";
 import MobileHome from "@/app/components/MobileHome";
 
 const mainMenus = ["구인", "구직", "행사·교육", "템플스테이", "사찰음식"];
+
+const quickMenus = [
+  {
+    title: "구인",
+    description: "사찰 채용정보",
+    image: "/images/menu/hire.webp",
+  },
+  {
+    title: "구직",
+    description: "일자리 등록",
+    image: "/images/menu/job-seeker.webp",
+  },
+  {
+    title: "행사·교육",
+    description: "불교 행사 소식",
+    image: "/images/menu/event-education.webp",
+  },
+  {
+    title: "체험",
+    description: "템플스테이·사찰음식",
+    image: "/images/menu/experience.webp",
+  },
+];
 
 const latestJobs = [
   {
@@ -62,20 +86,29 @@ const recommendedTempleStays = [
   },
 ];
 
-function ArrowIcon() {
+function LotusIcon() {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      className="h-4 w-4"
-      aria-hidden="true"
-    >
+    <svg viewBox="0 0 32 32" fill="none" className="h-6 w-6">
       <path
+        d="M16 24c-4-4.1-5.2-8.2 0-15 5.2 6.8 4 10.9 0 15Z"
+        stroke="currentColor"
+        strokeWidth="1.6"
+      />
+      <path
+        d="M15 24C9.5 23.3 6.6 20.5 7 14c5.4.7 8.1 4 8 10Z"
+        stroke="currentColor"
+        strokeWidth="1.6"
+      />
+      <path
+        d="M17 24c5.5-.7 8.4-3.5 8-10-5.4.7-8.1 4-8 10Z"
+        stroke="currentColor"
+        strokeWidth="1.6"
+      />
+      <path
+        d="M7 25h18"
+        stroke="currentColor"
+        strokeWidth="1.6"
         strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M5 12h14m-5-5 5 5-5 5"
       />
     </svg>
   );
@@ -87,12 +120,29 @@ function SearchIcon() {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.8"
       className="h-5 w-5"
-      aria-hidden="true"
     >
       <circle cx="11" cy="11" r="7" />
-      <path strokeLinecap="round" d="m20 20-4-4" />
+      <path d="m20 20-4-4" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function ArrowIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      className="h-4 w-4"
+    >
+      <path
+        d="M5 12h14m-5-5 5 5-5 5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -102,270 +152,183 @@ export default function Home() {
     <>
       <MobileHome />
 
-      <div className="hidden min-h-screen bg-[#fffcf8] pb-24 md:block">
-        <header className="sticky top-0 z-30 border-b border-[#f1e8e5] bg-[#fffcf8]/92 backdrop-blur-md">
-          <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 md:px-8">
+      <div className="hidden min-h-screen bg-white pb-20 text-[#191F28] md:block">
+        <header className="sticky top-0 z-30 border-b border-[#F2F4F6] bg-white/95 backdrop-blur">
+          <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-8">
             <div className="flex items-center gap-3">
-              <span
-                className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#f3c9d0] text-[#b86f7b] shadow-sm"
-                aria-hidden="true"
-              >
-                <svg viewBox="0 0 32 32" fill="none" className="h-6 w-6">
-                  <path
-                    d="M16 24c-4-4.1-5.2-8.2 0-15 5.2 6.8 4 10.9 0 15Z"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                  />
-                  <path
-                    d="M15 24C9.5 23.3 6.6 20.5 7 14c5.4.7 8.1 4 8 10Z"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                  />
-                  <path
-                    d="M17 24c5.5-.7 8.4-3.5 8-10-5.4.7-8.1 4-8 10Z"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                  />
-                  <path
-                    d="M7 25h18"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                  />
-                </svg>
+              <span className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-[#FEE500] text-[#191F28]">
+                <LotusIcon />
               </span>
 
-              <div className="flex items-baseline gap-2">
-                <strong className="text-xl tracking-[-0.04em] text-[#40333e]">
-                  연
-                </strong>
-                <span className="text-[10px] font-semibold tracking-[0.2em] text-[#ad8991]">
-                  YUN
-                </span>
-              </div>
+              <strong className="text-[22px] font-bold tracking-[-0.04em]">
+                연
+              </strong>
             </div>
 
-            <button
-              type="button"
-              aria-label="검색"
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#718064] shadow-sm ring-1 ring-[#eee3df] transition hover:bg-[#fff4f3]"
-            >
-              <SearchIcon />
-            </button>
+            <nav className="flex items-center gap-1" aria-label="주요 메뉴">
+              {mainMenus.map((menu) =>
+                menu === "구인" ? (
+                  <Link
+                    key={menu}
+                    href="/jobs"
+                    className="rounded-xl px-4 py-2.5 text-sm font-semibold text-[#4E5968] transition hover:bg-[#FFF9C4] hover:text-[#191F28]"
+                  >
+                    {menu}
+                  </Link>
+                ) : (
+                  <button
+                    key={menu}
+                    className="rounded-xl px-4 py-2.5 text-sm font-semibold text-[#4E5968] transition hover:bg-[#FFF9C4] hover:text-[#191F28]"
+                  >
+                    {menu}
+                  </button>
+                )
+              )}
+            </nav>
+
+            <div className="flex items-center gap-2">
+              <button className="px-2 py-2 text-xs font-bold">KR</button>
+
+              <button className="px-2 py-2 text-xs text-[#8B95A1]">
+                EN
+              </button>
+
+              <button
+                className="flex h-10 w-10 items-center justify-center rounded-full text-[#333D4B] transition hover:bg-[#F2F4F6]"
+                aria-label="검색"
+              >
+                <SearchIcon />
+              </button>
+
+              <button className="ml-1 rounded-xl bg-[#FEE500] px-4 py-2.5 text-sm font-bold text-[#191F28]">
+                로그인
+              </button>
+            </div>
           </div>
         </header>
 
         <main>
-          <div className="mx-auto max-w-6xl px-5 pt-4 md:px-8 md:pt-6">
-            <nav
-              className="scrollbar-none mb-4 flex overflow-x-auto rounded-2xl border border-[#eee3df] bg-white px-2 py-1.5 shadow-sm md:mb-5 md:justify-center"
-              aria-label="주요 메뉴"
-            >
-              {mainMenus.map((menu, index) => (
-                <div key={menu} className="flex shrink-0 items-center">
-                  {index > 0 && (
-                    <span
-                      className="h-4 w-px bg-[#eadeda]"
-                      aria-hidden="true"
-                    />
-                  )}
+          <section className="bg-[#FEE500]">
+            <div className="mx-auto grid min-h-[390px] max-w-6xl grid-cols-[0.9fr_1.1fr] items-center gap-14 px-8 py-14">
+              <div>
+                <p className="text-base font-semibold text-[#6D6200]">
+                  오늘 필요한 불교 정보를
+                </p>
 
-                  <button
-                    type="button"
-                    className="whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-semibold text-[#594851] transition hover:bg-[#fff2f2] hover:text-[#b76471] md:px-7"
-                  >
-                    {menu}
+                <h1 className="mt-3 text-[52px] font-bold leading-[1.12] tracking-[-0.055em]">
+                  쉽고 빠르게
+                  <br />
+                  찾아보세요
+                </h1>
+
+                <p className="mt-5 max-w-md text-[16px] leading-7 text-[#514A00]">
+                  사찰 구인·구직부터 행사와 교육, 템플스테이,
+                  사찰음식까지 필요한 정보를 한곳에서 편하게 만나보세요.
+                </p>
+
+                <div className="mt-8 flex gap-3">
+                  <button className="flex items-center gap-2 rounded-xl bg-[#191F28] px-5 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5">
+                    정보 둘러보기
+                    <ArrowIcon />
+                  </button>
+
+                  <button className="rounded-xl border border-[#191F28]/15 bg-white/70 px-5 py-3.5 text-sm font-bold text-[#191F28] transition hover:bg-white">
+                    행사 등록
                   </button>
                 </div>
-              ))}
-            </nav>
-
-            <section className="hero-surface relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#fff0f1] via-[#f9f1f7] to-[#f1f5e9] text-[#40333e] shadow-[0_22px_65px_-32px_rgba(117,88,101,0.38)]">
-              <div
-                className="hero-grid-pattern absolute inset-0 opacity-[0.12]"
-                aria-hidden="true"
-              />
-
-              <div
-                className="absolute -right-24 -top-32 h-80 w-80 rounded-full bg-[#efb7c2]/45 blur-3xl"
-                aria-hidden="true"
-              />
-
-              <div
-                className="absolute -bottom-32 -left-20 h-72 w-72 rounded-full bg-[#dce8cc]/45 blur-3xl"
-                aria-hidden="true"
-              />
-
-              <div className="relative grid min-h-[430px] gap-8 px-6 py-9 md:grid-cols-[0.9fr_1.1fr] md:items-center md:px-14 md:py-14">
-                <div className="relative z-10 max-w-lg">
-                  <p className="mb-4 text-[11px] font-semibold tracking-[0.2em] text-[#a46672]">
-                    BUDDHIST LIFE &amp; COMMUNITY
-                  </p>
-
-                  <h1 className="text-[38px] font-bold leading-[1.16] tracking-[-0.055em] text-[#40333e] md:text-6xl">
-                    불교 정보가
-                    <br />
-                    더 쉽고 가까이
-                  </h1>
-
-                  <p className="mt-5 text-sm leading-7 text-[#71636e] md:text-base">
-                    사찰 구인·구직부터 행사, 템플스테이와 사찰음식까지
-                    <br className="hidden md:block" /> 필요한 정보를 한곳에서
-                    편하게 만나보세요.
-                  </p>
-
-                  <div className="mt-7 flex flex-wrap gap-3">
-                    <button
-                      type="button"
-                      className="flex items-center gap-2 rounded-xl bg-[#c97883] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-[#b85f6d]/20 transition hover:-translate-y-0.5 hover:bg-[#b96875]"
-                    >
-                      정보 둘러보기
-                      <ArrowIcon />
-                    </button>
-
-                    <button
-                      type="button"
-                      className="rounded-xl border border-[#c97883]/30 bg-white/65 px-5 py-3 text-sm font-semibold text-[#754c56] backdrop-blur-sm transition hover:bg-white"
-                    >
-                      행사 등록
-                    </button>
-                  </div>
-                </div>
-
-                <div className="relative mx-auto h-[295px] w-full max-w-[460px] md:h-[330px]">
-                  <div className="absolute left-0 top-4 w-[78%] rotate-[-4deg] rounded-2xl border border-white/80 bg-[#fffaf5] p-4 text-[#40333e] shadow-[0_18px_45px_-18px_rgba(104,73,88,0.38)] md:p-5">
-                    <div className="mb-5 flex items-center justify-between">
-                      <span className="rounded-full bg-[#e9efdf] px-2.5 py-1 text-[10px] font-bold text-[#66745a]">
-                        최신 구인
-                      </span>
-                      <span className="text-xs text-[#ad8991]">오늘 등록</span>
-                    </div>
-
-                    <p className="text-xs text-[#987d84]">서울 · 조계사</p>
-                    <strong className="mt-1 block text-base">
-                      사무행정 담당자 모집
-                    </strong>
-
-                    <div className="mt-4 flex items-center justify-between border-t border-[#eee1dd] pt-3 text-xs">
-                      <span className="text-[#8d737a]">정규직 · 경력무관</span>
-                      <span className="font-bold text-[#b76471]">
-                        자세히 보기 →
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="absolute right-0 top-[92px] w-[72%] rotate-[4deg] rounded-2xl border border-white bg-white p-4 text-[#40333e] shadow-[0_18px_45px_-18px_rgba(104,73,88,0.35)] md:p-5">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <span className="text-[10px] font-bold tracking-[0.12em] text-[#b37580]">
-                          TEMPLESTAY
-                        </span>
-                        <strong className="mt-1 block text-base">
-                          월정사 숲속 힐링
-                        </strong>
-                        <p className="mt-1 text-xs text-[#987d84]">
-                          강원 평창 · 1박 2일
-                        </p>
-                      </div>
-
-                      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eef2e7] text-[#718064]">
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          className="h-6 w-6"
-                          aria-hidden="true"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M12 3v18M8 7c0 2.5 1.8 4 4 4M16 7c0 2.5-1.8 4-4 4M7 13c0 2.7 2.2 4.5 5 4.5M17 13c0 2.7-2.2 4.5-5 4.5"
-                          />
-                        </svg>
-                      </span>
-                    </div>
-
-                    <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-[#f2eee9]">
-                      <span className="block h-full w-2/3 rounded-full bg-[#a5b68e]" />
-                    </div>
-                  </div>
-
-                  <div className="absolute bottom-0 left-[8%] w-[70%] rounded-2xl border border-[#f0cfd3] bg-[#f8dfe2] p-4 text-[#40333e] shadow-[0_18px_45px_-18px_rgba(104,73,88,0.35)] md:p-5">
-                    <div className="flex items-center gap-3">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#c97883] text-white">
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="1.6"
-                          className="h-5 w-5"
-                          aria-hidden="true"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M5 4h14v16H5zM8 8h8M8 11h8M8 14h5"
-                          />
-                        </svg>
-                      </span>
-
-                      <div>
-                        <span className="text-[10px] font-bold text-[#a46672]">
-                          한 번 입력하면
-                        </span>
-                        <strong className="block text-sm">
-                          행사 웹전단 자동 완성
-                        </strong>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
-            </section>
-          </div>
 
-          <div className="mx-auto grid max-w-6xl gap-9 px-5 py-10 md:grid-cols-2 md:px-8 md:py-14">
+              <div className="grid grid-cols-2 gap-4">
+                {quickMenus.map((menu) =>
+                  menu.title === "구인" ? (
+                    <Link
+                      key={menu.title}
+                      href="/jobs"
+                      className="group flex min-h-[140px] items-center gap-4 rounded-[24px] border border-white/70 bg-white p-5 text-left shadow-[0_14px_40px_rgba(25,31,40,0.10)] transition hover:-translate-y-1"
+                    >
+                      <span className="flex h-[86px] w-[86px] shrink-0 items-center justify-center rounded-[20px] bg-[#FFFBE0] p-2">
+                        <img
+                          src={menu.image}
+                          alt=""
+                          className="h-full w-full object-contain"
+                        />
+                      </span>
+
+                      <span className="min-w-0">
+                        <strong className="block text-lg font-bold">
+                          {menu.title}
+                        </strong>
+
+                        <span className="mt-1 block text-sm leading-5 text-[#8B95A1]">
+                          {menu.description}
+                        </span>
+                      </span>
+                    </Link>
+                  ) : (
+                    <button
+                      key={menu.title}
+                      className="group flex min-h-[140px] items-center gap-4 rounded-[24px] border border-white/70 bg-white p-5 text-left shadow-[0_14px_40px_rgba(25,31,40,0.10)] transition hover:-translate-y-1"
+                    >
+                      <span className="flex h-[86px] w-[86px] shrink-0 items-center justify-center rounded-[20px] bg-[#FFFBE0] p-2">
+                        <img
+                          src={menu.image}
+                          alt=""
+                          className="h-full w-full object-contain"
+                        />
+                      </span>
+
+                      <span className="min-w-0">
+                        <strong className="block text-lg font-bold">
+                          {menu.title}
+                        </strong>
+
+                        <span className="mt-1 block text-sm leading-5 text-[#8B95A1]">
+                          {menu.description}
+                        </span>
+                      </span>
+                    </button>
+                  )
+                )}
+
+              </div>
+            </div>
+          </section>
+
+          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-10 px-8 py-14">
             <section aria-label="최신 구인 정보">
-              <div className="mb-4 flex items-center justify-between">
-                <div>
-                  <p className="text-[10px] font-bold tracking-[0.18em] text-[#b37580]">
-                    JOBS
-                  </p>
-                  <h2 className="mt-1 text-xl font-bold text-[#40333e]">
-                    최신 구인
-                  </h2>
-                </div>
+              <div className="mb-5 flex items-center justify-between">
+                <h2 className="text-[24px] font-bold tracking-[-0.04em]">
+                  최신 구인
+                </h2>
 
-                <button className="text-sm font-medium text-[#b76471] hover:text-[#92505b]">
-                  더보기 →
+                <button className="text-sm font-semibold text-[#8B95A1] transition hover:text-[#191F28]">
+                  전체보기
                 </button>
               </div>
 
               <div className="flex flex-col gap-3">
                 {latestJobs.map((job, index) => (
-                  <JobCard key={job.id} job={job} delay={index * 0.08} />
+                  <JobCard
+                    key={job.id}
+                    job={job}
+                    delay={index * 0.08}
+                  />
                 ))}
               </div>
             </section>
 
             <section aria-label="추천 템플스테이">
-              <div className="mb-4 flex items-center justify-between">
-                <div>
-                  <p className="text-[10px] font-bold tracking-[0.18em] text-[#b37580]">
-                    EXPERIENCE
-                  </p>
-                  <h2 className="mt-1 text-xl font-bold text-[#40333e]">
-                    추천 템플스테이
-                  </h2>
-                </div>
+              <div className="mb-5 flex items-center justify-between">
+                <h2 className="text-[24px] font-bold tracking-[-0.04em]">
+                  추천 템플스테이
+                </h2>
 
-                <button className="text-sm font-medium text-[#b76471] hover:text-[#92505b]">
-                  더보기 →
+                <button className="text-sm font-semibold text-[#8B95A1] transition hover:text-[#191F28]">
+                  전체보기
                 </button>
               </div>
 
-              <div className="scrollbar-none flex gap-3 overflow-x-auto px-1 pb-3 snap-x snap-mandatory">
+              <div className="grid grid-cols-3 gap-3 pb-3">
                 {recommendedTempleStays.map((stay, index) => (
                   <TempleStayCard
                     key={stay.id}
@@ -377,8 +340,7 @@ export default function Home() {
             </section>
           </div>
         </main>
-
-      </div>
+      </div >
 
       <div className="md:hidden">
         <BottomNav />

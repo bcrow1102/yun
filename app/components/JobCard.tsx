@@ -12,70 +12,77 @@ interface JobCardProps {
 
 export default function JobCard({ job, delay }: JobCardProps) {
   const tagColors: Record<string, string> = {
-    정규직: "bg-sage-200 text-sage-800",
-    계약직: "bg-warm-200 text-warm-800",
-    봉사: "bg-sage-100 text-sage-700",
+    정규직: "bg-[#FFF9C4] text-[#6D6200]",
+    계약직: "bg-[#F2F4F6] text-[#4E5968]",
+    봉사: "bg-[#EAF3FF] text-[#3182F6]",
   };
 
   return (
     <article
-      className="card-hover rounded-2xl border border-warm-100 bg-white p-4 animate-fade-in-up cursor-pointer active:scale-[0.98] transition-transform"
+      className="card-hover cursor-pointer rounded-[22px] border border-[#F2F4F6] bg-white p-5 shadow-[0_5px_18px_rgba(25,31,40,0.04)] transition active:scale-[0.99] animate-fade-in-up"
       style={{ animationDelay: `${delay}s` }}
     >
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-medium text-warm-500">{job.temple}</span>
+      <div className="flex items-center justify-between gap-4">
+        <div className="min-w-0 flex-1">
+          <div className="mb-2 flex items-center gap-2">
+            <span className="text-xs font-medium text-[#8B95A1]">
+              {job.temple}
+            </span>
+
             <span
-              className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${
-                tagColors[job.tag] || "bg-warm-100 text-warm-700"
-              }`}
+              className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${tagColors[job.tag] || "bg-[#F2F4F6] text-[#4E5968]"
+                }`}
             >
               {job.tag}
             </span>
           </div>
-          <h3 className="text-base font-semibold text-sage-900 truncate">
+
+          <h3 className="truncate text-[17px] font-bold tracking-[-0.025em] text-[#191F28]">
             {job.title}
           </h3>
-          <div className="flex items-center gap-2 mt-1.5 text-sm text-warm-500">
-            <span className="flex items-center gap-0.5">
+
+          <div className="mt-2 flex items-center gap-2 text-sm text-[#8B95A1]">
+            <span className="flex items-center gap-1">
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
                 viewBox="0 0 24 24"
-                strokeWidth={1.5}
+                fill="none"
                 stroke="currentColor"
-                className="w-3.5 h-3.5"
+                strokeWidth="1.7"
+                className="h-4 w-4"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                  d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z"
                 />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
-                />
+                <circle cx="12" cy="10" r="2.2" />
               </svg>
+
               {job.location}
             </span>
+
             <span>·</span>
             <span>{job.date}</span>
           </div>
         </div>
-        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-sage-50 text-sage-600 shrink-0">
+
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[14px] bg-[#FFFBE0] text-[#6D6200]">
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
             viewBox="0 0 24 24"
-            strokeWidth={1.5}
+            fill="none"
             stroke="currentColor"
-            className="w-5 h-5"
+            strokeWidth="1.8"
+            className="h-5 w-5"
+            aria-hidden="true"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m9 5 7 7-7 7"
+            />
           </svg>
-        </div>
+        </span>
       </div>
     </article>
   );

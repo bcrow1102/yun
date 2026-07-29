@@ -162,7 +162,7 @@ export default function MobileHome() {
             </header>
 
             <main className="px-4 pb-8">
-                <section className="-mx-4 mb-4 bg-[#FEE500] px-5 pb-7 pt-5">
+                <section className="-mx-4 mb-8 bg-[#FEE500] px-5 pb-7 pt-5">
                     <p className="text-[15px] font-medium text-[#6D6200]">
                         오늘 필요한 불교 정보를
                     </p>
