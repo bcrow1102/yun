@@ -1,9 +1,25 @@
 import Link from "next/link";
 const menus = [
-    { title: "구인", image: "/images/menu/hire.webp" },
-    { title: "구직", image: "/images/menu/job-seeker.webp" },
-    { title: "행사·교육", image: "/images/menu/event-education.webp" },
-    { title: "체험", image: "/images/menu/experience.webp" },
+    {
+        title: "구인",
+        image: "/images/menu/hire.webp",
+        href: "/jobs",
+    },
+    {
+        title: "구직",
+        image: "/images/menu/job-seeker.webp",
+        href: "",
+    },
+    {
+        title: "행사·교육",
+        image: "/images/menu/event-education.webp",
+        href: "",
+    },
+    {
+        title: "사찰",
+        image: "/images/menu/experience.webp",
+        href: "/temples",
+    },
 ];
 
 const jobs = [
@@ -174,26 +190,49 @@ export default function MobileHome() {
                 </section>
 
                 <section className="grid grid-cols-4 gap-2">
-                    {menus.map((menu) => (
-                        <button
-                            key={menu.title}
-                            className="min-w-0 overflow-hidden rounded-[18px] border border-[#E7E9EC] bg-[#FFFBE0] text-center shadow-[0_2px_8px_rgba(25,31,40,0.035)]"
-                        >
-                            <span className="block h-2 bg-[#FEE500]" />
+                    {menus.map((menu) => {
+                        const cardContent = (
+                            <>
+                                <span className="block h-2 bg-[#FEE500]" />
 
-                            <span className="flex h-[82px] items-center justify-center px-1.5 pt-2">
-                                <img
-                                    src={menu.image}
-                                    alt=""
-                                    className="h-full w-full object-contain"
-                                />
-                            </span>
+                                <span className="flex h-[82px] items-center justify-center px-1.5 pt-2">
+                                    <img
+                                        src={menu.image}
+                                        alt=""
+                                        className="h-full w-full object-contain"
+                                    />
+                                </span>
 
-                            <strong className="block truncate px-1 pb-3 pt-1 text-[12px] font-semibold text-[#252A31]">
-                                {menu.title}
-                            </strong>
-                        </button>
-                    ))}
+                                <strong className="block truncate px-1 pb-3 pt-1 text-[12px] font-semibold text-[#252A31]">
+                                    {menu.title}
+                                </strong>
+                            </>
+                        );
+
+                        const cardClassName =
+                            "min-w-0 overflow-hidden rounded-[18px] border border-[#E7E9EC] bg-[#FFFBE0] text-center shadow-[0_2px_8px_rgba(25,31,40,0.035)]";
+
+                        if (menu.href) {
+                            return (
+                                <Link
+                                    key={menu.title}
+                                    href={menu.href}
+                                    className={cardClassName}
+                                >
+                                    {cardContent}
+                                </Link>
+                            );
+                        }
+
+                        return (
+                            <button
+                                key={menu.title}
+                                className={cardClassName}
+                            >
+                                {cardContent}
+                            </button>
+                        );
+                    })}
                 </section>
 
                 <section className="mt-7">
