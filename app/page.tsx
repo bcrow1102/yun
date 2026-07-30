@@ -4,7 +4,14 @@ import TempleStayCard from "@/app/components/TempleStayCard";
 import BottomNav from "@/app/components/BottomNav";
 import MobileHome from "@/app/components/MobileHome";
 
-const mainMenus = ["구인", "구직", "행사·교육", "템플스테이", "사찰음식"];
+const mainMenus = [
+  "구인",
+  "구직",
+  "행사·교육",
+  "템플스테이",
+  "사찰음식",
+  "부처님 이야기",
+];
 
 const quickMenus = [
   {
@@ -166,24 +173,40 @@ export default function Home() {
             </div>
 
             <nav className="flex items-center gap-1" aria-label="주요 메뉴">
-              {mainMenus.map((menu) =>
-                menu === "구인" ? (
-                  <Link
-                    key={menu}
-                    href="/jobs"
-                    className="rounded-xl px-4 py-2.5 text-sm font-semibold text-[#4E5968] transition hover:bg-[#FFF9C4] hover:text-[#191F28]"
-                  >
-                    {menu}
-                  </Link>
-                ) : (
+              {mainMenus.map((menu) => {
+                if (menu === "구인") {
+                  return (
+                    <Link
+                      key={menu}
+                      href="/jobs"
+                      className="rounded-xl px-3 py-2.5 text-sm font-semibold text-[#4E5968] transition hover:bg-[#FFF9C4] hover:text-[#191F28]"
+                    >
+                      {menu}
+                    </Link>
+                  );
+                }
+
+                if (menu === "부처님 이야기") {
+                  return (
+                    <Link
+                      key={menu}
+                      href="/stories"
+                      className="rounded-xl px-3 py-2.5 text-sm font-semibold text-[#4E5968] transition hover:bg-[#FFF9C4] hover:text-[#191F28]"
+                    >
+                      {menu}
+                    </Link>
+                  );
+                }
+
+                return (
                   <button
                     key={menu}
-                    className="rounded-xl px-4 py-2.5 text-sm font-semibold text-[#4E5968] transition hover:bg-[#FFF9C4] hover:text-[#191F28]"
+                    className="rounded-xl px-3 py-2.5 text-sm font-semibold text-[#4E5968] transition hover:bg-[#FFF9C4] hover:text-[#191F28]"
                   >
                     {menu}
                   </button>
-                )
-              )}
+                );
+              })}
             </nav>
 
             <div className="flex items-center gap-2">

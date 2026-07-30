@@ -1,3 +1,4 @@
+import Link from "next/link";
 const menus = [
     { title: "구인", image: "/images/menu/hire.webp" },
     { title: "구직", image: "/images/menu/job-seeker.webp" },
@@ -196,6 +197,31 @@ export default function MobileHome() {
                 </section>
 
                 <section className="mt-7">
+                    <Link
+                        href="/stories"
+                        className="flex w-full items-center justify-between rounded-[22px] border border-[#DDE7D9] bg-[#F3F7F1] px-5 py-5"
+                    >
+                        <span className="min-w-0 text-left">
+                            <span className="text-xs font-bold text-[#61705B]">
+                                부처님 이야기
+                            </span>
+
+                            <strong className="mt-1 block text-[18px] font-bold tracking-[-0.025em] text-[#252A31]">
+                                오늘의 이야기
+                            </strong>
+
+                            <span className="mt-1 block text-xs leading-5 text-[#667085]">
+                                세 장의 삽화로 만나는 짧은 깨달음
+                            </span>
+                        </span>
+
+                        <span className="ml-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-[16px] bg-white text-[#61705B]">
+                            <LotusIcon />
+                        </span>
+                    </Link>
+                </section>
+
+                <section className="mt-7">
                     <div className="mb-3 flex items-center justify-between px-1">
                         <h2 className="text-xl font-bold tracking-[-0.035em]">
                             최신 구인
@@ -236,6 +262,8 @@ export default function MobileHome() {
                         ))}
                     </div>
                 </section>
+
+
 
                 <section className="mt-7">
                     <button className="flex w-full items-center justify-between rounded-[22px] bg-[#FEE500] px-5 py-5 text-left">
