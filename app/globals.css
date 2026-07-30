@@ -2,7 +2,7 @@
 
 @theme inline {
   --color-background: #ffffff;
-  --color-foreground: #2d2a24;
+  --color-foreground: #191f28;
 
   /* 따뜻한 연두색 계열 */
   --color-sage-50: #f6f7f2;
@@ -28,30 +28,18 @@
   --color-warm-800: #735f4b;
   --color-warm-900: #5f4e3f;
 
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-/* 스크롤바 스타일 */
-::-webkit-scrollbar {
-  width: 4px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-warm-50);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-sage-300);
-  border-radius: 4px;
+  /* 한글은 Noto Sans KR, 영문과 숫자는 Geist로 표시 */
+  --font-sans:
+    var(--font-noto-sans-kr), var(--font-geist-sans), "Malgun Gothic",
+    sans-serif;
 }
 
 body {
   background: var(--color-background);
   color: var(--color-foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
 }
 
 button {
@@ -76,7 +64,9 @@ button {
 
 /* 카드 호버 애니메이션 */
 .card-hover {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .card-hover:hover {

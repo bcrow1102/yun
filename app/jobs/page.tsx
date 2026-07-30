@@ -325,25 +325,25 @@ export default function JobsPage() {
 
             <main>
                 <section className="bg-[#FEE500]">
-                    <div className="mx-auto max-w-6xl px-5 py-9 md:px-8 md:py-11">
+                    <div className="mx-auto max-w-6xl px-5 py-7 md:px-8 md:py-11">
                         <p className="text-sm font-semibold text-[#6D6200]">
                             사찰과 불교기관의 채용정보
                         </p>
 
-                        <div className="mt-2 flex flex-col justify-between gap-5 md:flex-row md:items-end">
-                            <div>
+                        <div className="mt-2">
+                            <div className="flex items-center justify-between gap-4">
                                 <h1 className="text-[34px] font-bold tracking-[-0.05em] md:text-[42px]">
                                     구인
                                 </h1>
 
-                                <p className="mt-2 text-sm text-[#514A00] md:text-base">
-                                    나에게 맞는 사찰과 불교기관의 일자리를 찾아보세요.
-                                </p>
+                                <button className="shrink-0 rounded-xl bg-[#191F28] px-4 py-2.5 text-sm font-bold text-white md:px-5 md:py-3">
+                                    구인 등록
+                                </button>
                             </div>
 
-                            <button className="w-fit rounded-xl bg-[#191F28] px-5 py-3 text-sm font-bold text-white">
-                                구인 등록
-                            </button>
+                            <p className="mt-2 text-sm text-[#514A00] md:text-base">
+                                나에게 맞는 사찰과 불교기관의 일자리를 찾아보세요.
+                            </p>
                         </div>
                     </div>
                 </section>
@@ -367,8 +367,9 @@ export default function JobsPage() {
 
                     <div className="grid gap-2.5 sm:grid-cols-2 md:grid-cols-3">
                         {featuredJobs.map((job) => (
-                            <article
+                            <Link
                                 key={job.id}
+                                href={`/jobs/${job.id}`}
                                 className="group cursor-pointer rounded-[16px] border border-[#F2F4F6] bg-white p-3.5 shadow-[0_4px_14px_rgba(25,31,40,0.04)] transition hover:-translate-y-0.5 hover:shadow-[0_9px_22px_rgba(25,31,40,0.08)]"
                             >
                                 <div className="flex items-center justify-between gap-2.5">
@@ -396,7 +397,7 @@ export default function JobsPage() {
                                         <ChevronIcon />
                                     </span>
                                 </div>
-                            </article>
+                            </Link>
                         ))}
                     </div>
                 </section>
@@ -476,9 +477,10 @@ export default function JobsPage() {
 
                             {visibleJobs.length > 0 ? (
                                 visibleJobs.map((job) => (
-                                    <button
+                                    <Link
                                         key={job.id}
-                                        className="grid w-full grid-cols-[1fr_auto] items-center gap-3 border-b border-[#F2F4F6] px-4 py-3 text-left last:border-b-0 hover:bg-[#FFFDF0] md:grid-cols-[90px_1fr_90px_90px_80px] md:px-5"
+                                        href={`/jobs/${job.id}`}
+                                        className="flex w-full flex-col items-start gap-1 border-b border-[#F2F4F6] px-4 py-3 text-left last:border-b-0 hover:bg-[#FFFDF0] md:grid md:grid-cols-[90px_1fr_90px_90px_80px] md:items-center md:gap-3 md:px-5"
                                     >
                                         <span className="text-xs font-medium text-[#8B95A1] md:text-sm">
                                             {job.temple}
@@ -505,7 +507,7 @@ export default function JobsPage() {
                                         <span className="hidden text-right text-sm text-[#6B7684] md:block">
                                             {job.date}
                                         </span>
-                                    </button>
+                                    </Link>
                                 ))
                             ) : (
                                 <div className="px-5 py-14 text-center text-sm text-[#8B95A1]">
@@ -534,8 +536,8 @@ export default function JobsPage() {
                                         key={number}
                                         onClick={() => setPage(number)}
                                         className={`h-10 w-10 rounded-xl text-sm font-bold ${page === number
-                                                ? "bg-[#FEE500]"
-                                                : "border border-[#E5E8EB] bg-white"
+                                            ? "bg-[#FEE500]"
+                                            : "border border-[#E5E8EB] bg-white"
                                             }`}
                                     >
                                         {number}

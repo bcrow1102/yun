@@ -127,7 +127,7 @@ function TempleImage() {
 
 export default function MobileHome() {
     return (
-        <div className="min-h-screen bg-white pb-24 text-[#191F28] md:hidden">
+        <div className="min-h-screen bg-white pb-24 text-[#252A31] md:hidden">
             <header className="sticky top-0 z-30 bg-[#FEE500]/95 backdrop-blur">
                 <div className="flex h-16 items-center justify-between px-5">
                     <div className="flex items-center gap-2.5">
@@ -176,7 +176,7 @@ export default function MobileHome() {
                     {menus.map((menu) => (
                         <button
                             key={menu.title}
-                            className="min-w-0 overflow-hidden rounded-[18px] border border-[#F2F4F6] bg-white text-center shadow-[0_5px_16px_rgba(25,31,40,0.06)]"
+                            className="min-w-0 overflow-hidden rounded-[18px] border border-[#E7E9EC] bg-[#FFFBE0] text-center shadow-[0_2px_8px_rgba(25,31,40,0.035)]"
                         >
                             <span className="block h-2 bg-[#FEE500]" />
 
@@ -188,7 +188,7 @@ export default function MobileHome() {
                                 />
                             </span>
 
-                            <strong className="block truncate px-1 pb-3 pt-1 text-[12px] font-bold">
+                            <strong className="block truncate px-1 pb-3 pt-1 text-[12px] font-semibold text-[#252A31]">
                                 {menu.title}
                             </strong>
                         </button>
@@ -206,7 +206,7 @@ export default function MobileHome() {
                         </button>
                     </div>
 
-                    <div className="overflow-hidden rounded-[22px] border border-[#F2F4F6] bg-white px-4">
+                    <div className="overflow-hidden rounded-[22px] border border-[#E3E8EF] bg-[#F4F7FA] px-4">
                         {jobs.map((job, index) => (
                             <button
                                 key={`${job.temple}-${job.title}`}
@@ -216,16 +216,16 @@ export default function MobileHome() {
                                     }`}
                             >
                                 <span className="min-w-0 flex-1">
-                                    <span className="block text-[12px] text-[#8B95A1]">
+                                    <span className="block text-[12px] text-[#667085]">
                                         {job.temple} · {job.location}
                                     </span>
 
-                                    <strong className="mt-1 block truncate text-[15px] font-semibold">
+                                    <strong className="mt-1 block truncate text-[15px] font-semibold text-[#252A31]">
                                         {job.title}
                                     </strong>
                                 </span>
 
-                                <span className="ml-3 text-xs text-[#8B95A1]">
+                                <span className="ml-3 text-xs text-[#667085]">
                                     {job.date}
                                 </span>
 
@@ -274,7 +274,7 @@ export default function MobileHome() {
                         {templeStays.map((stay) => (
                             <button
                                 key={stay.name}
-                                className="flex w-full overflow-hidden rounded-[22px] border border-[#F2F4F6] bg-white text-left"
+                                className="flex w-full overflow-hidden rounded-[22px] border border-[#E7E9EC] bg-white text-left"
                             >
                                 <span className="h-[104px] w-[112px] shrink-0">
                                     <TempleImage />
@@ -282,11 +282,11 @@ export default function MobileHome() {
 
                                 <span className="flex min-w-0 flex-1 items-center justify-between px-4">
                                     <span className="min-w-0">
-                                        <strong className="block truncate text-[15px] font-semibold">
+                                        <strong className="block truncate text-[15px] font-semibold text-[#252A31]">
                                             {stay.name}
                                         </strong>
 
-                                        <span className="mt-1.5 block text-xs text-[#8B95A1]">
+                                        <span className="mt-1.5 block text-xs text-[#667085]">
                                             {stay.location} · {stay.duration}
                                         </span>
                                     </span>
@@ -301,7 +301,7 @@ export default function MobileHome() {
                 </section>
 
                 <section className="mt-7 grid grid-cols-2 gap-3">
-                    <button className="rounded-[20px] border border-[#F2F4F6] bg-white px-4 py-4 text-left">
+                    <button className="rounded-[20px] border border-[#E7E9EC] bg-white px-4 py-4 text-left">
                         <span className="text-xs font-medium text-[#3182F6]">
                             사찰음식
                         </span>
@@ -310,7 +310,7 @@ export default function MobileHome() {
                         </strong>
                     </button>
 
-                    <button className="rounded-[20px] border border-[#F2F4F6] bg-white px-4 py-4 text-left">
+                    <button className="rounded-[20px] border border-[#E7E9EC] bg-white px-4 py-4 text-left">
                         <span className="text-xs font-medium text-[#3182F6]">
                             새로운 소식
                         </span>

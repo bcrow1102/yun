@@ -152,7 +152,7 @@ export default function Home() {
     <>
       <MobileHome />
 
-      <div className="hidden min-h-screen bg-white pb-20 text-[#191F28] md:block">
+      <div className="hidden min-h-screen bg-white pb-20 text-[#252A31] md:block">
         <header className="sticky top-0 z-30 border-b border-[#F2F4F6] bg-white/95 backdrop-blur">
           <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-8">
             <div className="flex items-center gap-3">
@@ -244,7 +244,7 @@ export default function Home() {
                     <Link
                       key={menu.title}
                       href="/jobs"
-                      className="group flex min-h-[140px] items-center gap-4 rounded-[24px] border border-white/70 bg-white p-5 text-left shadow-[0_14px_40px_rgba(25,31,40,0.10)] transition hover:-translate-y-1"
+                      className="group flex min-h-[140px] items-center gap-4 rounded-[24px] border border-[#E7E9EC] bg-[#FFFBE0] p-5 text-left shadow-[0_3px_12px_rgba(25,31,40,0.04)] transition hover:-translate-y-1"
                     >
                       <span className="flex h-[86px] w-[86px] shrink-0 items-center justify-center rounded-[20px] bg-[#FFFBE0] p-2">
                         <img
@@ -255,11 +255,11 @@ export default function Home() {
                       </span>
 
                       <span className="min-w-0">
-                        <strong className="block text-lg font-bold">
+                        <strong className="block text-lg font-semibold text-[#252A31]">
                           {menu.title}
                         </strong>
 
-                        <span className="mt-1 block text-sm leading-5 text-[#8B95A1]">
+                        <span className="mt-1 block text-sm leading-5 text-[#667085]">
                           {menu.description}
                         </span>
                       </span>
@@ -267,7 +267,7 @@ export default function Home() {
                   ) : (
                     <button
                       key={menu.title}
-                      className="group flex min-h-[140px] items-center gap-4 rounded-[24px] border border-white/70 bg-white p-5 text-left shadow-[0_14px_40px_rgba(25,31,40,0.10)] transition hover:-translate-y-1"
+                      className="group flex min-h-[140px] items-center gap-4 rounded-[24px] border border-[#E7E9EC] bg-[#FFFBE0] p-5 text-left shadow-[0_3px_12px_rgba(25,31,40,0.04)] transition hover:-translate-y-1"
                     >
                       <span className="flex h-[86px] w-[86px] shrink-0 items-center justify-center rounded-[20px] bg-[#FFFBE0] p-2">
                         <img
@@ -278,11 +278,11 @@ export default function Home() {
                       </span>
 
                       <span className="min-w-0">
-                        <strong className="block text-lg font-bold">
+                        <strong className="block text-lg font-semibold text-[#252A31]">
                           {menu.title}
                         </strong>
 
-                        <span className="mt-1 block text-sm leading-5 text-[#8B95A1]">
+                        <span className="mt-1 block text-sm leading-5 text-[#667085]">
                           {menu.description}
                         </span>
                       </span>
