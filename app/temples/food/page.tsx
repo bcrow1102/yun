@@ -221,8 +221,9 @@ export default function TempleFoodPage() {
 
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                         {foodPrograms.map((program) => (
-                            <button
+                            <Link
                                 key={program.id}
+                                href={`/temples/food/${program.id}`}
                                 className="group overflow-hidden rounded-[22px] border border-[#E3E8EF] bg-white text-left transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(25,31,40,0.08)]"
                             >
                                 <span
@@ -264,7 +265,7 @@ export default function TempleFoodPage() {
                                         </span>
                                     </span>
                                 </span>
-                            </button>
+                            </Link>
                         ))}
                     </div>
 

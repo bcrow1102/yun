@@ -47,10 +47,12 @@ export default function TempleStayCard({
       className="card-hover animate-fade-in-up min-w-0 w-full cursor-pointer overflow-hidden rounded-[22px] border border-[#E7E9EC] bg-white shadow-[0_2px_10px_rgba(25,31,40,0.03)] transition active:scale-[0.98]"
       style={{ animationDelay: `${delay}s` }}
     >
-      <div className="flex h-[128px] items-center justify-center bg-[#FFFBE0]">
-        <span className="text-[52px]" aria-hidden="true">
-          {currentStay.image}
-        </span>
+      <div className="h-[128px] overflow-hidden bg-[#F2F4F6]">
+        <img
+          src={currentStay.image}
+          alt={currentStay.name}
+          className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
+        />
       </div>
 
       <div className="p-4">

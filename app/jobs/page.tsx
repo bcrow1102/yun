@@ -336,9 +336,12 @@ export default function JobsPage() {
                                     구인
                                 </h1>
 
-                                <button className="shrink-0 rounded-xl bg-[#191F28] px-4 py-2.5 text-sm font-bold text-white md:px-5 md:py-3">
+                                <Link
+                                    href="/jobs/new"
+                                    className="shrink-0 rounded-xl bg-[#191F28] px-4 py-2.5 text-sm font-medium text-white md:px-5 md:py-3"
+                                >
                                     구인 등록
-                                </button>
+                                </Link>
                             </div>
 
                             <p className="mt-2 text-sm text-[#514A00] md:text-base">
@@ -487,9 +490,9 @@ export default function JobsPage() {
                                         </span>
 
                                         <span className="min-w-0">
-                                            <strong className="block truncate text-sm md:text-[15px]">
+                                            <span className="block truncate text-sm font-normal text-[#333D4B] md:text-[15px]">
                                                 {job.title}
-                                            </strong>
+                                            </span>
 
                                             <span className="mt-1 block text-xs text-[#8B95A1] md:hidden">
                                                 {job.location} · {job.type} · {job.date}

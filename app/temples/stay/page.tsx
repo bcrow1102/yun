@@ -225,8 +225,9 @@ export default function TempleStayPage() {
 
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                         {programs.map((program) => (
-                            <button
+                            <Link
                                 key={program.id}
+                                href={`/temples/stay/${program.id}`}
                                 className="group overflow-hidden rounded-[22px] border border-[#E3E8EF] bg-white text-left transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(25,31,40,0.08)]"
                             >
                                 <span
@@ -270,7 +271,7 @@ export default function TempleStayPage() {
                                         </span>
                                     </span>
                                 </span>
-                            </button>
+                            </Link>
                         ))}
                     </div>
 
@@ -281,7 +282,7 @@ export default function TempleStayPage() {
                             </h3>
 
                             <p className="mt-2 text-sm leading-6 text-[#6D6200]">
-                                템플스테이 프로그램 정보를
+                                템플스테이 프로그램 정보를{" "}
                                 <br className="md:hidden" />
                                 직접 등록할 수 있습니다.
                             </p>

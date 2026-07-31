@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 import JobCard from "@/app/components/JobCard";
 import TempleStayCard from "@/app/components/TempleStayCard";
 import BottomNav from "@/app/components/BottomNav";
@@ -12,26 +15,43 @@ const mainMenus = [
   "부처님 이야기",
 ];
 
-const quickMenus = [
+const heroSlides = [
   {
-    title: "구인",
-    description: "사찰 채용정보",
-    image: "/images/menu/hire.webp",
+    eyebrow: "연이 소개하는 템플스테이",
+    title: "마음이 쉬어가는 시간\n템플스테이를 만나보세요",
+    description: "고요한 사찰에서 잠시 머물며 일상에 지친 마음을 편안하게 쉬어보세요.",
+    href: "/temples/stay",
+    action: "템플스테이 둘러보기",
+    image: "/images/hero/temple-stay-novice.webp",
+    background: "bg-[#F4EFE3]",
+    textColor: "text-[#28241E]",
+    descriptionColor: "text-[#665E52]",
   },
   {
-    title: "구직",
-    description: "일자리 등록",
-    image: "/images/menu/job-seeker.webp",
+    eyebrow: "산사 문화행사",
+    title: "별빛 아래 만나는\n산사의 음악",
+    description: "고요한 산사에서 음악과 이야기가 함께하는\n특별한 문화행사를 만나보세요.",
+    href: "/events",
+    action: "행사 둘러보기",
+    image: "/images/hero/temple-concert.webp",
+    overlay: "bg-gradient-to-r from-[#FFF8EA]/60 via-[#FFF8EA]/18 to-transparent",
+    background: "bg-[#F4E9D5]",
+    textColor: "text-[#29251F]",
+    descriptionColor: "text-[#5E574C]",
+    descriptionShadow: "light",
   },
   {
-    title: "행사·교육",
-    description: "불교 행사 소식",
-    image: "/images/menu/event-education.webp",
-  },
-  {
-    title: "체험",
-    description: "템플스테이·사찰음식",
-    image: "/images/menu/experience.webp",
+    eyebrow: "연이 소개하는 사찰음식",
+    title: "자연을 담은 한 상\n사찰음식을 만나보세요",
+    description: "제철 재료로 정성껏 차린 사찰음식과\n다양한 체험 프로그램을 만나보세요.",
+    href: "/temples/food",
+    action: "사찰음식 둘러보기",
+    image: "/images/hero/temple-food-real.webp",
+    overlay: "bg-gradient-to-r from-[#FFFDF8]/60 via-[#FFFDF8]/18 to-transparent",
+    background: "bg-[#F3EBDD]",
+    textColor: "text-[#29251F]",
+    descriptionColor: "text-[#5E574C]",
+    descriptionShadow: "light",
   },
 ];
 
@@ -70,7 +90,7 @@ const recommendedTempleStays = [
     duration: "1박 2일",
     price: "50,000원",
     rating: 4.8,
-    image: "🌲",
+    image: "/images/temple-stay/woljeongsa-forest.webp",
   },
   {
     id: 2,
@@ -79,7 +99,7 @@ const recommendedTempleStays = [
     duration: "2박 3일",
     price: "80,000원",
     rating: 4.9,
-    image: "🧘",
+    image: "/images/temple-stay/haeinsa-meditation.webp",
   },
   {
     id: 3,
@@ -88,7 +108,7 @@ const recommendedTempleStays = [
     duration: "당일",
     price: "30,000원",
     rating: 4.7,
-    image: "🕯️",
+    image: "/images/temple-stay/tongdosa-experience.webp",
   },
 ];
 
@@ -154,6 +174,61 @@ function ArrowIcon() {
 }
 
 export default function Home() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const pointerStartX = useRef<number | null>(null);
+  const didDrag = useRef(false);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setActiveSlide((current) => (current + 1) % heroSlides.length);
+    }, 6000);
+
+    return () => window.clearTimeout(timer);
+  }, [activeSlide]);
+
+  const handlePointerDown = (event: PointerEvent<HTMLElement>) => {
+    if ((event.target as HTMLElement).closest("a")) {
+      pointerStartX.current = null;
+      didDrag.current = false;
+      return;
+    }
+
+    pointerStartX.current = event.clientX;
+    didDrag.current = false;
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handlePointerMove = (event: PointerEvent<HTMLElement>) => {
+    if (pointerStartX.current === null) return;
+    if (Math.abs(event.clientX - pointerStartX.current) > 10) {
+      didDrag.current = true;
+    }
+  };
+
+  const handlePointerUp = (event: PointerEvent<HTMLElement>) => {
+    if (pointerStartX.current === null) return;
+
+    const distance = event.clientX - pointerStartX.current;
+    pointerStartX.current = null;
+
+    if (Math.abs(distance) >= 45) {
+      setActiveSlide((current) =>
+        distance < 0
+          ? (current + 1) % heroSlides.length
+          : (current - 1 + heroSlides.length) % heroSlides.length
+      );
+    }
+
+    window.setTimeout(() => {
+      didDrag.current = false;
+    }, 0);
+  };
+
+  const handlePointerCancel = () => {
+    pointerStartX.current = null;
+    didDrag.current = false;
+  };
+
   return (
     <>
       <MobileHome />
@@ -197,26 +272,17 @@ export default function Home() {
 
                       <div className="invisible absolute left-1/2 top-full z-50 w-44 -translate-x-1/2 pt-2 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
                         <div className="overflow-hidden rounded-2xl border border-[#E7E9EC] bg-white p-2 shadow-[0_12px_30px_rgba(25,31,40,0.12)]">
-                          <Link
-                            href="/temples#temple-guide"
-                            className="block w-full rounded-xl px-4 py-3 text-left text-sm font-semibold text-[#4E5968] hover:bg-[#FFF9C4]"
-                          >
+                          <button className="block w-full rounded-xl px-4 py-3 text-left text-sm font-semibold text-[#4E5968] hover:bg-[#FFF9C4]">
                             사찰 안내
-                          </Link>
+                          </button>
 
-                          <Link
-                            href="/temples#temple-stay"
-                            className="block w-full rounded-xl px-4 py-3 text-left text-sm font-semibold text-[#4E5968] hover:bg-[#FFF9C4]"
-                          >
+                          <button className="block w-full rounded-xl px-4 py-3 text-left text-sm font-semibold text-[#4E5968] hover:bg-[#FFF9C4]">
                             템플스테이
-                          </Link>
+                          </button>
 
-                          <Link
-                            href="/temples#temple-food"
-                            className="block w-full rounded-xl px-4 py-3 text-left text-sm font-semibold text-[#4E5968] hover:bg-[#FFF9C4]"
-                          >
+                          <button className="block w-full rounded-xl px-4 py-3 text-left text-sm font-semibold text-[#4E5968] hover:bg-[#FFF9C4]">
                             사찰음식
-                          </Link>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -268,89 +334,97 @@ export default function Home() {
         </header>
 
         <main>
-          <section className="bg-[#FEE500]">
-            <div className="mx-auto grid min-h-[390px] max-w-6xl grid-cols-[0.9fr_1.1fr] items-center gap-14 px-8 py-14">
-              <div>
-                <p className="text-base font-semibold text-[#6D6200]">
-                  오늘 필요한 불교 정보를
-                </p>
+          <section
+            className="relative cursor-grab touch-pan-y select-none overflow-hidden active:cursor-grabbing"
+            aria-label="주요 소식"
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerCancel}
+          >
+            <div
+              className="flex transition-transform duration-700 ease-in-out"
+              style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+            >
+              {heroSlides.map((slide) => (
+                <article
+                  key={slide.title}
+                  className={`${slide.background} ${slide.textColor} relative block w-full shrink-0 overflow-hidden`}
+                >
+                  {"image" in slide && slide.image && (
+                    <>
+                      <img
+                        src={slide.image}
+                        alt=""
+                        draggable={false}
+                        className="absolute inset-0 h-full w-full object-cover object-center"
+                      />
+                      <span
+                        className={`absolute inset-0 ${"overlay" in slide
+                          ? slide.overlay
+                          : "bg-gradient-to-r from-[#FFFDF8]/60 via-[#FFFDF8]/18 to-transparent"
+                          }`}
+                        aria-hidden="true"
+                      />
+                    </>
+                  )}
 
-                <h1 className="mt-3 text-[52px] font-bold leading-[1.12] tracking-[-0.055em]">
-                  쉽고 빠르게
-                  <br />
-                  찾아보세요
-                </h1>
+                  <div className="relative mx-auto grid min-h-[390px] max-w-6xl grid-cols-[1fr_0.7fr] items-center gap-16 px-8 py-14">
+                    <div className="max-w-[610px]">
+                      <p className="text-base font-semibold opacity-75">
+                        {slide.eyebrow}
+                      </p>
 
-                <p className="mt-5 max-w-md text-[16px] leading-7 text-[#514A00]">
-                  사찰 구인·구직부터 행사와 교육, 템플스테이,
-                  사찰음식까지 필요한 정보를 한곳에서 편하게 만나보세요.
-                </p>
+                      <h1 className="mt-3 whitespace-pre-line text-[50px] font-semibold leading-[1.14] tracking-[-0.05em]">
+                        {slide.title}
+                      </h1>
 
-                <div className="mt-8 flex gap-3">
-                  <button className="flex items-center gap-2 rounded-xl bg-[#191F28] px-5 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5">
-                    정보 둘러보기
-                    <ArrowIcon />
-                  </button>
+                      <p
+                        className={`mt-5 max-w-[500px] whitespace-pre-line text-[16px] leading-7 ${slide.descriptionColor} ${"descriptionShadow" in slide
+                          ? slide.descriptionShadow === "light"
+                            ? "[text-shadow:0_1px_3px_rgba(255,255,255,0.95)]"
+                            : "[text-shadow:0_1px_3px_rgba(0,0,0,0.8)]"
+                          : ""
+                          }`}
+                      >
+                        {slide.description}
+                      </p>
 
-                  <button className="rounded-xl border border-[#191F28]/15 bg-white/70 px-5 py-3.5 text-sm font-bold text-[#191F28] transition hover:bg-white">
-                    행사 등록
-                  </button>
-                </div>
-              </div>
+                      <Link
+                        href={slide.href}
+                        className="mt-8 inline-flex items-center gap-2 rounded-xl bg-[#191F28] px-5 py-3.5 text-sm font-semibold text-white"
+                        onClick={(event) => {
+                          if (didDrag.current) event.preventDefault();
+                        }}
+                      >
+                        {slide.action}
+                        <ArrowIcon />
+                      </Link>
+                    </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                {quickMenus.map((menu) =>
-                  menu.title === "구인" ? (
-                    <Link
-                      key={menu.title}
-                      href="/jobs"
-                      className="group flex min-h-[140px] items-center gap-4 rounded-[24px] border border-[#E7E9EC] bg-[#FFFBE0] p-5 text-left shadow-[0_3px_12px_rgba(25,31,40,0.04)] transition hover:-translate-y-1"
-                    >
-                      <span className="flex h-[86px] w-[86px] shrink-0 items-center justify-center rounded-[20px] bg-[#FFFBE0] p-2">
-                        <img
-                          src={menu.image}
-                          alt=""
-                          className="h-full w-full object-contain"
-                        />
-                      </span>
+                    {"icon" in slide && (
+                      <div className="flex items-center justify-center text-[132px]" aria-hidden="true">
+                        {slide.icon}
+                      </div>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
 
-                      <span className="min-w-0">
-                        <strong className="block text-lg font-semibold text-[#252A31]">
-                          {menu.title}
-                        </strong>
-
-                        <span className="mt-1 block text-sm leading-5 text-[#667085]">
-                          {menu.description}
-                        </span>
-                      </span>
-                    </Link>
-                  ) : (
-                    <button
-                      key={menu.title}
-                      className="group flex min-h-[140px] items-center gap-4 rounded-[24px] border border-[#E7E9EC] bg-[#FFFBE0] p-5 text-left shadow-[0_3px_12px_rgba(25,31,40,0.04)] transition hover:-translate-y-1"
-                    >
-                      <span className="flex h-[86px] w-[86px] shrink-0 items-center justify-center rounded-[20px] bg-[#FFFBE0] p-2">
-                        <img
-                          src={menu.image}
-                          alt=""
-                          className="h-full w-full object-contain"
-                        />
-                      </span>
-
-                      <span className="min-w-0">
-                        <strong className="block text-lg font-semibold text-[#252A31]">
-                          {menu.title}
-                        </strong>
-
-                        <span className="mt-1 block text-sm leading-5 text-[#667085]">
-                          {menu.description}
-                        </span>
-                      </span>
-                    </button>
-                  )
-                )}
-
-              </div>
+            <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-2">
+              {heroSlides.map((slide, index) => (
+                <button
+                  key={slide.title}
+                  type="button"
+                  onClick={() => setActiveSlide(index)}
+                  className={`h-2.5 rounded-full transition-all ${activeSlide === index
+                    ? "w-8 bg-[#191F28]"
+                    : "w-2.5 bg-[#191F28]/25"
+                    }`}
+                  aria-label={`${index + 1}번째 소식 보기`}
+                />
+              ))}
             </div>
           </section>
 

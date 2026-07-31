@@ -1,24 +1,56 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
+
 const menus = [
-    {
-        title: "구인",
-        image: "/images/menu/hire.webp",
-        href: "/jobs",
-    },
+    { title: "구인", image: "/images/menu/hire.webp", href: "/jobs" },
     {
         title: "구직",
         image: "/images/menu/job-seeker.webp",
-        href: "",
+        href: "/job-seekers",
     },
     {
         title: "행사·교육",
         image: "/images/menu/event-education.webp",
-        href: "",
+        href: "/events",
+    },
+    { title: "체험", image: "/images/menu/experience.webp", href: "/temples" },
+];
+
+const heroSlides = [
+    {
+        eyebrow: "연에서 만나는 불교 정보",
+        title: "오늘 필요한 정보를\n쉽고 빠르게 찾아보세요",
+        href: "/jobs",
+        background: "bg-[#FEE500]",
+        textColor: "text-[#191F28]",
     },
     {
-        title: "사찰",
-        image: "/images/menu/experience.webp",
-        href: "/temples",
+        eyebrow: "연이 소개하는 템플스테이",
+        title: "마음이 쉬어가는 시간\n템플스테이를 만나보세요",
+        href: "/temples/stay",
+        image: "/images/hero/temple-stay-novice.webp",
+        background: "bg-[#F4EFE3]",
+        textColor: "text-[#28241E]",
+    },
+    {
+        eyebrow: "연이 소개하는 사찰음식",
+        title: "자연을 담은 한 상\n사찰음식을 만나보세요",
+        href: "/temples/food",
+        image: "/images/hero/temple-food-real.webp",
+        overlay: "bg-gradient-to-r from-[#FFFDF8]/58 via-[#FFFDF8]/16 to-transparent",
+        background: "bg-[#F3EBDD]",
+        textColor: "text-[#29251F]",
+    },
+    {
+        eyebrow: "산사 문화행사",
+        title: "별빛 아래 만나는\n산사의 음악",
+        href: "/events",
+        image: "/images/hero/temple-concert.webp",
+        overlay: "bg-gradient-to-r from-[#FFF8EA]/58 via-[#FFF8EA]/16 to-transparent",
+        background: "bg-[#F4E9D5]",
+        textColor: "text-[#29251F]",
     },
 ];
 
@@ -143,6 +175,55 @@ function TempleImage() {
 }
 
 export default function MobileHome() {
+    const [activeSlide, setActiveSlide] = useState(0);
+    const pointerStartX = useRef<number | null>(null);
+    const didDrag = useRef(false);
+
+    useEffect(() => {
+        const timer = window.setTimeout(() => {
+            setActiveSlide((current) => (current + 1) % heroSlides.length);
+        }, 6000);
+
+        return () => window.clearTimeout(timer);
+    }, [activeSlide]);
+
+    const handlePointerDown = (event: PointerEvent<HTMLElement>) => {
+        pointerStartX.current = event.clientX;
+        didDrag.current = false;
+        event.currentTarget.setPointerCapture(event.pointerId);
+    };
+
+    const handlePointerMove = (event: PointerEvent<HTMLElement>) => {
+        if (pointerStartX.current === null) return;
+        if (Math.abs(event.clientX - pointerStartX.current) > 10) {
+            didDrag.current = true;
+        }
+    };
+
+    const handlePointerUp = (event: PointerEvent<HTMLElement>) => {
+        if (pointerStartX.current === null) return;
+
+        const distance = event.clientX - pointerStartX.current;
+        pointerStartX.current = null;
+
+        if (Math.abs(distance) >= 45) {
+            setActiveSlide((current) =>
+                distance < 0
+                    ? (current + 1) % heroSlides.length
+                    : (current - 1 + heroSlides.length) % heroSlides.length
+            );
+        }
+
+        window.setTimeout(() => {
+            didDrag.current = false;
+        }, 0);
+    };
+
+    const handlePointerCancel = () => {
+        pointerStartX.current = null;
+        didDrag.current = false;
+    };
+
     return (
         <div className="min-h-screen bg-white pb-24 text-[#252A31] md:hidden">
             <header className="sticky top-0 z-30 bg-[#FEE500]/95 backdrop-blur">
@@ -179,86 +260,171 @@ export default function MobileHome() {
             </header>
 
             <main className="px-4 pb-8">
-                <section className="-mx-4 mb-8 bg-[#FEE500] px-5 pb-7 pt-5">
-                    <p className="text-[15px] font-medium text-[#6D6200]">
-                        오늘 필요한 불교 정보를
-                    </p>
+                <section
+                    className="-mx-4 mb-8 cursor-grab touch-pan-y select-none overflow-hidden active:cursor-grabbing"
+                    aria-label="주요 소식"
+                    onPointerDown={handlePointerDown}
+                    onPointerMove={handlePointerMove}
+                    onPointerUp={handlePointerUp}
+                    onPointerCancel={handlePointerCancel}
+                >
+                    <div
+                        className="flex transition-transform duration-700 ease-in-out"
+                        style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+                    >
+                        {heroSlides.map((slide) => (
+                            <Link
+                                key={slide.title}
+                                href={slide.href}
+                                className={`${slide.background} ${slide.textColor} relative block min-h-[154px] w-full shrink-0 px-5 pb-9 pt-5`}
+                                onClick={(event) => {
+                                    if (didDrag.current) event.preventDefault();
+                                }}
+                            >
+                                {"image" in slide && slide.image && (
+                                    <>
+                                        <img
+                                            src={slide.image}
+                                            alt=""
+                                            draggable={false}
+                                            className="absolute inset-0 h-full w-full object-cover object-center"
+                                        />
+                                        <span
+                                            className={`absolute inset-0 ${"overlay" in slide
+                                                ? slide.overlay
+                                                : "bg-gradient-to-r from-[#FFFDF8]/58 via-[#FFFDF8]/16 to-transparent"
+                                                }`}
+                                            aria-hidden="true"
+                                        />
+                                    </>
+                                )}
 
-                    <h1 className="mt-1 text-[26px] font-bold leading-tight tracking-[-0.045em]">
-                        쉽고 빠르게 찾아보세요
-                    </h1>
+                                <span className="relative block max-w-[68%]">
+                                    <span className="block text-[13px] font-medium opacity-70">
+                                        {slide.eyebrow}
+                                    </span>
+
+                                    <strong className="mt-1 block whitespace-pre-line text-[23px] font-semibold leading-[1.25] tracking-[-0.04em]">
+                                        {slide.title}
+                                    </strong>
+                                </span>
+
+                                {"icon" in slide && (
+                                    <span className="absolute bottom-8 right-6 text-[58px]" aria-hidden="true">
+                                        {slide.icon}
+                                    </span>
+                                )}
+                            </Link>
+                        ))}
+                    </div>
+
+                    <div className="relative -mt-6 flex justify-center gap-1.5 pb-3">
+                        {heroSlides.map((slide, index) => (
+                            <button
+                                key={slide.title}
+                                type="button"
+                                onClick={() => setActiveSlide(index)}
+                                className={`h-2 rounded-full transition-all ${activeSlide === index
+                                    ? "w-6 bg-[#191F28]"
+                                    : "w-2 bg-[#191F28]/25"
+                                    }`}
+                                aria-label={`${index + 1}번째 소식 보기`}
+                            />
+                        ))}
+                    </div>
                 </section>
 
                 <section className="grid grid-cols-4 gap-2">
-                    {menus.map((menu) => {
-                        const cardContent = (
-                            <>
-                                <span className="block h-2 bg-[#FEE500]" />
+                    {menus.map((menu) => (
+                        <Link
+                            key={menu.title}
+                            href={menu.href}
+                            className="min-w-0 overflow-hidden rounded-[18px] border border-[#E7E9EC] bg-[#FFFBE0] text-center shadow-[0_2px_8px_rgba(25,31,40,0.035)]"
+                        >
+                            <span className="block h-2 bg-[#FEE500]" />
 
-                                <span className="flex h-[82px] items-center justify-center px-1.5 pt-2">
-                                    <img
-                                        src={menu.image}
-                                        alt=""
-                                        className="h-full w-full object-contain"
-                                    />
-                                </span>
+                            <span className="flex h-[82px] items-center justify-center px-1.5 pt-2">
+                                <img
+                                    src={menu.image}
+                                    alt=""
+                                    className="h-full w-full object-contain"
+                                />
+                            </span>
 
-                                <strong className="block truncate px-1 pb-3 pt-1 text-[12px] font-semibold text-[#252A31]">
-                                    {menu.title}
-                                </strong>
-                            </>
-                        );
-
-                        const cardClassName =
-                            "min-w-0 overflow-hidden rounded-[18px] border border-[#E7E9EC] bg-[#FFFBE0] text-center shadow-[0_2px_8px_rgba(25,31,40,0.035)]";
-
-                        if (menu.href) {
-                            return (
-                                <Link
-                                    key={menu.title}
-                                    href={menu.href}
-                                    className={cardClassName}
-                                >
-                                    {cardContent}
-                                </Link>
-                            );
-                        }
-
-                        return (
-                            <button
-                                key={menu.title}
-                                className={cardClassName}
-                            >
-                                {cardContent}
-                            </button>
-                        );
-                    })}
+                            <strong className="block truncate px-1 pb-3 pt-1 text-[12px] font-semibold text-[#252A31]">
+                                {menu.title}
+                            </strong>
+                        </Link>
+                    ))}
                 </section>
 
-                <section className="mt-7">
-                    <Link
-                        href="/stories"
-                        className="flex w-full items-center justify-between rounded-[22px] border border-[#DDE7D9] bg-[#F3F7F1] px-5 py-5"
-                    >
-                        <span className="min-w-0 text-left">
-                            <span className="text-xs font-bold text-[#61705B]">
+                <Link
+                    href="/stories"
+                    className="mt-7 flex w-full items-center justify-between rounded-[22px] border border-[#E2E7DA] bg-[#F3F5EE] px-5 py-5 shadow-[0_4px_14px_rgba(25,31,40,0.04)] transition active:scale-[0.99]"
+                >
+                    <span className="flex items-center gap-3.5">
+                        <span className="flex h-14 w-14 shrink-0 items-center justify-center">
+                            <svg
+                                viewBox="0 0 64 64"
+                                fill="none"
+                                className="h-14 w-14 text-[#786B5A]"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M8 15.5c8.5-2.5 16.5-.8 24 5v31c-7.5-5.8-15.5-7.5-24-5V15.5Z"
+                                    fill="#FFFDF3"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinejoin="round"
+                                />
+                                <path
+                                    d="M56 15.5c-8.5-2.5-16.5-.8-24 5v31c7.5-5.8 15.5-7.5 24-5V15.5Z"
+                                    fill="#FFFDF3"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinejoin="round"
+                                />
+                                <path
+                                    d="M32 20.5v31"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                />
+                                <path
+                                    d="M32 39c-4.2-3.4-5.2-7.4 0-12.5 5.2 5.1 4.2 9.1 0 12.5Z"
+                                    fill="#FEE500"
+                                    stroke="currentColor"
+                                    strokeWidth="1.6"
+                                />
+                                <path
+                                    d="M30.5 40c-4.7-.4-7.2-2.8-7.5-7 4.6.3 7.1 2.7 7.5 7Z"
+                                    fill="#FEE500"
+                                    stroke="currentColor"
+                                    strokeWidth="1.6"
+                                />
+                                <path
+                                    d="M33.5 40c4.7-.4 7.2-2.8 7.5-7-4.6.3-7.1 2.7-7.5 7Z"
+                                    fill="#FEE500"
+                                    stroke="currentColor"
+                                    strokeWidth="1.6"
+                                />
+                            </svg>
+                        </span>
+
+                        <span>
+                            <span className="block text-xs font-medium text-[#8D8040]">
+                                마음을 쉬어가는 이야기
+                            </span>
+                            <span className="mt-1 block text-[17px] font-medium text-[#252A31]">
                                 부처님 이야기
                             </span>
-
-                            <strong className="mt-1 block text-[18px] font-bold tracking-[-0.025em] text-[#252A31]">
-                                오늘의 이야기
-                            </strong>
-
-                            <span className="mt-1 block text-xs leading-5 text-[#667085]">
-                                세 장의 삽화로 만나는 짧은 깨달음
-                            </span>
                         </span>
+                    </span>
 
-                        <span className="ml-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-[16px] bg-white text-[#61705B]">
-                            <LotusIcon />
-                        </span>
-                    </Link>
-                </section>
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-[#8B95A1]">
+                        <ChevronIcon />
+                    </span>
+                </Link>
 
                 <section className="mt-7">
                     <div className="mb-3 flex items-center justify-between px-1">
@@ -301,8 +467,6 @@ export default function MobileHome() {
                         ))}
                     </div>
                 </section>
-
-
 
                 <section className="mt-7">
                     <button className="flex w-full items-center justify-between rounded-[22px] bg-[#FEE500] px-5 py-5 text-left">
