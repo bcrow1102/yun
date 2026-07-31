@@ -309,11 +309,7 @@ export default function MobileHome() {
                                     </strong>
                                 </span>
 
-                                {"icon" in slide && (
-                                    <span className="absolute bottom-8 right-6 text-[58px]" aria-hidden="true">
-                                        {slide.icon}
-                                    </span>
-                                )}
+
                             </Link>
                         ))}
                     </div>

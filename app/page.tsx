@@ -402,11 +402,7 @@ export default function Home() {
                       </Link>
                     </div>
 
-                    {"icon" in slide && (
-                      <div className="flex items-center justify-center text-[132px]" aria-hidden="true">
-                        {slide.icon}
-                      </div>
-                    )}
+
                   </div>
                 </article>
               ))}
