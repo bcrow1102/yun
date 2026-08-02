@@ -289,17 +289,20 @@ export default function Home() {
   const [keyword, setKeyword] = useState("");
   const [activeHeroSlide, setActiveHeroSlide] = useState(0);
   const [storyPopupOpen, setStoryPopupOpen] = useState(true);
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   useEffect(() => {
+    if (isSearchFocused) return;
+
     const timer = window.setTimeout(() => {
       setActiveHeroSlide((current) => (current + 1) % HERO_SLIDE_COUNT);
     }, 6000);
 
     return () => window.clearTimeout(timer);
-  }, [activeHeroSlide]);
+  }, [activeHeroSlide, isSearchFocused]);
 
   const handleHeroPointerDown = (event: PointerEvent<HTMLElement>) => {
-    if ((event.target as HTMLElement).closest("button, input, form")) {
+    if ((event.target as HTMLElement).closest("a, button, input, form")) {
       heroPointerStartX.current = null;
       heroDidDrag.current = false;
       return;
@@ -359,28 +362,7 @@ export default function Home() {
     }
 
     const encoded = encodeURIComponent(query);
-
-    if (/부처|이야기|법문/.test(query)) {
-      router.push("/stories");
-      return;
-    }
-
-    if (/음식|공양|사찰음식/.test(query)) {
-      router.push("/temples/food");
-      return;
-    }
-
-    if (/템플|사찰|절|명상/.test(query)) {
-      router.push("/temples/stay");
-      return;
-    }
-
-    if (/행사|교육|음악회|강좌/.test(query)) {
-      router.push(`/events?keyword=${encoded}`);
-      return;
-    }
-
-    router.push(`/jobs?keyword=${encoded}`);
+    router.push(`/search?q=${encoded}`);
   };
 
   return (
@@ -392,6 +374,10 @@ export default function Home() {
           <div className="mx-auto flex h-[76px] max-w-[1400px] items-center justify-between px-10 xl:px-14">
             <Link
               href="/"
+              onClick={(event) => {
+                event.preventDefault();
+                window.location.assign("/");
+              }}
               className="flex items-center gap-2.5"
               aria-label="연 홈"
             >
@@ -453,6 +439,28 @@ export default function Home() {
                 className="text-[15px] font-medium hover:text-[#777900]"
               >
                 부처님 이야기
+              </Link>
+              <Link
+                href="/resources/masters"
+                className="text-[15px] font-medium hover:text-[#777900]"
+              >
+                한국의 고승
+              </Link>
+              <Link
+                href="/resources"
+                className="text-[15px] font-medium hover:text-[#777900]"
+              >
+                불교자료
+              </Link>
+              <Link
+                href="/events/promote"
+                className="group relative rounded-lg px-2.5 py-2 text-[15px] font-semibold text-[#777900] transition hover:bg-[#FDFEDB] hover:text-[#5F6100]"
+              >
+                홍보물 DIY
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-1/2 -bottom-0.5 h-[3px] w-7 -translate-x-1/2 rounded-full bg-[#F4F54A] transition-all group-hover:w-10"
+                />
               </Link>
             </nav>
 
@@ -532,6 +540,8 @@ export default function Home() {
                         ref={searchInputRef}
                         value={keyword}
                         onChange={(event) => setKeyword(event.target.value)}
+                        onFocus={() => setIsSearchFocused(true)}
+                        onBlur={() => setIsSearchFocused(false)}
                         type="search"
                         placeholder="구인, 행사·교육, 사찰 정보를 검색해보세요"
                         className="h-[62px] w-full rounded-2xl border border-[#DDE1E5] bg-white pl-14 pr-16 text-[16px] font-normal text-[#191F28] shadow-[0_8px_30px_rgba(25,31,40,0.06)] outline-none placeholder:text-[#98A1AC] focus:border-[#B9BA28] focus:ring-4 focus:ring-[#F4F54A]/20"
@@ -671,18 +681,24 @@ export default function Home() {
                   key={slide.title}
                   className="relative w-full shrink-0 overflow-hidden bg-[#F6F4EC]"
                 >
-                  <img
-                    src={slide.image}
-                    alt={slide.imageAlt}
-                    draggable={false}
-                    className="absolute inset-0 h-full w-full object-cover object-center"
-                  />
-                  <span
-                    className="absolute inset-y-0 left-0 w-[52%] bg-[linear-gradient(90deg,rgba(255,255,255,0.90)_0%,rgba(255,255,255,0.74)_50%,rgba(255,255,255,0.20)_82%,rgba(255,255,255,0)_100%)]"
-                    aria-hidden="true"
-                  />
+                  <Link
+                    href={slide.href}
+                    className="absolute inset-0 z-[1] block"
+                    aria-label={slide.action}
+                  >
+                    <img
+                      src={slide.image}
+                      alt={slide.imageAlt}
+                      draggable={false}
+                      className="absolute inset-0 h-full w-full object-cover object-center"
+                    />
+                    <span
+                      className="absolute inset-y-0 left-0 w-[52%] bg-[linear-gradient(90deg,rgba(255,255,255,0.90)_0%,rgba(255,255,255,0.74)_50%,rgba(255,255,255,0.20)_82%,rgba(255,255,255,0)_100%)]"
+                      aria-hidden="true"
+                    />
+                  </Link>
 
-                  <div className="relative mx-auto flex min-h-[560px] max-w-[1400px] items-center px-10 py-12 xl:px-14">
+                  <div className="pointer-events-none relative z-10 mx-auto flex min-h-[560px] max-w-[1400px] items-center px-10 py-12 xl:px-14">
                     <div className="max-w-[590px]">
                       <p className="text-[15px] font-medium tracking-[-0.02em] text-[#4E5968]">
                         {slide.eyebrow}
@@ -699,7 +715,7 @@ export default function Home() {
 
                       <Link
                         href={slide.href}
-                        className="mt-8 inline-flex items-center gap-3 rounded-2xl bg-[#191F28] px-6 py-4 text-[15px] font-medium text-white transition hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(25,31,40,0.20)]"
+                        className="pointer-events-auto mt-8 inline-flex items-center gap-3 rounded-2xl bg-[#191F28] px-6 py-4 text-[15px] font-medium text-white transition hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(25,31,40,0.20)]"
                       >
                         {slide.action}
                         <ArrowIcon className="h-5 w-5" />
@@ -717,8 +733,8 @@ export default function Home() {
                   type="button"
                   onClick={() => setActiveHeroSlide(index)}
                   className={`h-2.5 rounded-full transition-all duration-300 ${activeHeroSlide === index
-                      ? "w-8 bg-[#191F28]"
-                      : "w-2.5 bg-[#191F28]/25 hover:bg-[#191F28]/45"
+                    ? "w-8 bg-[#191F28]"
+                    : "w-2.5 bg-[#191F28]/25 hover:bg-[#191F28]/45"
                     }`}
                   aria-label={`${index + 1}번째 소식 보기`}
                 />

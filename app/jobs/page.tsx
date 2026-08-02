@@ -258,7 +258,7 @@ export default function JobsPage() {
             <header className="sticky top-0 z-30 border-b border-[#F2F4F6] bg-white/95 backdrop-blur">
                 <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:h-[72px] md:px-8">
                     <Link href="/" className="flex items-center gap-2.5">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FEE500] md:h-10 md:w-10">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F4F54A] md:h-10 md:w-10">
                             <LotusIcon />
                         </span>
 
@@ -270,16 +270,9 @@ export default function JobsPage() {
                     <nav className="hidden items-center gap-1 md:flex">
                         <Link
                             href="/jobs"
-                            className="rounded-xl bg-[#FFF9C4] px-4 py-2.5 text-sm font-bold"
+                            className="rounded-xl bg-[#F4F54A] px-4 py-2.5 text-sm font-bold"
                         >
                             구인
-                        </Link>
-
-                        <Link
-                            href="/job-seekers"
-                            className="rounded-xl px-4 py-2.5 text-sm font-semibold text-[#4E5968] hover:bg-[#F2F4F6]"
-                        >
-                            구직
                         </Link>
 
                         <Link
@@ -290,14 +283,14 @@ export default function JobsPage() {
                         </Link>
 
                         <Link
-                            href="/temple-stays"
+                            href="/temples/stay"
                             className="rounded-xl px-4 py-2.5 text-sm font-semibold text-[#4E5968] hover:bg-[#F2F4F6]"
                         >
                             템플스테이
                         </Link>
 
                         <Link
-                            href="/temple-food"
+                            href="/temples/food"
                             className="rounded-xl px-4 py-2.5 text-sm font-semibold text-[#4E5968] hover:bg-[#F2F4F6]"
                         >
                             사찰음식
@@ -315,7 +308,7 @@ export default function JobsPage() {
 
                         <Link
                             href="/login"
-                            className="ml-1 rounded-xl bg-[#FEE500] px-4 py-2.5 text-sm font-bold"
+                            className="ml-1 rounded-xl bg-[#F4F54A] px-4 py-2.5 text-sm font-bold"
                         >
                             로그인
                         </Link>
@@ -324,7 +317,7 @@ export default function JobsPage() {
             </header>
 
             <main>
-                <section className="bg-[#FEE500]">
+                <section className="bg-[#F4F54A]">
                     <div className="mx-auto max-w-6xl px-5 py-7 md:px-8 md:py-11">
                         <p className="text-sm font-semibold text-[#6D6200]">
                             사찰과 불교기관의 채용정보
@@ -539,7 +532,7 @@ export default function JobsPage() {
                                         key={number}
                                         onClick={() => setPage(number)}
                                         className={`h-10 w-10 rounded-xl text-sm font-bold ${page === number
-                                            ? "bg-[#FEE500]"
+                                            ? "bg-[#F4F54A]"
                                             : "border border-[#E5E8EB] bg-white"
                                             }`}
                                     >

@@ -137,7 +137,7 @@ export default function StoriesPage() {
             <header className="sticky top-0 z-30 border-b border-[#E7E9EC] bg-white/95 backdrop-blur">
                 <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:h-[72px] md:px-8">
                     <Link href="/" className="flex items-center gap-2.5">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FEE500] text-[#191F28] md:h-10 md:w-10">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F4F54A] text-[#191F28] md:h-10 md:w-10">
                             <LotusIcon />
                         </span>
 
@@ -145,36 +145,6 @@ export default function StoriesPage() {
                             연
                         </strong>
                     </Link>
-
-                    <nav className="hidden items-center gap-1 md:flex">
-                        <Link
-                            href="/jobs"
-                            className="rounded-xl px-4 py-2.5 text-sm font-semibold text-[#4E5968] transition hover:bg-[#F2F4F6]"
-                        >
-                            구인
-                        </Link>
-
-                        <Link
-                            href="/events"
-                            className="rounded-xl px-4 py-2.5 text-sm font-semibold text-[#4E5968] transition hover:bg-[#F2F4F6]"
-                        >
-                            행사·교육
-                        </Link>
-
-                        <Link
-                            href="/temples"
-                            className="rounded-xl px-4 py-2.5 text-sm font-semibold text-[#4E5968] transition hover:bg-[#F2F4F6]"
-                        >
-                            사찰
-                        </Link>
-
-                        <Link
-                            href="/stories"
-                            className="rounded-xl bg-[#F3F7F1] px-4 py-2.5 text-sm font-bold text-[#52634D]"
-                        >
-                            부처님 이야기
-                        </Link>
-                    </nav>
 
                     <Link
                         href="/"
@@ -239,7 +209,7 @@ export default function StoriesPage() {
 
                         <div className="flex flex-col justify-center px-5 py-7 md:px-10 md:py-10">
                             <div className="flex flex-wrap items-center gap-2">
-                                <span className="rounded-full bg-[#FEE500] px-3 py-1 text-xs font-bold text-[#4D4300]">
+                                <span className="rounded-full bg-[#F4F54A] px-3 py-1 text-xs font-bold text-[#4D4300]">
                                     {featuredStory.episode}
                                 </span>
 

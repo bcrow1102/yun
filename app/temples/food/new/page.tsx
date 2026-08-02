@@ -28,7 +28,7 @@ function LotusIcon() {
 }
 
 const inputStyle =
-    "mt-2 w-full rounded-xl border border-[#DDE2E8] bg-white px-4 py-3.5 text-[15px] font-normal outline-none placeholder:text-[#A8B0BA] focus:border-[#9B8B77]";
+    "mt-2 w-full rounded-xl border border-[#DDE2E8] bg-white px-4 py-3.5 text-[15px] font-normal outline-none transition placeholder:text-[#A8B0BA] focus:border-[#B9BA28] focus:ring-2 focus:ring-[#F4F54A]/25";
 
 const labelStyle = "block text-sm font-medium text-[#333D4B]";
 
@@ -38,7 +38,7 @@ export default function NewTempleFoodPage() {
             <header className="border-b border-[#E7E9EC] bg-white">
                 <div className="mx-auto flex h-16 max-w-4xl items-center justify-between px-4 md:px-8">
                     <Link href="/" className="flex items-center gap-2">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FEE500] text-[#191F28]">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F4F54A] text-[#191F28]">
                             <LotusIcon />
                         </span>
 
@@ -55,7 +55,7 @@ export default function NewTempleFoodPage() {
             </header>
 
             <main>
-                <section className="bg-[#F6F1EA]">
+                <section className="border-b border-[#E8EA8A] bg-[#FDFDC7]">
                     <div className="mx-auto max-w-4xl px-5 py-10 md:px-8 md:py-14">
                         <span className="text-sm text-[#786B5A]">
                             프로그램 등록
@@ -310,12 +310,12 @@ export default function NewTempleFoodPage() {
                         </div>
                     </section>
 
-                    <div className="mt-6 rounded-[20px] bg-[#F6F1EA] p-5">
+                    <div className="mt-6 rounded-[20px] bg-[#FDFDC7] p-5">
                         <span className="text-sm font-medium">
                             등록 전 확인해 주세요
                         </span>
 
-                        <p className="mt-2 text-sm leading-6 text-[#786B5A]">
+                        <p className="mt-2 text-sm leading-6 text-[#5F610E]">
                             제출된 내용은 관리자 확인 후 공개됩니다. 허위
                             정보나 관련 없는 광고는 게시되지 않을 수 있습니다.
                         </p>
@@ -331,7 +331,7 @@ export default function NewTempleFoodPage() {
 
                         <button
                             type="button"
-                            className="rounded-xl bg-[#FEE500] px-8 py-4 text-sm font-medium"
+                            className="rounded-xl bg-[#F4F54A] px-8 py-4 text-sm font-medium"
                         >
                             등록 요청 보내기
                         </button>

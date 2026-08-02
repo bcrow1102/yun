@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Noto_Sans_KR } from "next/font/google";
+import ScrollToTop from "./components/ScrollToTop";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -31,7 +32,10 @@ export default function RootLayout({
       lang="ko"
       className={`${geistSans.variable} ${notoSansKr.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col bg-white">{children}</body>
+      <body className="min-h-full flex flex-col bg-white">
+        {children}
+        <ScrollToTop />
+      </body>
     </html>
   );
 }

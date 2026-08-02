@@ -213,7 +213,7 @@ export default async function StoryDetailPage({
             <header className="sticky top-0 z-30 border-b border-[#E7E9EC] bg-white/95 backdrop-blur">
                 <div className="mx-auto flex h-16 max-w-4xl items-center justify-between px-4 md:h-[72px] md:px-8">
                     <Link href="/" className="flex items-center gap-2.5">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FEE500] md:h-10 md:w-10">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F4F54A] md:h-10 md:w-10">
                             <LotusIcon />
                         </span>
 
@@ -235,7 +235,7 @@ export default async function StoryDetailPage({
                 <section className="border-b border-[#E6EDE3] bg-[#F3F7F1]">
                     <div className="mx-auto max-w-4xl px-5 py-10 md:px-8 md:py-16">
                         <div className="flex flex-wrap items-center gap-2">
-                            <span className="rounded-full bg-[#FEE500] px-3 py-1 text-xs font-bold text-[#4D4300]">
+                            <span className="rounded-full bg-[#F4F54A] px-3 py-1 text-xs font-bold text-[#4D4300]">
                                 {story.episode}
                             </span>
 
@@ -295,7 +295,7 @@ export default async function StoryDetailPage({
                         ))}
                     </div>
 
-                    <section className="mt-12 rounded-[24px] bg-[#FFF9C4] px-6 py-8 text-center md:mt-16 md:px-10 md:py-10">
+                    <section className="mt-12 rounded-[24px] bg-[#FDFDC7] px-6 py-8 text-center md:mt-16 md:px-10 md:py-10">
                         <span className="text-xs font-bold text-[#7A6D00]">
                             오늘의 한 문장
                         </span>

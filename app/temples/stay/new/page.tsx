@@ -29,7 +29,7 @@ function LotusIcon() {
 }
 
 const inputClassName =
-    "mt-2 w-full rounded-xl border border-[#DDE2E8] bg-white px-4 py-3.5 text-[15px] outline-none transition placeholder:text-[#A8B0BA] focus:border-[#8D8040] focus:ring-2 focus:ring-[#FEE500]/30";
+    "mt-2 w-full rounded-xl border border-[#DDE2E8] bg-white px-4 py-3.5 text-[15px] outline-none transition placeholder:text-[#A8B0BA] focus:border-[#B9BA28] focus:ring-2 focus:ring-[#F4F54A]/25";
 
 const labelClassName =
     "block text-sm font-medium text-[#333D4B]";
@@ -40,7 +40,7 @@ export default function NewTempleStayPage() {
             <header className="sticky top-0 z-30 border-b border-[#E7E9EC] bg-white/95 backdrop-blur">
                 <div className="mx-auto flex h-16 max-w-4xl items-center justify-between px-4 md:h-[72px] md:px-8">
                     <Link href="/" className="flex items-center gap-2.5">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FEE500] md:h-10 md:w-10">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F4F54A] md:h-10 md:w-10">
                             <LotusIcon />
                         </span>
 
@@ -57,7 +57,7 @@ export default function NewTempleStayPage() {
             </header>
 
             <main>
-                <section className="border-b border-[#EEE3A7] bg-[#FFF9DC]">
+                <section className="border-b border-[#E8EA8A] bg-[#FDFDC7]">
                     <div className="mx-auto max-w-4xl px-5 py-10 md:px-8 md:py-14">
                         <span className="text-sm font-medium text-[#7A6D00]">
                             프로그램 등록
@@ -361,7 +361,7 @@ export default function NewTempleStayPage() {
                         </div>
                     </section>
 
-                    <div className="mt-6 rounded-[22px] bg-[#FFF9C4] p-5">
+                    <div className="mt-6 rounded-[22px] bg-[#FDFDC7] p-5">
                         <strong className="text-sm">
                             등록 전 확인해 주세요
                         </strong>
@@ -383,7 +383,7 @@ export default function NewTempleStayPage() {
 
                         <button
                             type="button"
-                            className="rounded-xl bg-[#FEE500] px-8 py-4 text-sm font-medium text-[#191F28]"
+                            className="rounded-xl bg-[#F4F54A] px-8 py-4 text-sm font-medium text-[#191F28]"
                         >
                             등록 요청 보내기
                         </button>

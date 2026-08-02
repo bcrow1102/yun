@@ -65,7 +65,7 @@ export default function EventsPage() {
             <header className="sticky top-0 z-30 border-b border-[#EEF0F2] bg-white/95 backdrop-blur">
                 <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:h-[72px] md:px-8">
                     <Link href="/" className="flex items-center gap-2.5">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FEE500] md:h-10 md:w-10">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F4F54A] md:h-10 md:w-10">
                             <LotusIcon />
                         </span>
                         <span className="text-xl font-semibold">연</span>
@@ -81,7 +81,7 @@ export default function EventsPage() {
             </header>
 
             <main>
-                <section className="bg-[#FFF9DC]">
+                <section className="bg-[#FDFDC7]">
                     <div className="mx-auto max-w-6xl px-5 py-12 md:px-8 md:py-16">
                         <p className="text-sm font-medium text-[#766900]">행사·교육</p>
                         <h1 className="mt-3 text-[34px] font-semibold tracking-[-0.045em] md:text-[48px]">
@@ -122,7 +122,7 @@ export default function EventsPage() {
                                     </span>
                                     <span className="block p-5">
                                         <span className="flex items-center justify-between gap-3">
-                                            <span className="rounded-full bg-[#FFF4B8] px-3 py-1.5 text-xs font-medium text-[#6D6200]">
+                                            <span className="rounded-full bg-[#FDFDC7] px-3 py-1.5 text-xs font-medium text-[#5F610E]">
                                                 {event.category}
                                             </span>
                                             <span className="text-sm text-[#667085]">{event.date}</span>
@@ -169,7 +169,7 @@ export default function EventsPage() {
                         )}
                     </div>
 
-                    <div className="mt-10 rounded-[24px] bg-[#FFF9C4] px-5 py-6 md:flex md:items-center md:justify-between md:px-7">
+                    <div className="mt-10 rounded-[24px] bg-[#FDFDC7] px-5 py-6 md:flex md:items-center md:justify-between md:px-7">
                         <div>
                             <p className="mt-2 text-sm leading-6 text-[#6D6200]">
                                 행사와 교육 소식을 직접 등록해 보세요.
@@ -177,7 +177,7 @@ export default function EventsPage() {
                         </div>
                         <Link
                             href="/events/new"
-                            className="mt-5 inline-flex rounded-xl bg-[#FEE500] px-5 py-3 text-sm font-medium text-[#171B22] transition hover:bg-[#F5DC00] md:mt-0"
+                            className="mt-5 inline-flex rounded-xl bg-[#F4F54A] px-5 py-3 text-sm font-medium text-[#171B22] transition hover:bg-[#E8EA35] md:mt-0"
                         >
                             행사·교육 등록하기
                         </Link>

@@ -1,9 +1,13 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 
 const temples = [
     {
         id: 1,
         name: "조계사",
+        region: "서울",
         location: "서울 종로구",
         description: "서울 도심에서 만나는 한국 불교의 대표적인 사찰",
         tags: ["도심 사찰", "대중교통"],
@@ -12,6 +16,7 @@ const temples = [
     {
         id: 2,
         name: "해인사",
+        region: "경상",
         location: "경남 합천",
         description: "가야산의 자연과 팔만대장경을 품고 있는 사찰",
         tags: ["문화유산", "산사"],
@@ -20,6 +25,7 @@ const temples = [
     {
         id: 3,
         name: "불국사",
+        region: "경상",
         location: "경북 경주",
         description: "신라의 역사와 불교문화를 함께 만날 수 있는 사찰",
         tags: ["문화유산", "관광"],
@@ -28,6 +34,7 @@ const temples = [
     {
         id: 4,
         name: "통도사",
+        region: "경상",
         location: "경남 양산",
         description: "고요한 숲길과 깊은 수행의 전통이 이어지는 사찰",
         tags: ["산사", "산책"],
@@ -36,6 +43,7 @@ const temples = [
     {
         id: 5,
         name: "월정사",
+        region: "강원",
         location: "강원 평창",
         description: "전나무 숲길과 함께 걷기 좋은 오대산 사찰",
         tags: ["숲길", "휴식"],
@@ -44,6 +52,7 @@ const temples = [
     {
         id: 6,
         name: "봉은사",
+        region: "서울",
         location: "서울 강남구",
         description: "도심 속에서 잠시 쉬어갈 수 있는 편안한 사찰",
         tags: ["도심 사찰", "외국인 방문"],
@@ -112,27 +121,61 @@ function ChevronIcon() {
     );
 }
 
+function TempleCategoryNav() {
+    const menus = [
+        { label: "사찰 안내", href: "/temples/guide", active: true },
+        { label: "템플스테이", href: "/temples/stay", active: false },
+        { label: "사찰음식", href: "/temples/food", active: false },
+    ];
+
+    return (
+        <nav
+            className="sticky top-16 z-20 border-b border-[#E7E9EC] bg-white/95 backdrop-blur md:top-[72px]"
+            aria-label="사찰 서비스"
+        >
+            <div className="mx-auto grid max-w-6xl grid-cols-3 gap-1 px-4 py-2.5 md:px-8">
+                {menus.map((menu) => (
+                    <Link
+                        key={menu.href}
+                        href={menu.href}
+                        aria-current={menu.active ? "page" : undefined}
+                        className={`flex min-h-11 items-center justify-center rounded-xl px-2 text-[13px] font-medium transition md:text-sm ${menu.active
+                            ? "bg-[#F4F54A] text-[#191F28]"
+                            : "text-[#667085] hover:bg-[#F5F6F7] hover:text-[#191F28]"
+                            }`}
+                    >
+                        {menu.label}
+                    </Link>
+                ))}
+            </div>
+        </nav>
+    );
+}
+
 export default function TempleGuidePage() {
+    const [selectedRegion, setSelectedRegion] = useState("전체");
+    const regions = ["전체", "서울", "경기", "강원", "충청", "전라", "경상", "제주"];
+    const filteredTemples =
+        selectedRegion === "전체"
+            ? temples
+            : temples.filter((temple) => temple.region === selectedRegion);
+
     return (
         <div className="min-h-screen bg-white text-[#252A31]">
             <header className="sticky top-0 z-30 border-b border-[#E7E9EC] bg-white/95 backdrop-blur">
                 <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:h-[72px] md:px-8">
                     <Link href="/" className="flex items-center gap-2.5">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FEE500] md:h-10 md:w-10">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F4F54A] md:h-10 md:w-10">
                             <LotusIcon />
                         </span>
 
                         <strong className="text-xl font-bold">연</strong>
                     </Link>
 
-                    <Link
-                        href="/temples"
-                        className="rounded-xl border border-[#E3E8EF] bg-white px-4 py-2.5 text-sm font-semibold"
-                    >
-                        사찰 메뉴
-                    </Link>
                 </div>
             </header>
+
+            <TempleCategoryNav />
 
             <main>
                 <section className="bg-[#F3F7F1]">
@@ -170,13 +213,15 @@ export default function TempleGuidePage() {
 
                 <section className="border-b border-[#EEF0F2] bg-white">
                     <div className="mx-auto flex max-w-6xl gap-2 overflow-x-auto px-4 py-4 md:px-8">
-                        {["전체", "서울", "경기", "강원", "충청", "전라", "경상", "제주"].map(
-                            (region, index) => (
+                        {regions.map(
+                            (region) => (
                                 <button
                                     key={region}
-                                    className={`shrink-0 rounded-full px-4 py-2.5 text-sm font-semibold ${index === 0
-                                            ? "bg-[#252A31] text-white"
-                                            : "border border-[#E3E8EF] bg-white text-[#667085]"
+                                    type="button"
+                                    onClick={() => setSelectedRegion(region)}
+                                    className={`shrink-0 rounded-full px-4 py-2.5 text-sm font-semibold ${selectedRegion === region
+                                        ? "bg-[#252A31] text-white"
+                                        : "border border-[#E3E8EF] bg-white text-[#667085]"
                                         }`}
                                 >
                                     {region}
@@ -199,12 +244,12 @@ export default function TempleGuidePage() {
                         </div>
 
                         <span className="text-sm text-[#8B95A1]">
-                            예시 {temples.length}곳
+                            예시 {filteredTemples.length}곳
                         </span>
                     </div>
 
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                        {temples.map((temple) => (
+                        {filteredTemples.map((temple) => (
                             <button
                                 key={temple.id}
                                 className="group overflow-hidden rounded-[22px] border border-[#E3E8EF] bg-white text-left transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(25,31,40,0.08)]"
@@ -249,20 +294,23 @@ export default function TempleGuidePage() {
                         ))}
                     </div>
 
-                    <div className="mt-8 rounded-[22px] bg-[#FFF9C4] px-5 py-6 md:flex md:items-center md:justify-between md:px-7">
+                    <div className="mt-8 rounded-[22px] bg-[#FDFDC7] px-5 py-6 md:flex md:items-center md:justify-between md:px-7">
                         <div>
                             <strong className="text-lg">
                                 사찰 정보를 등록하고 싶으신가요?
                             </strong>
 
                             <p className="mt-2 text-sm leading-6 text-[#6D6200]">
-                                기본 등록은 무료로 제공할 예정입니다.
+                                사찰 기본 정보와 방문 안내를 등록해 주세요.
                             </p>
                         </div>
 
-                        <button className="mt-5 w-full rounded-xl bg-[#252A31] px-5 py-3.5 text-sm font-bold text-white md:mt-0 md:w-auto">
-                            사찰 등록 준비 중
-                        </button>
+                        <Link
+                            href="/temples/guide/new"
+                            className="mt-5 block w-full rounded-xl bg-[#252A31] px-5 py-3.5 text-center text-sm font-medium text-white md:mt-0 md:w-auto"
+                        >
+                            사찰 등록하기
+                        </Link>
                     </div>
                 </section>
             </main>

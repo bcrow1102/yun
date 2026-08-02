@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const inputStyle =
-    "mt-2 w-full rounded-xl border border-[#E3E6EB] bg-white px-4 py-3 text-[15px] text-[#20242C] outline-none transition placeholder:text-[#A0A6B0] focus:border-[#D8BE00] focus:ring-2 focus:ring-[#FEE500]/20";
+    "mt-2 w-full rounded-xl border border-[#E3E6EB] bg-white px-4 py-3 text-[15px] text-[#20242C] outline-none transition placeholder:text-[#A0A6B0] focus:border-[#B9BA28] focus:ring-2 focus:ring-[#F4F54A]/25";
 
 const labelStyle = "block text-sm font-medium text-[#343A46]";
 
@@ -11,7 +11,7 @@ export default function EventNewPage() {
             <header className="border-b border-[#ECEEF1] bg-white">
                 <div className="mx-auto flex h-[74px] max-w-[1180px] items-center justify-between px-5 md:px-8">
                     <Link href="/" className="flex items-center gap-3" aria-label="연 홈">
-                        <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#FEE500]">
+                        <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#F4F54A]">
                             <svg viewBox="0 0 32 32" fill="none" className="h-6 w-6">
                                 <path
                                     d="M16 24c-4-4.1-5.2-8.2 0-15 5.2 6.8 4 10.9 0 15Z"
@@ -60,11 +60,6 @@ export default function EventNewPage() {
                         <br className="hidden md:block" /> 확인이 필요한 항목은 담당자가
                         연락드릴 수 있어요.
                     </p>
-                </div>
-
-                <div className="mb-6 rounded-2xl border border-[#F0DF65] bg-[#FFFBE2] px-5 py-4 text-sm leading-6 text-[#5F5520]">
-                    현재는 화면 구성 단계입니다. Supabase 연결 후 실제 등록과 이미지
-                    업로드 기능이 활성화됩니다.
                 </div>
 
                 <form className="space-y-6">
@@ -262,7 +257,7 @@ export default function EventNewPage() {
                             </p>
                         </div>
                         <label className="flex min-h-40 cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-[#C9CED6] bg-[#FAFAFB] px-5 text-center transition hover:border-[#B8A000] hover:bg-[#FFFDF0]">
-                            <span className="mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-[#FEE500] text-xl">
+                            <span className="mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-[#F4F54A] text-xl">
                                 +
                             </span>
                             <span className="text-sm font-medium">이미지 선택</span>
@@ -299,7 +294,7 @@ export default function EventNewPage() {
                         </Link>
                         <button
                             type="button"
-                            className="rounded-xl bg-[#FEE500] px-8 py-4 text-sm font-semibold text-[#171B22] transition hover:bg-[#F5DC00]"
+                            className="rounded-xl bg-[#F4F54A] px-8 py-4 text-sm font-medium text-[#171B22] transition hover:bg-[#E8EA35]"
                         >
                             등록하기
                         </button>

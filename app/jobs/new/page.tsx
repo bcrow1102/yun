@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const inputStyle =
-    "mt-2 w-full rounded-xl border border-[#DDE2E8] bg-white px-4 py-3.5 text-[15px] text-[#252A31] outline-none transition placeholder:text-[#A8B0BA] focus:border-[#D8BE00] focus:ring-2 focus:ring-[#FEE500]/20";
+    "mt-2 w-full rounded-xl border border-[#DDE2E8] bg-white px-4 py-3.5 text-[15px] text-[#252A31] outline-none transition placeholder:text-[#A8B0BA] focus:border-[#B9BA28] focus:ring-2 focus:ring-[#F4F54A]/25";
 
 const labelStyle = "block text-sm font-medium text-[#333D4B]";
 
@@ -39,7 +39,7 @@ export default function NewJobPage() {
             <header className="border-b border-[#E7E9EC] bg-white">
                 <div className="mx-auto flex h-16 max-w-4xl items-center justify-between px-4 md:h-[72px] md:px-8">
                     <Link href="/" className="flex items-center gap-2.5">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FEE500] md:h-10 md:w-10">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F4F54A] md:h-10 md:w-10">
                             <LotusIcon />
                         </span>
                         <span className="text-xl font-semibold">연</span>
@@ -54,7 +54,7 @@ export default function NewJobPage() {
                 </div>
             </header>
 
-            <section className="border-b border-[#EEE3A7] bg-[#FFF9DC]">
+            <section className="border-b border-[#E8EA8A] bg-[#FDFDC7]">
                 <div className="mx-auto max-w-4xl px-5 py-10 md:px-8 md:py-14">
                     <p className="text-sm font-medium text-[#766900]">구인 공고 등록</p>
 
@@ -223,7 +223,7 @@ export default function NewJobPage() {
 
                     <button
                         type="button"
-                        className="rounded-xl bg-[#FEE500] px-8 py-4 text-sm font-medium"
+                        className="rounded-xl bg-[#F4F54A] px-8 py-4 text-sm font-medium"
                     >
                         구인 등록 요청
                     </button>

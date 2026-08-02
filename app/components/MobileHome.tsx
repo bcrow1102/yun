@@ -15,7 +15,11 @@ const menus = [
         image: "/images/menu/event-education.webp",
         href: "/events",
     },
-    { title: "체험", image: "/images/menu/experience.webp", href: "/temples" },
+    {
+        title: "사찰",
+        image: "/images/menu/experience.webp",
+        href: "/temples/guide",
+    },
 ];
 
 const heroSlides = [
@@ -23,7 +27,7 @@ const heroSlides = [
         eyebrow: "연에서 만나는 불교 정보",
         title: "오늘 필요한 정보를\n쉽고 빠르게 찾아보세요",
         href: "/jobs",
-        background: "bg-[#FEE500]",
+        background: "bg-[#F4F54A]",
         textColor: "text-[#191F28]",
     },
     {
@@ -39,7 +43,8 @@ const heroSlides = [
         title: "자연을 담은 한 상\n사찰음식을 만나보세요",
         href: "/temples/food",
         image: "/images/hero/temple-food-real.webp",
-        overlay: "bg-gradient-to-r from-[#FFFDF8]/58 via-[#FFFDF8]/16 to-transparent",
+        overlay:
+            "bg-gradient-to-r from-[#FFFDF8]/58 via-[#FFFDF8]/16 to-transparent",
         background: "bg-[#F3EBDD]",
         textColor: "text-[#29251F]",
     },
@@ -48,7 +53,8 @@ const heroSlides = [
         title: "별빛 아래 만나는\n산사의 음악",
         href: "/events",
         image: "/images/hero/temple-concert.webp",
-        overlay: "bg-gradient-to-r from-[#FFF8EA]/58 via-[#FFF8EA]/16 to-transparent",
+        overlay:
+            "bg-gradient-to-r from-[#FFF8EA]/58 via-[#FFF8EA]/16 to-transparent",
         background: "bg-[#F4E9D5]",
         textColor: "text-[#29251F]",
     },
@@ -56,18 +62,21 @@ const heroSlides = [
 
 const jobs = [
     {
+        id: 1,
         temple: "조계사",
         title: "사무행정 담당자 모집",
         location: "서울 종로구",
         date: "~07.31",
     },
     {
+        id: 2,
         temple: "해인사",
         title: "문화해설 자원봉사자",
         location: "경남 합천",
         date: "~08.15",
     },
     {
+        id: 3,
         temple: "불국사",
         title: "템플스테이 코디네이터",
         location: "경북 경주",
@@ -77,11 +86,13 @@ const jobs = [
 
 const templeStays = [
     {
+        id: 1,
         name: "월정사 숲속 힐링",
         location: "강원 평창",
         duration: "1박 2일",
     },
     {
+        id: 2,
         name: "해인사 명상 수련",
         location: "경남 합천",
         duration: "2박 3일",
@@ -119,13 +130,7 @@ function LotusIcon() {
 function SearchIcon() {
     return (
         <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
-            <circle
-                cx="11"
-                cy="11"
-                r="7"
-                stroke="currentColor"
-                strokeWidth="1.8"
-            />
+            <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.8" />
             <path
                 d="m20 20-4-4"
                 stroke="currentColor"
@@ -210,7 +215,7 @@ export default function MobileHome() {
             setActiveSlide((current) =>
                 distance < 0
                     ? (current + 1) % heroSlides.length
-                    : (current - 1 + heroSlides.length) % heroSlides.length
+                    : (current - 1 + heroSlides.length) % heroSlides.length,
             );
         }
 
@@ -226,15 +231,23 @@ export default function MobileHome() {
 
     return (
         <div className="min-h-screen bg-white pb-24 text-[#252A31] md:hidden">
-            <header className="sticky top-0 z-30 bg-[#FEE500]/95 backdrop-blur">
+            <header className="sticky top-0 z-30 bg-[#F4F54A]/95 backdrop-blur">
                 <div className="flex h-16 items-center justify-between px-5">
-                    <div className="flex items-center gap-2.5">
+                    <Link
+                        href="/"
+                        onClick={(event) => {
+                            event.preventDefault();
+                            window.location.assign("/");
+                        }}
+                        className="flex items-center gap-2.5"
+                        aria-label="연 홈"
+                    >
                         <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-[#191F28]">
                             <LotusIcon />
                         </span>
 
                         <strong className="text-xl tracking-[-0.04em]">연</strong>
-                    </div>
+                    </Link>
 
                     <div className="flex items-center gap-1">
                         <button className="rounded-lg px-2 py-2 text-xs font-semibold text-[#191F28]">
@@ -245,12 +258,13 @@ export default function MobileHome() {
                             EN
                         </button>
 
-                        <button
+                        <Link
+                            href="/search"
                             className="ml-1 flex h-9 w-9 items-center justify-center rounded-full text-[#333D4B] transition-colors hover:bg-[#F2F4F6]"
                             aria-label="검색"
                         >
                             <SearchIcon />
-                        </button>
+                        </Link>
 
                         <button className="ml-1 text-xs font-semibold text-[#3182F6]">
                             로그인
@@ -308,8 +322,6 @@ export default function MobileHome() {
                                         {slide.title}
                                     </strong>
                                 </span>
-
-
                             </Link>
                         ))}
                     </div>
@@ -337,7 +349,7 @@ export default function MobileHome() {
                             href={menu.href}
                             className="min-w-0 overflow-hidden rounded-[18px] border border-[#E7E9EC] bg-[#FFFBE0] text-center shadow-[0_2px_8px_rgba(25,31,40,0.035)]"
                         >
-                            <span className="block h-2 bg-[#FEE500]" />
+                            <span className="block h-2 bg-[#F4F54A]" />
 
                             <span className="flex h-[82px] items-center justify-center px-1.5 pt-2">
                                 <img
@@ -355,9 +367,39 @@ export default function MobileHome() {
                 </section>
 
                 <Link
-                    href="/stories"
-                    className="mt-7 flex w-full items-center justify-between rounded-[22px] border border-[#E2E7DA] bg-[#F3F5EE] px-5 py-5 shadow-[0_4px_14px_rgba(25,31,40,0.04)] transition active:scale-[0.99]"
+                    href="/events/promote"
+                    className="group relative mt-6 flex min-h-[88px] w-full items-center justify-between overflow-hidden rounded-[20px] border border-[#E7E9D5] bg-white px-5 py-4 text-left shadow-[0_4px_14px_rgba(25,31,40,0.04)] transition active:scale-[0.99]"
                 >
+                    <span
+                        aria-hidden="true"
+                        className="absolute inset-y-4 left-0 w-[4px] rounded-r-full bg-[#F4F54A]"
+                    />
+
+                    <span className="min-w-0 pr-4">
+                        <span className="block text-xs font-medium text-[#777900]">
+                            내 손으로 쉽고 빠르게
+                        </span>
+                        <strong className="mt-1 block text-[18px] font-semibold tracking-[-0.03em] text-[#252A31]">
+                            홍보물 DIY
+                        </strong>
+                        <span className="mt-1 block text-xs font-normal text-[#7A818D]">
+                            이미지와 채널별 홍보 문구를 한 번에 만들어요
+                        </span>
+                    </span>
+
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F4F54A] text-[#4D4E00] transition group-active:translate-x-0.5">
+                        <ChevronIcon />
+                    </span>
+                </Link>
+
+                <Link
+                    href="/stories"
+                    className="relative mt-7 flex w-full items-center justify-between overflow-hidden rounded-[22px] border border-[#E2E7DA] bg-[#F7F8F3] px-5 py-5 shadow-[0_4px_14px_rgba(25,31,40,0.04)] transition active:scale-[0.99]"
+                >
+                    <span
+                        aria-hidden="true"
+                        className="absolute inset-y-4 left-0 w-[4px] rounded-r-full bg-[#F4F54A]"
+                    />
                     <span className="flex items-center gap-3.5">
                         <span className="flex h-14 w-14 shrink-0 items-center justify-center">
                             <svg
@@ -388,19 +430,19 @@ export default function MobileHome() {
                                 />
                                 <path
                                     d="M32 39c-4.2-3.4-5.2-7.4 0-12.5 5.2 5.1 4.2 9.1 0 12.5Z"
-                                    fill="#FEE500"
+                                    fill="#F4F54A"
                                     stroke="currentColor"
                                     strokeWidth="1.6"
                                 />
                                 <path
                                     d="M30.5 40c-4.7-.4-7.2-2.8-7.5-7 4.6.3 7.1 2.7 7.5 7Z"
-                                    fill="#FEE500"
+                                    fill="#F4F54A"
                                     stroke="currentColor"
                                     strokeWidth="1.6"
                                 />
                                 <path
                                     d="M33.5 40c4.7-.4 7.2-2.8 7.5-7-4.6.3-7.1 2.7-7.5 7Z"
-                                    fill="#FEE500"
+                                    fill="#F4F54A"
                                     stroke="currentColor"
                                     strokeWidth="1.6"
                                 />
@@ -422,24 +464,66 @@ export default function MobileHome() {
                     </span>
                 </Link>
 
+                <Link
+                    href="/resources/masters"
+                    className="relative mt-4 flex w-full items-center justify-between overflow-hidden rounded-[18px] border border-[#E2E7DA] bg-[#F7F8F3] px-5 py-4 transition active:scale-[0.99]"
+                >
+                    <span
+                        aria-hidden="true"
+                        className="absolute inset-y-3 left-0 w-[4px] rounded-r-full bg-[#F4F54A]"
+                    />
+                    <span>
+                        <span className="block text-xs font-medium text-[#777900]">
+                            생애·사상·일화 깊이 읽기
+                        </span>
+                        <strong className="mt-1 block text-[16px] font-medium text-[#252A31]">
+                            한국의 고승
+                        </strong>
+                    </span>
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#A1A996]">
+                        <ChevronIcon />
+                    </span>
+                </Link>
+
+                <Link
+                    href="/resources"
+                    className="relative mt-4 flex w-full items-center justify-between overflow-hidden rounded-[18px] border border-[#E2E7DA] bg-[#F7F8F3] px-5 py-4 transition active:scale-[0.99]"
+                >
+                    <span
+                        aria-hidden="true"
+                        className="absolute inset-y-3 left-0 w-[4px] rounded-r-full bg-[#F4F54A]"
+                    />
+                    <span>
+                        <span className="block text-xs font-medium text-[#777900]">
+                            경전·역사·학술자료
+                        </span>
+                        <strong className="mt-1 block text-[16px] font-medium">
+                            불교자료 찾아보기
+                        </strong>
+                    </span>
+                    <span className="text-[#B0B8C1]">
+                        <ChevronIcon />
+                    </span>
+                </Link>
+
                 <section className="mt-7">
                     <div className="mb-3 flex items-center justify-between px-1">
-                        <h2 className="text-xl font-bold tracking-[-0.035em]">
-                            최신 구인
-                        </h2>
+                        <h2 className="text-xl font-bold tracking-[-0.035em]">최신 구인</h2>
 
-                        <button className="text-sm font-medium text-[#8B95A1]">
+                        <Link
+                            href="/jobs"
+                            className="rounded-lg px-2 py-2 text-sm font-medium text-[#8B95A1]"
+                        >
                             전체보기
-                        </button>
+                        </Link>
                     </div>
 
                     <div className="overflow-hidden rounded-[22px] border border-[#E3E8EF] bg-[#F4F7FA] px-4">
                         {jobs.map((job, index) => (
-                            <button
+                            <Link
                                 key={`${job.temple}-${job.title}`}
-                                className={`flex w-full items-center py-4 text-left ${index !== jobs.length - 1
-                                    ? "border-b border-[#F2F4F6]"
-                                    : ""
+                                href={`/jobs/${job.id}`}
+                                className={`flex w-full items-center py-4 text-left ${index !== jobs.length - 1 ? "border-b border-[#F2F4F6]" : ""
                                     }`}
                             >
                                 <span className="min-w-0 flex-1">
@@ -452,38 +536,14 @@ export default function MobileHome() {
                                     </strong>
                                 </span>
 
-                                <span className="ml-3 text-xs text-[#667085]">
-                                    {job.date}
-                                </span>
+                                <span className="ml-3 text-xs text-[#667085]">{job.date}</span>
 
                                 <span className="ml-2 text-[#B0B8C1]">
                                     <ChevronIcon />
                                 </span>
-                            </button>
+                            </Link>
                         ))}
                     </div>
-                </section>
-
-                <section className="mt-7">
-                    <button className="flex w-full items-center justify-between rounded-[22px] bg-[#FEE500] px-5 py-5 text-left">
-                        <span>
-                            <span className="text-xs font-bold text-[#4D4300]">
-                                행사·교육
-                            </span>
-
-                            <strong className="mt-1 block text-[17px] tracking-[-0.025em]">
-                                행사 등록부터 웹전단까지
-                            </strong>
-
-                            <span className="mt-1 block text-xs text-[#6D6200]">
-                                한 번 입력하면 홍보 문구도 완성해드려요
-                            </span>
-                        </span>
-
-                        <span className="text-[#4D4300]">
-                            <ChevronIcon />
-                        </span>
-                    </button>
                 </section>
 
                 <section className="mt-7">
@@ -492,15 +552,19 @@ export default function MobileHome() {
                             추천 템플스테이
                         </h2>
 
-                        <button className="text-sm font-medium text-[#8B95A1]">
+                        <Link
+                            href="/temples/stay"
+                            className="rounded-lg px-2 py-2 text-sm font-medium text-[#8B95A1]"
+                        >
                             전체보기
-                        </button>
+                        </Link>
                     </div>
 
                     <div className="space-y-3">
                         {templeStays.map((stay) => (
-                            <button
+                            <Link
                                 key={stay.name}
+                                href={`/temples/stay/${stay.id}`}
                                 className="flex w-full overflow-hidden rounded-[22px] border border-[#E7E9EC] bg-white text-left"
                             >
                                 <span className="h-[104px] w-[112px] shrink-0">
@@ -522,31 +586,86 @@ export default function MobileHome() {
                                         <ChevronIcon />
                                     </span>
                                 </span>
-                            </button>
+                            </Link>
                         ))}
                     </div>
                 </section>
 
                 <section className="mt-7 grid grid-cols-2 gap-3">
-                    <button className="rounded-[20px] border border-[#E7E9EC] bg-white px-4 py-4 text-left">
-                        <span className="text-xs font-medium text-[#3182F6]">
-                            사찰음식
-                        </span>
+                    <Link
+                        href="/temples/food"
+                        className="rounded-[20px] border border-[#E7E9EC] bg-white px-4 py-4 text-left"
+                    >
+                        <span className="text-xs font-medium text-[#3182F6]">사찰음식</span>
                         <strong className="mt-1 block text-[15px]">
                             우리 사찰음식 보기
                         </strong>
-                    </button>
+                    </Link>
 
-                    <button className="rounded-[20px] border border-[#E7E9EC] bg-white px-4 py-4 text-left">
+                    <Link
+                        href="/events"
+                        className="rounded-[20px] border border-[#E7E9EC] bg-white px-4 py-4 text-left"
+                    >
                         <span className="text-xs font-medium text-[#3182F6]">
                             새로운 소식
                         </span>
                         <strong className="mt-1 block text-[15px]">
                             행사 일정 둘러보기
                         </strong>
-                    </button>
+                    </Link>
                 </section>
             </main>
+
+            <footer className="border-t border-[#E7E9EC] bg-[#FAFAF8] px-5 pb-8 pt-8">
+                <Link
+                    href="/"
+                    className="inline-flex items-center gap-2"
+                    aria-label="연 홈"
+                >
+                    <LotusIcon />
+                    <span className="text-lg font-semibold tracking-[-0.04em]">연</span>
+                </Link>
+
+                <p className="mt-3 text-[13px] leading-5 text-[#667085]">
+                    불교 생활에 필요한 정보를 쉽고 가깝게 연결하는 공간입니다.
+                </p>
+
+                <div className="mt-6">
+                    <h2 className="text-[13px] font-semibold text-[#252A31]">
+                        등록 안내
+                    </h2>
+
+                    <div className="mt-3 grid grid-cols-2 gap-x-5 gap-y-3 text-[13px] text-[#667085]">
+                        <Link href="/jobs/new">구인 등록</Link>
+                        <Link href="/events/new">행사·교육 등록</Link>
+                        <Link href="/temples/stay/new">템플스테이 등록</Link>
+                        <Link href="/temples/food/new">사찰음식 등록</Link>
+                    </div>
+                </div>
+
+                <div className="mt-6 grid grid-cols-2 gap-2.5">
+                    <a
+                        href="https://open.kakao.com/o/sulQHJGi"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex min-h-12 items-center justify-center rounded-xl bg-[#FEE500] px-3 text-[13px] font-medium text-[#191F28]"
+                    >
+                        카카오톡 문의
+                    </a>
+
+                    <a
+                        href="sms:01057861556"
+                        className="flex min-h-12 items-center justify-center rounded-xl border border-[#DDE1E5] bg-white px-3 text-[13px] font-medium text-[#252A31]"
+                    >
+                        문자 문의
+                    </a>
+                </div>
+
+                <div className="mt-7 border-t border-[#E7E9EC] pt-4 text-[11px] text-[#8B95A1]">
+                    <p>© 2026 연. All rights reserved.</p>
+                    <p className="mt-1">불교 정보와 사람을 잇는 공간</p>
+                </div>
+            </footer>
         </div>
     );
 }
