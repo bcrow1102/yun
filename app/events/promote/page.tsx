@@ -5,6 +5,7 @@ import {
     useMemo,
     useRef,
     useState,
+    type CSSProperties,
     type ChangeEvent,
     type PointerEvent as ReactPointerEvent,
 } from "react";
@@ -15,10 +16,21 @@ type ChannelKey =
     | "story"
     | "blog"
     | "youtube"
-    | "share";
+    | "share"
+    | "a4";
 
-type SceneKey = "welcome" | "point" | "experience" | "custom";
-type ImageCategory = "novice" | "temple" | "food" | "other";
+type SceneKey =
+    | "otherLotus"
+    | "otherMoon"
+    | "otherLanterns"
+    | "moreMountain"
+    | "moreBamboo"
+    | "moreLotus"
+    | "moreTwilight"
+    | "moreTea"
+    | "moreMoonLanterns"
+    | "custom";
+type ImageCategory = "featured" | "other";
 type ImageFit = "cover" | "contain";
 type TextKey =
     | "title"
@@ -39,6 +51,81 @@ type FontKey =
     | "notoSerif"
     | "gowun";
 type ShadowKey = "none" | "soft" | "normal" | "strong";
+type RichTextKey = TextKey;
+type PictogramKey =
+    | "none"
+    | "calendar"
+    | "pin"
+    | "phone"
+    | "clock"
+    | "music"
+    | "lotus"
+    | "info"
+    | "pointer";
+
+type RichTextRun = {
+    start: number;
+    end: number;
+    color: string;
+    fontWeight: number;
+    scale: number;
+};
+
+const LOTUS_SYMBOL = "❀";
+const PIN_SYMBOL = "⌖";
+
+const pictogramOptions: {
+    key: PictogramKey;
+    label: string;
+    path: string;
+    symbol: string;
+    filled?: boolean;
+}[] = [
+        { key: "none", label: "없음", path: "", symbol: "" },
+        {
+            key: "pin",
+            label: "위치",
+            symbol: PIN_SYMBOL,
+            path: "M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12ZM12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z",
+        },
+        {
+            key: "phone",
+            label: "전화",
+            symbol: "☎",
+            path: "M6.6 3.8 9.2 7a1.5 1.5 0 0 1-.1 2l-1.3 1.4a15 15 0 0 0 5.8 5.8l1.4-1.3a1.5 1.5 0 0 1 2-.1l3.2 2.6a1.5 1.5 0 0 1 .3 1.9c-.8 1.4-2.3 2.2-4 1.9C9.8 20 4 14.2 2.8 7.5c-.3-1.7.5-3.2 1.9-4a1.5 1.5 0 0 1 1.9.3Z",
+        },
+        {
+            key: "clock",
+            label: "시계",
+            symbol: "◷",
+            path: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-13v5l3.2 2",
+        },
+        {
+            key: "music",
+            label: "음표",
+            symbol: "♫",
+            path: "M9 18V6l10-2v12M9 10l10-2M6.5 21A2.5 2.5 0 1 0 6.5 16a2.5 2.5 0 0 0 0 5ZM16.5 19a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z",
+        },
+        {
+            key: "lotus",
+            label: "연꽃",
+            symbol: LOTUS_SYMBOL,
+            path: "M12 18c-3.2-3.4-3.7-6.8 0-12 3.7 5.2 3.2 8.6 0 12Zm-1 1c-4.7-.5-7.2-2.7-7-7.8 4.3.5 6.8 3.1 7 7.8Zm2 0c4.7-.5 7.2-2.7 7-7.8-4.3.5-6.8 3.1-7 7.8ZM4 21h16",
+        },
+        {
+            key: "info",
+            label: "안내",
+            symbol: "ⓘ",
+            path: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-10v6M12 7.5v.2",
+        },
+        {
+            key: "pointer",
+            label: "화살표",
+            symbol: "→",
+            path: "M3.5 13.5c0-1.3 1-2.3 2.3-2.3h6.9l-1.6-1.6a1.7 1.7 0 0 1 2.4-2.4l6 4.8a2 2 0 0 1 0 3.1l-6 4.8a1.7 1.7 0 0 1-2.4-2.4l1.6-1.6H5.8a2.3 2.3 0 0 1-2.3-2.4Z",
+            filled: true,
+        },
+    ];
 
 const channels: Record<
     ChannelKey,
@@ -94,6 +181,14 @@ const channels: Record<
         guide:
             "이미지를 저장한 뒤 문자나 원하는 앱에서 짧은 안내문과 함께 보내세요.",
     },
+    a4: {
+        label: "A4 인쇄",
+        size: "2480 × 3508",
+        width: 2480,
+        height: 3508,
+        guide:
+            "A4 세로 인쇄용 PNG입니다. 인쇄할 때 여백 없음과 실제 크기를 선택하세요.",
+    },
 };
 
 const copyEmojiOptions = [
@@ -119,31 +214,77 @@ const copyEmojiOptions = [
     "🙌",
 ];
 
-const scenes: {
+type SceneOption = {
     key: SceneKey;
     label: string;
     description: string;
     image: string;
-}[] = [
-        {
-            key: "welcome",
-            label: "반가운 인사",
-            description: "두 손 모아 따뜻하게 맞이해요",
-            image: "/images/promote/novice-welcome.webp",
-        },
-        {
-            key: "point",
-            label: "정보 가리키기",
-            description: "행사명과 신청 정보를 안내해요",
-            image: "/images/promote/novice-point.webp",
-        },
-        {
-            key: "experience",
-            label: "체험 중",
-            description: "연꽃·숲 체험에 어울려요",
-            image: "/images/promote/novice-experience.webp",
-        },
-    ];
+};
+
+const featuredScenes: SceneOption[] = [
+    {
+        key: "otherLotus",
+        label: "연꽃 동자승",
+        description: "따뜻한 인사와 일반 행사에 어울려요",
+        image: "/images/promote/promote-other-lotus-novice.webp",
+    },
+    {
+        key: "otherMoon",
+        label: "고요한 달빛",
+        description: "명상·기도·교육 안내에 어울려요",
+        image: "/images/promote/promote-other-moon-novice.webp",
+    },
+    {
+        key: "otherLanterns",
+        label: "한지 연등",
+        description: "어떤 불교 행사에도 편하게 사용할 수 있어요",
+        image: "/images/promote/promote-other-lanterns.webp",
+    },
+];
+
+const otherScenes: SceneOption[] = [
+    {
+        key: "moreMountain",
+        label: "산사 능선",
+        description: "사찰 안내와 일반 행사에 어울려요",
+        image: "/images/promote/promote-more-mountain.webp",
+    },
+    {
+        key: "moreBamboo",
+        label: "대나무 바람",
+        description: "명상·교육·자연 행사에 어울려요",
+        image: "/images/promote/promote-more-bamboo.webp",
+    },
+    {
+        key: "moreLotus",
+        label: "연꽃 물결",
+        description: "법회와 문화행사에 어울려요",
+        image: "/images/promote/promote-more-lotus.webp",
+    },
+    {
+        key: "moreTwilight",
+        label: "초저녁 산사",
+        description: "음악회와 저녁 행사에 어울려요",
+        image: "/images/promote/promote-more-twilight.webp",
+    },
+    {
+        key: "moreTea",
+        label: "차와 다식",
+        description: "사찰음식과 차 행사에 어울려요",
+        image: "/images/promote/promote-more-tea.webp",
+    },
+    {
+        key: "moreMoonLanterns",
+        label: "달과 연등",
+        description: "기도·법회·연등 행사에 어울려요",
+        image: "/images/promote/promote-more-moon-lanterns.webp",
+    },
+];
+
+const scenesByCategory: Record<ImageCategory, SceneOption[]> = {
+    featured: featuredScenes,
+    other: otherScenes,
+};
 
 const fieldClass =
     "mt-2 w-full rounded-xl border border-[#E1E4E8] bg-white px-4 py-3 text-[15px] font-normal text-[#8B95A1] outline-none transition placeholder:font-normal placeholder:text-[#A1A8B2] focus:border-[#B9BA28] focus:ring-2 focus:ring-[#F4F54A]/30";
@@ -207,9 +348,7 @@ const colorNames: Record<string, string> = {
 };
 
 const imageCategories: { key: ImageCategory; label: string }[] = [
-    { key: "novice", label: "동자승" },
-    { key: "temple", label: "산사" },
-    { key: "food", label: "사찰음식" },
+    { key: "featured", label: "대표" },
     { key: "other", label: "기타" },
 ];
 
@@ -218,7 +357,7 @@ const textLabels: Record<TextKey, string> = {
     organizer: "사찰·기관명",
     date: "일시",
     place: "장소",
-    description: "한 줄 소개",
+    description: "행사 내용",
     application: "신청·문의",
 };
 
@@ -228,6 +367,12 @@ type TextFormat = {
     fontWeight: number;
     scale: number;
     shadowKey: ShadowKey;
+};
+
+type ResolvedTextFormat = TextFormat & {
+    size: number;
+    family: string;
+    shadow: { blur: number; opacity: number; offset: number };
 };
 
 const initialTextFormats: Record<TextKey, TextFormat> = {
@@ -247,7 +392,7 @@ const initialTextFormats: Record<TextKey, TextFormat> = {
     },
     date: {
         fontKey: "pretendard",
-        color: "#F4F54A",
+        color: "#171B22",
         fontWeight: 500,
         scale: 100,
         shadowKey: "soft",
@@ -268,7 +413,7 @@ const initialTextFormats: Record<TextKey, TextFormat> = {
     },
     application: {
         fontKey: "pretendard",
-        color: "#F4F54A",
+        color: "#171B22",
         fontWeight: 500,
         scale: 100,
         shadowKey: "soft",
@@ -521,32 +666,71 @@ function LotusMark() {
     );
 }
 
+function isRichTextKey(key: TextKey): key is RichTextKey {
+    return Boolean(key);
+}
+
+function PictogramIcon({
+    icon,
+    className = "h-[1em] w-[1em]",
+}: {
+    icon: PictogramKey;
+    className?: string;
+}) {
+    const option = pictogramOptions.find((item) => item.key === icon);
+
+    if (!option || icon === "none") return null;
+
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            fill={option.filled ? "white" : "none"}
+            stroke="currentColor"
+            strokeWidth="1.7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            aria-hidden="true"
+        >
+            <path d={option.path} />
+        </svg>
+    );
+}
+
 function wrapText(
     context: CanvasRenderingContext2D,
     text: string,
     maxWidth: number,
     maxLines: number,
 ) {
-    const chars = Array.from(text);
     const lines: string[] = [];
-    let line = "";
+    const paragraphs = text.replace(/\r\n/g, "\n").split("\n");
 
-    chars.forEach((char) => {
-        const next = line + char;
+    for (const paragraph of paragraphs) {
+        if (lines.length >= maxLines) break;
 
-        if (context.measureText(next).width > maxWidth && line) {
-            if (lines.length < maxLines) {
-                lines.push(line);
-            }
-
-            line = char;
-        } else {
-            line = next;
+        if (!paragraph) {
+            lines.push("");
+            continue;
         }
-    });
 
-    if (line && lines.length < maxLines) {
-        lines.push(line);
+        let line = "";
+
+        for (const char of Array.from(paragraph)) {
+            const next = line + char;
+
+            if (context.measureText(next).width > maxWidth && line) {
+                lines.push(line);
+
+                if (lines.length >= maxLines) return lines;
+
+                line = char;
+            } else {
+                line = next;
+            }
+        }
+
+        if (line && lines.length < maxLines) lines.push(line);
     }
 
     return lines;
@@ -570,22 +754,167 @@ function drawPosterText(
     context.restore();
 }
 
+function drawCanvasPictogram(
+    context: CanvasRenderingContext2D,
+    icon: PictogramKey,
+    x: number,
+    centerY: number,
+    size: number,
+    color: string,
+) {
+    const option = pictogramOptions.find((item) => item.key === icon);
+
+    if (!option || icon === "none") return;
+
+    context.save();
+    context.translate(x, centerY - size / 2);
+    context.scale(size / 24, size / 24);
+    context.lineWidth = 1.7;
+    context.lineCap = "round";
+    context.lineJoin = "round";
+    context.strokeStyle = color;
+    context.fillStyle = option.filled ? "#FFFFFF" : "transparent";
+
+    const path = new Path2D(option.path);
+
+    if (option.filled) context.fill(path);
+    context.stroke(path);
+    context.restore();
+}
+
+function richRunAt(runs: RichTextRun[], index: number) {
+    return runs.find((run) => index >= run.start && index < run.end);
+}
+
+function layoutRichText(
+    context: CanvasRenderingContext2D,
+    text: string,
+    base: ResolvedTextFormat,
+    runs: RichTextRun[],
+    maxWidth: number,
+    maxLines: number,
+) {
+    type Glyph = {
+        char: string;
+        width: number;
+        style: ResolvedTextFormat;
+    };
+
+    const lines: Glyph[][] = [[]];
+    let lineWidth = 0;
+
+    for (let index = 0; index < text.length; index += 1) {
+        const char = text[index];
+
+        if (char === "\r") continue;
+
+        if (char === "\n") {
+            if (lines.length >= maxLines) break;
+            lines.push([]);
+            lineWidth = 0;
+            continue;
+        }
+
+        const run = richRunAt(runs, index);
+        const style: ResolvedTextFormat = run
+            ? {
+                ...base,
+                color: run.color,
+                fontWeight: run.fontWeight,
+                size: base.size * (run.scale / 100),
+            }
+            : base;
+
+        context.font = `${style.fontWeight} ${style.size}px ${style.family}`;
+        const width =
+            char === LOTUS_SYMBOL || char === PIN_SYMBOL
+                ? style.size * 1.05
+                : context.measureText(char).width;
+
+        if (lineWidth + width > maxWidth && lines[lines.length - 1].length) {
+            if (lines.length >= maxLines) break;
+            lines.push([]);
+            lineWidth = 0;
+        }
+
+        lines[lines.length - 1].push({ char, width, style });
+        lineWidth += width;
+    }
+
+    return lines;
+}
+
+function drawRichText(
+    context: CanvasRenderingContext2D,
+    lines: ReturnType<typeof layoutRichText>,
+    x: number,
+    firstBaselineY: number,
+    defaultLineHeight: number,
+) {
+    let baselineY = firstBaselineY;
+
+    lines.forEach((line, lineIndex) => {
+        let cursorX = x;
+        const largestSize = Math.max(...line.map((glyph) => glyph.style.size), 0);
+
+        line.forEach((glyph) => {
+            context.font = `${glyph.style.fontWeight} ${glyph.style.size}px ${glyph.style.family}`;
+            if (glyph.char === LOTUS_SYMBOL || glyph.char === PIN_SYMBOL) {
+                drawCanvasPictogram(
+                    context,
+                    glyph.char === LOTUS_SYMBOL ? "lotus" : "pin",
+                    cursorX,
+                    baselineY - glyph.style.size * 0.36,
+                    glyph.style.size,
+                    glyph.style.color,
+                );
+            } else {
+                drawPosterText(
+                    context,
+                    glyph.char,
+                    cursorX,
+                    baselineY,
+                    glyph.style.color,
+                    glyph.style.shadow,
+                );
+            }
+            cursorX += glyph.width;
+        });
+
+        if (lineIndex < lines.length - 1) {
+            baselineY += Math.max(defaultLineHeight, largestSize * 1.28);
+        }
+    });
+
+    const lastLine = lines[lines.length - 1] ?? [];
+    const lastLargestSize = Math.max(
+        ...lastLine.map((glyph) => glyph.style.size),
+        0,
+    );
+
+    return (
+        baselineY -
+        firstBaselineY +
+        Math.max(defaultLineHeight, lastLargestSize * 1.28)
+    );
+}
+
 export default function EventPromotePage() {
     const [channel, setChannel] = useState<ChannelKey>("instagram");
 
-    const [scene, setScene] = useState<SceneKey>("welcome");
+    const [scene, setScene] = useState<SceneKey>("otherLotus");
     const [imageFit, setImageFit] = useState<ImageFit>("cover");
 
-    const [title, setTitle] = useState("연꽃 피는 산사 음악회");
+    const [title, setTitle] = useState("♫ 연꽃 피는 산사 음악회");
 
     const [organizer, setOrganizer] = useState("연화사");
 
     const [date, setDate] = useState("2026. 8. 22. 토요일 오후 6시");
 
-    const [place, setPlace] = useState("연화사 앞마당");
+    const [place, setPlace] = useState(`${PIN_SYMBOL} 연화사 앞마당`);
 
     const [description, setDescription] = useState(
-        "여름 저녁, 산사의 고요함과 음악이 만나는 시간",
+        "여름 저녁, 산사의 고요함과 음악이 만나는 시간\n차 한 잔과 함께 잠시 머물며\n마음에 작은 쉼표를 놓아보세요",
     );
 
     const [application, setApplication] = useState(
@@ -593,14 +922,16 @@ export default function EventPromotePage() {
     );
 
     const [imageSrc, setImageSrc] = useState(
-        "/images/promote/novice-welcome.webp",
+        "/images/promote/promote-other-lotus-novice.webp",
     );
 
     const [copied, setCopied] = useState("");
     const [editorTab, setEditorTab] = useState<EditorTab>("content");
     const [copyChannel, setCopyChannel] = useState<CopyKey>("instagram");
-    const [imageCategory, setImageCategory] = useState<ImageCategory>("novice");
+    const [imageCategory, setImageCategory] = useState<ImageCategory>("featured");
+    const [visibleOtherCount, setVisibleOtherCount] = useState(6);
     const [selectedText, setSelectedText] = useState<TextKey>("title");
+    const [activeContentText, setActiveContentText] = useState<TextKey>("title");
     const [selectedElement, setSelectedElement] =
         useState<SelectedElement>("title");
     const [dividerStyle, setDividerStyle] = useState({
@@ -610,9 +941,40 @@ export default function EventPromotePage() {
     });
     const [textFormats, setTextFormats] =
         useState<Record<TextKey, TextFormat>>(initialTextFormats);
+    const [textIcons] = useState<Record<TextKey, PictogramKey>>({
+        title: "none",
+        organizer: "none",
+        date: "none",
+        place: "none",
+        description: "none",
+        application: "none",
+    });
+    const [richTextRuns, setRichTextRuns] = useState<
+        Record<RichTextKey, RichTextRun[]>
+    >({
+        title: [
+            {
+                start: 11,
+                end: 14,
+                color: "#B73535",
+                fontWeight: 700,
+                scale: 145,
+            },
+        ],
+        organizer: [],
+        date: [],
+        place: [],
+        description: [],
+        application: [],
+    });
+    const [textSelection, setTextSelection] = useState<{
+        start: number;
+        end: number;
+    } | null>(null);
 
     const imageObjectUrl = useRef<string | null>(null);
     const copyTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+    const styleTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
     const copy = useMemo(() => {
         return {
@@ -633,6 +995,10 @@ export default function EventPromotePage() {
     >({});
 
     const activeCopy = copyDrafts[copyChannel] ?? copy[copyChannel];
+    const visibleScenes =
+        imageCategory === "other"
+            ? scenesByCategory.other.slice(0, visibleOtherCount)
+            : scenesByCategory.featured;
 
     const insertCopyEmoji = (emoji: string) => {
         const textarea = copyTextareaRef.current;
@@ -663,6 +1029,15 @@ export default function EventPromotePage() {
     };
 
     const selectedFormat = textFormats[selectedText];
+    const selectedRichRun = textSelection
+        ? richTextRuns[selectedText].find(
+            (run) =>
+                run.start === textSelection.start && run.end === textSelection.end,
+        )
+        : undefined;
+    const activeScale = selectedRichRun?.scale ?? selectedFormat.scale;
+    const activeWeight = selectedRichRun?.fontWeight ?? selectedFormat.fontWeight;
+    const activeColor = selectedRichRun?.color ?? selectedFormat.color;
     const selectedTextValue: Record<TextKey, string> = {
         title,
         organizer,
@@ -672,7 +1047,8 @@ export default function EventPromotePage() {
         application,
     };
 
-    const updateSelectedTextValue = (value: string) => {
+    const updateTextValuePreservingRuns = (key: TextKey, nextValue: string) => {
+        const previousValue = selectedTextValue[key];
         const setters: Record<TextKey, (next: string) => void> = {
             title: setTitle,
             organizer: setOrganizer,
@@ -682,7 +1058,115 @@ export default function EventPromotePage() {
             application: setApplication,
         };
 
-        setters[selectedText](value);
+        let prefix = 0;
+        while (
+            prefix < previousValue.length &&
+            prefix < nextValue.length &&
+            previousValue[prefix] === nextValue[prefix]
+        ) {
+            prefix += 1;
+        }
+
+        let suffix = 0;
+        while (
+            suffix < previousValue.length - prefix &&
+            suffix < nextValue.length - prefix &&
+            previousValue[previousValue.length - 1 - suffix] ===
+            nextValue[nextValue.length - 1 - suffix]
+        ) {
+            suffix += 1;
+        }
+
+        const removedEnd = previousValue.length - suffix;
+        const insertedEnd = nextValue.length - suffix;
+        const delta = insertedEnd - removedEnd;
+
+        setRichTextRuns((current) => ({
+            ...current,
+            [key]: current[key]
+                .map((run) => {
+                    if (run.end <= prefix) return run;
+                    if (run.start >= removedEnd) {
+                        return {
+                            ...run,
+                            start: run.start + delta,
+                            end: run.end + delta,
+                        };
+                    }
+                    return {
+                        ...run,
+                        start: Math.min(run.start, prefix),
+                        end: Math.max(prefix, run.end + delta),
+                    };
+                })
+                .filter((run) => run.end > run.start),
+        }));
+        setters[key](nextValue);
+    };
+
+    const insertPictogram = (key: TextKey, symbol: string) => {
+        if (!symbol) return;
+
+        const field = document.getElementById(`promote-${key}`) as
+            | HTMLInputElement
+            | HTMLTextAreaElement
+            | null;
+        const value = selectedTextValue[key];
+        const start = field?.selectionStart ?? value.length;
+        const end = field?.selectionEnd ?? start;
+        const nextValue = value.slice(0, start) + symbol + value.slice(end);
+        updateTextValuePreservingRuns(key, nextValue);
+
+        const nextCursor = start + symbol.length;
+        window.requestAnimationFrame(() => {
+            field?.focus();
+            field?.setSelectionRange(nextCursor, nextCursor);
+        });
+    };
+
+    const pictogramPicker = () => (
+        <details className="group relative mt-2 shrink-0">
+            <summary
+                className="flex h-[46px] w-[46px] cursor-pointer list-none items-center justify-center rounded-xl border border-[#E2E32E] bg-[#F4F54A] text-xl font-normal text-[#252A31] transition hover:bg-[#EDEF36] [&::-webkit-details-marker]:hidden"
+                title="픽토그램 넣기"
+                aria-label={`${textLabels[activeContentText]}에 픽토그램 넣기`}
+            >
+                ＋
+            </summary>
+            <div
+                className="absolute right-0 top-[52px] z-40 grid w-[246px] grid-cols-3 gap-1.5 rounded-2xl border border-[#E1E4E8] bg-white p-2 shadow-[0_12px_30px_rgba(25,31,40,0.14)]"
+                role="group"
+                aria-label={`${textLabels[activeContentText]} 픽토그램 선택표`}
+            >
+                {pictogramOptions.map((item) => (
+                    <button
+                        key={item.key}
+                        type="button"
+                        onClick={(event) => {
+                            insertPictogram(activeContentText, item.symbol);
+                            event.currentTarget.closest("details")?.removeAttribute("open");
+                        }}
+                        className="flex items-center gap-1.5 rounded-lg px-2 py-2 text-left text-[11px] transition hover:bg-[#FFFFD8]"
+                        title={`${item.label} 삽입`}
+                        aria-label={`${textLabels[activeContentText]}에 ${item.label} 삽입`}
+                    >
+                        {item.key === "none" ? (
+                            <span className="flex h-4 w-4 items-center justify-center text-[#A1A8B2]">
+                                —
+                            </span>
+                        ) : (
+                            <PictogramIcon icon={item.key} className="h-4 w-4 shrink-0" />
+                        )}
+                        <span>{item.label}</span>
+                    </button>
+                ))}
+            </div>
+        </details>
+    );
+
+    const updateSelectedTextValue = (value: string) => {
+        updateTextValuePreservingRuns(selectedText, value);
+        setTextSelection(null);
     };
     const updateSelectedFormat = (patch: Partial<TextFormat>) => {
         setTextFormats((current) => ({
@@ -694,7 +1178,53 @@ export default function EventPromotePage() {
     const selectPreviewText = (key: TextKey) => {
         setSelectedText(key);
         setSelectedElement(key);
+        setTextSelection(null);
         setEditorTab("style");
+    };
+
+    const applyPartialStyle = (
+        patch: Partial<Pick<RichTextRun, "color" | "fontWeight" | "scale">>,
+    ) => {
+        if (!isRichTextKey(selectedText) || !textSelection) return;
+
+        const { start, end } = textSelection;
+
+        if (start === end) return;
+
+        setRichTextRuns((current) => {
+            const existing = current[selectedText].find(
+                (run) => run.start === start && run.end === end,
+            );
+            const nextRun: RichTextRun = {
+                start,
+                end,
+                color: existing?.color ?? textFormats[selectedText].color,
+                fontWeight:
+                    existing?.fontWeight ?? textFormats[selectedText].fontWeight,
+                scale: existing?.scale ?? 100,
+                ...patch,
+            };
+
+            return {
+                ...current,
+                [selectedText]: [
+                    ...current[selectedText].filter(
+                        (run) => run.end <= start || run.start >= end,
+                    ),
+                    nextRun,
+                ].sort((a, b) => a.start - b.start),
+            };
+        });
+    };
+
+    const updateSizeWeightOrColor = (
+        patch: Partial<Pick<RichTextRun, "color" | "fontWeight" | "scale">>,
+    ) => {
+        if (isRichTextKey(selectedText) && textSelection) {
+            applyPartialStyle(patch);
+            return;
+        }
+        updateSelectedFormat(patch);
     };
 
     const selectDivider = () => {
@@ -812,14 +1342,15 @@ export default function EventPromotePage() {
         }
 
         const isLandscape = selected.width / selected.height > 1.45;
+        const outputScale = channel === "a4" ? selected.width / 1080 : 1;
 
-        const side = isLandscape ? 62 : 76;
-        const top = isLandscape ? 62 : 105;
+        const side = (isLandscape ? 62 : 76) * outputScale;
+        const top = (isLandscape ? 62 : 105) * outputScale;
 
         const contentWidth = isLandscape
             ? selected.width * 0.56
             : selected.width - side * 2;
-        const format = (key: TextKey, baseSize: number) => {
+        const format = (key: TextKey, baseSize: number): ResolvedTextFormat => {
             const value = textFormats[key];
             return {
                 ...value,
@@ -828,97 +1359,165 @@ export default function EventPromotePage() {
                 shadow: shadowOptions[value.shadowKey],
             };
         };
-        const organizerFormat = format("organizer", isLandscape ? 27 : 34);
-        const titleFormat = format("title", isLandscape ? 55 : 68);
-        const dateFormat = format("date", isLandscape ? 29 : 36);
-        const placeFormat = format("place", isLandscape ? 27 : 34);
-        const descriptionFormat = format("description", isLandscape ? 25 : 31);
-        const applicationFormat = format("application", isLandscape ? 25 : 32);
+        const organizerFormat = format(
+            "organizer",
+            (isLandscape ? 27 : 34) * outputScale,
+        );
+        const titleFormat = format("title", (isLandscape ? 55 : 68) * outputScale);
+        const dateFormat = format("date", (isLandscape ? 29 : 36) * outputScale);
+        const placeFormat = format("place", (isLandscape ? 27 : 34) * outputScale);
+        const descriptionFormat = format(
+            "description",
+            (isLandscape ? 25 : 31) * outputScale,
+        );
+        const applicationFormat = format(
+            "application",
+            (isLandscape ? 25 : 32) * outputScale,
+        );
+        const iconOffset = (key: TextKey, size: number) =>
+            textIcons[key] === "none" ? 0 : size * 1.35;
 
         context.textBaseline = "alphabetic";
         context.font = `${organizerFormat.fontWeight} ${organizerFormat.size}px ${organizerFormat.family}`;
-        drawPosterText(
+        drawCanvasPictogram(
             context,
-            organizer,
+            textIcons.organizer,
             side,
-            top,
+            top - organizerFormat.size * 0.35,
+            organizerFormat.size * 0.9,
             organizerFormat.color,
-            organizerFormat.shadow,
+        );
+        drawRichText(
+            context,
+            layoutRichText(
+                context,
+                organizer,
+                organizerFormat,
+                richTextRuns.organizer,
+                contentWidth - iconOffset("organizer", organizerFormat.size),
+                1,
+            ),
+            side + iconOffset("organizer", organizerFormat.size),
+            top,
+            organizerFormat.size * 1.28,
         );
 
-        context.font = `${titleFormat.fontWeight} ${titleFormat.size}px ${titleFormat.family}`;
-
-        const titleLines = wrapText(
+        const titleOffset = iconOffset("title", titleFormat.size);
+        const titleLines = layoutRichText(
             context,
             title,
-            contentWidth,
+            titleFormat,
+            richTextRuns.title,
+            contentWidth - titleOffset,
             isLandscape ? 2 : 3,
         );
 
         const titleStartY = top + Math.round(titleFormat.size * 1.42);
         const titleLineHeight = Math.round(titleFormat.size * 1.18);
-
-        titleLines.forEach((line, index) => {
-            drawPosterText(
-                context,
-                line,
-                side,
-                titleStartY + index * titleLineHeight,
-                titleFormat.color,
-                titleFormat.shadow,
-            );
-        });
+        drawCanvasPictogram(
+            context,
+            textIcons.title,
+            side,
+            titleStartY - titleFormat.size * 0.35,
+            titleFormat.size,
+            titleFormat.color,
+        );
+        const titleBlockHeight = drawRichText(
+            context,
+            titleLines,
+            side + titleOffset,
+            titleStartY,
+            titleLineHeight,
+        );
 
         const infoY =
             titleStartY +
-            (titleLines.length - 1) * titleLineHeight +
+            Math.max(0, titleBlockHeight - titleLineHeight) +
             Math.round(dateFormat.size * 1.9);
 
         context.font = `${dateFormat.fontWeight} ${dateFormat.size}px ${dateFormat.family}`;
-        drawPosterText(
+        drawCanvasPictogram(
             context,
-            date,
+            textIcons.date,
             side,
-            infoY,
+            infoY - dateFormat.size * 0.35,
+            dateFormat.size * 0.9,
             dateFormat.color,
-            dateFormat.shadow,
+        );
+        drawRichText(
+            context,
+            layoutRichText(
+                context,
+                date,
+                dateFormat,
+                richTextRuns.date,
+                contentWidth - iconOffset("date", dateFormat.size),
+                1,
+            ),
+            side + iconOffset("date", dateFormat.size),
+            infoY,
+            dateFormat.size * 1.28,
         );
 
         context.font = `${placeFormat.fontWeight} ${placeFormat.size}px ${placeFormat.family}`;
         const placeY =
             infoY + Math.round(Math.max(dateFormat.size, placeFormat.size) * 1.55);
-        drawPosterText(
+        drawCanvasPictogram(
             context,
-            place,
+            textIcons.place,
             side,
-            placeY,
+            placeY - placeFormat.size * 0.35,
+            placeFormat.size * 0.9,
             placeFormat.color,
-            placeFormat.shadow,
+        );
+        drawRichText(
+            context,
+            layoutRichText(
+                context,
+                place,
+                placeFormat,
+                richTextRuns.place,
+                contentWidth - iconOffset("place", placeFormat.size),
+                1,
+            ),
+            side + iconOffset("place", placeFormat.size),
+            placeY,
+            placeFormat.size * 1.28,
         );
 
-        context.font = `${descriptionFormat.fontWeight} ${descriptionFormat.size}px ${descriptionFormat.family}`;
+        const descriptionOffset = iconOffset("description", descriptionFormat.size);
+        const descriptionY = placeY + Math.round(placeFormat.size * 1.7);
+        const descriptionLines = layoutRichText(
+            context,
+            description,
+            descriptionFormat,
+            richTextRuns.description,
+            contentWidth - descriptionOffset,
+            4,
+        );
+        drawCanvasPictogram(
+            context,
+            textIcons.description,
+            side,
+            descriptionY - descriptionFormat.size * 0.35,
+            descriptionFormat.size * 0.9,
+            descriptionFormat.color,
+        );
+        drawRichText(
+            context,
+            descriptionLines,
+            side + descriptionOffset,
+            descriptionY,
+            Math.round(descriptionFormat.size * 1.45),
+        );
 
-        const descriptionLines = wrapText(context, description, contentWidth, 2);
-
-        descriptionLines.forEach((line, index) => {
-            drawPosterText(
-                context,
-                line,
-                side,
-                placeY +
-                Math.round(placeFormat.size * 1.7) +
-                index * Math.round(descriptionFormat.size * 1.45),
-                descriptionFormat.color,
-                descriptionFormat.shadow,
-            );
-        });
-
-        const contactLineY = selected.height - (isLandscape ? 87 : 122);
+        const contactLineY =
+            selected.height - (isLandscape ? 87 : 122) * outputScale;
 
         if (dividerStyle.visible) {
             context.save();
             context.strokeStyle = dividerStyle.color;
-            context.lineWidth = dividerStyle.width;
+            context.lineWidth = dividerStyle.width * outputScale;
             context.beginPath();
             context.moveTo(side, contactLineY);
             context.lineTo(selected.width - side, contactLineY);
@@ -927,14 +1526,29 @@ export default function EventPromotePage() {
         }
 
         context.font = `${applicationFormat.fontWeight} ${applicationFormat.size}px ${applicationFormat.family}`;
-
-        drawPosterText(
+        const applicationY = contactLineY + (isLandscape ? 44 : 57) * outputScale;
+        drawCanvasPictogram(
             context,
-            application,
+            textIcons.application,
             side,
-            contactLineY + (isLandscape ? 44 : 57),
+            applicationY - applicationFormat.size * 0.35,
+            applicationFormat.size * 0.9,
             applicationFormat.color,
-            applicationFormat.shadow,
+        );
+
+        drawRichText(
+            context,
+            layoutRichText(
+                context,
+                application,
+                applicationFormat,
+                richTextRuns.application,
+                contentWidth - iconOffset("application", applicationFormat.size),
+                1,
+            ),
+            side + iconOffset("application", applicationFormat.size),
+            applicationY,
+            applicationFormat.size * 1.28,
         );
 
         const link = document.createElement("a");
@@ -958,7 +1572,9 @@ export default function EventPromotePage() {
                     ? "aspect-[1200/628]"
                     : channel === "youtube"
                         ? "aspect-video"
-                        : "aspect-square";
+                        : channel === "a4"
+                            ? "aspect-[210/297]"
+                            : "aspect-square";
 
     const copyLabels: Record<CopyKey, string> = {
         kakao: "카카오톡",
@@ -990,11 +1606,74 @@ export default function EventPromotePage() {
         };
     };
 
+    const renderTextCharacters = (key: TextKey, text: string, size: number) => {
+        if (
+            !isRichTextKey(key) ||
+            (!richTextRuns[key].length &&
+                !text.includes(LOTUS_SYMBOL) &&
+                !text.includes(PIN_SYMBOL))
+        )
+            return text;
+
+        const base = textFormats[key];
+
+        return text.split("").map((char, index) => {
+            const run = richRunAt(richTextRuns[key], index);
+
+            if (char === LOTUS_SYMBOL || char === PIN_SYMBOL) {
+                return (
+                    <span
+                        key={`${key}-${index}`}
+                        className="inline-flex w-[1.05em] items-center justify-center align-[-0.12em]"
+                        style={
+                            run
+                                ? {
+                                    color: run.color,
+                                    fontSize: `${size * (base.scale / 100) * (run.scale / 100)}px`,
+                                }
+                                : undefined
+                        }
+                    >
+                        <PictogramIcon
+                            icon={char === LOTUS_SYMBOL ? "lotus" : "pin"}
+                            className="h-[1em] w-[1em]"
+                        />
+                    </span>
+                );
+            }
+
+            if (!run) return <span key={`${key}-${index}`}>{char}</span>;
+
+            const isDefaultMusicEmphasis =
+                key === "title" && text.slice(run.start, run.end) === "음악회";
+
+            return (
+                <span
+                    key={`${key}-${index}`}
+                    className={
+                        isDefaultMusicEmphasis ? "mobile-music-emphasis" : undefined
+                    }
+                    style={
+                        {
+                            color: run.color,
+                            fontWeight: run.fontWeight,
+                            fontSize: `${size * (base.scale / 100) * (run.scale / 100)}px`,
+                            "--mobile-music-size": `${size * (base.scale / 100) * 1.05}px`,
+                        } as CSSProperties
+                    }
+                >
+                    {char}
+                </span>
+            );
+        });
+    };
+
     const previewButtonClass = (key: TextKey, extra = "") =>
         `${extra} cursor-pointer ${editorTab === "style" && selectedElement === key ? "rounded-md outline outline-1 outline-dashed outline-[#777900] outline-offset-4" : ""}`;
 
     return (
         <main className="min-h-screen bg-[#F7F8FA] text-[#171B22]">
+            <style>{`@media (max-width: 639px) { .mobile-title { font-size: 24px !important; } .mobile-music-emphasis { font-size: var(--mobile-music-size) !important; } }`}</style>
             <header className="border-b border-[#E9EBEE] bg-white">
                 <div className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between px-5 md:px-8">
                     <Link
@@ -1109,7 +1788,15 @@ export default function EventPromotePage() {
                                         )}
                                         aria-label="사찰 기관명 편집"
                                     >
-                                        <span style={textStyle("organizer", 15)}>{organizer}</span>
+                                        <span
+                                            className="inline-flex items-center gap-[0.35em]"
+                                            style={textStyle("organizer", 15)}
+                                        >
+                                            <PictogramIcon icon={textIcons.organizer} />
+                                            <span>
+                                                {renderTextCharacters("organizer", organizer, 15)}
+                                            </span>
+                                        </span>
                                     </button>
                                     <button
                                         type="button"
@@ -1121,10 +1808,20 @@ export default function EventPromotePage() {
                                         aria-label="행사명 편집"
                                     >
                                         <span
-                                            className="block leading-[1.1] tracking-[-0.05em]"
+                                            className="mobile-title flex max-w-full items-start gap-[0.35em] leading-[1.1] tracking-[-0.05em]"
                                             style={textStyle("title", channel === "story" ? 34 : 32)}
                                         >
-                                            {title}
+                                            <PictogramIcon
+                                                icon={textIcons.title}
+                                                className="mt-[0.08em] h-[1em] w-[1em] shrink-0"
+                                            />
+                                            <span className="min-w-0 whitespace-pre-wrap break-words">
+                                                {renderTextCharacters(
+                                                    "title",
+                                                    title,
+                                                    channel === "story" ? 34 : 32,
+                                                )}
+                                            </span>
                                         </span>
                                     </button>
                                     <button
@@ -1136,7 +1833,13 @@ export default function EventPromotePage() {
                                         )}
                                         aria-label="일시 편집"
                                     >
-                                        <span style={textStyle("date", 15)}>{date}</span>
+                                        <span
+                                            className="inline-flex items-center gap-[0.35em]"
+                                            style={textStyle("date", 15)}
+                                        >
+                                            <PictogramIcon icon={textIcons.date} />
+                                            <span>{renderTextCharacters("date", date, 15)}</span>
+                                        </span>
                                     </button>
                                     <button
                                         type="button"
@@ -1147,7 +1850,13 @@ export default function EventPromotePage() {
                                         )}
                                         aria-label="장소 편집"
                                     >
-                                        <span style={textStyle("place", 14)}>{place}</span>
+                                        <span
+                                            className="inline-flex items-center gap-[0.35em]"
+                                            style={textStyle("place", 14)}
+                                        >
+                                            <PictogramIcon icon={textIcons.place} />
+                                            <span>{renderTextCharacters("place", place, 14)}</span>
+                                        </span>
                                     </button>
                                     <button
                                         type="button"
@@ -1156,13 +1865,19 @@ export default function EventPromotePage() {
                                             "description",
                                             "mt-2 block max-w-full text-left",
                                         )}
-                                        aria-label="한 줄 소개 편집"
+                                        aria-label="행사 내용 편집"
                                     >
                                         <span
-                                            className="line-clamp-2 leading-[1.65]"
+                                            className="flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words leading-[1.55]"
                                             style={textStyle("description", 14)}
                                         >
-                                            {description}
+                                            <PictogramIcon
+                                                icon={textIcons.description}
+                                                className="mt-[0.2em] h-[1em] w-[1em] shrink-0"
+                                            />
+                                            <span className="line-clamp-4 min-w-0 whitespace-pre-wrap break-words">
+                                                {renderTextCharacters("description", description, 14)}
+                                            </span>
                                         </span>
                                     </button>
                                 </div>
@@ -1193,8 +1908,14 @@ export default function EventPromotePage() {
                                     )}
                                     aria-label="신청 문의 편집"
                                 >
-                                    <span style={textStyle("application", 14)}>
-                                        {application}
+                                    <span
+                                        className="inline-flex items-center gap-[0.35em]"
+                                        style={textStyle("application", 14)}
+                                    >
+                                        <PictogramIcon icon={textIcons.application} />
+                                        <span>
+                                            {renderTextCharacters("application", application, 14)}
+                                        </span>
                                     </span>
                                 </button>
                             </div>
@@ -1223,55 +1944,114 @@ export default function EventPromotePage() {
                             {editorTab === "content" && (
                                 <div className="pt-6">
                                     <h2 className="text-lg font-semibold">행사 내용</h2>
+                                    <p className="mt-1 text-xs text-[#8B95A1]">
+                                        원하는 입력칸에 커서를 놓고 행사명 옆 ＋ 버튼을 눌러보세요.
+                                    </p>
                                     <div className="mt-4 grid gap-x-4 gap-y-4 sm:grid-cols-2">
-                                        <label className="text-sm font-medium sm:col-span-2">
-                                            행사명
-                                            <input
-                                                value={title}
-                                                onChange={(event) => setTitle(event.target.value)}
-                                                className={fieldClass}
-                                            />
-                                        </label>
-                                        <label className="text-sm font-medium">
-                                            사찰·기관명
-                                            <input
-                                                value={organizer}
-                                                onChange={(event) => setOrganizer(event.target.value)}
-                                                className={fieldClass}
-                                            />
-                                        </label>
-                                        <label className="text-sm font-medium">
-                                            일시
-                                            <input
-                                                value={date}
-                                                onChange={(event) => setDate(event.target.value)}
-                                                className={fieldClass}
-                                            />
-                                        </label>
-                                        <label className="text-sm font-medium">
-                                            장소
-                                            <input
-                                                value={place}
-                                                onChange={(event) => setPlace(event.target.value)}
-                                                className={fieldClass}
-                                            />
-                                        </label>
-                                        <label className="text-sm font-medium">
-                                            신청·문의
-                                            <input
-                                                value={application}
-                                                onChange={(event) => setApplication(event.target.value)}
-                                                className={fieldClass}
-                                            />
-                                        </label>
-                                        <label className="text-sm font-medium sm:col-span-2">
-                                            한 줄 소개
-                                            <input
-                                                value={description}
-                                                onChange={(event) => setDescription(event.target.value)}
-                                                className={fieldClass}
-                                            />
-                                        </label>
+                                        <div className="text-sm font-medium sm:col-span-2">
+                                            <label htmlFor="promote-title">행사명</label>
+                                            <div className="flex items-start gap-2">
+                                                <input
+                                                    id="promote-title"
+                                                    onFocus={() => setActiveContentText("title")}
+                                                    value={title}
+                                                    onChange={(event) =>
+                                                        updateTextValuePreservingRuns(
+                                                            "title",
+                                                            event.target.value,
+                                                        )
+                                                    }
+                                                    className={fieldClass}
+                                                />
+                                                {pictogramPicker()}
+                                            </div>
+                                        </div>
+                                        <div className="text-sm font-medium">
+                                            <label htmlFor="promote-organizer">사찰·기관명</label>
+                                            <div className="flex items-start gap-2">
+                                                <input
+                                                    id="promote-organizer"
+                                                    onFocus={() => setActiveContentText("organizer")}
+                                                    value={organizer}
+                                                    onChange={(event) =>
+                                                        updateTextValuePreservingRuns(
+                                                            "organizer",
+                                                            event.target.value,
+                                                        )
+                                                    }
+                                                    className={fieldClass}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="text-sm font-medium">
+                                            <label htmlFor="promote-date">일시</label>
+                                            <div className="flex items-start gap-2">
+                                                <input
+                                                    id="promote-date"
+                                                    onFocus={() => setActiveContentText("date")}
+                                                    value={date}
+                                                    onChange={(event) =>
+                                                        updateTextValuePreservingRuns(
+                                                            "date",
+                                                            event.target.value,
+                                                        )
+                                                    }
+                                                    className={fieldClass}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="text-sm font-medium">
+                                            <label htmlFor="promote-place">장소</label>
+                                            <div className="flex items-start gap-2">
+                                                <input
+                                                    id="promote-place"
+                                                    onFocus={() => setActiveContentText("place")}
+                                                    value={place}
+                                                    onChange={(event) =>
+                                                        updateTextValuePreservingRuns(
+                                                            "place",
+                                                            event.target.value,
+                                                        )
+                                                    }
+                                                    className={fieldClass}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="text-sm font-medium">
+                                            <label htmlFor="promote-application">신청·문의</label>
+                                            <div className="flex items-start gap-2">
+                                                <input
+                                                    id="promote-application"
+                                                    onFocus={() => setActiveContentText("application")}
+                                                    value={application}
+                                                    onChange={(event) =>
+                                                        updateTextValuePreservingRuns(
+                                                            "application",
+                                                            event.target.value,
+                                                        )
+                                                    }
+                                                    className={fieldClass}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="text-sm font-medium sm:col-span-2">
+                                            <label htmlFor="promote-description">행사 내용</label>
+                                            <div className="flex items-start gap-2">
+                                                <textarea
+                                                    id="promote-description"
+                                                    onFocus={() => setActiveContentText("description")}
+                                                    value={description}
+                                                    onChange={(event) =>
+                                                        updateTextValuePreservingRuns(
+                                                            "description",
+                                                            event.target.value,
+                                                        )
+                                                    }
+                                                    rows={3}
+                                                    className={`${fieldClass} min-h-[96px] resize-y leading-6`}
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             )}
@@ -1280,14 +2060,19 @@ export default function EventPromotePage() {
                                 <div className="pt-6">
                                     <h2 className="text-lg font-semibold">이미지 선택</h2>
                                     <p className="mt-1 text-sm text-[#8B95A1]">
-                                        주제를 고른 뒤 이미지 3장 중 하나를 선택해 주세요.
+                                        대표 또는 기타 배경 중 하나를 선택해 주세요.
                                     </p>
                                     <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
                                         {imageCategories.map((category) => (
                                             <button
                                                 key={category.key}
                                                 type="button"
-                                                onClick={() => setImageCategory(category.key)}
+                                                onClick={() => {
+                                                    setImageCategory(category.key);
+                                                    const firstScene = scenesByCategory[category.key][0];
+                                                    setScene(firstScene.key);
+                                                    setImageSrc(firstScene.image);
+                                                }}
                                                 className={`shrink-0 rounded-full px-4 py-2 text-sm transition ${imageCategory === category.key ? "bg-[#F4F54A] text-[#252A31]" : "bg-[#F2F4F6] text-[#737B87]"}`}
                                             >
                                                 {category.label}
@@ -1295,7 +2080,7 @@ export default function EventPromotePage() {
                                         ))}
                                     </div>
                                     <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
-                                        {scenes.map((item) => (
+                                        {visibleScenes.map((item) => (
                                             <button
                                                 key={item.key}
                                                 type="button"
@@ -1394,17 +2179,18 @@ export default function EventPromotePage() {
                                         </button>
                                     </div>
 
-                                    {imageCategory !== "novice" && (
-                                        <p className="mt-3 text-xs leading-5 text-[#8B95A1]">
-                                            {
-                                                imageCategories.find(
-                                                    (item) => item.key === imageCategory,
-                                                )?.label
-                                            }{" "}
-                                            전용 이미지는 가독성을 확인한 뒤 순서대로 연결할
-                                            예정이에요. 지금은 배치 확인용 이미지를 보여드려요.
-                                        </p>
-                                    )}
+                                    {imageCategory === "other" &&
+                                        visibleOtherCount < scenesByCategory.other.length && (
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    setVisibleOtherCount((count) => count + 6)
+                                                }
+                                                className="mt-4 w-full rounded-xl border border-[#E1E4E8] bg-white px-4 py-3 text-sm font-medium text-[#4E5968] transition hover:border-[#B8BEC6] hover:bg-[#F8F9FA]"
+                                            >
+                                                이미지 더보기
+                                            </button>
+                                        )}
 
                                     <label className="mt-5 flex cursor-pointer items-center justify-between border-t border-[#E7E9EC] py-5 text-sm">
                                         <span>
@@ -1440,10 +2226,12 @@ export default function EventPromotePage() {
                                                 role="group"
                                                 aria-label="사진 맞춤 방식"
                                             >
-                                                {([
-                                                    { key: "cover", label: "화면 채우기" },
-                                                    { key: "contain", label: "전체 사진" },
-                                                ] as const).map((item) => (
+                                                {(
+                                                    [
+                                                        { key: "cover", label: "화면 채우기" },
+                                                        { key: "contain", label: "전체 사진" },
+                                                    ] as const
+                                                ).map((item) => (
                                                     <button
                                                         key={item.key}
                                                         type="button"
@@ -1471,13 +2259,32 @@ export default function EventPromotePage() {
                                                 </span>
                                             </span>
                                             <textarea
+                                                ref={styleTextareaRef}
                                                 value={selectedTextValue[selectedText]}
                                                 onChange={(event) =>
                                                     updateSelectedTextValue(event.target.value)
                                                 }
-                                                rows={selectedText === "description" ? 2 : 1}
+                                                onSelect={(event) => {
+                                                    if (!isRichTextKey(selectedText)) {
+                                                        setTextSelection(null);
+                                                        return;
+                                                    }
+
+                                                    const start = event.currentTarget.selectionStart;
+                                                    const end = event.currentTarget.selectionEnd;
+                                                    setTextSelection(
+                                                        start === end ? null : { start, end },
+                                                    );
+                                                }}
+                                                rows={selectedText === "description" ? 4 : 1}
                                                 className="mt-2 w-full resize-none rounded-xl border border-[#E1E4E8] bg-white px-4 py-3 text-[15px] font-normal leading-6 text-[#6B7280] outline-none transition focus:border-[#B9BA28] focus:ring-2 focus:ring-[#F4F54A]/30"
                                             />
+                                            {isRichTextKey(selectedText) && (
+                                                <span className="mt-1.5 block text-xs text-[#8B95A1]">
+                                                    일부 글자만 바꾸려면 입력창에서 글자를 드래그한 뒤
+                                                    아래의 크기·굵기·색상을 선택하세요.
+                                                </span>
+                                            )}
                                         </label>
                                     )}
 
@@ -1581,17 +2388,17 @@ export default function EventPromotePage() {
                                                     <span className="flex items-center justify-between">
                                                         <span>글자 크기</span>
                                                         <span className="text-[#8B95A1]">
-                                                            {selectedFormat.scale}%
+                                                            {activeScale}%
                                                         </span>
                                                     </span>
                                                     <input
                                                         type="range"
-                                                        min="80"
-                                                        max="130"
+                                                        min="50"
+                                                        max="200"
                                                         step="5"
-                                                        value={selectedFormat.scale}
+                                                        value={activeScale}
                                                         onChange={(event) =>
-                                                            updateSelectedFormat({
+                                                            updateSizeWeightOrColor({
                                                                 scale: Number(event.target.value),
                                                             })
                                                         }
@@ -1655,9 +2462,11 @@ export default function EventPromotePage() {
                                                         key={item.value}
                                                         type="button"
                                                         onClick={() =>
-                                                            updateSelectedFormat({ fontWeight: item.value })
+                                                            updateSizeWeightOrColor({
+                                                                fontWeight: item.value,
+                                                            })
                                                         }
-                                                        className={`rounded-xl border px-3 py-2.5 text-sm transition ${selectedFormat.fontWeight === item.value ? "border-[#BABB25] bg-[#FFFFD8]" : "border-[#E1E4E8]"}`}
+                                                        className={`rounded-xl border px-3 py-2.5 text-sm transition ${activeWeight === item.value ? "border-[#BABB25] bg-[#FFFFD8]" : "border-[#E1E4E8]"}`}
                                                         style={{ fontWeight: item.value }}
                                                     >
                                                         {item.label}
@@ -1675,8 +2484,8 @@ export default function EventPromotePage() {
                                                     <span key={color} className="group relative">
                                                         <button
                                                             type="button"
-                                                            onClick={() => updateSelectedFormat({ color })}
-                                                            className={`h-9 w-9 rounded-full border-2 shadow-sm transition ${selectedFormat.color === color ? "scale-110 border-[#3182F6]" : "border-white ring-1 ring-[#DDE1E5]"}`}
+                                                            onClick={() => updateSizeWeightOrColor({ color })}
+                                                            className={`h-9 w-9 rounded-full border-2 shadow-sm transition ${activeColor === color ? "scale-110 border-[#3182F6]" : "border-white ring-1 ring-[#DDE1E5]"}`}
                                                             style={{ backgroundColor: color }}
                                                             title={`${colorNames[color]} · ${color}`}
                                                             aria-label={`글자색 ${colorNames[color]}, ${color}`}
@@ -1690,8 +2499,10 @@ export default function EventPromotePage() {
                                                     </span>
                                                 ))}
                                                 <ModernColorPicker
-                                                    value={selectedFormat.color}
-                                                    onChange={(color) => updateSelectedFormat({ color })}
+                                                    value={activeColor}
+                                                    onChange={(color) =>
+                                                        updateSizeWeightOrColor({ color })
+                                                    }
                                                     label="글자색 직접 선택"
                                                 />
                                             </div>
@@ -1725,23 +2536,32 @@ export default function EventPromotePage() {
                                         <textarea
                                             ref={copyTextareaRef}
                                             value={activeCopy}
-                                            onChange={(event) =>
-                                                updateCopyDraft(event.target.value)
-                                            }
+                                            onChange={(event) => updateCopyDraft(event.target.value)}
                                             rows={copyChannel === "sms" ? 4 : 11}
                                             className="mt-2 w-full resize-y rounded-xl border border-[#E1E4E8] bg-white px-4 py-3 text-sm font-normal leading-7 text-[#59616D] outline-none transition focus:border-[#B9BA28] focus:ring-2 focus:ring-[#F4F54A]/30"
                                             aria-label={`${copyLabels[copyChannel]} 홍보 문구 편집`}
                                         />
                                     </label>
-                                    <div className="mt-3 rounded-xl bg-[#F7F8FA] px-3 py-3">
-                                        <div className="flex items-center justify-between gap-3">
+                                    <details className="group mt-3 rounded-xl bg-[#F7F8FA] px-3 py-3">
+                                        <summary className="flex cursor-pointer list-none items-center justify-between gap-3 [&::-webkit-details-marker]:hidden">
                                             <span className="text-xs font-medium text-[#667085]">
                                                 이모지 표
                                             </span>
-                                            <span className="text-[11px] text-[#8B95A1]">
-                                                원하는 위치에 직접 넣어보세요
-                                            </span>
-                                        </div>
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                className="h-6 w-6 text-[#BABB25] transition-transform group-open:rotate-180"
+                                                aria-hidden="true"
+                                            >
+                                                <path
+                                                    d="m7 7 5 5 5-5M7 12l5 5 5-5"
+                                                    stroke="currentColor"
+                                                    strokeWidth="2.2"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                />
+                                            </svg>
+                                        </summary>
                                         <div className="mt-2.5 grid grid-cols-5 gap-1.5 sm:grid-cols-10">
                                             {copyEmojiOptions.map((emoji) => (
                                                 <button
@@ -1755,7 +2575,7 @@ export default function EventPromotePage() {
                                                 </button>
                                             ))}
                                         </div>
-                                    </div>
+                                    </details>
                                     <div className="mt-3 flex flex-col gap-2 sm:flex-row">
                                         <button
                                             type="button"

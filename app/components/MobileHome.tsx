@@ -6,9 +6,9 @@ import { useEffect, useRef, useState, type PointerEvent } from "react";
 const menus = [
     { title: "구인", image: "/images/menu/hire.webp", href: "/jobs" },
     {
-        title: "구직",
-        image: "/images/menu/job-seeker.webp",
-        href: "/job-seekers",
+        title: "홍보물 DIY",
+        image: "/images/menu/promote-diy.webp",
+        href: "/events/promote",
     },
     {
         title: "행사·교육",
@@ -179,10 +179,35 @@ function TempleImage() {
     );
 }
 
+let hasShownMobileIntro = false;
+
 export default function MobileHome() {
     const [activeSlide, setActiveSlide] = useState(0);
+    const [showIntro, setShowIntro] = useState(false);
+    const [introLeaving, setIntroLeaving] = useState(false);
+    const introStartedHere = useRef(false);
     const pointerStartX = useRef<number | null>(null);
     const didDrag = useRef(false);
+
+    useEffect(() => {
+        if (!introStartedHere.current) {
+            if (hasShownMobileIntro) return;
+
+            introStartedHere.current = true;
+            hasShownMobileIntro = true;
+        }
+
+        setShowIntro(true);
+        setIntroLeaving(false);
+
+        const fadeTimer = window.setTimeout(() => setIntroLeaving(true), 3000);
+        const hideTimer = window.setTimeout(() => setShowIntro(false), 3500);
+
+        return () => {
+            window.clearTimeout(fadeTimer);
+            window.clearTimeout(hideTimer);
+        };
+    }, []);
 
     useEffect(() => {
         const timer = window.setTimeout(() => {
@@ -231,6 +256,82 @@ export default function MobileHome() {
 
     return (
         <div className="min-h-screen bg-white pb-24 text-[#252A31] md:hidden">
+            {showIntro && (
+                <div
+                    className={`fixed inset-0 z-[100] flex bg-[#F4F54A] px-7 transition-opacity duration-500 ${introLeaving ? "pointer-events-none opacity-0" : "opacity-100"}`}
+                    role="status"
+                    aria-live="polite"
+                    aria-label="연 주요 서비스 안내"
+                >
+                    <div className="my-auto w-full text-[#191F28]">
+                        <div className="flex items-center gap-2.5">
+                            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/85">
+                                <LotusIcon />
+                            </span>
+                            <span className="text-xl font-semibold tracking-[-0.04em]">
+                                연
+                            </span>
+                        </div>
+
+                        <p className="mt-10 text-[15px] font-medium tracking-[-0.02em] text-[#555700]">
+                            템플스테이 · 사찰음식
+                        </p>
+                        <p className="mt-2 text-[48px] font-semibold leading-[0.98] tracking-[-0.07em]">
+                            홍보물 DIY
+                        </p>
+                        <p className="mt-3 text-sm font-medium text-[#555700]">
+                            머물고, 체험하고, 직접 만드는 한국불교 생활
+                        </p>
+
+                        <div className="mt-9 grid grid-cols-3 gap-2.5">
+                            {[
+                                {
+                                    label: "템플스테이",
+                                    image: "/images/hero/temple-stay-novice.webp",
+                                    position: "82% center",
+                                    offset: "mt-7",
+                                    aspect: "aspect-[3/4]",
+                                },
+                                {
+                                    label: "홍보물 DIY",
+                                    image: "/images/promote/promote-other-lotus-novice.webp",
+                                    position: "center",
+                                    offset: "mt-0",
+                                    aspect: "aspect-[2/3]",
+                                },
+                                {
+                                    label: "사찰음식",
+                                    image: "/images/hero/temple-food-real.webp",
+                                    position: "82% center",
+                                    offset: "mt-4",
+                                    aspect: "aspect-[5/7]",
+                                },
+                            ].map((item) => (
+                                <div key={item.label} className={item.offset}>
+                                    <div
+                                        className={`${item.aspect} overflow-hidden rounded-[22px] bg-white/60`}
+                                    >
+                                        <img
+                                            src={item.image}
+                                            alt=""
+                                            className="h-full w-full object-cover"
+                                            style={{ objectPosition: item.position }}
+                                        />
+                                    </div>
+                                    <p className="mt-2 text-center text-[11px] font-semibold tracking-[-0.03em]">
+                                        {item.label}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+
+                        <p className="mt-8 text-center text-xs font-medium text-[#666800]">
+                            한국불교 생활 플랫폼 연
+                        </p>
+                    </div>
+                </div>
+            )}
+
             <header className="sticky top-0 z-30 bg-[#F4F54A]/95 backdrop-blur">
                 <div className="flex h-16 items-center justify-between px-5">
                     <Link
@@ -305,8 +406,8 @@ export default function MobileHome() {
                                         />
                                         <span
                                             className={`absolute inset-0 ${"overlay" in slide
-                                                ? slide.overlay
-                                                : "bg-gradient-to-r from-[#FFFDF8]/58 via-[#FFFDF8]/16 to-transparent"
+                                                    ? slide.overlay
+                                                    : "bg-gradient-to-r from-[#FFFDF8]/58 via-[#FFFDF8]/16 to-transparent"
                                                 }`}
                                             aria-hidden="true"
                                         />
@@ -333,8 +434,8 @@ export default function MobileHome() {
                                 type="button"
                                 onClick={() => setActiveSlide(index)}
                                 className={`h-2 rounded-full transition-all ${activeSlide === index
-                                    ? "w-6 bg-[#191F28]"
-                                    : "w-2 bg-[#191F28]/25"
+                                        ? "w-6 bg-[#191F28]"
+                                        : "w-2 bg-[#191F28]/25"
                                     }`}
                                 aria-label={`${index + 1}번째 소식 보기`}
                             />
@@ -501,7 +602,7 @@ export default function MobileHome() {
                             불교자료 찾아보기
                         </strong>
                     </span>
-                    <span className="text-[#B0B8C1]">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#A1A996]">
                         <ChevronIcon />
                     </span>
                 </Link>
