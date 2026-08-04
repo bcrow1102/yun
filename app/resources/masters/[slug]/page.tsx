@@ -95,11 +95,7 @@ function RecordBadge({ type }: { type: "기록" | "전승" | "연구" }) {
     );
 }
 
-function DeepPage({
-    slug,
-}: {
-    slug: "wonhyo" | "wonkwang" | "gyunyeo";
-}) {
+function DeepPage({ slug }: { slug: "wonhyo" | "wonkwang" | "gyunyeo" }) {
     const article =
         slug === "wonhyo"
             ? wonhyoArticle
@@ -176,27 +172,27 @@ function DeepPage({
 
                 <nav
                     className="sticky top-0 z-20 border-b border-[#E6E8E3] bg-white/95 backdrop-blur"
-                    aria-label={`${master.name} 페이지 목차`}
+                    aria-label={`${master.name} 자료 탭`}
                 >
                     <div className="mx-auto flex max-w-[1000px] gap-1 overflow-x-auto px-5 py-3 md:px-8">
-                        {article.navigation.map((item) => (
-                            <a
-                                key={item.id}
-                                href={`#${item.id}`}
-                                className="shrink-0 rounded-full px-3.5 py-2 text-sm text-[#667085] hover:bg-[#F4F54A] hover:text-[#252A31]"
-                            >
-                                {item.label}
-                            </a>
-                        ))}
-
-                        {master.videos?.length ? (
-                            <a
-                                href="#videos"
-                                className="shrink-0 rounded-full px-3.5 py-2 text-sm text-[#667085] hover:bg-[#F4F54A] hover:text-[#252A31]"
-                            >
-                                다큐·영상
-                            </a>
-                        ) : null}
+                        <Link
+                            href={`/resources/masters/${slug}`}
+                            className="shrink-0 rounded-full px-3.5 py-2 text-sm text-[#667085] hover:bg-[#F4F54A] hover:text-[#252A31]"
+                        >
+                            다큐·영상
+                        </Link>
+                        <Link
+                            href={`/resources/masters/${slug}/illustrations`}
+                            className="shrink-0 rounded-full px-3.5 py-2 text-sm text-[#667085] hover:bg-[#F4F54A] hover:text-[#252A31]"
+                        >
+                            삽화로 보는 일화
+                        </Link>
+                        <Link
+                            href={`/resources/masters/${slug}/academic`}
+                            className="shrink-0 rounded-full px-3.5 py-2 text-sm text-[#667085] hover:bg-[#F4F54A] hover:text-[#252A31]"
+                        >
+                            학술 자료
+                        </Link>
                     </div>
                 </nav>
 
