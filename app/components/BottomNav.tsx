@@ -25,18 +25,18 @@ const navItems = [
     ),
   },
   {
-    id: "seek",
-    label: "구직",
-    href: "/job-seekers",
+    id: "diy",
+    label: "DIY",
+    href: "/events/promote",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor" className="w-6 h-6">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H6.75A1.75 1.75 0 0 0 5 7.75v9.5A1.75 1.75 0 0 0 6.75 19h9.5A1.75 1.75 0 0 0 18 17.25V10.5M14.5 5.5l4 4M13 11l1.1-4.1L17.9 3.1a1.4 1.4 0 0 1 2 2L16.1 8.9 13 11Z" />
       </svg>
     ),
   },
   {
     id: "events",
-    label: "행사",
+    label: "행사·교육",
     href: "/events",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor" className="w-6 h-6">
@@ -45,9 +45,9 @@ const navItems = [
     ),
   },
   {
-    id: "experience",
-    label: "체험",
-    href: "/temples/stay",
+    id: "temples",
+    label: "사찰",
+    href: "/temples/guide",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -70,9 +70,13 @@ const navItems = [
 export default function BottomNav() {
   const pathname = usePathname();
 
-  const isCurrentItem = (href: string) => {
+  const isCurrentItem = (id: string, href: string) => {
     if (href === "/") return pathname === "/";
-    if (href === "/temples/stay") return pathname.startsWith("/temples");
+    if (id === "diy") return pathname.startsWith("/events/promote");
+    if (id === "events") {
+      return pathname.startsWith("/events") && !pathname.startsWith("/events/promote");
+    }
+    if (id === "temples") return pathname.startsWith("/temples");
     return pathname.startsWith(href);
   };
 
@@ -82,7 +86,7 @@ export default function BottomNav() {
     >
       <div className="mx-auto flex max-w-lg items-center px-2 pt-1.5">
         {navItems.map((item) => {
-          const isActive = isCurrentItem(item.href);
+          const isActive = isCurrentItem(item.id, item.href);
           return (
             <Link
               key={item.id}
@@ -101,7 +105,7 @@ export default function BottomNav() {
                 {item.icon}
               </span>
               <span
-                className={`text-[11px] font-medium transition-colors ${isActive ? "text-[#6B7684]" : "text-[#B0B8C1]"
+                className={`whitespace-nowrap font-medium transition-colors ${item.id === "events" ? "text-[10px] tracking-[-0.04em]" : "text-[11px]"} ${isActive ? "text-[#6B7684]" : "text-[#B0B8C1]"
                   }`}
               >
                 {item.label}

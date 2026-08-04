@@ -742,6 +742,14 @@ export default function MobileHome() {
                         <Link href="/temples/stay/new">템플스테이 등록</Link>
                         <Link href="/temples/food/new">사찰음식 등록</Link>
                     </div>
+
+                    <a
+                        href="mailto:bcrow1102@gmail.com"
+                        className="mt-3 inline-flex gap-2 whitespace-nowrap text-xs text-[#2563EB]"
+                    >
+                        <span>이메일 문의</span>
+                        <span>bcrow1102@gmail.com</span>
+                    </a>
                 </div>
 
                 <div className="mt-6 grid grid-cols-2 gap-2.5">

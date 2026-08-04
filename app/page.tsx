@@ -951,7 +951,16 @@ export default function Home() {
               </div>
 
               <div>
-                <h2 className="text-sm font-semibold">문의하기</h2>
+                <div className="flex items-center gap-4">
+                  <h2 className="shrink-0 text-sm font-semibold">문의하기</h2>
+                  <a
+                    href="mailto:bcrow1102@gmail.com"
+                    className="inline-flex gap-2 whitespace-nowrap text-xs font-normal text-[#2563EB]"
+                  >
+                    <span>이메일 문의</span>
+                    <span>bcrow1102@gmail.com</span>
+                  </a>
+                </div>
                 <div className="mt-4 grid grid-cols-2 gap-3">
                   <a
                     href="https://open.kakao.com/o/sulQHJGi"

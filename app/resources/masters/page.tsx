@@ -174,8 +174,9 @@ export default function KoreanMastersPage() {
                 </div>
 
                 {visibleMasters.length > 0 ? (
+                    <>
                     <div className="mt-5 grid gap-4 md:grid-cols-3">
-                        {visibleMasters.map((master) =>
+                        {visibleMasters.slice(0, 3).map((master) =>
                             master.status === "planned" ? (
                                 <article
                                     key={master.slug}
@@ -184,13 +185,19 @@ export default function KoreanMastersPage() {
                                     <span className="absolute inset-y-5 left-0 w-1 rounded-r-full bg-[#ECEF88]" />
 
                                     <div className="flex items-start justify-between gap-3">
-                                        <span className="text-sm font-medium text-[#B0B546]">
-                                            {master.number}
+                                        <span className="flex h-20 w-20 items-center justify-center rounded-[20px] bg-[#F4F6EF] text-[#786B5A]">
+                                            <RoofMark />
                                         </span>
 
-                                        <span className="rounded-full bg-[#F4F5F2] px-2.5 py-1 text-[11px] text-[#929A8C]">
-                                            연재 예정
-                                        </span>
+                                        <div className="text-right">
+                                            <span className="block text-sm font-medium text-[#B0B546]">
+                                                {master.number}
+                                            </span>
+
+                                            <span className="mt-2 inline-flex rounded-full bg-[#F4F5F2] px-2.5 py-1 text-[11px] text-[#929A8C]">
+                                                연재 예정
+                                            </span>
+                                        </div>
                                     </div>
 
                                     <div className="mt-5 flex items-center gap-2 text-xs text-[#777900]">
@@ -288,6 +295,35 @@ export default function KoreanMastersPage() {
                             ),
                         )}
                     </div>
+
+                    {visibleMasters.length > 3 ? (
+                        <section className="mt-10" aria-labelledby="all-masters-title">
+                            <h2
+                                id="all-masters-title"
+                                className="text-sm font-semibold text-[#4E5968]"
+                            >
+                                전체 고승
+                            </h2>
+
+                            <div className="mt-3 grid grid-cols-2 gap-x-5 md:grid-cols-3 md:gap-x-7 lg:grid-cols-5 lg:gap-x-8">
+                                {visibleMasters.slice(3).map((master) => (
+                                    <Link
+                                        key={master.slug}
+                                        href={`/resources/masters/${master.slug}`}
+                                        className="group flex min-h-12 items-center gap-2.5 border-b border-[#E1E4E8] transition-colors hover:border-[#B8BEC7]"
+                                    >
+                                        <span className="shrink-0 text-xs tabular-nums text-[#B0B8C1]">
+                                            {master.number.padStart(2, "0")}
+                                        </span>
+                                        <span className="truncate text-sm font-medium text-[#343B45] transition-colors group-hover:text-[#171B22]">
+                                            {master.name}
+                                        </span>
+                                    </Link>
+                                ))}
+                            </div>
+                        </section>
+                    ) : null}
+                    </>
                 ) : (
                     <div className="mt-5 rounded-[24px] border border-dashed border-[#D8DCCF] bg-white px-6 py-14 text-center">
                         <p className="text-base font-medium">

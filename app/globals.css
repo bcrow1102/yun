@@ -42,6 +42,20 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* 모바일 한글 단어는 음절 중간에서 끊지 않고, 긴 주소만 필요할 때 감싼다. */
+@media (max-width: 767px) {
+  body {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  button,
+  [role="tab"],
+  nav a {
+    white-space: nowrap;
+  }
+}
+
 button {
   cursor: pointer;
 }
