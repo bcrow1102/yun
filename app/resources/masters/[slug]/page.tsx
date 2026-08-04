@@ -188,6 +188,15 @@ function DeepPage({
                                 {item.label}
                             </a>
                         ))}
+
+                        {master.videos?.length ? (
+                            <a
+                                href="#videos"
+                                className="shrink-0 rounded-full px-3.5 py-2 text-sm text-[#667085] hover:bg-[#F4F54A] hover:text-[#252A31]"
+                            >
+                                다큐·영상
+                            </a>
+                        ) : null}
                     </div>
                 </nav>
 
@@ -411,6 +420,71 @@ function DeepPage({
                         </ol>
                     </section>
 
+                    {master.videos?.length ? (
+                        <section id="videos" className="scroll-mt-24 pt-20">
+                            <SectionTitle
+                                eyebrow="함께 보는 자료"
+                                title="다큐·영상"
+                                description="공식 채널에서 공개한 관련 영상을 연의 인물 자료와 함께 살펴봅니다."
+                            />
+
+                            <div className="mt-8 space-y-6">
+                                {master.videos.map((video) => (
+                                    <article
+                                        key={video.youtubeId}
+                                        className="overflow-hidden rounded-[22px] border border-[#E2E5DF] bg-white"
+                                    >
+                                        <div className="aspect-video bg-black">
+                                            <iframe
+                                                src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}`}
+                                                title={video.title}
+                                                className="h-full w-full"
+                                                loading="lazy"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                referrerPolicy="strict-origin-when-cross-origin"
+                                                allowFullScreen
+                                            />
+                                        </div>
+
+                                        <div className="p-5 md:p-6">
+                                            <div className="flex flex-wrap items-start justify-between gap-3">
+                                                <div>
+                                                    <p className="text-xs text-[#777900]">
+                                                        {video.type ?? "관련 영상"}
+                                                    </p>
+                                                    <h3 className="mt-1.5 text-lg font-medium leading-7 text-[#303641]">
+                                                        {video.title}
+                                                    </h3>
+                                                </div>
+
+                                                {video.duration ? (
+                                                    <span className="shrink-0 rounded-full bg-[#F1F3ED] px-3 py-1.5 text-xs text-[#6D7538]">
+                                                        {video.duration}
+                                                    </span>
+                                                ) : null}
+                                            </div>
+
+                                            <p className="mt-3 text-sm text-[#8B95A1]">
+                                                제작·제공: {video.channel}
+                                            </p>
+
+                                            {video.note ? (
+                                                <p className="mt-4 text-sm font-normal leading-7 text-[#667085]">
+                                                    {video.note}
+                                                </p>
+                                            ) : null}
+
+                                            <p className="mt-4 border-t border-[#ECEEE9] pt-4 text-xs leading-5 text-[#8B95A1]">
+                                                영상은 원 게시자의 유튜브 플레이어를 통해 제공되며,
+                                                저작권과 운영 권한은 해당 제작자와 채널에 있습니다.
+                                            </p>
+                                        </div>
+                                    </article>
+                                ))}
+                            </div>
+                        </section>
+                    ) : null}
+
                     <section id="sources" className="scroll-mt-24 pt-20">
                         <SectionTitle
                             eyebrow="검토 자료"
@@ -571,6 +645,71 @@ function SummaryPage({ slug }: { slug: string }) {
                             </div>
                         </section>
                     ))}
+                    {master.videos?.length ? (
+                        <section id="videos" className="scroll-mt-24 pt-16">
+                            <SectionTitle
+                                eyebrow="함께 보는 자료"
+                                title="다큐·영상"
+                                description="공식 채널에서 공개한 관련 영상을 연의 인물 자료와 함께 살펴봅니다."
+                            />
+
+                            <div className="mt-8 space-y-6">
+                                {master.videos.map((video) => (
+                                    <article
+                                        key={video.youtubeId}
+                                        className="overflow-hidden rounded-[22px] border border-[#E2E5DF] bg-white"
+                                    >
+                                        <div className="aspect-video bg-black">
+                                            <iframe
+                                                src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}`}
+                                                title={video.title}
+                                                className="h-full w-full"
+                                                loading="lazy"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                referrerPolicy="strict-origin-when-cross-origin"
+                                                allowFullScreen
+                                            />
+                                        </div>
+
+                                        <div className="p-5 md:p-6">
+                                            <div className="flex flex-wrap items-start justify-between gap-3">
+                                                <div>
+                                                    <p className="text-xs text-[#777900]">
+                                                        {video.type ?? "관련 영상"}
+                                                    </p>
+                                                    <h3 className="mt-1.5 text-lg font-medium leading-7 text-[#303641]">
+                                                        {video.title}
+                                                    </h3>
+                                                </div>
+
+                                                {video.duration ? (
+                                                    <span className="shrink-0 rounded-full bg-[#F1F3ED] px-3 py-1.5 text-xs text-[#6D7538]">
+                                                        {video.duration}
+                                                    </span>
+                                                ) : null}
+                                            </div>
+
+                                            <p className="mt-3 text-sm text-[#8B95A1]">
+                                                제작·제공: {video.channel}
+                                            </p>
+
+                                            {video.note ? (
+                                                <p className="mt-4 text-sm font-normal leading-7 text-[#667085]">
+                                                    {video.note}
+                                                </p>
+                                            ) : null}
+
+                                            <p className="mt-4 border-t border-[#ECEEE9] pt-4 text-xs leading-5 text-[#8B95A1]">
+                                                영상은 원 게시자의 유튜브 플레이어를 통해 제공되며,
+                                                저작권과 운영 권한은 해당 제작자와 채널에 있습니다.
+                                            </p>
+                                        </div>
+                                    </article>
+                                ))}
+                            </div>
+                        </section>
+                    ) : null}
+
                     <p className="mt-12 rounded-[20px] bg-[#F1F3ED] px-5 py-5 text-sm leading-7 text-[#66705C]">
                         이 인물의 심화 연표·원문·출전은 차례로 보완하고 있습니다.
                     </p>

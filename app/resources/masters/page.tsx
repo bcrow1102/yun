@@ -182,8 +182,8 @@ export default function KoreanMastersPage() {
                             type="button"
                             onClick={() => setEra(item.key)}
                             className={`shrink-0 rounded-full px-4 py-2.5 text-sm font-medium transition ${era === item.key
-                                    ? "bg-[#F4F54A] text-[#252A31]"
-                                    : "border border-[#E1E4E8] bg-white text-[#737B87] hover:border-[#C9CC73]"
+                                ? "bg-[#F4F54A] text-[#252A31]"
+                                : "border border-[#E1E4E8] bg-white text-[#737B87] hover:border-[#C9CC73]"
                                 }`}
                         >
                             {item.label}
@@ -210,44 +210,79 @@ export default function KoreanMastersPage() {
                 {visibleMasters.length > 0 ? (
                     <>
                         {representativeMaster ? (
-                            <Link
-                                href={`/resources/masters/${representativeMaster.slug}`}
-                                className="group relative mt-5 flex flex-col gap-5 overflow-hidden rounded-[24px] border border-[#D9DDC9] bg-white p-5 shadow-[0_8px_24px_rgba(25,31,40,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#CFD277] hover:shadow-[0_14px_30px_rgba(25,31,40,0.08)] sm:flex-row md:items-center md:gap-7 md:p-7"
-                            >
+                            <article className="group relative mt-5 overflow-hidden rounded-[24px] border border-[#D9DDC9] bg-white shadow-[0_8px_24px_rgba(25,31,40,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#CFD277] hover:shadow-[0_14px_30px_rgba(25,31,40,0.08)]">
                                 <span className="absolute inset-y-5 left-0 w-1 rounded-r-full bg-[#F4F54A]" />
 
-                                <MasterPortrait master={representativeMaster} />
+                                <div className="flex flex-col gap-5 p-5 sm:flex-row md:items-center md:gap-7 md:p-7">
+                                    <Link
+                                        href={`/resources/masters/${representativeMaster.slug}`}
+                                        className="flex min-w-0 flex-1 flex-col gap-5 sm:flex-row md:items-center md:gap-7"
+                                    >
+                                        <MasterPortrait master={representativeMaster} />
 
-                                <div className="min-w-0 flex-1">
-                                    <div className="flex flex-wrap items-center gap-2 text-xs text-[#777900]">
-                                        <span>{representativeMaster.eraLabel}</span>
-                                        <span className="text-[#CDD0D5]">·</span>
-                                        <span>{representativeMaster.years}</span>
-                                    </div>
+                                        <div className="min-w-0 flex-1">
+                                            <div className="flex flex-wrap items-center gap-2 text-xs text-[#777900]">
+                                                <span>{representativeMaster.eraLabel}</span>
+                                                <span className="text-[#CDD0D5]">·</span>
+                                                <span>{representativeMaster.years}</span>
+                                            </div>
 
-                                    <div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                                        <h3 className="text-[24px] font-semibold tracking-[-0.035em] md:text-[28px]">
-                                            {representativeMaster.name}
-                                        </h3>
-                                        <span className="text-sm text-[#8B95A1]">
-                                            {representativeMaster.hanja}
+                                            <div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                                                <h3 className="text-[24px] font-semibold tracking-[-0.035em] md:text-[28px]">
+                                                    {representativeMaster.name}
+                                                </h3>
+                                                <span className="text-sm text-[#8B95A1]">
+                                                    {representativeMaster.hanja}
+                                                </span>
+                                            </div>
+
+                                            <p className="mt-2 text-sm text-[#81765F]">
+                                                {representativeMaster.theme}
+                                            </p>
+
+                                            <p className="mt-3 max-w-[720px] text-sm font-normal leading-6 text-[#667085] md:text-[15px] md:leading-7">
+                                                {representativeMaster.introduction}
+                                            </p>
+
+                                            <span className="mt-5 inline-flex items-center gap-1 rounded-full bg-[#F7F8FA] px-3 py-2 text-xs text-[#68713A] transition group-hover:bg-[#F4F54A] group-hover:text-[#252A31]">
+                                                이야기 읽기
+                                                <span aria-hidden="true">→</span>
+                                            </span>
+                                        </div>
+                                    </Link>
+
+                                    <div className="flex shrink-0 flex-row gap-2 sm:w-[118px] sm:flex-col sm:items-end">
+                                        <span className="inline-flex rounded-full bg-[#F1F3DD] px-3 py-1.5 text-xs text-[#717727]">
+                                            {representativeMaster.status === "deep"
+                                                ? "심화 공개"
+                                                : representativeMaster.status === "summary"
+                                                    ? "요약 공개"
+                                                    : "연재 예정"}
                                         </span>
+
+                                        {representativeMaster.videos?.length ? (
+                                            <Link
+                                                href={`/resources/masters/${representativeMaster.slug}#videos`}
+                                                className="inline-flex items-center gap-1.5 rounded-full border border-[#E1E4D8] bg-white px-3 py-1.5 text-xs text-[#596270] transition hover:border-[#D6D96A] hover:bg-[#FDFDC7] hover:text-[#252A31]"
+                                                aria-label={`${representativeMaster.name} 영상자료 ${representativeMaster.videos.length}편 보기`}
+                                            >
+                                                <svg
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    className="h-3.5 w-3.5"
+                                                    aria-hidden="true"
+                                                >
+                                                    <path
+                                                        d="M9 7.5v9l7-4.5-7-4.5Z"
+                                                        fill="currentColor"
+                                                    />
+                                                </svg>
+                                                영상자료 {representativeMaster.videos.length}
+                                            </Link>
+                                        ) : null}
                                     </div>
-
-                                    <p className="mt-2 text-sm text-[#81765F]">
-                                        {representativeMaster.theme}
-                                    </p>
-
-                                    <p className="mt-3 max-w-[720px] text-sm font-normal leading-6 text-[#667085] md:text-[15px] md:leading-7">
-                                        {representativeMaster.introduction}
-                                    </p>
-
-                                    <span className="mt-5 inline-flex items-center gap-1 rounded-full bg-[#F7F8FA] px-3 py-2 text-xs text-[#68713A] transition group-hover:bg-[#F4F54A] group-hover:text-[#252A31]">
-                                        이야기 읽기
-                                        <span aria-hidden="true">→</span>
-                                    </span>
                                 </div>
-                            </Link>
+                            </article>
                         ) : (
                             <div className="mt-5 grid gap-4 md:grid-cols-3">
                                 {visibleMasters.slice(0, 3).map((master, index) =>
@@ -293,77 +328,111 @@ export default function KoreanMastersPage() {
                                             </p>
                                         </article>
                                     ) : (
-                                        <Link
+                                        <article
                                             key={master.slug}
-                                            href={`/resources/masters/${master.slug}`}
-                                            className={`group relative block overflow-hidden rounded-[24px] border border-[#D9DDC9] bg-white p-5 shadow-[0_8px_24px_rgba(25,31,40,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#CFD277] hover:shadow-[0_14px_30px_rgba(25,31,40,0.08)] md:p-6 ${index > 0 ? "hidden md:block" : ""}`}
+                                            className={`group relative overflow-hidden rounded-[24px] border border-[#D9DDC9] bg-white p-5 shadow-[0_8px_24px_rgba(25,31,40,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#CFD277] hover:shadow-[0_14px_30px_rgba(25,31,40,0.08)] md:p-6 ${index > 0 ? "hidden md:block" : ""}`}
                                         >
                                             <span className="absolute inset-y-5 left-0 w-1 rounded-r-full bg-[#F4F54A]" />
 
                                             <div className="flex items-start justify-between gap-4">
-                                                {master.slug === "wonhyo" ||
-                                                    master.slug === "wonkwang" ? (
-                                                    <span className="h-20 w-20 overflow-hidden rounded-[20px] bg-[#F4F6EF]">
-                                                        <img
-                                                            src={`/images/masters/${master.slug}-card.webp`}
-                                                            alt={
-                                                                master.slug === "wonhyo"
-                                                                    ? "전해지는 원효대사 초상"
-                                                                    : "원광법사가 귀산과 추항에게 세속오계를 전하는 장면"
-                                                            }
-                                                            className="h-full w-full object-cover"
-                                                        />
-                                                    </span>
-                                                ) : (
-                                                    <span className="flex h-20 w-20 items-center justify-center rounded-[20px] bg-[#F4F6EF] text-[#786B5A]">
-                                                        <RoofMark />
-                                                    </span>
-                                                )}
+                                                <Link
+                                                    href={`/resources/masters/${master.slug}`}
+                                                    className="min-w-0 flex-1"
+                                                >
+                                                    {master.slug === "wonhyo" ||
+                                                        master.slug === "wonkwang" ? (
+                                                        <span className="block h-20 w-20 overflow-hidden rounded-[20px] bg-[#F4F6EF]">
+                                                            <img
+                                                                src={`/images/masters/${master.slug}-card.webp`}
+                                                                alt={
+                                                                    master.slug === "wonhyo"
+                                                                        ? "전해지는 원효대사 초상"
+                                                                        : "원광법사가 귀산과 추항에게 세속오계를 전하는 장면"
+                                                                }
+                                                                className="h-full w-full object-cover"
+                                                            />
+                                                        </span>
+                                                    ) : (
+                                                        <span className="flex h-20 w-20 items-center justify-center rounded-[20px] bg-[#F4F6EF] text-[#786B5A]">
+                                                            <RoofMark />
+                                                        </span>
+                                                    )}
+                                                </Link>
 
-                                                <div className="text-right">
+                                                <div className="shrink-0 text-right">
                                                     <span className="block text-sm font-medium text-[#A0A60B]">
                                                         {master.number}
                                                     </span>
 
-                                                    <span className="mt-2 inline-flex rounded-full bg-[#F1F3DD] px-2.5 py-1 text-[11px] text-[#717727]">
-                                                        {master.status === "deep"
-                                                            ? "심화 공개"
-                                                            : "요약 공개"}
-                                                    </span>
+                                                    <div className="mt-2 flex flex-col items-end gap-1.5">
+                                                        <span className="inline-flex rounded-full bg-[#F1F3DD] px-2.5 py-1 text-[11px] text-[#717727]">
+                                                            {master.status === "deep"
+                                                                ? "심화 공개"
+                                                                : "요약 공개"}
+                                                        </span>
+
+                                                        {master.videos?.length ? (
+                                                            <Link
+                                                                href={`/resources/masters/${master.slug}#videos`}
+                                                                className="inline-flex items-center gap-1 rounded-full border border-[#E1E4D8] bg-white px-2.5 py-1 text-[11px] text-[#596270] transition hover:border-[#D6D96A] hover:bg-[#FDFDC7] hover:text-[#252A31]"
+                                                                aria-label={`${master.name} 영상자료 ${master.videos.length}편 보기`}
+                                                            >
+                                                                <svg
+                                                                    viewBox="0 0 24 24"
+                                                                    fill="none"
+                                                                    className="h-3 w-3"
+                                                                    aria-hidden="true"
+                                                                >
+                                                                    <path
+                                                                        d="M9 7.5v9l7-4.5-7-4.5Z"
+                                                                        fill="currentColor"
+                                                                    />
+                                                                </svg>
+                                                                영상자료 {master.videos.length}
+                                                            </Link>
+                                                        ) : null}
+                                                    </div>
                                                 </div>
                                             </div>
 
-                                            <div className="mt-5 flex items-center gap-2 text-xs text-[#777900]">
-                                                <span>{master.eraLabel}</span>
-                                                <span className="text-[#CDD0D5]">·</span>
-                                                <span>{master.years}</span>
-                                            </div>
+                                            <Link
+                                                href={`/resources/masters/${master.slug}`}
+                                                className="mt-5 block"
+                                            >
+                                                <div className="flex items-center gap-2 text-xs text-[#777900]">
+                                                    <span>{master.eraLabel}</span>
+                                                    <span className="text-[#CDD0D5]">·</span>
+                                                    <span>{master.years}</span>
+                                                </div>
 
-                                            <h3 className="mt-2 text-[23px] font-semibold tracking-[-0.035em]">
-                                                {master.name}
-                                            </h3>
+                                                <h3 className="mt-2 text-[23px] font-semibold tracking-[-0.035em]">
+                                                    {master.name}
+                                                </h3>
 
-                                            <p className="mt-2 text-sm text-[#81765F]">
-                                                {master.theme}
-                                            </p>
-
-                                            <p className="mt-4 text-sm font-normal leading-6 text-[#667085]">
-                                                {master.introduction}
-                                            </p>
-
-                                            <div className="mt-5 border-t border-[#ECEEE9] pt-4">
-                                                <p className="text-xs text-[#8B95A1]">관련 지역·도량</p>
-
-                                                <p className="mt-1 text-sm text-[#4E5968]">
-                                                    {master.place}
+                                                <p className="mt-2 text-sm text-[#81765F]">
+                                                    {master.theme}
                                                 </p>
-                                            </div>
 
-                                            <span className="mt-5 inline-flex items-center gap-1 rounded-full bg-[#F7F8FA] px-3 py-2 text-xs text-[#68713A] transition group-hover:bg-[#F4F54A] group-hover:text-[#252A31]">
-                                                이야기 읽기
-                                                <span aria-hidden="true">→</span>
-                                            </span>
-                                        </Link>
+                                                <p className="mt-4 text-sm font-normal leading-6 text-[#667085]">
+                                                    {master.introduction}
+                                                </p>
+
+                                                <div className="mt-5 border-t border-[#ECEEE9] pt-4">
+                                                    <p className="text-xs text-[#8B95A1]">
+                                                        관련 지역·도량
+                                                    </p>
+
+                                                    <p className="mt-1 text-sm text-[#4E5968]">
+                                                        {master.place}
+                                                    </p>
+                                                </div>
+
+                                                <span className="mt-5 inline-flex items-center gap-1 rounded-full bg-[#F7F8FA] px-3 py-2 text-xs text-[#68713A] transition group-hover:bg-[#F4F54A] group-hover:text-[#252A31]">
+                                                    이야기 읽기
+                                                    <span aria-hidden="true">→</span>
+                                                </span>
+                                            </Link>
+                                        </article>
                                     ),
                                 )}
                             </div>

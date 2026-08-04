@@ -6,6 +6,15 @@ export type MasterSection = {
     paragraphs: string[];
 };
 
+export type MasterVideo = {
+    title: string;
+    channel: string;
+    youtubeId: string;
+    duration?: string;
+    type?: string;
+    note?: string;
+};
+
 export type Master = {
     slug: string;
     number: string;
@@ -19,6 +28,7 @@ export type Master = {
     place: string;
     introduction: string;
     sections: MasterSection[];
+    videos?: MasterVideo[];
 };
 
 type PlannedMaster = Omit<Master, "status" | "sections">;
@@ -97,6 +107,16 @@ export const masters: Master[] = [
         place: "경산·경주를 비롯한 신라 전역",
         introduction:
             "서로 다른 가르침이 더 큰 관점에서 조화를 이룰 수 있음을 밝히고, 불교를 백성의 삶 가까이 전한 사상가입니다.",
+        videos: [
+            {
+                title: "90분만에 알아보는 원효스님의 생애",
+                channel: "한국불교 대표방송 BTN",
+                youtubeId: "SFmeflzMoLc",
+                duration: "약 90분",
+                type: "고승전",
+                note: "원효의 생애와 주요 일화를 장편으로 살펴보는 BTN 공식 영상입니다.",
+            },
+        ],
         sections: [
             {
                 title: "시대와 생애",
