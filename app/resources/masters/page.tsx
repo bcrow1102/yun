@@ -176,11 +176,11 @@ export default function KoreanMastersPage() {
                 {visibleMasters.length > 0 ? (
                     <>
                     <div className="mt-5 grid gap-4 md:grid-cols-3">
-                        {visibleMasters.slice(0, 3).map((master) =>
+                        {visibleMasters.slice(0, 3).map((master, index) =>
                             master.status === "planned" ? (
                                 <article
                                     key={master.slug}
-                                    className="relative overflow-hidden rounded-[22px] border border-[#E3E6E0] bg-white p-5"
+                                    className={`relative overflow-hidden rounded-[22px] border border-[#E3E6E0] bg-white p-5 ${index > 0 ? "hidden md:block" : ""}`}
                                 >
                                     <span className="absolute inset-y-5 left-0 w-1 rounded-r-full bg-[#ECEF88]" />
 
@@ -222,7 +222,7 @@ export default function KoreanMastersPage() {
                                 <Link
                                     key={master.slug}
                                     href={`/resources/masters/${master.slug}`}
-                                    className="group relative block overflow-hidden rounded-[24px] border border-[#D9DDC9] bg-white p-5 shadow-[0_8px_24px_rgba(25,31,40,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#CFD277] hover:shadow-[0_14px_30px_rgba(25,31,40,0.08)] md:p-6"
+                                    className={`group relative block overflow-hidden rounded-[24px] border border-[#D9DDC9] bg-white p-5 shadow-[0_8px_24px_rgba(25,31,40,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#CFD277] hover:shadow-[0_14px_30px_rgba(25,31,40,0.08)] md:p-6 ${index > 0 ? "hidden md:block" : ""}`}
                                 >
                                     <span className="absolute inset-y-5 left-0 w-1 rounded-r-full bg-[#F4F54A]" />
 
@@ -296,8 +296,36 @@ export default function KoreanMastersPage() {
                         )}
                     </div>
 
+                    {visibleMasters.length > 1 ? (
+                        <section className="mt-10 md:hidden" aria-labelledby="mobile-all-masters-title">
+                            <h2
+                                id="mobile-all-masters-title"
+                                className="text-sm font-semibold text-[#4E5968]"
+                            >
+                                전체 고승
+                            </h2>
+
+                            <div className="mt-3 grid grid-cols-2 gap-x-5 md:grid-cols-3 md:gap-x-7 lg:grid-cols-5 lg:gap-x-8">
+                                {visibleMasters.slice(1).map((master) => (
+                                    <Link
+                                        key={master.slug}
+                                        href={`/resources/masters/${master.slug}`}
+                                        className="group flex min-h-12 items-center gap-2.5 border-b border-[#E1E4E8] transition-colors hover:border-[#B8BEC7]"
+                                    >
+                                        <span className="shrink-0 text-xs tabular-nums text-[#B0B8C1]">
+                                            {master.number.padStart(2, "0")}
+                                        </span>
+                                        <span className="truncate text-sm font-medium text-[#343B45] transition-colors group-hover:text-[#171B22]">
+                                            {master.name}
+                                        </span>
+                                    </Link>
+                                ))}
+                            </div>
+                        </section>
+                    ) : null}
+
                     {visibleMasters.length > 3 ? (
-                        <section className="mt-10" aria-labelledby="all-masters-title">
+                        <section className="mt-10 hidden md:block" aria-labelledby="all-masters-title">
                             <h2
                                 id="all-masters-title"
                                 className="text-sm font-semibold text-[#4E5968]"

@@ -183,21 +183,20 @@ let hasShownMobileIntro = false;
 
 export default function MobileHome() {
     const [activeSlide, setActiveSlide] = useState(0);
-    const [showIntro, setShowIntro] = useState(false);
+    const [showIntro, setShowIntro] = useState(() => !hasShownMobileIntro);
     const [introLeaving, setIntroLeaving] = useState(false);
     const introStartedHere = useRef(false);
     const pointerStartX = useRef<number | null>(null);
     const didDrag = useRef(false);
 
     useEffect(() => {
-        if (!introStartedHere.current) {
-            if (hasShownMobileIntro) return;
+        if (!showIntro) return;
 
+        if (!introStartedHere.current) {
             introStartedHere.current = true;
             hasShownMobileIntro = true;
         }
 
-        setShowIntro(true);
         setIntroLeaving(false);
 
         const fadeTimer = window.setTimeout(() => setIntroLeaving(true), 3000);
@@ -207,7 +206,7 @@ export default function MobileHome() {
             window.clearTimeout(fadeTimer);
             window.clearTimeout(hideTimer);
         };
-    }, []);
+    }, [showIntro]);
 
     useEffect(() => {
         const timer = window.setTimeout(() => {
