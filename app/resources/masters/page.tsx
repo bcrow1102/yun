@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { masters, type EraKey } from "./data";
+import { masters, type EraKey, type Master } from "./data";
 
 type EraFilter = "all" | EraKey;
 
@@ -14,14 +14,16 @@ const eras: { key: EraFilter; label: string }[] = [
     { key: "modern", label: "근현대" },
 ];
 
+const representativeSlugs: Record<EraKey, string> = {
+    silla: "wonhyo",
+    goryeo: "gyunyeo",
+    joseon: "gihwa",
+    modern: "mangong",
+};
+
 function LotusMark() {
     return (
-        <svg
-            viewBox="0 0 32 32"
-            fill="none"
-            className="h-6 w-6"
-            aria-hidden="true"
-        >
+        <svg viewBox="0 0 32 32" fill="none" className="h-6 w-6" aria-hidden="true">
             <path
                 d="M16 24c-4-4.1-5.2-8.2 0-15 5.2 6.8 4 10.9 0 15Z"
                 stroke="currentColor"
@@ -85,12 +87,49 @@ function RoofMark() {
     );
 }
 
+function MasterPortrait({ master }: { master: Master }) {
+    const [hasError, setHasError] = useState(false);
+
+    return (
+        <span className="relative flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-[22px] bg-[#F4F6EF] text-[#786B5A] md:h-40 md:w-40">
+            {!hasError ? (
+                <img
+                    src={`/images/masters/${master.slug}-card.webp`}
+                    alt={`${master.name} 화상`}
+                    className="h-full w-full object-cover"
+                    onError={() => setHasError(true)}
+                />
+            ) : (
+                <RoofMark />
+            )}
+        </span>
+    );
+}
+
 export default function KoreanMastersPage() {
     const [era, setEra] = useState<EraFilter>("all");
 
     const visibleMasters = useMemo(
         () => masters.filter((master) => era === "all" || master.era === era),
         [era],
+    );
+
+    const representativeMaster = useMemo(
+        () =>
+            era === "all"
+                ? undefined
+                : masters.find((master) => master.slug === representativeSlugs[era]),
+        [era],
+    );
+
+    const remainingMasters = useMemo(
+        () =>
+            representativeMaster
+                ? visibleMasters.filter(
+                    (master) => master.slug !== representativeMaster.slug,
+                )
+                : visibleMasters,
+        [representativeMaster, visibleMasters],
     );
 
     return (
@@ -136,18 +175,15 @@ export default function KoreanMastersPage() {
             </section>
 
             <section className="mx-auto max-w-[1180px] px-5 py-8 md:px-8 md:py-12">
-                <div
-                    className="flex gap-2 overflow-x-auto pb-2"
-                    aria-label="시대 선택"
-                >
+                <div className="flex gap-2 overflow-x-auto pb-2" aria-label="시대 선택">
                     {eras.map((item) => (
                         <button
                             key={item.key}
                             type="button"
                             onClick={() => setEra(item.key)}
                             className={`shrink-0 rounded-full px-4 py-2.5 text-sm font-medium transition ${era === item.key
-                                ? "bg-[#F4F54A] text-[#252A31]"
-                                : "border border-[#E1E4E8] bg-white text-[#737B87] hover:border-[#C9CC73]"
+                                    ? "bg-[#F4F54A] text-[#252A31]"
+                                    : "border border-[#E1E4E8] bg-white text-[#737B87] hover:border-[#C9CC73]"
                                 }`}
                         >
                             {item.label}
@@ -168,189 +204,260 @@ export default function KoreanMastersPage() {
                         </h2>
                     </div>
 
-                    <span className="text-xs text-[#9AA1AB]">
-                        28인 연재 목록
-                    </span>
+                    <span className="text-xs text-[#9AA1AB]">28인 연재 목록</span>
                 </div>
 
                 {visibleMasters.length > 0 ? (
                     <>
-                    <div className="mt-5 grid gap-4 md:grid-cols-3">
-                        {visibleMasters.slice(0, 3).map((master, index) =>
-                            master.status === "planned" ? (
-                                <article
-                                    key={master.slug}
-                                    className={`relative overflow-hidden rounded-[22px] border border-[#E3E6E0] bg-white p-5 ${index > 0 ? "hidden md:block" : ""}`}
-                                >
-                                    <span className="absolute inset-y-5 left-0 w-1 rounded-r-full bg-[#ECEF88]" />
+                        {representativeMaster ? (
+                            <Link
+                                href={`/resources/masters/${representativeMaster.slug}`}
+                                className="group relative mt-5 flex flex-col gap-5 overflow-hidden rounded-[24px] border border-[#D9DDC9] bg-white p-5 shadow-[0_8px_24px_rgba(25,31,40,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#CFD277] hover:shadow-[0_14px_30px_rgba(25,31,40,0.08)] sm:flex-row md:items-center md:gap-7 md:p-7"
+                            >
+                                <span className="absolute inset-y-5 left-0 w-1 rounded-r-full bg-[#F4F54A]" />
 
-                                    <div className="flex items-start justify-between gap-3">
-                                        <span className="flex h-20 w-20 items-center justify-center rounded-[20px] bg-[#F4F6EF] text-[#786B5A]">
-                                            <RoofMark />
+                                <MasterPortrait master={representativeMaster} />
+
+                                <div className="min-w-0 flex-1">
+                                    <div className="flex flex-wrap items-center gap-2 text-xs text-[#777900]">
+                                        <span>{representativeMaster.eraLabel}</span>
+                                        <span className="text-[#CDD0D5]">·</span>
+                                        <span>{representativeMaster.years}</span>
+                                    </div>
+
+                                    <div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                                        <h3 className="text-[24px] font-semibold tracking-[-0.035em] md:text-[28px]">
+                                            {representativeMaster.name}
+                                        </h3>
+                                        <span className="text-sm text-[#8B95A1]">
+                                            {representativeMaster.hanja}
                                         </span>
-
-                                        <div className="text-right">
-                                            <span className="block text-sm font-medium text-[#B0B546]">
-                                                {master.number}
-                                            </span>
-
-                                            <span className="mt-2 inline-flex rounded-full bg-[#F4F5F2] px-2.5 py-1 text-[11px] text-[#929A8C]">
-                                                연재 예정
-                                            </span>
-                                        </div>
                                     </div>
-
-                                    <div className="mt-5 flex items-center gap-2 text-xs text-[#777900]">
-                                        <span>{master.eraLabel}</span>
-                                        <span className="text-[#CDD0D5]">·</span>
-                                        <span>{master.years}</span>
-                                    </div>
-
-                                    <h3 className="mt-2 text-[21px] font-semibold tracking-[-0.035em]">
-                                        {master.name}
-                                    </h3>
 
                                     <p className="mt-2 text-sm text-[#81765F]">
-                                        {master.theme}
+                                        {representativeMaster.theme}
                                     </p>
 
-                                    <p className="mt-4 text-sm font-normal leading-6 text-[#77808C]">
-                                        {master.introduction}
+                                    <p className="mt-3 max-w-[720px] text-sm font-normal leading-6 text-[#667085] md:text-[15px] md:leading-7">
+                                        {representativeMaster.introduction}
                                     </p>
-                                </article>
-                            ) : (
-                                <Link
-                                    key={master.slug}
-                                    href={`/resources/masters/${master.slug}`}
-                                    className={`group relative block overflow-hidden rounded-[24px] border border-[#D9DDC9] bg-white p-5 shadow-[0_8px_24px_rgba(25,31,40,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#CFD277] hover:shadow-[0_14px_30px_rgba(25,31,40,0.08)] md:p-6 ${index > 0 ? "hidden md:block" : ""}`}
-                                >
-                                    <span className="absolute inset-y-5 left-0 w-1 rounded-r-full bg-[#F4F54A]" />
-
-                                    <div className="flex items-start justify-between gap-4">
-                                        {master.slug === "wonhyo" ||
-                                            master.slug === "wonkwang" ? (
-                                            <span className="h-20 w-20 overflow-hidden rounded-[20px] bg-[#F4F6EF]">
-                                                <img
-                                                    src={`/images/masters/${master.slug}-card.webp`}
-                                                    alt={
-                                                        master.slug === "wonhyo"
-                                                            ? "전해지는 원효대사 초상"
-                                                            : "원광법사가 귀산과 추항에게 세속오계를 전하는 장면"
-                                                    }
-                                                    className="h-full w-full object-cover"
-                                                />
-                                            </span>
-                                        ) : (
-                                            <span className="flex h-20 w-20 items-center justify-center rounded-[20px] bg-[#F4F6EF] text-[#786B5A]">
-                                                <RoofMark />
-                                            </span>
-                                        )}
-
-                                        <div className="text-right">
-                                            <span className="block text-sm font-medium text-[#A0A60B]">
-                                                {master.number}
-                                            </span>
-
-                                            <span className="mt-2 inline-flex rounded-full bg-[#F1F3DD] px-2.5 py-1 text-[11px] text-[#717727]">
-                                                {master.status === "deep"
-                                                    ? "심화 공개"
-                                                    : "요약 공개"}
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div className="mt-5 flex items-center gap-2 text-xs text-[#777900]">
-                                        <span>{master.eraLabel}</span>
-                                        <span className="text-[#CDD0D5]">·</span>
-                                        <span>{master.years}</span>
-                                    </div>
-
-                                    <h3 className="mt-2 text-[23px] font-semibold tracking-[-0.035em]">
-                                        {master.name}
-                                    </h3>
-
-                                    <p className="mt-2 text-sm text-[#81765F]">
-                                        {master.theme}
-                                    </p>
-
-                                    <p className="mt-4 text-sm font-normal leading-6 text-[#667085]">
-                                        {master.introduction}
-                                    </p>
-
-                                    <div className="mt-5 border-t border-[#ECEEE9] pt-4">
-                                        <p className="text-xs text-[#8B95A1]">
-                                            관련 지역·도량
-                                        </p>
-
-                                        <p className="mt-1 text-sm text-[#4E5968]">
-                                            {master.place}
-                                        </p>
-                                    </div>
 
                                     <span className="mt-5 inline-flex items-center gap-1 rounded-full bg-[#F7F8FA] px-3 py-2 text-xs text-[#68713A] transition group-hover:bg-[#F4F54A] group-hover:text-[#252A31]">
                                         이야기 읽기
                                         <span aria-hidden="true">→</span>
                                     </span>
-                                </Link>
-                            ),
+                                </div>
+                            </Link>
+                        ) : (
+                            <div className="mt-5 grid gap-4 md:grid-cols-3">
+                                {visibleMasters.slice(0, 3).map((master, index) =>
+                                    master.status === "planned" ? (
+                                        <article
+                                            key={master.slug}
+                                            className={`relative overflow-hidden rounded-[22px] border border-[#E3E6E0] bg-white p-5 ${index > 0 ? "hidden md:block" : ""}`}
+                                        >
+                                            <span className="absolute inset-y-5 left-0 w-1 rounded-r-full bg-[#ECEF88]" />
+
+                                            <div className="flex items-start justify-between gap-3">
+                                                <span className="flex h-20 w-20 items-center justify-center rounded-[20px] bg-[#F4F6EF] text-[#786B5A]">
+                                                    <RoofMark />
+                                                </span>
+
+                                                <div className="text-right">
+                                                    <span className="block text-sm font-medium text-[#B0B546]">
+                                                        {master.number}
+                                                    </span>
+
+                                                    <span className="mt-2 inline-flex rounded-full bg-[#F4F5F2] px-2.5 py-1 text-[11px] text-[#929A8C]">
+                                                        연재 예정
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div className="mt-5 flex items-center gap-2 text-xs text-[#777900]">
+                                                <span>{master.eraLabel}</span>
+                                                <span className="text-[#CDD0D5]">·</span>
+                                                <span>{master.years}</span>
+                                            </div>
+
+                                            <h3 className="mt-2 text-[21px] font-semibold tracking-[-0.035em]">
+                                                {master.name}
+                                            </h3>
+
+                                            <p className="mt-2 text-sm text-[#81765F]">
+                                                {master.theme}
+                                            </p>
+
+                                            <p className="mt-4 text-sm font-normal leading-6 text-[#77808C]">
+                                                {master.introduction}
+                                            </p>
+                                        </article>
+                                    ) : (
+                                        <Link
+                                            key={master.slug}
+                                            href={`/resources/masters/${master.slug}`}
+                                            className={`group relative block overflow-hidden rounded-[24px] border border-[#D9DDC9] bg-white p-5 shadow-[0_8px_24px_rgba(25,31,40,0.05)] transition duration-200 hover:-translate-y-1 hover:border-[#CFD277] hover:shadow-[0_14px_30px_rgba(25,31,40,0.08)] md:p-6 ${index > 0 ? "hidden md:block" : ""}`}
+                                        >
+                                            <span className="absolute inset-y-5 left-0 w-1 rounded-r-full bg-[#F4F54A]" />
+
+                                            <div className="flex items-start justify-between gap-4">
+                                                {master.slug === "wonhyo" ||
+                                                    master.slug === "wonkwang" ? (
+                                                    <span className="h-20 w-20 overflow-hidden rounded-[20px] bg-[#F4F6EF]">
+                                                        <img
+                                                            src={`/images/masters/${master.slug}-card.webp`}
+                                                            alt={
+                                                                master.slug === "wonhyo"
+                                                                    ? "전해지는 원효대사 초상"
+                                                                    : "원광법사가 귀산과 추항에게 세속오계를 전하는 장면"
+                                                            }
+                                                            className="h-full w-full object-cover"
+                                                        />
+                                                    </span>
+                                                ) : (
+                                                    <span className="flex h-20 w-20 items-center justify-center rounded-[20px] bg-[#F4F6EF] text-[#786B5A]">
+                                                        <RoofMark />
+                                                    </span>
+                                                )}
+
+                                                <div className="text-right">
+                                                    <span className="block text-sm font-medium text-[#A0A60B]">
+                                                        {master.number}
+                                                    </span>
+
+                                                    <span className="mt-2 inline-flex rounded-full bg-[#F1F3DD] px-2.5 py-1 text-[11px] text-[#717727]">
+                                                        {master.status === "deep"
+                                                            ? "심화 공개"
+                                                            : "요약 공개"}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div className="mt-5 flex items-center gap-2 text-xs text-[#777900]">
+                                                <span>{master.eraLabel}</span>
+                                                <span className="text-[#CDD0D5]">·</span>
+                                                <span>{master.years}</span>
+                                            </div>
+
+                                            <h3 className="mt-2 text-[23px] font-semibold tracking-[-0.035em]">
+                                                {master.name}
+                                            </h3>
+
+                                            <p className="mt-2 text-sm text-[#81765F]">
+                                                {master.theme}
+                                            </p>
+
+                                            <p className="mt-4 text-sm font-normal leading-6 text-[#667085]">
+                                                {master.introduction}
+                                            </p>
+
+                                            <div className="mt-5 border-t border-[#ECEEE9] pt-4">
+                                                <p className="text-xs text-[#8B95A1]">관련 지역·도량</p>
+
+                                                <p className="mt-1 text-sm text-[#4E5968]">
+                                                    {master.place}
+                                                </p>
+                                            </div>
+
+                                            <span className="mt-5 inline-flex items-center gap-1 rounded-full bg-[#F7F8FA] px-3 py-2 text-xs text-[#68713A] transition group-hover:bg-[#F4F54A] group-hover:text-[#252A31]">
+                                                이야기 읽기
+                                                <span aria-hidden="true">→</span>
+                                            </span>
+                                        </Link>
+                                    ),
+                                )}
+                            </div>
                         )}
-                    </div>
 
-                    {visibleMasters.length > 1 ? (
-                        <section className="mt-10 md:hidden" aria-labelledby="mobile-all-masters-title">
-                            <h2
-                                id="mobile-all-masters-title"
-                                className="text-sm font-semibold text-[#4E5968]"
+                        {era === "all" && visibleMasters.length > 1 ? (
+                            <section
+                                className="mt-10 md:hidden"
+                                aria-labelledby="mobile-all-masters-title"
                             >
-                                전체 고승
-                            </h2>
+                                <h2
+                                    id="mobile-all-masters-title"
+                                    className="text-sm font-semibold text-[#4E5968]"
+                                >
+                                    전체 고승
+                                </h2>
 
-                            <div className="mt-3 grid grid-cols-2 gap-x-5 md:grid-cols-3 md:gap-x-7 lg:grid-cols-5 lg:gap-x-8">
-                                {visibleMasters.slice(1).map((master) => (
-                                    <Link
-                                        key={master.slug}
-                                        href={`/resources/masters/${master.slug}`}
-                                        className="group flex min-h-12 items-center gap-2.5 border-b border-[#E1E4E8] transition-colors hover:border-[#B8BEC7]"
-                                    >
-                                        <span className="shrink-0 text-xs tabular-nums text-[#B0B8C1]">
-                                            {master.number.padStart(2, "0")}
-                                        </span>
-                                        <span className="truncate text-sm font-medium text-[#343B45] transition-colors group-hover:text-[#171B22]">
-                                            {master.name}
-                                        </span>
-                                    </Link>
-                                ))}
-                            </div>
-                        </section>
-                    ) : null}
+                                <div className="mt-3 grid grid-cols-2 gap-x-5 md:grid-cols-3 md:gap-x-7 lg:grid-cols-5 lg:gap-x-8">
+                                    {visibleMasters.slice(1).map((master) => (
+                                        <Link
+                                            key={master.slug}
+                                            href={`/resources/masters/${master.slug}`}
+                                            className="group flex min-h-12 items-center gap-2.5 border-b border-[#E1E4E8] transition-colors hover:border-[#B8BEC7]"
+                                        >
+                                            <span className="shrink-0 text-xs tabular-nums text-[#B0B8C1]">
+                                                {master.number.padStart(2, "0")}
+                                            </span>
+                                            <span className="truncate text-sm font-medium text-[#343B45] transition-colors group-hover:text-[#171B22]">
+                                                {master.name}
+                                            </span>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </section>
+                        ) : null}
 
-                    {visibleMasters.length > 3 ? (
-                        <section className="mt-10 hidden md:block" aria-labelledby="all-masters-title">
-                            <h2
-                                id="all-masters-title"
-                                className="text-sm font-semibold text-[#4E5968]"
+                        {era === "all" && visibleMasters.length > 3 ? (
+                            <section
+                                className="mt-10 hidden md:block"
+                                aria-labelledby="all-masters-title"
                             >
-                                전체 고승
-                            </h2>
+                                <h2
+                                    id="all-masters-title"
+                                    className="text-sm font-semibold text-[#4E5968]"
+                                >
+                                    전체 고승
+                                </h2>
 
-                            <div className="mt-3 grid grid-cols-2 gap-x-5 md:grid-cols-3 md:gap-x-7 lg:grid-cols-5 lg:gap-x-8">
-                                {visibleMasters.slice(3).map((master) => (
-                                    <Link
-                                        key={master.slug}
-                                        href={`/resources/masters/${master.slug}`}
-                                        className="group flex min-h-12 items-center gap-2.5 border-b border-[#E1E4E8] transition-colors hover:border-[#B8BEC7]"
-                                    >
-                                        <span className="shrink-0 text-xs tabular-nums text-[#B0B8C1]">
-                                            {master.number.padStart(2, "0")}
-                                        </span>
-                                        <span className="truncate text-sm font-medium text-[#343B45] transition-colors group-hover:text-[#171B22]">
-                                            {master.name}
-                                        </span>
-                                    </Link>
-                                ))}
-                            </div>
-                        </section>
-                    ) : null}
+                                <div className="mt-3 grid grid-cols-2 gap-x-5 md:grid-cols-3 md:gap-x-7 lg:grid-cols-5 lg:gap-x-8">
+                                    {visibleMasters.slice(3).map((master) => (
+                                        <Link
+                                            key={master.slug}
+                                            href={`/resources/masters/${master.slug}`}
+                                            className="group flex min-h-12 items-center gap-2.5 border-b border-[#E1E4E8] transition-colors hover:border-[#B8BEC7]"
+                                        >
+                                            <span className="shrink-0 text-xs tabular-nums text-[#B0B8C1]">
+                                                {master.number.padStart(2, "0")}
+                                            </span>
+                                            <span className="truncate text-sm font-medium text-[#343B45] transition-colors group-hover:text-[#171B22]">
+                                                {master.name}
+                                            </span>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </section>
+                        ) : null}
+
+                        {era !== "all" && remainingMasters.length > 0 ? (
+                            <section className="mt-10" aria-labelledby="era-masters-title">
+                                <h2
+                                    id="era-masters-title"
+                                    className="text-sm font-semibold text-[#4E5968]"
+                                >
+                                    이 시대의 다른 고승
+                                </h2>
+
+                                <div className="mt-3 grid grid-cols-2 gap-x-5 md:grid-cols-3 md:gap-x-7 lg:grid-cols-5 lg:gap-x-8">
+                                    {remainingMasters.map((master) => (
+                                        <Link
+                                            key={master.slug}
+                                            href={`/resources/masters/${master.slug}`}
+                                            className="group flex min-h-12 items-center gap-2.5 border-b border-[#E1E4E8] transition-colors hover:border-[#B8BEC7]"
+                                        >
+                                            <span className="shrink-0 text-xs tabular-nums text-[#B0B8C1]">
+                                                {master.number.padStart(2, "0")}
+                                            </span>
+                                            <span className="truncate text-sm font-medium text-[#343B45] transition-colors group-hover:text-[#171B22]">
+                                                {master.name}
+                                            </span>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </section>
+                        ) : null}
                     </>
                 ) : (
                     <div className="mt-5 rounded-[24px] border border-dashed border-[#D8DCCF] bg-white px-6 py-14 text-center">
@@ -366,13 +473,11 @@ export default function KoreanMastersPage() {
 
                 <aside className="mt-8 rounded-[22px] bg-[#20242C] px-5 py-6 text-white md:flex md:items-center md:justify-between md:px-7">
                     <div>
-                        <p className="text-xs text-[#D7D96A]">
-                            연의 기록 원칙
-                        </p>
+                        <p className="text-xs text-[#D7D96A]">연의 기록 원칙</p>
 
                         <p className="mt-2 text-sm font-normal leading-6 text-white/75">
-                            역사적 사실, 후대 전승, 민간 설화를 구분하고 원문과
-                            참고자료를 함께 밝힙니다.
+                            역사적 사실, 후대 전승, 민간 설화를 구분하고 원문과 참고자료를
+                            함께 밝힙니다.
                         </p>
                     </div>
 
