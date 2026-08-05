@@ -280,6 +280,41 @@ export default function KoreanMastersPage() {
                                                 영상자료 {representativeMaster.videos.length}
                                             </Link>
                                         ) : null}
+                                        {representativeMaster.slug === "wonhyo" ? (
+                                            <Link
+                                                href="/resources/masters/wonhyo/illustrations"
+                                                className="inline-flex items-center gap-1.5 rounded-full border border-[#E1E4D8] bg-white px-3 py-1.5 text-xs text-[#596270] transition hover:border-[#D6D96A] hover:bg-[#FDFDC7] hover:text-[#252A31]"
+                                                aria-label="원효대사 삽화 일화 3편 보기"
+                                            >
+                                                <svg
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    className="h-3.5 w-3.5"
+                                                    aria-hidden="true"
+                                                >
+                                                    <path
+                                                        d="M5 5.5h14v13H5z"
+                                                        stroke="currentColor"
+                                                        strokeWidth="1.5"
+                                                    />
+                                                    <path
+                                                        d="m7.5 15 3.2-3.4 2.5 2.3 1.9-2 1.4 1.5"
+                                                        stroke="currentColor"
+                                                        strokeWidth="1.5"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                    />
+                                                    <circle
+                                                        cx="15.5"
+                                                        cy="8.8"
+                                                        r="1.2"
+                                                        fill="currentColor"
+                                                    />
+                                                </svg>
+
+                                                삽화 일화 3
+                                            </Link>
+                                        ) : null}
                                     </div>
                                 </div>
                             </article>
