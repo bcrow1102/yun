@@ -1684,7 +1684,12 @@ export default function EventPromotePage() {
         setSelectedElement(key);
         setSelectedLineId(null);
         setTextSelection(null);
-        setEditorTab("style");
+
+        // 내용 입력 중에는 작업 흐름을 유지한다.
+        // 미리보기의 글자를 눌러도 편집 탭으로 강제 이동하지 않는다.
+        if (editorTab !== "content") {
+            setEditorTab("style");
+        }
     };
 
     const applyPartialStyle = (
