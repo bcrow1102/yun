@@ -37,7 +37,7 @@ export default async function MasterAcademicPage({ params }: PageProps) {
 
             <nav className="sticky top-0 z-20 border-b border-[#E6E8E3] bg-white/95 backdrop-blur" aria-label={`${master.name} 자료 탭`}>
                 <div className="mx-auto flex max-w-[900px] gap-1 overflow-x-auto px-5 py-3 md:px-8">
-                    <Link href={`/resources/masters/${slug}`} className="shrink-0 rounded-full px-3.5 py-2 text-sm text-[#667085] hover:bg-[#F4F54A] hover:text-[#252A31]">다큐·영상</Link>
+                    <Link href={`/resources/masters/${slug}#videos`} className="shrink-0 rounded-full px-3.5 py-2 text-sm text-[#667085] hover:bg-[#F4F54A] hover:text-[#252A31]">다큐·영상</Link>
                     <Link href={`/resources/masters/${slug}/illustrations`} className="shrink-0 rounded-full px-3.5 py-2 text-sm text-[#667085] hover:bg-[#F4F54A] hover:text-[#252A31]">삽화로 보는 일화</Link>
                     <Link href={`/resources/masters/${slug}/academic`} className="shrink-0 rounded-full bg-[#F4F54A] px-3.5 py-2 text-sm text-[#252A31]">학술 자료</Link>
                 </div>

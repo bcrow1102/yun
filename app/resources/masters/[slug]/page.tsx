@@ -5,6 +5,7 @@ import { getMaster, masters } from "../data";
 import { wonhyoArticle } from "./articles/wonhyo";
 import { wonkwangArticle } from "./articles/wonkwang";
 import { gyunyeoArticle } from "./articles/gyunyeo";
+import ScrollToHash from "./ScrollToHash";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -108,6 +109,7 @@ function DeepPage({ slug }: { slug: "wonhyo" | "wonkwang" | "gyunyeo" }) {
     return (
         <main className="min-h-screen bg-[#F7F8FA] text-[#171B22]">
             <SiteHeader />
+            <ScrollToHash />
 
             <article>
                 <section className="border-b border-[#E4E7DF] bg-[#F4F6EF]">
@@ -175,12 +177,12 @@ function DeepPage({ slug }: { slug: "wonhyo" | "wonkwang" | "gyunyeo" }) {
                     aria-label={`${master.name} 자료 탭`}
                 >
                     <div className="mx-auto flex max-w-[1000px] gap-1 overflow-x-auto px-5 py-3 md:px-8">
-                        <Link
-                            href={`/resources/masters/${slug}`}
-                            className="shrink-0 rounded-full px-3.5 py-2 text-sm text-[#667085] hover:bg-[#F4F54A] hover:text-[#252A31]"
+                        <a
+                            href="#videos"
+                            className="shrink-0 rounded-full px-3.5 py-2 text-sm text-[#667085] hover:bg-[#F4F54A] hover:text-[#252A31] focus:bg-[#F4F54A] focus:text-[#252A31]"
                         >
                             다큐·영상
-                        </Link>
+                        </a>
                         <Link
                             href={`/resources/masters/${slug}/illustrations`}
                             className="shrink-0 rounded-full px-3.5 py-2 text-sm text-[#667085] hover:bg-[#F4F54A] hover:text-[#252A31]"

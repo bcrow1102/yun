@@ -776,20 +776,24 @@ export default function Home() {
               ))}
 
               <Link
-                href="/stories"
+                href="/events/promote"
                 className="group relative overflow-hidden rounded-[24px] border border-[#E8E99C] bg-[#FFFED7] p-6 transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(25,31,40,0.10)]"
               >
                 <span className="absolute inset-x-0 top-0 h-1 bg-[#F4F54A]" />
                 <span className="flex h-[102px] items-center justify-center">
-                  <BookLotusIcon className="h-[92px] w-[132px]" />
+                  <img
+                    src="/images/menu/promote-diy.webp"
+                    alt=""
+                    className="h-full w-[132px] object-contain"
+                  />
                 </span>
                 <span className="mt-3 flex items-end justify-between gap-3">
                   <span>
                     <strong className="block text-[20px] font-semibold tracking-[-0.03em]">
-                      부처님 이야기
+                      홍보물 DIY
                     </strong>
                     <span className="mt-1 block text-[13px] font-normal text-[#667085]">
-                      삶을 비추는 지혜와 이야기
+                      행사 홍보물을 직접 만들어요
                     </span>
                   </span>
                   <ArrowIcon className="h-5 w-5 shrink-0 text-[#9A9B16] transition group-hover:translate-x-1" />

@@ -39,7 +39,21 @@ type TextKey =
     | "place"
     | "description"
     | "application";
-type SelectedElement = TextKey | "divider";
+type SelectedElement = TextKey | "divider" | "line";
+
+type LineVariant = "solid" | "dashed";
+type LineOrientation = "horizontal" | "vertical";
+type LineInteractionMode = "move" | "start" | "end";
+
+type CustomLine = {
+    id: string;
+    variant: LineVariant;
+    orientation: LineOrientation;
+    start: { x: number; y: number };
+    end: { x: number; y: number };
+    color: string;
+    width: number;
+};
 
 type EditorTab = "content" | "image" | "style" | "copy";
 type CopyKey = "kakao" | "instagram" | "blog" | "youtube" | "sms";
@@ -419,6 +433,21 @@ const initialTextFormats: Record<TextKey, TextFormat> = {
         shadowKey: "soft",
     },
 };
+
+const SAFE_AREA = {
+    left: 0.07,
+    right: 0.93,
+    top: 0.08,
+    bottom: 0.95,
+};
+
+const LINE_MIN_LENGTH = {
+    horizontal: 0.08,
+    vertical: 0.05,
+};
+
+const LINE_DRAW_THRESHOLD = 0.015;
+
 
 type HsvColor = { h: number; s: number; v: number };
 
@@ -899,6 +928,103 @@ function drawRichText(
     );
 }
 
+function clamp(value: number, min: number, max: number) {
+    return Math.min(max, Math.max(min, value));
+}
+
+function normalizeLine(line: CustomLine): CustomLine {
+    if (line.orientation === "horizontal") {
+        const y = clamp(line.start.y, SAFE_AREA.top, SAFE_AREA.bottom);
+        let startX = clamp(line.start.x, SAFE_AREA.left, SAFE_AREA.right);
+        let endX = clamp(line.end.x, SAFE_AREA.left, SAFE_AREA.right);
+
+        if (endX < startX) {
+            [startX, endX] = [endX, startX];
+        }
+
+        if (endX - startX < LINE_MIN_LENGTH.horizontal) {
+            endX = clamp(startX + LINE_MIN_LENGTH.horizontal, SAFE_AREA.left, SAFE_AREA.right);
+        }
+
+        return {
+            ...line,
+            start: { x: startX, y },
+            end: { x: endX, y },
+        };
+    }
+
+    const x = clamp(line.start.x, SAFE_AREA.left, SAFE_AREA.right);
+    let startY = clamp(line.start.y, SAFE_AREA.top, SAFE_AREA.bottom);
+    let endY = clamp(line.end.y, SAFE_AREA.top, SAFE_AREA.bottom);
+
+    if (endY < startY) {
+        [startY, endY] = [endY, startY];
+    }
+
+    if (endY - startY < LINE_MIN_LENGTH.vertical) {
+        endY = clamp(startY + LINE_MIN_LENGTH.vertical, SAFE_AREA.top, SAFE_AREA.bottom);
+    }
+
+    return {
+        ...line,
+        start: { x, y: startY },
+        end: { x, y: endY },
+    };
+}
+
+function lineBounds(line: CustomLine) {
+    const left = Math.min(line.start.x, line.end.x);
+    const right = Math.max(line.start.x, line.end.x);
+    const top = Math.min(line.start.y, line.end.y);
+    const bottom = Math.max(line.start.y, line.end.y);
+
+    return { left, right, top, bottom };
+}
+
+function createLineStyle(line: CustomLine, selected: boolean): CSSProperties {
+    const bounds = lineBounds(line);
+
+    if (line.orientation === "horizontal") {
+        return {
+            left: `${bounds.left * 100}%`,
+            width: `${Math.max((bounds.right - bounds.left) * 100, 1)}%`,
+            top: `calc(${line.start.y * 100}% - 9px)`,
+            height: "18px",
+            cursor: "pointer",
+        };
+    }
+
+    return {
+        left: `calc(${line.start.x * 100}% - 9px)`,
+        width: "18px",
+        top: `${bounds.top * 100}%`,
+        height: `${Math.max((bounds.bottom - bounds.top) * 100, 1)}%`,
+        cursor: "pointer",
+    };
+}
+
+function createLineStrokeStyle(line: CustomLine): CSSProperties {
+    if (line.orientation === "horizontal") {
+        return {
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: "50%",
+            transform: "translateY(-50%)",
+            borderTop: `${line.width}px ${line.variant === "dashed" ? "dashed" : "solid"} ${line.color}`,
+        };
+    }
+
+    return {
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: "50%",
+        transform: "translateX(-50%)",
+        borderLeft: `${line.width}px ${line.variant === "dashed" ? "dashed" : "solid"} ${line.color}`,
+    };
+}
+
 export default function EventPromotePage() {
     const [channel, setChannel] = useState<ChannelKey>("instagram");
 
@@ -938,7 +1064,13 @@ export default function EventPromotePage() {
         color: "#171B22",
         width: 2,
         visible: true,
+        variant: "solid" as LineVariant,
     });
+    const [customLines, setCustomLines] = useState<CustomLine[]>([]);
+    const [selectedLineId, setSelectedLineId] = useState<string | null>(null);
+    const [lineDraftVariant, setLineDraftVariant] = useState<LineVariant | null>(null);
+    const [lineMenuOpen, setLineMenuOpen] = useState(false);
+    const [drawingLine, setDrawingLine] = useState<CustomLine | null>(null);
     const [textFormats, setTextFormats] =
         useState<Record<TextKey, TextFormat>>(initialTextFormats);
     const [textIcons] = useState<Record<TextKey, PictogramKey>>({
@@ -975,6 +1107,17 @@ export default function EventPromotePage() {
     const imageObjectUrl = useRef<string | null>(null);
     const copyTextareaRef = useRef<HTMLTextAreaElement | null>(null);
     const styleTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+    const previewFrameRef = useRef<HTMLDivElement | null>(null);
+    const linePointerIdRef = useRef<number | null>(null);
+    const lineStartRef = useRef<{ x: number; y: number } | null>(null);
+    const lineOrientationRef = useRef<LineOrientation | null>(null);
+    const lineInteractionRef = useRef<{
+        pointerId: number;
+        lineId: string;
+        mode: LineInteractionMode;
+        origin: { x: number; y: number };
+        original: CustomLine;
+    } | null>(null);
 
     const copy = useMemo(() => {
         return {
@@ -999,6 +1142,367 @@ export default function EventPromotePage() {
         imageCategory === "other"
             ? scenesByCategory.other.slice(0, visibleOtherCount)
             : scenesByCategory.featured;
+    const selectedLine = customLines.find((line) => line.id === selectedLineId) ?? null;
+    const isFixedDividerSelected = selectedElement === "divider";
+    const activeLineVariant = isFixedDividerSelected
+        ? dividerStyle.variant
+        : selectedLine?.variant;
+    const activeLineWidth = isFixedDividerSelected
+        ? dividerStyle.width
+        : selectedLine?.width;
+    const activeLineColor = isFixedDividerSelected
+        ? dividerStyle.color
+        : selectedLine?.color;
+    const hasActiveLine = isFixedDividerSelected || Boolean(selectedLine);
+
+    const beginLineInsert = (variant: LineVariant) => {
+        setLineDraftVariant(variant);
+        setLineMenuOpen(false);
+        setSelectedLineId(null);
+        setSelectedElement("line");
+    };
+
+    const cancelLineInsert = () => {
+        setLineDraftVariant(null);
+        setDrawingLine(null);
+        linePointerIdRef.current = null;
+        lineStartRef.current = null;
+        lineOrientationRef.current = null;
+    };
+
+    const selectCustomLine = (lineId: string) => {
+        setSelectedLineId(lineId);
+        setSelectedElement("line");
+    };
+
+    const clearLineInteraction = () => {
+        lineInteractionRef.current = null;
+    };
+
+    const deleteSelectedLine = () => {
+        if (!selectedLineId) return;
+        setCustomLines((current) => current.filter((line) => line.id !== selectedLineId));
+        setSelectedLineId(null);
+        setSelectedElement("title");
+        cancelLineInsert();
+    };
+
+    const updateSelectedLine = (patch: Partial<CustomLine>) => {
+        if (!selectedLineId) return;
+        setCustomLines((current) =>
+            current.map((line) =>
+                line.id === selectedLineId ? normalizeLine({ ...line, ...patch }) : line,
+            ),
+        );
+    };
+
+    const updateActiveLineStyle = (
+        patch: Partial<Pick<CustomLine, "variant" | "width" | "color">>,
+    ) => {
+        if (isFixedDividerSelected) {
+            setDividerStyle((current) => ({
+                ...current,
+                ...patch,
+                visible: true,
+            }));
+            return;
+        }
+
+        updateSelectedLine(patch);
+    };
+
+    const deleteActiveLine = () => {
+        if (isFixedDividerSelected) {
+            setDividerStyle((current) => ({ ...current, visible: false }));
+            setSelectedElement("title");
+            setSelectedLineId(null);
+            return;
+        }
+
+        deleteSelectedLine();
+    };
+
+
+    const startLineInteraction = (
+        event: ReactPointerEvent<HTMLElement>,
+        line: CustomLine,
+        mode: LineInteractionMode,
+    ) => {
+        selectCustomLine(line.id);
+
+        if (editorTab !== "content" || lineDraftVariant) return;
+
+        const bounds = previewFrameRef.current?.getBoundingClientRect();
+        if (!bounds) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        const origin = {
+            x: clamp((event.clientX - bounds.left) / bounds.width, SAFE_AREA.left, SAFE_AREA.right),
+            y: clamp((event.clientY - bounds.top) / bounds.height, SAFE_AREA.top, SAFE_AREA.bottom),
+        };
+
+        lineInteractionRef.current = {
+            pointerId: event.pointerId,
+            lineId: line.id,
+            mode,
+            origin,
+            original: line,
+        };
+
+        previewFrameRef.current?.setPointerCapture(event.pointerId);
+    };
+
+    const moveLineWithinSafeArea = (
+        line: CustomLine,
+        dx: number,
+        dy: number,
+    ) => {
+        const minDx = SAFE_AREA.left - Math.min(line.start.x, line.end.x);
+        const maxDx = SAFE_AREA.right - Math.max(line.start.x, line.end.x);
+        const minDy = SAFE_AREA.top - Math.min(line.start.y, line.end.y);
+        const maxDy = SAFE_AREA.bottom - Math.max(line.start.y, line.end.y);
+        const safeDx = clamp(dx, minDx, maxDx);
+        const safeDy = clamp(dy, minDy, maxDy);
+
+        return {
+            ...line,
+            start: { x: line.start.x + safeDx, y: line.start.y + safeDy },
+            end: { x: line.end.x + safeDx, y: line.end.y + safeDy },
+        };
+    };
+
+    const resizeLineFromHandle = (
+        line: CustomLine,
+        mode: "start" | "end",
+        point: { x: number; y: number },
+        dragOrigin: { x: number; y: number },
+    ) => {
+        const anchor = mode === "start" ? line.end : line.start;
+        const pointerMoveX = point.x - dragOrigin.x;
+        const pointerMoveY = point.y - dragOrigin.y;
+        const switchThreshold = 0.012;
+
+        let orientation = line.orientation;
+
+        if (
+            Math.abs(pointerMoveX) > switchThreshold ||
+            Math.abs(pointerMoveY) > switchThreshold
+        ) {
+            if (Math.abs(pointerMoveX) > Math.abs(pointerMoveY) * 1.1) {
+                orientation = "horizontal";
+            } else if (Math.abs(pointerMoveY) > Math.abs(pointerMoveX) * 1.1) {
+                orientation = "vertical";
+            }
+        }
+
+        if (orientation === "horizontal") {
+            const axisDelta = point.x - anchor.x;
+            const originalDirection =
+                mode === "start"
+                    ? Math.sign(line.start.x - line.end.x) || -1
+                    : Math.sign(line.end.x - line.start.x) || 1;
+            const movementDirection = Math.sign(pointerMoveX);
+            let direction =
+                Math.abs(axisDelta) > 0.004
+                    ? Math.sign(axisDelta)
+                    : movementDirection || originalDirection;
+
+            const availableInDirection = () =>
+                direction > 0
+                    ? SAFE_AREA.right - anchor.x
+                    : anchor.x - SAFE_AREA.left;
+
+            if (availableInDirection() < LINE_MIN_LENGTH.horizontal) {
+                direction *= -1;
+            }
+
+            const distance = Math.min(
+                Math.max(Math.abs(axisDelta), LINE_MIN_LENGTH.horizontal),
+                availableInDirection(),
+            );
+            const target = {
+                x: anchor.x + distance * direction,
+                y: anchor.y,
+            };
+
+            return normalizeLine({
+                ...line,
+                orientation,
+                start: mode === "start" ? target : anchor,
+                end: mode === "start" ? anchor : target,
+            });
+        }
+
+        const axisDelta = point.y - anchor.y;
+        const originalDirection =
+            mode === "start"
+                ? Math.sign(line.start.y - line.end.y) || -1
+                : Math.sign(line.end.y - line.start.y) || 1;
+        const movementDirection = Math.sign(pointerMoveY);
+        let direction =
+            Math.abs(axisDelta) > 0.004
+                ? Math.sign(axisDelta)
+                : movementDirection || originalDirection;
+
+        const availableInDirection = () =>
+            direction > 0
+                ? SAFE_AREA.bottom - anchor.y
+                : anchor.y - SAFE_AREA.top;
+
+        if (availableInDirection() < LINE_MIN_LENGTH.vertical) {
+            direction *= -1;
+        }
+
+        const distance = Math.min(
+            Math.max(Math.abs(axisDelta), LINE_MIN_LENGTH.vertical),
+            availableInDirection(),
+        );
+        const target = {
+            x: anchor.x,
+            y: anchor.y + distance * direction,
+        };
+
+        return normalizeLine({
+            ...line,
+            orientation,
+            start: mode === "start" ? target : anchor,
+            end: mode === "start" ? anchor : target,
+        });
+    };
+
+    const previewPoint = (event: ReactPointerEvent<HTMLDivElement>) => {
+        const bounds = previewFrameRef.current?.getBoundingClientRect();
+        if (!bounds) return null;
+
+        return {
+            x: clamp((event.clientX - bounds.left) / bounds.width, SAFE_AREA.left, SAFE_AREA.right),
+            y: clamp((event.clientY - bounds.top) / bounds.height, SAFE_AREA.top, SAFE_AREA.bottom),
+        };
+    };
+
+    const handlePreviewPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+        if (!lineDraftVariant) return;
+
+        const point = previewPoint(event);
+        if (!point) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        linePointerIdRef.current = event.pointerId;
+        lineStartRef.current = point;
+        lineOrientationRef.current = null;
+
+        const nextLine: CustomLine = {
+            id: `line-${Date.now()}`,
+            variant: lineDraftVariant,
+            orientation: "horizontal",
+            start: point,
+            end: point,
+            color: "#171B22",
+            width: 2,
+        };
+
+        setDrawingLine(nextLine);
+        event.currentTarget.setPointerCapture(event.pointerId);
+    };
+
+    const handlePreviewPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+        const interaction = lineInteractionRef.current;
+
+        if (interaction && interaction.pointerId === event.pointerId) {
+            const point = previewPoint(event);
+            if (!point) return;
+
+            const nextLine =
+                interaction.mode === "move"
+                    ? moveLineWithinSafeArea(
+                        interaction.original,
+                        point.x - interaction.origin.x,
+                        point.y - interaction.origin.y,
+                    )
+                    : resizeLineFromHandle(
+                        interaction.original,
+                        interaction.mode,
+                        point,
+                        interaction.origin,
+                    );
+
+            setCustomLines((current) =>
+                current.map((line) =>
+                    line.id === interaction.lineId ? nextLine : line,
+                ),
+            );
+            return;
+        }
+
+        if (!lineDraftVariant || linePointerIdRef.current !== event.pointerId) return;
+        const point = previewPoint(event);
+        const start = lineStartRef.current;
+        if (!point || !start) return;
+
+        const dx = point.x - start.x;
+        const dy = point.y - start.y;
+
+        let orientation = lineOrientationRef.current;
+        if (!orientation && (Math.abs(dx) > LINE_DRAW_THRESHOLD || Math.abs(dy) > LINE_DRAW_THRESHOLD)) {
+            orientation = Math.abs(dx) >= Math.abs(dy) ? "horizontal" : "vertical";
+            lineOrientationRef.current = orientation;
+        }
+
+        if (!orientation) orientation = "horizontal";
+
+        const draft = normalizeLine({
+            id: drawingLine?.id ?? `line-${Date.now()}`,
+            variant: lineDraftVariant,
+            orientation,
+            start,
+            end:
+                orientation === "horizontal"
+                    ? { x: point.x, y: start.y }
+                    : { x: start.x, y: point.y },
+            color: drawingLine?.color ?? "#171B22",
+            width: drawingLine?.width ?? 2,
+        });
+
+        setDrawingLine(draft);
+    };
+
+    const handlePreviewPointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
+        const interaction = lineInteractionRef.current;
+        if (interaction && interaction.pointerId === event.pointerId) {
+            clearLineInteraction();
+            if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+                event.currentTarget.releasePointerCapture(event.pointerId);
+            }
+            return;
+        }
+
+        if (!lineDraftVariant || linePointerIdRef.current !== event.pointerId) return;
+        const draft = drawingLine;
+        if (draft) {
+            const finalized = normalizeLine(draft);
+            setCustomLines((current) => [...current, finalized]);
+            setSelectedLineId(finalized.id);
+            setSelectedElement("line");
+        }
+
+        cancelLineInsert();
+
+        if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+            event.currentTarget.releasePointerCapture(event.pointerId);
+        }
+    };
+
+    const handlePreviewPointerCancel = (event: ReactPointerEvent<HTMLDivElement>) => {
+        clearLineInteraction();
+        cancelLineInsert();
+        if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+            event.currentTarget.releasePointerCapture(event.pointerId);
+        }
+    };
 
     const insertCopyEmoji = (emoji: string) => {
         const textarea = copyTextareaRef.current;
@@ -1178,6 +1682,7 @@ export default function EventPromotePage() {
     const selectPreviewText = (key: TextKey) => {
         setSelectedText(key);
         setSelectedElement(key);
+        setSelectedLineId(null);
         setTextSelection(null);
         setEditorTab("style");
     };
@@ -1229,6 +1734,7 @@ export default function EventPromotePage() {
 
     const selectDivider = () => {
         if (editorTab !== "style") return;
+        setSelectedLineId(null);
         setSelectedElement("divider");
     };
 
@@ -1518,12 +2024,33 @@ export default function EventPromotePage() {
             context.save();
             context.strokeStyle = dividerStyle.color;
             context.lineWidth = dividerStyle.width * outputScale;
+            context.setLineDash(
+                dividerStyle.variant === "dashed"
+                    ? [10 * outputScale, 8 * outputScale]
+                    : [],
+            );
             context.beginPath();
             context.moveTo(side, contactLineY);
             context.lineTo(selected.width - side, contactLineY);
             context.stroke();
             context.restore();
         }
+
+        customLines.forEach((line) => {
+            context.save();
+            context.strokeStyle = line.color;
+            context.lineWidth = line.width * outputScale;
+            if (line.variant === "dashed") {
+                context.setLineDash([10 * outputScale, 8 * outputScale]);
+            } else {
+                context.setLineDash([]);
+            }
+            context.beginPath();
+            context.moveTo(line.start.x * selected.width, line.start.y * selected.height);
+            context.lineTo(line.end.x * selected.width, line.end.y * selected.height);
+            context.stroke();
+            context.restore();
+        });
 
         context.font = `${applicationFormat.fontWeight} ${applicationFormat.size}px ${applicationFormat.family}`;
         const applicationY = contactLineY + (isLandscape ? 44 : 57) * outputScale;
@@ -1753,7 +2280,12 @@ export default function EventPromotePage() {
                                 {channels[channel].label} · {channels[channel].size}px
                             </p>
                             <div
-                                className={`relative mx-auto w-full max-w-[480px] overflow-hidden rounded-[24px] bg-[#E8ECEF] shadow-[0_16px_38px_rgba(25,31,40,0.14)] ${aspectClass}`}
+                                ref={previewFrameRef}
+                                onPointerDown={handlePreviewPointerDown}
+                                onPointerMove={handlePreviewPointerMove}
+                                onPointerUp={handlePreviewPointerUp}
+                                onPointerCancel={handlePreviewPointerCancel}
+                                className={`relative mx-auto w-full max-w-[480px] overflow-hidden rounded-[24px] bg-[#E8ECEF] shadow-[0_16px_38px_rgba(25,31,40,0.14)] ${aspectClass} ${lineDraftVariant ? "cursor-crosshair" : ""}`}
                             >
                                 {scene === "custom" && imageFit === "contain" ? (
                                     <>
@@ -1776,6 +2308,94 @@ export default function EventPromotePage() {
                                         alt="웹전단 대표 이미지"
                                         className="absolute inset-0 h-full w-full object-cover"
                                     />
+                                )}
+
+                                {customLines.map((line) => {
+                                    const selected = selectedLineId === line.id;
+                                    const canArrange = editorTab === "content" && !lineDraftVariant;
+                                    return (
+                                        <div
+                                            key={line.id}
+                                            role="button"
+                                            tabIndex={0}
+                                            onClick={(event) => {
+                                                event.stopPropagation();
+                                                selectCustomLine(line.id);
+                                            }}
+                                            onKeyDown={(event) => {
+                                                if (event.key === "Enter" || event.key === " ") {
+                                                    event.preventDefault();
+                                                    selectCustomLine(line.id);
+                                                }
+                                            }}
+                                            onPointerDown={(event) =>
+                                                startLineInteraction(event, line, "move")
+                                            }
+                                            className={`absolute z-[1] bg-transparent outline-none ${lineDraftVariant ? "pointer-events-none" : ""} ${canArrange ? "cursor-move touch-none" : "cursor-pointer"}`}
+                                            style={createLineStyle(line, selected)}
+                                            aria-label={`${line.variant === "dashed" ? "점선" : "실선"} 선택`}
+                                        >
+                                            <span style={createLineStrokeStyle(line)} />
+                                            {selected && canArrange && (
+                                                <>
+                                                    <span
+                                                        onPointerDown={(event) => {
+                                                            event.stopPropagation();
+                                                            startLineInteraction(event, line, "start");
+                                                        }}
+                                                        className={`absolute h-4 w-4 -translate-x-1/2 -translate-y-1/2 touch-none rounded-full border-2 border-white bg-[#2E90FA] shadow-md ${line.orientation === "horizontal" ? "cursor-ew-resize" : "cursor-ns-resize"}`}
+                                                        style={{
+                                                            left: line.orientation === "horizontal" ? 0 : "50%",
+                                                            top: line.orientation === "horizontal" ? "50%" : 0,
+                                                        }}
+                                                        aria-label="선 시작점 조절"
+                                                    />
+                                                    <span
+                                                        onPointerDown={(event) => {
+                                                            event.stopPropagation();
+                                                            startLineInteraction(event, line, "end");
+                                                        }}
+                                                        className={`absolute h-4 w-4 -translate-x-1/2 -translate-y-1/2 touch-none rounded-full border-2 border-white bg-[#2E90FA] shadow-md ${line.orientation === "horizontal" ? "cursor-ew-resize" : "cursor-ns-resize"}`}
+                                                        style={{
+                                                            left: line.orientation === "horizontal" ? "100%" : "50%",
+                                                            top: line.orientation === "horizontal" ? "50%" : "100%",
+                                                        }}
+                                                        aria-label="선 끝점 조절"
+                                                    />
+                                                </>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+
+                                {drawingLine && (
+                                    <span
+                                        className="absolute z-[2] pointer-events-none"
+                                        style={createLineStyle(drawingLine, true)}
+                                        aria-hidden="true"
+                                    >
+                                        <span style={createLineStrokeStyle(drawingLine)} />
+                                        <span
+                                            className="absolute h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white bg-[#2E90FA] shadow"
+                                            style={{
+                                                left: drawingLine.orientation === "horizontal" ? 0 : "50%",
+                                                top: drawingLine.orientation === "horizontal" ? "50%" : 0,
+                                            }}
+                                        />
+                                        <span
+                                            className="absolute h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white bg-[#2E90FA] shadow"
+                                            style={{
+                                                left: drawingLine.orientation === "horizontal" ? "100%" : "50%",
+                                                top: drawingLine.orientation === "horizontal" ? "50%" : "100%",
+                                            }}
+                                        />
+                                    </span>
+                                )}
+
+                                {lineDraftVariant && (
+                                    <div className="absolute inset-x-[7%] top-[4.5%] z-[3] rounded-full bg-[#2E90FA]/92 px-3 py-2 text-center text-[11px] font-medium text-white shadow-lg">
+                                        미리보기에서 드래그해 {lineDraftVariant === "dashed" ? "점선" : "실선"}을 넣어보세요.
+                                    </div>
                                 )}
 
                                 <div className="absolute inset-x-0 top-0 px-[7%] pb-4 pt-[8%]">
@@ -1892,8 +2512,7 @@ export default function EventPromotePage() {
                                         <span
                                             className="absolute inset-x-0 top-1/2 block -translate-y-1/2"
                                             style={{
-                                                height: `${Math.max(1, dividerStyle.width / 2)}px`,
-                                                backgroundColor: dividerStyle.color,
+                                                borderTop: `${Math.max(1, dividerStyle.width / 2)}px ${dividerStyle.variant === "dashed" ? "dashed" : "solid"} ${dividerStyle.color}`,
                                             }}
                                         />
                                     )}
@@ -1920,7 +2539,7 @@ export default function EventPromotePage() {
                                 </button>
                             </div>
                             <p className="mt-4 text-center text-xs leading-5 text-[#8B95A1]">
-                                미리보기의 글자를 누르면 해당 글자를 편집할 수 있어요.
+                                미리보기의 글자나 선을 누르면 해당 요소를 편집할 수 있어요.
                             </p>
                         </div>
 
@@ -1944,9 +2563,6 @@ export default function EventPromotePage() {
                             {editorTab === "content" && (
                                 <div className="pt-6">
                                     <h2 className="text-lg font-semibold">행사 내용</h2>
-                                    <p className="mt-1 text-xs text-[#8B95A1]">
-                                        원하는 입력칸에 커서를 놓고 행사명 옆 ＋ 버튼을 눌러보세요.
-                                    </p>
                                     <div className="mt-4 grid gap-x-4 gap-y-4 sm:grid-cols-2">
                                         <div className="text-sm font-medium sm:col-span-2">
                                             <label htmlFor="promote-title">행사명</label>
@@ -2053,6 +2669,114 @@ export default function EventPromotePage() {
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div className="mt-6 flex flex-wrap items-center gap-2.5 border-t border-[#E7E9EC] pt-5">
+                                        <div className="relative">
+                                            <button
+                                                type="button"
+                                                onClick={() => setLineMenuOpen((open) => !open)}
+                                                className={`rounded-xl border px-4 py-2.5 text-sm font-medium transition ${lineDraftVariant ? "border-[#2E90FA] bg-[#EEF5FF] text-[#1B5FC1]" : "border-[#E1E4E8] bg-white text-[#4E5968] hover:border-[#B8BEC6] hover:bg-[#F8F9FA]"}`}
+                                            >
+                                                ＋ 선 추가
+                                            </button>
+                                            {lineMenuOpen && (
+                                                <div className="absolute left-0 top-[calc(100%+8px)] z-30 w-36 rounded-2xl border border-[#E1E4E8] bg-white p-2 shadow-[0_12px_30px_rgba(25,31,40,0.14)]">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => beginLineInsert("solid")}
+                                                        className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm text-[#252A31] transition hover:bg-[#FFFFD8]"
+                                                    >
+                                                        <span>실선 추가</span>
+                                                        <span className="h-px w-8 bg-[#252A31]" />
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => beginLineInsert("dashed")}
+                                                        className="mt-1 flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm text-[#252A31] transition hover:bg-[#FFFFD8]"
+                                                    >
+                                                        <span>점선 추가</span>
+                                                        <span className="w-8 border-t-2 border-dashed border-[#252A31]" />
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {lineDraftVariant && (
+                                            <button
+                                                type="button"
+                                                onClick={cancelLineInsert}
+                                                className="rounded-xl border border-[#DDE1E5] bg-white px-4 py-2.5 text-sm font-medium text-[#4E5968] transition hover:border-[#B8BEC6] hover:bg-[#F8F9FA]"
+                                            >
+                                                선 넣기 취소
+                                            </button>
+                                        )}
+
+                                        {selectedLine && (
+                                            <button
+                                                type="button"
+                                                onClick={deleteSelectedLine}
+                                                className="rounded-xl border border-[#F0C9C9] bg-white px-4 py-2.5 text-sm font-medium text-[#B73535] transition hover:bg-[#FFF4F4]"
+                                            >
+                                                선 삭제
+                                            </button>
+                                        )}
+                                    </div>
+
+                                    {selectedLine && (
+                                        <div className="mt-4 rounded-2xl border border-[#E7E9EC] bg-[#F8F9FA] px-4 py-4">
+                                            <label className="flex items-center justify-between text-sm text-[#4E5968]">
+                                                <span>선 길이</span>
+                                                <span className="text-[#8B95A1]">
+                                                    {selectedLine.orientation === "horizontal"
+                                                        ? `${Math.round((selectedLine.end.x - selectedLine.start.x) * 100)}%`
+                                                        : `${Math.round((selectedLine.end.y - selectedLine.start.y) * 100)}%`}
+                                                </span>
+                                            </label>
+                                            <input
+                                                type="range"
+                                                min={selectedLine.orientation === "horizontal"
+                                                    ? String(Math.round(LINE_MIN_LENGTH.horizontal * 100))
+                                                    : String(Math.round(LINE_MIN_LENGTH.vertical * 100))}
+                                                max={selectedLine.orientation === "horizontal"
+                                                    ? String(Math.max(
+                                                        Math.round(LINE_MIN_LENGTH.horizontal * 100),
+                                                        Math.round((SAFE_AREA.right - selectedLine.start.x) * 100),
+                                                    ))
+                                                    : String(Math.max(
+                                                        Math.round(LINE_MIN_LENGTH.vertical * 100),
+                                                        Math.round((SAFE_AREA.bottom - selectedLine.start.y) * 100),
+                                                    ))}
+                                                step="1"
+                                                value={selectedLine.orientation === "horizontal"
+                                                    ? Math.round((selectedLine.end.x - selectedLine.start.x) * 100)
+                                                    : Math.round((selectedLine.end.y - selectedLine.start.y) * 100)}
+                                                onChange={(event) => {
+                                                    const nextLength = Number(event.target.value) / 100;
+                                                    updateSelectedLine({
+                                                        end:
+                                                            selectedLine.orientation === "horizontal"
+                                                                ? {
+                                                                    x: clamp(
+                                                                        selectedLine.start.x + nextLength,
+                                                                        SAFE_AREA.left,
+                                                                        SAFE_AREA.right,
+                                                                    ),
+                                                                    y: selectedLine.start.y,
+                                                                }
+                                                                : {
+                                                                    x: selectedLine.start.x,
+                                                                    y: clamp(
+                                                                        selectedLine.start.y + nextLength,
+                                                                        SAFE_AREA.top,
+                                                                        SAFE_AREA.bottom,
+                                                                    ),
+                                                                },
+                                                    });
+                                                }}
+                                                className="mt-3 w-full accent-[#BABB25]"
+                                            />
+                                        </div>
+                                    )}
                                 </div>
                             )}
 
@@ -2250,7 +2974,7 @@ export default function EventPromotePage() {
 
                             {editorTab === "style" && (
                                 <div className="pt-3 sm:pt-6">
-                                    {selectedElement !== "divider" && (
+                                    {selectedElement !== "divider" && selectedElement !== "line" && (
                                         <label className="block text-sm font-normal text-[#4E5968]">
                                             <span className="flex items-center justify-between gap-3">
                                                 <span>선택한 글자 내용</span>
@@ -2288,98 +3012,109 @@ export default function EventPromotePage() {
                                         </label>
                                     )}
 
-                                    {selectedElement === "divider" && (
+                                    {(selectedElement === "divider" || selectedElement === "line") && (
                                         <div>
                                             <div className="flex items-center justify-between gap-3 text-sm text-[#4E5968]">
-                                                <span>구분선 편집</span>
+                                                <span>추가한 선 편집</span>
                                                 <span className="shrink-0 text-xs font-medium text-[#777900]">
-                                                    선택: 구분선
+                                                    선택: 사용자 선
                                                 </span>
                                             </div>
-                                            <div className="mt-3 flex items-center justify-between border-b border-[#E7E9EC] pb-5">
-                                                <span className="text-sm text-[#4E5968]">선 표시</span>
-                                                <button
-                                                    type="button"
-                                                    onClick={() =>
-                                                        setDividerStyle((current) => ({
-                                                            ...current,
-                                                            visible: !current.visible,
-                                                        }))
-                                                    }
-                                                    className={`rounded-full px-4 py-2 text-xs ${dividerStyle.visible ? "bg-[#F4F54A] text-[#252A31]" : "bg-[#F2F4F6] text-[#737B87]"}`}
-                                                >
-                                                    {dividerStyle.visible ? "표시 중" : "숨김"}
-                                                </button>
-                                            </div>
-                                            <div className="border-b border-[#E7E9EC] py-5">
-                                                <label className="flex items-center justify-between text-sm text-[#4E5968]">
-                                                    <span>선 굵기</span>
-                                                    <span className="text-[#8B95A1]">
-                                                        {dividerStyle.width}px
-                                                    </span>
-                                                </label>
-                                                <input
-                                                    type="range"
-                                                    min="1"
-                                                    max="8"
-                                                    step="1"
-                                                    value={dividerStyle.width}
-                                                    onChange={(event) =>
-                                                        setDividerStyle((current) => ({
-                                                            ...current,
-                                                            width: Number(event.target.value),
-                                                        }))
-                                                    }
-                                                    className="mt-3 w-full accent-[#BABB25]"
-                                                />
-                                            </div>
-                                            <div className="pt-5">
-                                                <p className="text-sm text-[#4E5968]">선 색상</p>
-                                                <div className="mt-3 flex flex-wrap items-start gap-2.5">
-                                                    {colorPalette.map((color) => (
-                                                        <span
-                                                            key={`divider-${color}`}
-                                                            className="group relative"
-                                                        >
-                                                            <button
-                                                                type="button"
-                                                                onClick={() =>
-                                                                    setDividerStyle((current) => ({
-                                                                        ...current,
-                                                                        color,
-                                                                    }))
-                                                                }
-                                                                className={`h-9 w-9 rounded-full border-2 shadow-sm ${dividerStyle.color === color ? "scale-110 border-[#3182F6]" : "border-white ring-1 ring-[#DDE1E5]"}`}
-                                                                style={{ backgroundColor: color }}
-                                                                title={`${colorNames[color]} · ${color}`}
-                                                                aria-label={`선 색상 ${colorNames[color]}, ${color}`}
-                                                            />
-                                                            <span
-                                                                role="tooltip"
-                                                                className="pointer-events-none absolute bottom-[calc(100%+8px)] left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded-lg bg-[#252A31] px-2.5 py-1.5 text-[11px] font-normal text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
-                                                            >
-                                                                {colorNames[color]} · {color}
+
+                                            {!hasActiveLine || !activeLineVariant || activeLineWidth === undefined || !activeLineColor ? (
+                                                <p className="mt-3 rounded-2xl border border-[#E7E9EC] bg-[#F8F9FA] px-4 py-4 text-sm leading-6 text-[#6B7280]">
+                                                    미리보기에서 선을 눌러 선택하거나 내용 탭에서 선을 추가해 주세요.
+                                                </p>
+                                            ) : (
+                                                <>
+                                                    <div className="mt-3 border-b border-[#E7E9EC] pb-5">
+                                                        <p className="text-sm text-[#4E5968]">선 종류</p>
+                                                        <div className="mt-3 grid grid-cols-2 gap-2">
+                                                            {[
+                                                                { value: "solid", label: "실선" },
+                                                                { value: "dashed", label: "점선" },
+                                                            ].map((item) => (
+                                                                <button
+                                                                    key={item.value}
+                                                                    type="button"
+                                                                    onClick={() =>
+                                                                        updateActiveLineStyle({
+                                                                            variant: item.value as LineVariant,
+                                                                        })
+                                                                    }
+                                                                    className={`rounded-xl border px-3 py-2.5 text-sm transition ${activeLineVariant === item.value ? "border-[#BABB25] bg-[#FFFFD8]" : "border-[#E1E4E8]"}`}
+                                                                >
+                                                                    {item.label}
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="border-b border-[#E7E9EC] py-5">
+                                                        <label className="flex items-center justify-between text-sm text-[#4E5968]">
+                                                            <span>선 굵기</span>
+                                                            <span className="text-[#8B95A1]">
+                                                                {activeLineWidth}px
                                                             </span>
-                                                        </span>
-                                                    ))}
-                                                    <ModernColorPicker
-                                                        value={dividerStyle.color}
-                                                        onChange={(color) =>
-                                                            setDividerStyle((current) => ({
-                                                                ...current,
-                                                                color,
-                                                            }))
-                                                        }
-                                                        label="선 색상 직접 선택"
-                                                    />
-                                                </div>
-                                            </div>
+                                                        </label>
+                                                        <input
+                                                            type="range"
+                                                            min="1"
+                                                            max="8"
+                                                            step="1"
+                                                            value={activeLineWidth}
+                                                            onChange={(event) =>
+                                                                updateActiveLineStyle({
+                                                                    width: Number(event.target.value),
+                                                                })
+                                                            }
+                                                            className="mt-3 w-full accent-[#BABB25]"
+                                                        />
+                                                    </div>
+
+                                                    <div className="pt-5">
+                                                        <p className="text-sm text-[#4E5968]">선 색상</p>
+                                                        <div className="mt-3 flex flex-wrap items-start gap-2.5">
+                                                            {colorPalette.map((color) => (
+                                                                <span key={`active-line-${color}`} className="group relative">
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() => updateActiveLineStyle({ color })}
+                                                                        className={`h-9 w-9 rounded-full border-2 shadow-sm ${activeLineColor === color ? "scale-110 border-[#3182F6]" : "border-white ring-1 ring-[#DDE1E5]"}`}
+                                                                        style={{ backgroundColor: color }}
+                                                                        title={`${colorNames[color]} · ${color}`}
+                                                                        aria-label={`선 색상 ${colorNames[color]}, ${color}`}
+                                                                    />
+                                                                    <span
+                                                                        role="tooltip"
+                                                                        className="pointer-events-none absolute bottom-[calc(100%+8px)] left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded-lg bg-[#252A31] px-2.5 py-1.5 text-[11px] font-normal text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
+                                                                    >
+                                                                        {colorNames[color]} · {color}
+                                                                    </span>
+                                                                </span>
+                                                            ))}
+                                                            <ModernColorPicker
+                                                                value={activeLineColor}
+                                                                onChange={(color) => updateActiveLineStyle({ color })}
+                                                                label="선 색상 직접 선택"
+                                                            />
+                                                        </div>
+                                                        <button
+                                                            type="button"
+                                                            onClick={deleteActiveLine}
+                                                            className="mt-5 rounded-xl border border-[#F0C9C9] bg-white px-4 py-2.5 text-sm font-medium text-[#B73535] transition hover:bg-[#FFF4F4]"
+                                                        >
+                                                            선 삭제
+                                                        </button>
+                                                    </div>
+                                                </>
+                                            )}
                                         </div>
                                     )}
 
                                     <div
                                         className={
-                                            selectedElement === "divider" ? "hidden" : "block"
+                                            selectedElement === "divider" || selectedElement === "line" ? "hidden" : "block"
                                         }
                                     >
                                         <div className="mt-4 border-b border-[#E7E9EC] pb-5">
