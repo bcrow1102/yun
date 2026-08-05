@@ -118,7 +118,7 @@ export default async function MasterIllustrationsPage({
                 </div>
             </nav>
 
-            <div className="mx-auto max-w-[900px] px-5 py-12 md:px-8 md:py-16">
+            <div className="mx-auto max-w-[1100px] px-5 py-12 md:px-8 md:py-16">
                 <p className="text-sm font-medium text-[#777900]">
                     이야기로 만나는 고승
                 </p>
@@ -133,7 +133,7 @@ export default async function MasterIllustrationsPage({
                 </p>
 
                 {items.length ? (
-                    <div className="mt-8 grid gap-5 md:grid-cols-2">
+                    <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
                         {items.map((item) => (
                             <Link
                                 key={item.slug}
