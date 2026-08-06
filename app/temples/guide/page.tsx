@@ -164,14 +164,24 @@ export default function TempleGuidePage() {
         <div className="min-h-screen bg-white text-[#252A31]">
             <header className="sticky top-0 z-30 border-b border-[#E7E9EC] bg-white/95 backdrop-blur">
                 <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:h-[72px] md:px-8">
-                    <Link href="/" className="flex items-center gap-2.5">
+                    <Link
+                        href="/"
+                        className="flex items-center gap-2.5"
+                        aria-label="연 홈"
+                    >
                         <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F4F54A] md:h-10 md:w-10">
                             <LotusIcon />
                         </span>
 
-                        <strong className="text-xl font-bold">연</strong>
+                        <strong className="text-xl font-semibold">연</strong>
                     </Link>
 
+                    <Link
+                        href="/temples/guide/new"
+                        className="inline-flex min-h-10 items-center justify-center rounded-xl bg-[#F4F54A] px-4 py-2.5 text-sm font-medium text-[#191F28] transition hover:bg-[#E8EA35]"
+                    >
+                        사찰 등록
+                    </Link>
                 </div>
             </header>
 

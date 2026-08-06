@@ -2218,20 +2218,12 @@ export default function EventPromotePage() {
                         </span>
                         <span className="text-2xl font-semibold">연</span>
                     </Link>
-                    <div className="flex items-center gap-2">
-                        <Link
-                            href="/events"
-                            className="rounded-full border border-[#DFE2E7] px-4 py-2 text-sm text-[#56606D]"
-                        >
-                            행사 목록
-                        </Link>
-                        <Link
-                            href="/events/new"
-                            className="hidden rounded-full bg-[#20242C] px-4 py-2 text-sm font-medium text-white sm:block"
-                        >
-                            행사 등록
-                        </Link>
-                    </div>
+                    <Link
+                        href="/"
+                        className="rounded-xl border border-[#E3E8EF] bg-white px-4 py-2.5 text-sm font-medium text-[#4D5562] transition hover:border-[#20242C] hover:text-[#20242C]"
+                    >
+                        홈으로
+                    </Link>
                 </div>
             </header>
 
