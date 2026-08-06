@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import RegionSelector from "../../../components/forms/RegionSelector";
 import {
     useEffect,
     useRef,
@@ -13,6 +14,103 @@ import {
     loadDraft,
     saveDraft,
 } from "../../../lib/draftStorage";
+
+const inputClassName =
+    "mt-2 w-full rounded-xl border border-[#DDE2E8] bg-white px-4 py-3.5 text-[15px] text-[#252A31] outline-none transition placeholder:text-[#A8B0BA] focus:border-[#B9BA28] focus:ring-2 focus:ring-[#F4F54A]/25";
+
+const labelClassName = "block text-sm font-medium text-[#333D4B]";
+
+const TOTAL_STEPS = 3;
+
+type TempleStayFormData = {
+    programName: string;
+    operatorName: string;
+    programType: string;
+    region: string;
+    address: string;
+    startDate: string;
+    endDate: string;
+    duration: string;
+    capacity: string;
+    fee: string;
+    description: string;
+    applicationUrl: string;
+    managerName: string;
+    phone: string;
+    email: string;
+    agreement: boolean;
+};
+
+type TempleStayDraftData = {
+    formData: TempleStayFormData;
+    currentStep: number;
+};
+
+type SaveStatus = "idle" | "saving" | "saved" | "error";
+
+const initialFormData: TempleStayFormData = {
+    programName: "",
+    operatorName: "",
+    programType: "",
+    region: "",
+    address: "",
+    startDate: "",
+    endDate: "",
+    duration: "",
+    capacity: "",
+    fee: "",
+    description: "",
+    applicationUrl: "",
+    managerName: "",
+    phone: "",
+    email: "",
+    agreement: false,
+};
+
+const steps = [
+    { number: 1, label: "기본 정보" },
+    { number: 2, label: "운영 안내" },
+    { number: 3, label: "담당자" },
+];
+
+function isTempleStayDraftData(value: unknown): value is TempleStayDraftData {
+    if (!value || typeof value !== "object") return false;
+    return "formData" in value && "currentStep" in value;
+}
+
+function normalizeDraft(value: unknown): TempleStayDraftData {
+    if (isTempleStayDraftData(value)) {
+        return {
+            formData: {
+                ...initialFormData,
+                ...value.formData,
+            },
+            currentStep: Math.min(
+                Math.max(Number(value.currentStep) || 1, 1),
+                TOTAL_STEPS,
+            ),
+        };
+    }
+
+    return {
+        formData: {
+            ...initialFormData,
+            ...(value as Partial<TempleStayFormData>),
+        },
+        currentStep: 1,
+    };
+}
+
+function formatSavedTime(timestamp: number | null) {
+    if (!timestamp) return "";
+
+    return new Intl.DateTimeFormat("ko-KR", {
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+    }).format(new Date(timestamp));
+}
 
 function LotusIcon() {
     return (
@@ -42,87 +140,52 @@ function LotusIcon() {
     );
 }
 
-const inputClassName =
-    "mt-2 w-full rounded-xl border border-[#DDE2E8] bg-white px-4 py-3.5 text-[15px] outline-none transition placeholder:text-[#A8B0BA] focus:border-[#B9BA28] focus:ring-2 focus:ring-[#F4F54A]/25";
-
-const labelClassName = "block text-sm font-medium text-[#333D4B]";
-
-type TempleStayFormData = {
-    programName: string;
-    operatorName: string;
-    programType: string;
-    region: string;
-    address: string;
-    startDate: string;
-    endDate: string;
-    duration: string;
-    capacity: string;
-    fee: string;
-    description: string;
-    applicationUrl: string;
-    managerName: string;
-    phone: string;
-    email: string;
-    agreement: boolean;
-};
-
-const initialFormData: TempleStayFormData = {
-    programName: "",
-    operatorName: "",
-    programType: "",
-    region: "",
-    address: "",
-    startDate: "",
-    endDate: "",
-    duration: "",
-    capacity: "",
-    fee: "",
-    description: "",
-    applicationUrl: "",
-    managerName: "",
-    phone: "",
-    email: "",
-    agreement: false,
-};
-
-type SaveStatus = "idle" | "saving" | "saved" | "error";
-
-function formatSavedTime(timestamp: number | null) {
-    if (!timestamp) return "";
-
-    return new Intl.DateTimeFormat("ko-KR", {
-        month: "numeric",
-        day: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-    }).format(new Date(timestamp));
+function SectionHeader({
+    number,
+    title,
+    description,
+}: {
+    number: string;
+    title: string;
+    description?: string;
+}) {
+    return (
+        <div className="border-b border-[#EEF0F2] pb-5">
+            <span className="text-xs font-medium text-[#8D8040]">
+                {number}
+            </span>
+            <h2 className="mt-1 text-[22px] font-medium">{title}</h2>
+            {description && (
+                <p className="mt-2 text-sm leading-6 text-[#7B8490]">
+                    {description}
+                </p>
+            )}
+        </div>
+    );
 }
 
 export default function NewTempleStayPage() {
     const [formData, setFormData] =
         useState<TempleStayFormData>(initialFormData);
+    const [currentStep, setCurrentStep] = useState(1);
+    const [highestVisitedStep, setHighestVisitedStep] = useState(1);
 
     const [showRestoreDialog, setShowRestoreDialog] = useState(false);
     const [pendingDraft, setPendingDraft] =
-        useState<TempleStayFormData | null>(null);
-
-    const [saveStatus, setSaveStatus] =
-        useState<SaveStatus>("idle");
-
+        useState<TempleStayDraftData | null>(null);
+    const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
     const [savedAt, setSavedAt] = useState<number | null>(null);
     const [hasStarted, setHasStarted] = useState(false);
     const [isReady, setIsReady] = useState(false);
 
     const fileInputRef = useRef<HTMLInputElement | null>(null);
-    const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
-        null,
-    );
+    const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
-        const saved = loadDraft<TempleStayFormData>("temple-stay");
+        const saved = loadDraft<unknown>("temple-stay");
 
         if (saved) {
-            setPendingDraft(saved.data);
+            setPendingDraft(normalizeDraft(saved.data));
             setSavedAt(saved.updatedAt);
             setShowRestoreDialog(true);
         }
@@ -140,7 +203,10 @@ export default function NewTempleStayPage() {
         setSaveStatus("saving");
 
         saveTimerRef.current = setTimeout(() => {
-            const success = saveDraft("temple-stay", formData);
+            const success = saveDraft<TempleStayDraftData>("temple-stay", {
+                formData,
+                currentStep,
+            });
 
             if (success) {
                 const now = Date.now();
@@ -156,14 +222,19 @@ export default function NewTempleStayPage() {
                 clearTimeout(saveTimerRef.current);
             }
         };
-    }, [formData, hasStarted, isReady, showRestoreDialog]);
+    }, [
+        currentStep,
+        formData,
+        hasStarted,
+        isReady,
+        showRestoreDialog,
+    ]);
 
     const updateField = <K extends keyof TempleStayFormData>(
         key: K,
         value: TempleStayFormData[K],
     ) => {
         setHasStarted(true);
-
         setFormData((current) => ({
             ...current,
             [key]: value,
@@ -174,21 +245,32 @@ export default function NewTempleStayPage() {
         (key: keyof TempleStayFormData) =>
             (
                 event: ChangeEvent<
-                    HTMLInputElement |
-                    HTMLTextAreaElement |
-                    HTMLSelectElement
+                    HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
                 >,
             ) => {
                 updateField(key, event.target.value as never);
             };
 
+    const moveToStep = (step: number) => {
+        setCurrentStep(step);
+        setHighestVisitedStep((current) => Math.max(current, step));
+        setHasStarted(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    const goToNextStep = () => {
+        moveToStep(Math.min(currentStep + 1, TOTAL_STEPS));
+    };
+
+    const goToPreviousStep = () => {
+        moveToStep(Math.max(currentStep - 1, 1));
+    };
+
     const restoreDraft = () => {
         if (pendingDraft) {
-            setFormData({
-                ...initialFormData,
-                ...pendingDraft,
-            });
-
+            setFormData(pendingDraft.formData);
+            setCurrentStep(pendingDraft.currentStep);
+            setHighestVisitedStep(pendingDraft.currentStep);
             setHasStarted(false);
             setSaveStatus("saved");
         }
@@ -199,8 +281,9 @@ export default function NewTempleStayPage() {
 
     const startNewDraft = () => {
         deleteDraft("temple-stay");
-
         setFormData(initialFormData);
+        setCurrentStep(1);
+        setHighestVisitedStep(1);
         setPendingDraft(null);
         setSavedAt(null);
         setHasStarted(false);
@@ -218,7 +301,6 @@ export default function NewTempleStayPage() {
         );
 
         if (!confirmed) return;
-
         startNewDraft();
     };
 
@@ -246,7 +328,7 @@ export default function NewTempleStayPage() {
     })();
 
     return (
-        <div className="min-h-screen bg-[#F7F8FA] text-[#252A31]">
+        <main className="min-h-screen bg-[#F7F8FA] text-[#252A31]">
             <header className="border-b border-[#E7E9EC] bg-white">
                 <div className="mx-auto flex h-16 max-w-4xl items-center justify-between px-4 md:h-[72px] md:px-8">
                     <Link
@@ -257,7 +339,6 @@ export default function NewTempleStayPage() {
                         <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F4F54A] md:h-10 md:w-10">
                             <LotusIcon />
                         </span>
-
                         <span className="text-xl font-semibold">연</span>
                     </Link>
 
@@ -270,71 +351,110 @@ export default function NewTempleStayPage() {
                 </div>
             </header>
 
-            <main>
-                <section className="border-b border-[#E8EA8A] bg-[#FDFDC7]">
-                    <div className="mx-auto max-w-4xl px-5 py-10 md:px-8 md:py-14">
-                        <span className="text-sm font-medium text-[#5F610E]">
-                            프로그램 등록
-                        </span>
+            <section className="border-b border-[#E8EA8A] bg-[#FDFDC7]">
+                <div className="mx-auto max-w-4xl px-5 py-10 md:px-8 md:py-14">
+                    <p className="text-sm font-medium text-[#5F610E]">
+                        템플스테이 등록
+                    </p>
+                    <h1 className="mt-3 text-[31px] font-semibold leading-tight tracking-[-0.045em] md:text-[44px]">
+                        템플스테이를 소개해 주세요
+                    </h1>
+                    <p className="mt-4 max-w-2xl text-[15px] leading-7 text-[#667085]">
+                        프로그램의 특징과 운영 정보를 작성해 주시면 확인 후
+                        사이트에 공개됩니다.
+                    </p>
 
-                        <h1 className="mt-3 text-[31px] font-semibold leading-tight tracking-[-0.045em] md:text-[44px]">
-                            템플스테이 프로그램 등록
-                        </h1>
-
-                        <p className="mt-4 max-w-2xl text-[15px] leading-7 text-[#667085]">
-                            프로그램 정보를 작성해 주시면 확인 후 사이트에
-                            게시됩니다. 정확한 연락처와 행사 일정을 입력해 주세요.
+                    <div className="mt-5 flex flex-col gap-3 rounded-2xl border border-[#E5E58E] bg-white/80 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+                        <p
+                            className={`text-sm ${saveStatus === "error"
+                                ? "text-[#D45643]"
+                                : "text-[#737B87]"
+                                }`}
+                        >
+                            {saveStatusText}
                         </p>
 
-                        <div className="mt-5 flex flex-col gap-3 rounded-2xl border border-[#E5E58E] bg-white/80 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-                            <p
-                                className={`text-sm ${saveStatus === "error"
-                                    ? "text-[#D45643]"
-                                    : "text-[#737B87]"
-                                    }`}
+                        {(savedAt || hasStarted) && (
+                            <button
+                                type="button"
+                                onClick={removeCurrentDraft}
+                                className="self-start text-sm text-[#68707D] underline underline-offset-4 sm:self-auto"
                             >
-                                {saveStatusText}
-                            </p>
-
-                            {(savedAt || hasStarted) && (
-                                <button
-                                    type="button"
-                                    onClick={removeCurrentDraft}
-                                    className="self-start text-sm text-[#68707D] underline underline-offset-4 sm:self-auto"
-                                >
-                                    초안 삭제
-                                </button>
-                            )}
-                        </div>
+                                초안 삭제
+                            </button>
+                        )}
                     </div>
-                </section>
+                </div>
+            </section>
 
-                <form
-                    className="mx-auto max-w-4xl px-4 py-8 md:px-8 md:py-12"
-                    onSubmit={handleSubmit}
-                >
+            <section className="border-b border-[#E7E9EC] bg-white">
+                <div className="mx-auto max-w-4xl px-4 py-5 md:px-8">
+                    <div className="grid grid-cols-3 gap-2">
+                        {steps.map((step) => {
+                            const isAvailable =
+                                step.number <= highestVisitedStep;
+
+                            return (
+                                <button
+                                    key={step.number}
+                                    type="button"
+                                    onClick={() =>
+                                        isAvailable && moveToStep(step.number)
+                                    }
+                                    disabled={!isAvailable}
+                                    className="min-w-0 text-center disabled:cursor-default"
+                                    aria-current={
+                                        currentStep === step.number
+                                            ? "step"
+                                            : undefined
+                                    }
+                                >
+                                    <span
+                                        className={`mx-auto flex h-9 w-9 items-center justify-center rounded-full text-sm font-medium ${currentStep === step.number
+                                            ? "bg-[#252A31] text-white"
+                                            : currentStep > step.number
+                                                ? "bg-[#F4F54A] text-[#252A31]"
+                                                : "bg-[#EEF0F2] text-[#7B8490]"
+                                            }`}
+                                    >
+                                        {step.number}
+                                    </span>
+                                    <span
+                                        className={`mt-2 block truncate text-[11px] md:text-xs ${currentStep === step.number
+                                            ? "font-medium text-[#252A31]"
+                                            : "text-[#8A919D]"
+                                            }`}
+                                    >
+                                        {step.label}
+                                    </span>
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+            </section>
+
+            <form
+                className="mx-auto grid max-w-4xl gap-5 px-4 py-8 md:px-8 md:py-12"
+                onSubmit={handleSubmit}
+            >
+                <div className="rounded-[18px] border border-[#E7E9EC] bg-white px-4 py-4 text-sm leading-6 text-[#667085]">
+                    모르는 항목은 비워두셔도 됩니다. 필수 항목만 입력해도
+                    등록을 요청할 수 있습니다.
+                </div>
+
+                {currentStep === 1 && (
                     <section className="rounded-[24px] border border-[#E3E8EF] bg-white p-5 md:p-8">
-                        <div className="border-b border-[#EEF0F2] pb-5">
-                            <span className="text-xs font-medium text-[#8D8040]">
-                                01
-                            </span>
-
-                            <h2 className="mt-1 text-[22px] font-medium">
-                                기본 정보
-                            </h2>
-
-                            <p className="mt-2 text-sm text-[#8B95A1]">
-                                프로그램을 소개할 기본 정보를 입력해 주세요.
-                            </p>
-                        </div>
+                        <SectionHeader
+                            number="01"
+                            title="프로그램 기본 정보"
+                            description="프로그램명과 운영 사찰, 유형과 장소를 입력해 주세요."
+                        />
 
                         <div className="mt-6 grid gap-6">
                             <label className={labelClassName}>
-                                프로그램명
-                                <span className="ml-1 text-[#E5484D]">
-                                    *
-                                </span>
-
+                                프로그램명{" "}
+                                <span className="text-[#E5484D]">*</span>
                                 <input
                                     type="text"
                                     required
@@ -346,11 +466,8 @@ export default function NewTempleStayPage() {
                             </label>
 
                             <label className={labelClassName}>
-                                사찰 또는 운영기관
-                                <span className="ml-1 text-[#E5484D]">
-                                    *
-                                </span>
-
+                                사찰 또는 운영기관{" "}
+                                <span className="text-[#E5484D]">*</span>
                                 <input
                                     type="text"
                                     required
@@ -363,11 +480,8 @@ export default function NewTempleStayPage() {
 
                             <div className="grid gap-6 md:grid-cols-2">
                                 <label className={labelClassName}>
-                                    프로그램 유형
-                                    <span className="ml-1 text-[#E5484D]">
-                                        *
-                                    </span>
-
+                                    프로그램 유형{" "}
+                                    <span className="text-[#E5484D]">*</span>
                                     <select
                                         required
                                         value={formData.programType}
@@ -391,47 +505,18 @@ export default function NewTempleStayPage() {
                                         <option value="other">기타</option>
                                     </select>
                                 </label>
-
-                                <label className={labelClassName}>
-                                    지역
-                                    <span className="ml-1 text-[#E5484D]">
-                                        *
-                                    </span>
-
-                                    <select
-                                        required
-                                        value={formData.region}
-                                        onChange={handleTextChange("region")}
-                                        className={inputClassName}
-                                    >
-                                        <option value="" disabled>
-                                            지역을 선택해 주세요
-                                        </option>
-                                        <option value="seoul">서울</option>
-                                        <option value="gyeonggi">경기</option>
-                                        <option value="incheon">인천</option>
-                                        <option value="gangwon">강원</option>
-                                        <option value="chungcheong">
-                                            충청
-                                        </option>
-                                        <option value="jeolla">전라</option>
-                                        <option value="gyeongsang">
-                                            경상
-                                        </option>
-                                        <option value="jeju">제주</option>
-                                    </select>
-                                </label>
+                                <RegionSelector
+                                    value={formData.region}
+                                    onChange={(value) =>
+                                        updateField("region", value)
+                                    }
+                                />
                             </div>
 
                             <label className={labelClassName}>
                                 주소
-                                <span className="ml-1 text-[#E5484D]">
-                                    *
-                                </span>
-
                                 <input
                                     type="text"
-                                    required
                                     value={formData.address}
                                     onChange={handleTextChange("address")}
                                     placeholder="프로그램이 진행되는 주소"
@@ -440,29 +525,22 @@ export default function NewTempleStayPage() {
                             </label>
                         </div>
                     </section>
+                )}
 
-                    <section className="mt-5 rounded-[24px] border border-[#E3E8EF] bg-white p-5 md:p-8">
-                        <div className="border-b border-[#EEF0F2] pb-5">
-                            <span className="text-xs font-medium text-[#8D8040]">
-                                02
-                            </span>
-
-                            <h2 className="mt-1 text-[22px] font-medium">
-                                일정과 참가 정보
-                            </h2>
-                        </div>
+                {currentStep === 2 && (
+                    <section className="rounded-[24px] border border-[#E3E8EF] bg-white p-5 md:p-8">
+                        <SectionHeader
+                            number="02"
+                            title="운영 및 신청 안내"
+                            description="운영 기간과 참가 정보, 프로그램 내용을 적어주세요."
+                        />
 
                         <div className="mt-6 grid gap-6">
                             <div className="grid gap-6 md:grid-cols-2">
                                 <label className={labelClassName}>
                                     시작일
-                                    <span className="ml-1 text-[#E5484D]">
-                                        *
-                                    </span>
-
                                     <input
                                         type="date"
-                                        required
                                         value={formData.startDate}
                                         onChange={handleTextChange("startDate")}
                                         className={inputClassName}
@@ -471,13 +549,8 @@ export default function NewTempleStayPage() {
 
                                 <label className={labelClassName}>
                                     종료일
-                                    <span className="ml-1 text-[#E5484D]">
-                                        *
-                                    </span>
-
                                     <input
                                         type="date"
-                                        required
                                         value={formData.endDate}
                                         onChange={handleTextChange("endDate")}
                                         className={inputClassName}
@@ -485,7 +558,7 @@ export default function NewTempleStayPage() {
                                 </label>
                             </div>
 
-                            <div className="grid gap-6 md:grid-cols-2">
+                            <div className="grid gap-6 md:grid-cols-3">
                                 <label className={labelClassName}>
                                     기간
                                     <input
@@ -508,58 +581,22 @@ export default function NewTempleStayPage() {
                                         className={inputClassName}
                                     />
                                 </label>
+
+                                <label className={labelClassName}>
+                                    참가비
+                                    <input
+                                        type="text"
+                                        value={formData.fee}
+                                        onChange={handleTextChange("fee")}
+                                        placeholder="예: 50,000원 또는 무료"
+                                        className={inputClassName}
+                                    />
+                                </label>
                             </div>
 
                             <label className={labelClassName}>
-                                참가비
-                                <input
-                                    type="text"
-                                    value={formData.fee}
-                                    onChange={handleTextChange("fee")}
-                                    placeholder="예: 50,000원 또는 무료"
-                                    className={inputClassName}
-                                />
-                            </label>
-                        </div>
-                    </section>
-
-                    <section className="mt-5 rounded-[24px] border border-[#E3E8EF] bg-white p-5 md:p-8">
-                        <div className="border-b border-[#EEF0F2] pb-5">
-                            <span className="text-xs font-medium text-[#8D8040]">
-                                03
-                            </span>
-
-                            <h2 className="mt-1 text-[22px] font-medium">
-                                프로그램 소개
-                            </h2>
-                        </div>
-
-                        <div className="mt-6 grid gap-6">
-                            <label className={labelClassName}>
-                                대표 이미지
-                                <input
-                                    ref={fileInputRef}
-                                    type="file"
-                                    accept="image/png,image/jpeg,image/webp"
-                                    className="mt-2 block w-full rounded-xl border border-dashed border-[#C9D0D8] bg-[#F7F8FA] px-4 py-6 text-sm text-[#667085]"
-                                />
-
-                                <span className="mt-2 block text-xs font-normal leading-5 text-[#8B95A1]">
-                                    JPG, PNG 또는 WebP 이미지를 등록해 주세요.
-                                </span>
-
-                                <span className="mt-1 block text-xs font-normal leading-5 text-[#A06B28]">
-                                    임시 저장을 불러온 뒤에는 이미지를 다시
-                                    선택해야 합니다.
-                                </span>
-                            </label>
-
-                            <label className={labelClassName}>
-                                상세 설명
-                                <span className="ml-1 text-[#E5484D]">
-                                    *
-                                </span>
-
+                                상세 설명{" "}
+                                <span className="text-[#E5484D]">*</span>
                                 <textarea
                                     required
                                     rows={8}
@@ -582,32 +619,40 @@ export default function NewTempleStayPage() {
                                     className={inputClassName}
                                 />
                             </label>
+
+                            <label className={labelClassName}>
+                                대표 이미지
+                                <span className="mt-2 block text-xs font-normal leading-5 text-[#8A919D]">
+                                    가로형 JPG, PNG 또는 WebP 이미지를 권장합니다.
+                                </span>
+                                <input
+                                    ref={fileInputRef}
+                                    type="file"
+                                    accept="image/png,image/jpeg,image/webp"
+                                    className="mt-3 block w-full rounded-xl border border-dashed border-[#C9D0D8] bg-[#F7F8FA] px-4 py-6 text-sm text-[#667085]"
+                                />
+                                <span className="mt-2 block text-xs font-normal leading-5 text-[#A06B28]">
+                                    임시 저장을 불러온 뒤에는 이미지를 다시
+                                    선택해야 합니다. 직접 촬영하거나 사용 권한이
+                                    확인된 사진만 등록해 주세요.
+                                </span>
+                            </label>
                         </div>
                     </section>
+                )}
 
-                    <section className="mt-5 rounded-[24px] border border-[#E3E8EF] bg-white p-5 md:p-8">
-                        <div className="border-b border-[#EEF0F2] pb-5">
-                            <span className="text-xs font-medium text-[#8D8040]">
-                                04
-                            </span>
-
-                            <h2 className="mt-1 text-[22px] font-medium">
-                                담당자 정보
-                            </h2>
-
-                            <p className="mt-2 text-sm leading-6 text-[#8B95A1]">
-                                등록 내용 확인을 위해 연락 가능한 정보를 입력해
-                                주세요.
-                            </p>
-                        </div>
+                {currentStep === 3 && (
+                    <section className="rounded-[24px] border border-[#E3E8EF] bg-white p-5 md:p-8">
+                        <SectionHeader
+                            number="03"
+                            title="담당자 정보"
+                            description="등록 내용을 확인할 수 있도록 연락 가능한 정보를 입력해 주세요."
+                        />
 
                         <div className="mt-6 grid gap-6">
                             <label className={labelClassName}>
-                                담당자 이름
-                                <span className="ml-1 text-[#E5484D]">
-                                    *
-                                </span>
-
+                                담당자 이름{" "}
+                                <span className="text-[#E5484D]">*</span>
                                 <input
                                     type="text"
                                     required
@@ -620,11 +665,8 @@ export default function NewTempleStayPage() {
 
                             <div className="grid gap-6 md:grid-cols-2">
                                 <label className={labelClassName}>
-                                    전화번호
-                                    <span className="ml-1 text-[#E5484D]">
-                                        *
-                                    </span>
-
+                                    전화번호{" "}
+                                    <span className="text-[#E5484D]">*</span>
                                     <input
                                         type="tel"
                                         required
@@ -658,49 +700,69 @@ export default function NewTempleStayPage() {
                                             event.target.checked,
                                         )
                                     }
-                                    className="mt-1 h-4 w-4"
+                                    className="mt-1 h-4 w-4 shrink-0 accent-[#252A31]"
                                 />
-
                                 <span>
                                     등록 내용 확인과 연락을 위한 개인정보 수집 및
-                                    이용에 동의합니다.
-                                    <span className="ml-1 text-[#E5484D]">
-                                        *
+                                    이용에 동의합니다.{" "}
+                                    <span className="text-[#E5484D]">
+                                        (필수)
                                     </span>
                                 </span>
                             </label>
+
+                            <div className="rounded-[18px] bg-[#FDFDC7] p-5">
+                                <p className="text-sm font-medium text-[#4E4F0D]">
+                                    등록 전 확인해 주세요
+                                </p>
+                                <p className="mt-2 text-sm leading-6 text-[#6D6200]">
+                                    제출된 프로그램은 관리자 확인 후 공개됩니다.
+                                    운영 내용이 바뀌면 이후 정보 수정을 요청할 수
+                                    있습니다.
+                                </p>
+                            </div>
                         </div>
                     </section>
+                )}
 
-                    <div className="mt-6 rounded-[22px] bg-[#FDFDC7] p-5">
-                        <strong className="text-sm">
-                            등록 전 확인해 주세요
-                        </strong>
-
-                        <p className="mt-2 text-sm leading-6 text-[#6D6200]">
-                            제출된 프로그램은 관리자 확인 후 공개됩니다. 허위
-                            정보나 프로그램과 관련 없는 광고는 게시되지 않을 수
-                            있습니다.
-                        </p>
+                <div className="mt-2 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                        {currentStep === 1 ? (
+                            <Link
+                                href="/temples/stay"
+                                className="block rounded-xl border border-[#DDE2E8] bg-white px-6 py-4 text-center text-sm font-medium"
+                            >
+                                취소
+                            </Link>
+                        ) : (
+                            <button
+                                type="button"
+                                onClick={goToPreviousStep}
+                                className="w-full rounded-xl border border-[#DDE2E8] bg-white px-6 py-4 text-sm font-medium sm:w-auto"
+                            >
+                                이전
+                            </button>
+                        )}
                     </div>
 
-                    <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-                        <Link
-                            href="/temples/stay"
-                            className="rounded-xl border border-[#DDE2E8] bg-white px-6 py-4 text-center text-sm font-medium"
+                    {currentStep < TOTAL_STEPS ? (
+                        <button
+                            type="button"
+                            onClick={goToNextStep}
+                            className="rounded-xl bg-[#20242C] px-8 py-4 text-sm font-medium text-white transition hover:bg-[#11151B]"
                         >
-                            취소
-                        </Link>
-
+                            다음
+                        </button>
+                    ) : (
                         <button
                             type="submit"
                             className="rounded-xl bg-[#20242C] px-8 py-4 text-sm font-medium text-white transition hover:bg-[#11151B]"
                         >
-                            등록 요청 보내기
+                            템플스테이 등록 요청
                         </button>
-                    </div>
-                </form>
-            </main>
+                    )}
+                </div>
+            </form>
 
             {showRestoreDialog && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/35 px-5">
@@ -752,6 +814,6 @@ export default function NewTempleStayPage() {
                     </div>
                 </div>
             )}
-        </div>
+        </main>
     );
 }

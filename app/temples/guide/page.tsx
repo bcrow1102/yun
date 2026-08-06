@@ -1,64 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import {
+    FormEvent,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
-const temples = [
-    {
-        id: 1,
-        name: "조계사",
-        region: "서울",
-        location: "서울 종로구",
-        description: "서울 도심에서 만나는 한국 불교의 대표적인 사찰",
-        tags: ["도심 사찰", "대중교통"],
-        icon: "🏯",
-    },
-    {
-        id: 2,
-        name: "해인사",
-        region: "경상",
-        location: "경남 합천",
-        description: "가야산의 자연과 팔만대장경을 품고 있는 사찰",
-        tags: ["문화유산", "산사"],
-        icon: "🌳",
-    },
-    {
-        id: 3,
-        name: "불국사",
-        region: "경상",
-        location: "경북 경주",
-        description: "신라의 역사와 불교문화를 함께 만날 수 있는 사찰",
-        tags: ["문화유산", "관광"],
-        icon: "🏛️",
-    },
-    {
-        id: 4,
-        name: "통도사",
-        region: "경상",
-        location: "경남 양산",
-        description: "고요한 숲길과 깊은 수행의 전통이 이어지는 사찰",
-        tags: ["산사", "산책"],
-        icon: "🌲",
-    },
-    {
-        id: 5,
-        name: "월정사",
-        region: "강원",
-        location: "강원 평창",
-        description: "전나무 숲길과 함께 걷기 좋은 오대산 사찰",
-        tags: ["숲길", "휴식"],
-        icon: "🍃",
-    },
-    {
-        id: 6,
-        name: "봉은사",
-        region: "서울",
-        location: "서울 강남구",
-        description: "도심 속에서 잠시 쉬어갈 수 있는 편안한 사찰",
-        tags: ["도심 사찰", "외국인 방문"],
-        icon: "🪷",
-    },
-];
+import {
+    getTempleSearchText,
+    normalizeTempleSearchText,
+    SIDO_LIST,
+    temples,
+} from "./temples";
 
 function LotusIcon() {
     return (
@@ -121,11 +76,102 @@ function ChevronIcon() {
     );
 }
 
+function DownIcon({ open }: { open: boolean }) {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            className={`h-5 w-5 transition-transform ${open ? "rotate-180" : ""
+                }`}
+        >
+            <path
+                d="m6 9 6 6 6-6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </svg>
+    );
+}
+
+function TempleIllustration() {
+    return (
+        <svg
+            viewBox="0 0 120 90"
+            fill="none"
+            className="h-24 w-32 text-[#65755F]"
+            aria-hidden="true"
+        >
+            <path
+                d="M20 69h80"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+            />
+            <path
+                d="M29 68V49h62v19"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinejoin="round"
+            />
+            <path
+                d="M36 49V35h48v14"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinejoin="round"
+            />
+            <path
+                d="M20 49h80L87 38H33L20 49Z"
+                fill="#E2ECDD"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinejoin="round"
+            />
+            <path
+                d="M29 35h62L80 25H40L29 35Z"
+                fill="#EDF3EA"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinejoin="round"
+            />
+            <path
+                d="M49 68V54h22v14"
+                stroke="currentColor"
+                strokeWidth="2"
+            />
+            <path
+                d="M60 54v14"
+                stroke="currentColor"
+                strokeWidth="2"
+            />
+            <path
+                d="M44 25h32"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+            />
+        </svg>
+    );
+}
+
 function TempleCategoryNav() {
     const menus = [
-        { label: "사찰 안내", href: "/temples/guide", active: true },
-        { label: "템플스테이", href: "/temples/stay", active: false },
-        { label: "사찰음식", href: "/temples/food", active: false },
+        {
+            label: "사찰 안내",
+            href: "/temples/guide",
+            active: true,
+        },
+        {
+            label: "템플스테이",
+            href: "/temples/stay",
+            active: false,
+        },
+        {
+            label: "사찰음식",
+            href: "/temples/food",
+            active: false,
+        },
     ];
 
     return (
@@ -154,11 +200,81 @@ function TempleCategoryNav() {
 
 export default function TempleGuidePage() {
     const [selectedRegion, setSelectedRegion] = useState("전체");
-    const regions = ["전체", "서울", "경기", "강원", "충청", "전라", "경상", "제주"];
-    const filteredTemples =
-        selectedRegion === "전체"
-            ? temples
-            : temples.filter((temple) => temple.region === selectedRegion);
+    const [regionPanelOpen, setRegionPanelOpen] = useState(false);
+    const [searchInput, setSearchInput] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const resultsSectionRef = useRef<HTMLElement>(null);
+
+    const filteredTemples = useMemo(() => {
+        const normalizedQuery =
+            normalizeTempleSearchText(searchTerm);
+
+        return temples.filter((temple) => {
+            if (!temple.published) {
+                return false;
+            }
+
+            const matchesRegion =
+                selectedRegion === "전체" ||
+                temple.sido === selectedRegion;
+
+            const matchesSearch =
+                normalizedQuery.length === 0 ||
+                getTempleSearchText(temple).includes(
+                    normalizedQuery,
+                );
+
+            return matchesRegion && matchesSearch;
+        });
+    }, [searchTerm, selectedRegion]);
+
+    function moveToResults() {
+        window.setTimeout(() => {
+            resultsSectionRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            });
+        }, 80);
+    }
+
+    function handleSearch(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        setSearchTerm(searchInput.trim());
+        moveToResults();
+    }
+
+    function handleRegionChange(region: string) {
+        setSelectedRegion(region);
+        setRegionPanelOpen(false);
+        moveToResults();
+    }
+
+    function resetSearch() {
+        setSelectedRegion("전체");
+        setSearchInput("");
+        setSearchTerm("");
+        setRegionPanelOpen(false);
+    }
+
+    const hasActiveFilter =
+        selectedRegion !== "전체" || searchTerm.length > 0;
+
+    const resultTitle = useMemo(() => {
+        if (searchTerm && selectedRegion !== "전체") {
+            return `${selectedRegion} · ‘${searchTerm}’ 검색 결과`;
+        }
+
+        if (searchTerm) {
+            return `‘${searchTerm}’ 검색 결과`;
+        }
+
+        if (selectedRegion !== "전체") {
+            return `${selectedRegion} 사찰`;
+        }
+
+        return "사찰 둘러보기";
+    }, [searchTerm, selectedRegion]);
 
     return (
         <div className="min-h-screen bg-white text-[#252A31]">
@@ -173,7 +289,9 @@ export default function TempleGuidePage() {
                             <LotusIcon />
                         </span>
 
-                        <strong className="text-xl font-semibold">연</strong>
+                        <strong className="text-xl font-semibold">
+                            연
+                        </strong>
                     </Link>
 
                     <Link
@@ -199,128 +317,331 @@ export default function TempleGuidePage() {
                         </h1>
 
                         <p className="mt-4 max-w-2xl text-[15px] leading-7 text-[#667085] md:text-base">
-                            지역과 사찰 이름으로 검색하고 방문에 필요한 정보를
-                            편하게 확인해 보세요.
+                            지역과 사찰 이름으로 검색하고 방문에
+                            필요한 정보를 편하게 확인해 보세요.
                         </p>
 
-                        <div className="mt-7 flex max-w-2xl items-center gap-2 rounded-[18px] border border-[#DDE7D9] bg-white p-2 shadow-[0_4px_16px_rgba(25,31,40,0.05)]">
+                        <form
+                            onSubmit={handleSearch}
+                            className="mt-7 flex max-w-2xl items-center gap-2 rounded-[18px] border border-[#DDE7D9] bg-white p-2 shadow-[0_4px_16px_rgba(25,31,40,0.05)] transition focus-within:border-[#252A31] focus-within:ring-2 focus-within:ring-[#F4F54A]"
+                        >
                             <span className="ml-2 text-[#8B95A1]">
                                 <SearchIcon />
                             </span>
 
                             <input
-                                type="text"
-                                placeholder="사찰 이름 또는 지역 검색"
+                                type="search"
+                                value={searchInput}
+                                onChange={(event) =>
+                                    setSearchInput(
+                                        event.target.value,
+                                    )
+                                }
+                                placeholder="사찰 이름, 지역, 문화유산 검색"
+                                aria-label="사찰 검색어"
                                 className="min-w-0 flex-1 bg-transparent px-2 py-3 text-sm outline-none placeholder:text-[#A8B0BA]"
                             />
 
-                            <button className="rounded-xl bg-[#252A31] px-4 py-3 text-sm font-bold text-white">
+                            <button
+                                type="submit"
+                                className="shrink-0 rounded-xl bg-[#252A31] px-4 py-3 text-sm font-bold text-white transition active:scale-95 active:bg-black"
+                            >
                                 검색
                             </button>
-                        </div>
+                        </form>
                     </div>
                 </section>
 
                 <section className="border-b border-[#EEF0F2] bg-white">
-                    <div className="mx-auto flex max-w-6xl gap-2 overflow-x-auto px-4 py-4 md:px-8">
-                        {regions.map(
-                            (region) => (
+                    <div className="mx-auto max-w-6xl px-4 py-4 md:px-8">
+                        <div className="max-w-2xl">
+                            <div className="flex items-center gap-3">
+                                <span className="shrink-0 text-sm font-semibold text-[#252A31]">
+                                    지역
+                                </span>
+
                                 <button
-                                    key={region}
                                     type="button"
-                                    onClick={() => setSelectedRegion(region)}
-                                    className={`shrink-0 rounded-full px-4 py-2.5 text-sm font-semibold ${selectedRegion === region
-                                        ? "bg-[#252A31] text-white"
-                                        : "border border-[#E3E8EF] bg-white text-[#667085]"
+                                    onClick={() =>
+                                        setRegionPanelOpen(
+                                            (current) => !current,
+                                        )
+                                    }
+                                    aria-expanded={regionPanelOpen}
+                                    aria-controls="region-selection-panel"
+                                    className={`flex min-h-11 w-full max-w-[230px] items-center justify-between rounded-xl border px-4 text-left text-sm font-medium transition ${regionPanelOpen
+                                        ? "border-[#252A31] bg-white ring-2 ring-[#F4F54A]"
+                                        : "border-[#DDE1E6] bg-white"
                                         }`}
                                 >
-                                    {region}
+                                    <span>
+                                        {selectedRegion === "전체"
+                                            ? "전체 지역"
+                                            : selectedRegion}
+                                    </span>
+
+                                    <DownIcon
+                                        open={regionPanelOpen}
+                                    />
                                 </button>
-                            )
-                        )}
+
+                                {selectedRegion !== "전체" && (
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            handleRegionChange(
+                                                "전체",
+                                            )
+                                        }
+                                        className="shrink-0 text-xs font-medium text-[#667085] underline underline-offset-4"
+                                    >
+                                        전국 보기
+                                    </button>
+                                )}
+                            </div>
+
+                            {regionPanelOpen && (
+                                <div
+                                    id="region-selection-panel"
+                                    className="mt-3 rounded-[18px] border border-[#DDE1E6] bg-white p-3 shadow-[0_12px_30px_rgba(25,31,40,0.1)] md:p-4"
+                                >
+                                    <div className="mb-3 flex items-center justify-between">
+                                        <strong className="text-sm font-semibold">
+                                            지역 선택
+                                        </strong>
+
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                setRegionPanelOpen(
+                                                    false,
+                                                )
+                                            }
+                                            className="text-xs text-[#667085]"
+                                        >
+                                            닫기
+                                        </button>
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            handleRegionChange(
+                                                "전체",
+                                            )
+                                        }
+                                        className={`mb-2 min-h-11 w-full rounded-xl text-sm font-semibold transition ${selectedRegion ===
+                                            "전체"
+                                            ? "bg-[#252A31] text-white"
+                                            : "bg-[#F5F6F7] text-[#252A31]"
+                                            }`}
+                                    >
+                                        전국
+                                    </button>
+
+                                    <div className="grid grid-cols-3 gap-2 md:grid-cols-6">
+                                        {SIDO_LIST.filter(
+                                            (region) =>
+                                                region !== "전체",
+                                        ).map((region) => (
+                                            <button
+                                                key={region}
+                                                type="button"
+                                                onClick={() =>
+                                                    handleRegionChange(
+                                                        region,
+                                                    )
+                                                }
+                                                className={`min-h-11 rounded-xl border px-2 text-sm font-medium transition ${selectedRegion ===
+                                                    region
+                                                    ? "border-[#252A31] bg-[#F4F54A] text-[#191F28]"
+                                                    : "border-[#E3E8EF] bg-white text-[#667085] hover:border-[#B8BEC6] hover:text-[#252A31]"
+                                                    }`}
+                                            >
+                                                {region}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </section>
 
-                <section className="mx-auto max-w-6xl px-4 py-8 md:px-8 md:py-12">
-                    <div className="mb-5 flex items-end justify-between">
+                <section
+                    ref={resultsSectionRef}
+                    className="scroll-mt-32 mx-auto max-w-6xl px-4 py-8 md:px-8 md:py-12"
+                >
+                    <div className="mb-5 flex items-end justify-between gap-4">
                         <div>
                             <span className="text-xs font-bold text-[#7A8B74]">
                                 등록된 사찰
                             </span>
 
                             <h2 className="mt-1 text-[24px] font-bold tracking-[-0.035em] md:text-[28px]">
-                                사찰 둘러보기
+                                {resultTitle}
                             </h2>
                         </div>
 
-                        <span className="text-sm text-[#8B95A1]">
-                            예시 {filteredTemples.length}곳
+                        <span
+                            className="shrink-0 text-sm text-[#8B95A1]"
+                            aria-live="polite"
+                        >
+                            {filteredTemples.length}곳
                         </span>
                     </div>
 
-                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                        {filteredTemples.map((temple) => (
+                    {hasActiveFilter && (
+                        <div className="mb-5 flex flex-wrap items-center gap-2">
+                            {selectedRegion !== "전체" && (
+                                <span className="rounded-full bg-[#F3F7F1] px-3 py-2 text-xs font-semibold text-[#61705B]">
+                                    지역: {selectedRegion}
+                                </span>
+                            )}
+
+                            {searchTerm && (
+                                <span className="rounded-full bg-[#F3F7F1] px-3 py-2 text-xs font-semibold text-[#61705B]">
+                                    검색어: {searchTerm}
+                                </span>
+                            )}
+
                             <button
-                                key={temple.id}
-                                className="group overflow-hidden rounded-[22px] border border-[#E3E8EF] bg-white text-left transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(25,31,40,0.08)]"
+                                type="button"
+                                onClick={resetSearch}
+                                className="px-2 py-2 text-xs font-medium text-[#667085] underline underline-offset-4"
                             >
-                                <span className="flex h-40 items-center justify-center bg-[#F3F7F1] text-5xl">
-                                    {temple.icon}
-                                </span>
-
-                                <span className="block p-5">
-                                    <span className="flex items-start justify-between gap-3">
-                                        <span>
-                                            <strong className="block text-[20px] font-bold">
-                                                {temple.name}
-                                            </strong>
-
-                                            <span className="mt-1 block text-sm text-[#8B95A1]">
-                                                {temple.location}
-                                            </span>
-                                        </span>
-
-                                        <span className="mt-1 text-[#7A8B74]">
-                                            <ChevronIcon />
-                                        </span>
-                                    </span>
-
-                                    <span className="mt-4 block text-sm leading-6 text-[#667085]">
-                                        {temple.description}
-                                    </span>
-
-                                    <span className="mt-4 flex flex-wrap gap-2">
-                                        {temple.tags.map((tag) => (
-                                            <span
-                                                key={tag}
-                                                className="rounded-full bg-[#F3F7F1] px-3 py-1.5 text-xs font-semibold text-[#61705B]"
-                                            >
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </span>
-                                </span>
+                                검색 조건 초기화
                             </button>
-                        ))}
-                    </div>
+                        </div>
+                    )}
 
-                    <div className="mt-8 rounded-[22px] bg-[#FDFDC7] px-5 py-6 md:flex md:items-center md:justify-between md:px-7">
-                        <div>
-                            <strong className="text-lg">
-                                사찰 정보를 등록하고 싶으신가요?
+                    {filteredTemples.length > 0 ? (
+                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                            {filteredTemples.map((temple) => (
+                                <Link
+                                    key={temple.slug}
+                                    href={`/temples/guide/${temple.slug}`}
+                                    className="group overflow-hidden rounded-[22px] border border-[#E3E8EF] bg-white text-left transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(25,31,40,0.08)]"
+                                >
+                                    <span className="flex h-40 items-center justify-center bg-[#F3F7F1]">
+                                        {temple.image ? (
+                                            <img
+                                                src={temple.image}
+                                                alt={
+                                                    temple.imageAlt ??
+                                                    `${temple.name} 전경`
+                                                }
+                                                className="h-full w-full object-cover"
+                                            />
+                                        ) : (
+                                            <TempleIllustration />
+                                        )}
+                                    </span>
+
+                                    <span className="block p-5">
+                                        <span className="flex items-start justify-between gap-3">
+                                            <span>
+                                                <strong className="block text-[20px] font-bold">
+                                                    {temple.name}
+                                                </strong>
+
+                                                <span className="mt-1 block text-sm text-[#8B95A1]">
+                                                    {temple.sido}{" "}
+                                                    {temple.sigungu}
+                                                </span>
+                                            </span>
+
+                                            <span className="mt-1 text-[#7A8B74] transition group-hover:translate-x-1">
+                                                <ChevronIcon />
+                                            </span>
+                                        </span>
+
+                                        <span className="mt-4 block text-sm leading-6 text-[#667085]">
+                                            {temple.summary}
+                                        </span>
+
+                                        <span className="mt-4 flex flex-wrap gap-2">
+                                            {temple.tags.map(
+                                                (tag) => (
+                                                    <span
+                                                        key={tag}
+                                                        className="rounded-full bg-[#F3F7F1] px-3 py-1.5 text-xs font-semibold text-[#61705B]"
+                                                    >
+                                                        {tag}
+                                                    </span>
+                                                ),
+                                            )}
+                                        </span>
+                                    </span>
+                                </Link>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="rounded-[22px] border border-[#E3E8EF] bg-[#F8F9FA] px-5 py-12 text-center">
+                            <strong className="block text-lg">
+                                검색 결과가 없습니다
                             </strong>
 
-                            <p className="mt-2 text-sm leading-6 text-[#6D6200]">
-                                사찰 기본 정보와 방문 안내를 등록해 주세요.
+                            <p className="mt-2 text-sm leading-6 text-[#667085]">
+                                사찰 이름이나 지역을 다시 확인하거나,
+                                목록에 없는 사찰을 제안해 주세요.
                             </p>
-                        </div>
 
-                        <Link
-                            href="/temples/guide/new"
-                            className="mt-5 block w-full rounded-xl bg-[#252A31] px-5 py-3.5 text-center text-sm font-medium text-white md:mt-0 md:w-auto"
-                        >
-                            사찰 등록하기
-                        </Link>
+                            <div className="mt-5 flex flex-col justify-center gap-2 sm:flex-row">
+                                <button
+                                    type="button"
+                                    onClick={resetSearch}
+                                    className="rounded-xl border border-[#DDE1E6] bg-white px-5 py-3 text-sm font-medium"
+                                >
+                                    검색 조건 초기화
+                                </button>
+
+                                <Link
+                                    href="/temples/guide/suggest"
+                                    className="rounded-xl bg-[#F4F54A] px-5 py-3 text-sm font-medium text-[#191F28]"
+                                >
+                                    사찰 추가 제안
+                                </Link>
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="mt-8 rounded-[22px] bg-[#FDFDC7] px-5 py-6 md:px-7">
+                        <div className="md:flex md:items-end md:justify-between md:gap-8">
+                            <div>
+                                <strong className="text-lg">
+                                    사찰 정보를 함께 채워 주세요
+                                </strong>
+
+                                <p className="mt-2 text-sm leading-6 text-[#6D6200]">
+                                    사찰 관계자의 직접 등록과 이용자의
+                                    추가·수정 제안을 모두 받고 있습니다.
+                                </p>
+                            </div>
+
+                            <div className="mt-5 grid gap-2 sm:grid-cols-3 md:mt-0">
+                                <Link
+                                    href="/temples/guide/new"
+                                    className="rounded-xl bg-[#252A31] px-4 py-3.5 text-center text-sm font-medium text-white"
+                                >
+                                    사찰 등록
+                                </Link>
+
+                                <Link
+                                    href="/temples/guide/suggest"
+                                    className="rounded-xl border border-[#D7D979] bg-white px-4 py-3.5 text-center text-sm font-medium text-[#252A31]"
+                                >
+                                    사찰 추가 제안
+                                </Link>
+
+                                <Link
+                                    href="/temples/guide/correction"
+                                    className="rounded-xl border border-[#D7D979] bg-white px-4 py-3.5 text-center text-sm font-medium text-[#252A31]"
+                                >
+                                    정보 수정 제안
+                                </Link>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </main>
