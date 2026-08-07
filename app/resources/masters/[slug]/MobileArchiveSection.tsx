@@ -127,7 +127,7 @@ export default function MobileArchiveSection({
                                 ? context.returnToList()
                                 : context.openNextSection(id)
                         }
-                        className="shrink-0 text-sm text-[#667085]"
+                        className="shrink-0 text-sm text-[#777900]"
                         aria-label={
                             isLastSection
                                 ? "전체 항목 목록으로 돌아가기"
@@ -153,7 +153,7 @@ export default function MobileArchiveSection({
                     className="flex w-full items-center justify-between py-5 text-left text-[17px] font-medium text-[#303641] md:hidden"
                 >
                     <span>{title}</span>
-                    <span aria-hidden="true" className="text-[#8B95A1]">
+                    <span aria-hidden="true" className="text-[#777900]">
                         ＋
                     </span>
                 </button>

@@ -214,17 +214,21 @@ function DeepPage({ slug }: { slug: "wonhyo" | "wonkwang" | "gyunyeo" }) {
                                 >
                                     <Link
                                         href={`/resources/masters/${slug}/illustrations`}
-                                        className="text-sm text-[#303641] transition hover:text-[#777900]"
+                                        className="group relative inline-flex items-center pb-1 text-sm text-[#303641] transition hover:text-[#777900]"
                                     >
                                         삽화로 보는 일화
                                         <span className="ml-1.5 text-xs text-[#9AA1AB]">
                                             {illustrationCount}편
                                         </span>
+                                        <span
+                                            aria-hidden="true"
+                                            className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-[#F4F54A] transition-transform duration-200 group-hover:scale-x-100"
+                                        />
                                     </Link>
 
                                     <Link
                                         href={`/resources/masters/${slug}/videos`}
-                                        className="text-sm text-[#303641] transition hover:text-[#777900]"
+                                        className="group relative inline-flex items-center pb-1 text-sm text-[#303641] transition hover:text-[#777900]"
                                     >
                                         다큐·영상
                                         {master.videos?.length ? (
@@ -232,13 +236,21 @@ function DeepPage({ slug }: { slug: "wonhyo" | "wonkwang" | "gyunyeo" }) {
                                                 {master.videos.length}편
                                             </span>
                                         ) : null}
+                                        <span
+                                            aria-hidden="true"
+                                            className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-[#F4F54A] transition-transform duration-200 group-hover:scale-x-100"
+                                        />
                                     </Link>
 
                                     <Link
                                         href={`/resources/masters/${slug}/academic`}
-                                        className="text-sm text-[#303641] transition hover:text-[#777900]"
+                                        className="group relative inline-flex pb-1 text-sm text-[#303641] transition hover:text-[#777900]"
                                     >
                                         학술 자료
+                                        <span
+                                            aria-hidden="true"
+                                            className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-[#F4F54A] transition-transform duration-200 group-hover:scale-x-100"
+                                        />
                                     </Link>
                                 </nav>
                             </div>
@@ -256,7 +268,7 @@ function DeepPage({ slug }: { slug: "wonhyo" | "wonkwang" | "gyunyeo" }) {
                                         <Link
                                             key={item.href}
                                             href={`/resources/masters/${slug}/${item.href}`}
-                                            className="group inline-flex items-center gap-1.5 text-sm text-[#303641] transition hover:text-[#777900]"
+                                            className="group relative inline-flex items-center gap-1.5 pb-1 text-sm text-[#303641] transition hover:text-[#777900]"
                                         >
                                             <span>{item.label}</span>
                                             <span
@@ -265,6 +277,10 @@ function DeepPage({ slug }: { slug: "wonhyo" | "wonkwang" | "gyunyeo" }) {
                                             >
                                                 ›
                                             </span>
+                                            <span
+                                                aria-hidden="true"
+                                                className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-[#F4F54A] transition-transform duration-200 group-hover:scale-x-100"
+                                            />
                                         </Link>
                                     ))}
                                 </nav>
@@ -284,21 +300,21 @@ function DeepPage({ slug }: { slug: "wonhyo" | "wonkwang" | "gyunyeo" }) {
                             >
                                 <Link
                                     href={`/resources/masters/${slug}/illustrations`}
-                                    className="flex min-h-[58px] items-center justify-center border-r border-[#E5E7EA] px-2 text-center text-[13px] leading-5 text-[#303641]"
+                                    className="flex min-h-[58px] items-center justify-center border-r border-[#E5E7EA] px-2 text-center text-[13px] leading-5 text-[#777900]"
                                 >
                                     삽화 일화 {illustrationCount}편
                                 </Link>
 
                                 <Link
                                     href={`/resources/masters/${slug}/videos`}
-                                    className="flex min-h-[58px] items-center justify-center border-r border-[#E5E7EA] px-2 text-center text-[13px] leading-5 text-[#303641]"
+                                    className="flex min-h-[58px] items-center justify-center border-r border-[#E5E7EA] px-2 text-center text-[13px] leading-5 text-[#777900]"
                                 >
                                     영상{master.videos?.length ? ` ${master.videos.length}편` : ""}
                                 </Link>
 
                                 <Link
                                     href={`/resources/masters/${slug}/academic`}
-                                    className="flex min-h-[58px] items-center justify-center px-2 text-center text-[13px] leading-5 text-[#303641]"
+                                    className="flex min-h-[58px] items-center justify-center px-2 text-center text-[13px] leading-5 text-[#777900]"
                                 >
                                     학술 자료
                                 </Link>
@@ -586,7 +602,7 @@ function DeepPage({ slug }: { slug: "wonhyo" | "wonkwang" | "gyunyeo" }) {
                                             className="group flex items-start justify-between gap-4 py-5"
                                         >
                                             <div>
-                                                <p className="text-sm font-medium text-[#303641] group-hover:text-[#777900]">
+                                                <p className="text-sm font-medium text-[#777900] md:text-[#303641] md:group-hover:text-[#777900]">
                                                     {source.label}
                                                 </p>
                                                 <p className="mt-1 text-xs text-[#8B95A1]">
@@ -608,7 +624,7 @@ function DeepPage({ slug }: { slug: "wonhyo" | "wonkwang" | "gyunyeo" }) {
                             <div className="mt-14 flex justify-center">
                                 <Link
                                     href="/resources/masters"
-                                    className="rounded-full border border-[#DDE1D8] bg-white px-5 py-3 text-sm text-[#56606D]"
+                                    className="rounded-full border border-[#DDE1D8] bg-white px-5 py-3 text-sm text-[#777900] md:text-[#56606D]"
                                 >
                                     한국의 고승 목록으로
                                 </Link>
