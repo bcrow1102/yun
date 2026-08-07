@@ -55,29 +55,6 @@ function getResourceMeta(master: Master) {
     return items.join(" · ");
 }
 
-function getResourceLinks(master: Master) {
-    const videoCount = getVideoCount(master);
-    const illustratedCount = illustratedStoryCounts[master.slug] ?? 0;
-
-    const links: { href: string; label: string }[] = [];
-
-    if (videoCount > 0) {
-        links.push({
-            href: `/resources/masters/${master.slug}/videos`,
-            label: `영상자료 ${videoCount}편`,
-        });
-    }
-
-    if (illustratedCount > 0) {
-        links.push({
-            href: `/resources/masters/${master.slug}/illustrations`,
-            label: `삽화 일화 ${illustratedCount}편`,
-        });
-    }
-
-    return links;
-}
-
 function getStatusText(master: Master) {
     if (master.status === "planned") {
         return "자료 준비 중";
@@ -200,15 +177,15 @@ function MasterPortrait({ master }: { master: Master }) {
 }
 
 function RepresentativeCard({ master }: { master: Master }) {
-    const resourceLinks = getResourceLinks(master);
+    const resourceMeta = getResourceMeta(master);
     const statusText = getStatusText(master);
 
     return (
-        <article className="group mt-5 overflow-hidden rounded-[20px] border border-[#DEE1DB] bg-white transition-colors duration-200 hover:border-[#BFC4B8]">
-            <Link
-                href={`/resources/masters/${master.slug}`}
-                className="block p-4 md:flex md:items-stretch md:gap-5 md:p-5 md:pb-4"
-            >
+        <Link
+            href={`/resources/masters/${master.slug}`}
+            className="group mt-5 block overflow-hidden rounded-[20px] border border-[#DEE1DB] bg-white transition-colors duration-200 hover:border-[#BFC4B8]"
+        >
+            <article className="p-4 md:flex md:items-stretch md:gap-5 md:p-5">
                 <div className="flex items-start gap-4 md:contents">
                     <MasterPortrait master={master} />
 
@@ -248,8 +225,12 @@ function RepresentativeCard({ master }: { master: Master }) {
                             {master.introduction}
                         </p>
 
-                        <div className="mt-auto hidden items-center justify-end pt-3 text-[#7B8490] md:flex">
-                            <span className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-[#20242B]">
+                        <div className="mt-auto hidden items-center justify-between gap-4 border-t border-[#ECEEEA] pt-3 md:flex">
+                            <p className="min-w-0 truncate text-sm text-[#8B95A1]">
+                                {resourceMeta || "관련 자료 준비 중"}
+                            </p>
+
+                            <span className="shrink-0 text-[#7B8490] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-[#20242B]">
                                 <ArrowMark />
                             </span>
                         </div>
@@ -259,34 +240,18 @@ function RepresentativeCard({ master }: { master: Master }) {
                 <p className="mt-3 line-clamp-2 break-keep text-sm font-normal leading-6 text-[#667085] md:hidden">
                     {master.introduction}
                 </p>
-            </Link>
 
-            <div className="border-t border-[#ECEEEA] px-4 py-3 md:px-5">
-                {resourceLinks.length ? (
-                    <nav
-                        className="flex flex-wrap items-center gap-x-5 gap-y-2"
-                        aria-label={`${master.name} 관련 자료`}
-                    >
-                        {resourceLinks.map((item) => (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                className="text-xs text-[#7B8490] transition-colors hover:text-[#20242B] md:text-sm"
-                            >
-                                {item.label}
-                                <span aria-hidden="true" className="ml-1 text-[#B0B6BE]">
-                                    ›
-                                </span>
-                            </Link>
-                        ))}
-                    </nav>
-                ) : (
-                    <p className="text-xs text-[#939AA4] md:text-sm">
-                        관련 자료 준비 중
+                <div className="mt-3 flex items-center justify-between gap-4 border-t border-[#ECEEEA] pt-3 md:hidden">
+                    <p className="min-w-0 truncate text-xs text-[#8B95A1]">
+                        {resourceMeta || "관련 자료 준비 중"}
                     </p>
-                )}
-            </div>
-        </article>
+
+                    <span className="shrink-0 text-[#7B8490] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-[#20242B]">
+                        <ArrowMark />
+                    </span>
+                </div>
+            </article>
+        </Link>
     );
 }
 
