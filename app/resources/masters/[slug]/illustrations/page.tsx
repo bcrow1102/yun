@@ -75,62 +75,25 @@ export default async function MasterIllustrationsPage({
             </header>
 
             <section className="border-b border-[#E4E7DF] bg-[#F4F6EF]">
-                <div className="mx-auto max-w-[900px] px-5 py-10 md:px-8 md:py-14">
-                    <p className="text-sm text-[#777900]">
-                        {master.eraLabel} · {master.years}
-                    </p>
-
-                    <h1 className="mt-2 text-[34px] font-semibold tracking-[-0.04em] md:text-[46px]">
-                        {master.name}
-                    </h1>
-
-                    <p className="mt-4 max-w-[680px] break-keep text-[15px] leading-7 text-[#667085]">
-                        {master.introduction}
-                    </p>
+                <div className="mx-auto max-w-[900px] px-5 py-8 md:px-8 md:py-11">
+                    <Link href={`/resources/masters/${slug}`} className="text-sm text-[#777900]">← {master.name}</Link>
+                    <p className="mt-4 text-xs text-[#8B95A1]">{master.eraLabel} · {master.years}</p>
+                    <h1 className="mt-1 text-[30px] font-semibold tracking-[-0.04em] md:text-[40px]">삽화로 보는 일화</h1>
+                    <p className="mt-3 max-w-[680px] break-keep text-sm leading-7 text-[#667085]">{master.name}의 생애와 전승을 삽화와 함께 살펴봅니다.</p>
                 </div>
             </section>
 
-            <nav
-                className="sticky top-0 z-20 border-b border-[#E6E8E3] bg-white/95 backdrop-blur"
-                aria-label={`${master.name} 자료 탭`}
-            >
-                <div className="mx-auto flex max-w-[900px] gap-1 overflow-x-auto px-5 py-3 md:px-8">
-                    <Link
-                        href={`/resources/masters/${slug}#videos`}
-                        className="shrink-0 rounded-full px-3.5 py-2 text-sm text-[#667085] hover:bg-[#F4F54A] hover:text-[#252A31]"
-                    >
-                        다큐·영상
-                    </Link>
-
-                    <Link
-                        href={`/resources/masters/${slug}/illustrations`}
-                        className="shrink-0 rounded-full bg-[#F4F54A] px-3.5 py-2 text-sm text-[#252A31]"
-                    >
-                        삽화로 보는 일화
-                    </Link>
-
-                    <Link
-                        href={`/resources/masters/${slug}/academic`}
-                        className="shrink-0 rounded-full px-3.5 py-2 text-sm text-[#667085] hover:bg-[#F4F54A] hover:text-[#252A31]"
-                    >
-                        학술 자료
-                    </Link>
+            <nav className="sticky top-0 z-20 hidden border-b border-[#E6E8E3] bg-white/95 backdrop-blur md:block" aria-label={`${master.name} 자료 탭`}>
+                <div className="mx-auto flex max-w-[900px] gap-9 px-8">
+                    <Link href={`/resources/masters/${slug}`} className="py-4 text-sm text-[#667085]">인물 개요</Link>
+                    <span className="border-b-2 border-[#F4F54A] py-4 text-sm font-semibold text-[#20242B]">삽화로 보는 일화</span>
+                    <Link href={`/resources/masters/${slug}/videos`} className="py-4 text-sm text-[#667085]">다큐·영상</Link>
+                    <Link href={`/resources/masters/${slug}/academic`} className="py-4 text-sm text-[#667085]">학술 자료</Link>
                 </div>
             </nav>
 
             <div className="mx-auto max-w-[1100px] px-5 py-12 md:px-8 md:py-16">
-                <p className="text-sm font-medium text-[#777900]">
-                    이야기로 만나는 고승
-                </p>
-
-                <h2 className="mt-2 text-[28px] font-semibold tracking-[-0.04em] md:text-[36px]">
-                    삽화로 보는 일화
-                </h2>
-
-                <p className="mt-3 max-w-[680px] break-keep text-sm leading-7 text-[#7B8490]">
-                    문헌에 전하는 일화를 삽화와 함께 읽되, 역사적 기록과
-                    후대 전승, 이야기의 재구성 부분을 구분해 소개합니다.
-                </p>
+                <p className="text-sm leading-7 text-[#7B8490]">문헌 기록과 후대 전승, 이야기의 재구성 부분을 구분해 소개합니다.</p>
 
                 {items.length ? (
                     <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -171,7 +134,7 @@ export default async function MasterIllustrationsPage({
                                         출전: {item.source}
                                     </p>
 
-                                    <span className="mt-5 inline-flex items-center gap-1 rounded-full bg-[#F7F8FA] px-3 py-2 text-xs text-[#68713A] transition group-hover:bg-[#F4F54A] group-hover:text-[#252A31]">
+                                    <span className="mt-5 inline-flex items-center gap-1 text-xs text-[#68713A] transition group-hover:text-[#20242B]">
                                         이야기 읽기
                                         <span aria-hidden="true">→</span>
                                     </span>

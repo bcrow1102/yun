@@ -5,7 +5,10 @@ import { getMaster, masters } from "../data";
 import { wonhyoArticle } from "./articles/wonhyo";
 import { wonkwangArticle } from "./articles/wonkwang";
 import { gyunyeoArticle } from "./articles/gyunyeo";
-import ScrollToHash from "./ScrollToHash";
+import MobileArchiveSection, {
+    MobileArchiveDefault,
+    MobileArchiveRoot,
+} from "./MobileArchiveSection";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -83,15 +86,9 @@ function SiteHeader() {
 }
 
 function RecordBadge({ type }: { type: "기록" | "전승" | "연구" }) {
-    const style =
-        type === "기록"
-            ? "bg-[#EEF1D8] text-[#666B27]"
-            : type === "전승"
-                ? "bg-[#F4EFE8] text-[#806D56]"
-                : "bg-[#EDF1F5] text-[#637083]";
     return (
-        <span className={`rounded-full px-2.5 py-1 text-[11px] ${style}`}>
-            {type}
+        <span className="text-xs font-normal text-[#8B95A1]">
+            {type === "기록" ? "문헌 기록" : type === "전승" ? "후대 전승" : "연구 해석"}
         </span>
     );
 }
@@ -106,425 +103,520 @@ function DeepPage({ slug }: { slug: "wonhyo" | "wonkwang" | "gyunyeo" }) {
 
     const master = getMaster(slug)!;
 
+    const illustrationCountBySlug: Record<typeof slug, number> = {
+        wonhyo: 3,
+        wonkwang: 1,
+        gyunyeo: 1,
+    };
+
+    const illustrationCount = illustrationCountBySlug[slug];
+
+    const detailLinks = [
+        { href: "timeline", label: "생애 연표" },
+        { href: "life", label: "상세 일대기" },
+        { href: "thought", label: "핵심 사상" },
+        { href: "works", label: "주요 저술" },
+        { href: "stories", label: "일화와 전승" },
+    ] as const;
+
     return (
         <main className="min-h-screen bg-[#F7F8FA] text-[#171B22]">
             <SiteHeader />
-            <ScrollToHash />
 
-            <article>
-                <section className="border-b border-[#E4E7DF] bg-[#F4F6EF]">
-                    <div className="mx-auto grid max-w-[1000px] gap-8 px-5 py-12 md:grid-cols-[1fr_280px] md:px-8 md:py-20">
-                        <div className="self-center">
-                            <div className="flex flex-wrap items-center gap-2 text-sm text-[#777900]">
-                                <span>한국의 고승 {master.number}</span>
-                                <span className="text-[#C4C8BD]">·</span>
-                                <span>{article.readingTime}</span>
-                                <span className="text-[#C4C8BD]">·</span>
-                                <span>검토 {article.lastReviewed}</span>
-                            </div>
-                            <p className="mt-6 text-base text-[#8A8173]">
-                                {master.hanja} · {master.years}
-                            </p>
-                            <h1 className="mt-2 max-w-[680px] text-[38px] font-semibold leading-[1.18] tracking-[-0.05em] md:text-[54px]">
-                                {article.title}
-                            </h1>
-                            <p className="mt-5 max-w-[680px] text-[15px] leading-7 text-[#667085] md:text-[17px] md:leading-8">
-                                {article.subtitle}
-                            </p>
-                            <div className="mt-7 flex flex-wrap gap-2">
-                                {master.theme.split(" · ").map((item) => (
-                                    <span
-                                        key={item}
-                                        className="rounded-full bg-white px-3.5 py-2 text-sm text-[#666B27]"
-                                    >
-                                        {item}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
+            <MobileArchiveRoot>
+                <article>
+                    <MobileArchiveDefault>
+                        <section className="border-b border-[#E4E7DF] bg-[#F4F6EF]">
+                            <div className="mx-auto max-w-[1120px] px-4 py-9 md:grid md:grid-cols-[300px_1fr] md:items-center md:gap-12 md:px-8 md:py-14">
+                                <figure>
+                                    <div className="relative mx-auto aspect-[4/5] w-full max-w-[320px] overflow-hidden rounded-[22px] border border-[#D7D9CF] bg-white md:mx-0 md:max-w-none">
+                                        <img
+                                            src={article.portrait.src}
+                                            alt={article.portrait.alt}
+                                            className="h-full w-full object-cover object-center"
+                                        />
+                                    </div>
 
-                        <figure>
-                            <div className="relative overflow-hidden rounded-[26px] border border-[#D7D9CF] bg-[#D6C6A7]">
-                                <img
-                                    src={article.portrait.src}
-                                    alt={article.portrait.alt}
-                                    className="h-auto w-full object-contain"
-                                />
-
-                                <span
-                                    aria-hidden="true"
-                                    className="absolute bottom-4 left-4 h-1 w-12 rounded-full bg-[#F4F54A]"
-                                />
-                            </div>
-
-                            <figcaption className="mt-3 text-xs font-normal leading-5 text-[#8B95A1]">
-                                {slug === "wonhyo" ? (
-                                    <>
-                                        전해지는 원효대사 초상 · 일본 교토 고산사 소장
-                                        <span className="mx-1 text-[#C2C7CE]">·</span>
-                                        퍼블릭 도메인
-                                    </>
-                                ) : (
-                                    article.portrait.caption
-                                )}
-                            </figcaption>
-                        </figure>
-                    </div>
-                </section>
-
-                <nav
-                    className="sticky top-0 z-20 border-b border-[#E6E8E3] bg-white/95 backdrop-blur"
-                    aria-label={`${master.name} 자료 탭`}
-                >
-                    <div className="mx-auto flex max-w-[1000px] gap-1 overflow-x-auto px-5 py-3 md:px-8">
-                        <a
-                            href="#videos"
-                            className="shrink-0 rounded-full px-3.5 py-2 text-sm text-[#667085] hover:bg-[#F4F54A] hover:text-[#252A31] focus:bg-[#F4F54A] focus:text-[#252A31]"
-                        >
-                            다큐·영상
-                        </a>
-                        <Link
-                            href={`/resources/masters/${slug}/illustrations`}
-                            className="shrink-0 rounded-full px-3.5 py-2 text-sm text-[#667085] hover:bg-[#F4F54A] hover:text-[#252A31]"
-                        >
-                            삽화로 보는 일화
-                        </Link>
-                        <Link
-                            href={`/resources/masters/${slug}/academic`}
-                            className="shrink-0 rounded-full px-3.5 py-2 text-sm text-[#667085] hover:bg-[#F4F54A] hover:text-[#252A31]"
-                        >
-                            학술 자료
-                        </Link>
-                    </div>
-                </nav>
-
-                <div className="mx-auto max-w-[900px] px-5 py-10 md:px-8 md:py-16">
-                    <section
-                        className="grid gap-3 sm:grid-cols-2 md:grid-cols-3"
-                        aria-label={`${master.name} 기본 정보`}
-                    >
-                        {article.quickFacts.map((fact) => (
-                            <div
-                                key={fact.label}
-                                className="rounded-[18px] border border-[#E2E5DF] bg-white p-4"
-                            >
-                                <p className="text-xs text-[#8B95A1]">{fact.label}</p>
-                                <p className="mt-1.5 text-sm leading-6 text-[#3F4752]">
-                                    {fact.value}
-                                </p>
-                            </div>
-                        ))}
-                    </section>
-
-                    <section id="timeline" className="scroll-mt-24 pt-16">
-                        <SectionTitle
-                            eyebrow={`${master.name}의 생애`}
-                            title="생애 연표"
-                            description="확정 가능한 기록과 후대 전승, 연구상 추정을 구분해서 살펴봅니다."
-                        />
-                        <div className="relative mt-8 space-y-0 before:absolute before:bottom-3 before:left-[5px] before:top-3 before:w-px before:bg-[#DDE1D8] md:before:left-[119px]">
-                            {article.timeline.map((item) => (
-                                <div
-                                    key={`${item.year}-${item.title}`}
-                                    className="relative grid gap-3 pb-8 pl-8 md:grid-cols-[96px_1fr] md:gap-6 md:pl-0"
-                                >
-                                    <span className="absolute left-0 top-2 h-[11px] w-[11px] rounded-full border-[3px] border-[#F4F54A] bg-white md:left-[114px]" />
-                                    <div>
-                                        <p className="text-sm font-medium text-[#666B27]">
-                                            {item.year}
-                                        </p>
-                                        {item.age && (
-                                            <p className="mt-0.5 text-xs text-[#9AA1AB]">
-                                                {item.age}
-                                            </p>
+                                    <figcaption className="mx-auto mt-3 max-w-[320px] text-xs font-normal leading-5 text-[#8B95A1] md:mx-0 md:max-w-[300px]">
+                                        {slug === "wonhyo" ? (
+                                            <>
+                                                전해지는 원효대사 초상 · 일본 교토 고산사 소장
+                                                <span className="mx-1 text-[#C2C7CE]">·</span>
+                                                퍼블릭 도메인
+                                            </>
+                                        ) : (
+                                            article.portrait.caption
                                         )}
-                                    </div>
-                                    <div className="rounded-[18px] border border-[#E4E7E1] bg-white p-5 md:ml-4">
-                                        <div className="flex flex-wrap items-center justify-between gap-2">
-                                            <h3 className="text-[17px] font-medium">{item.title}</h3>
-                                            <RecordBadge type={item.recordType} />
-                                        </div>
-                                        <p className="mt-3 text-sm font-normal leading-7 text-[#667085]">
-                                            {item.description}
-                                        </p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
+                                    </figcaption>
+                                </figure>
 
-                    <section id="life" className="scroll-mt-24 pt-16">
-                        <SectionTitle
-                            eyebrow="깊이 읽기"
-                            title="상세 일대기"
-                            description="한 사람의 삶을 당시의 전쟁과 지식, 신앙의 변화 속에서 읽습니다."
-                        />
-                        <div className="mt-9 space-y-14">
-                            {article.lifeSections.map((section) => (
-                                <section
-                                    key={section.id}
-                                    id={section.id}
-                                    className="border-t border-[#E5E7EA] pt-8"
-                                >
-                                    <p className="text-sm text-[#A0A60B]">{section.eyebrow}</p>
-                                    <h3 className="mt-2 text-[25px] font-semibold tracking-[-0.035em] md:text-[30px]">
-                                        {section.title}
-                                    </h3>
-                                    <div className="mt-5 space-y-5">
-                                        {section.paragraphs.map((p) => (
-                                            <p
-                                                key={p}
-                                                className="text-[15px] font-normal leading-[1.95] text-[#4E5968] md:text-base"
-                                            >
-                                                {p}
-                                            </p>
-                                        ))}
-                                    </div>
-                                    {section.note && (
-                                        <p className="mt-6 rounded-[18px] bg-[#F1F3ED] px-5 py-4 text-sm font-normal leading-7 text-[#66705C]">
-                                            {section.note}
-                                        </p>
-                                    )}
-                                </section>
-                            ))}
-                        </div>
-                    </section>
+                                <div className="mt-7 min-w-0 md:mt-0">
+                                    <p className="text-sm text-[#777900]">
+                                        한국의 고승 {master.number} · {master.eraLabel} · {master.years}
+                                    </p>
 
-                    <section id="thought" className="scroll-mt-24 pt-20">
-                        <SectionTitle
-                            eyebrow="사상"
-                            title={`세 가지 핵심어로 읽는 ${master.name}`}
-                            description="어려운 용어의 뜻을 먼저 잡고, 이 인물이 해결하려 한 문제를 함께 봅니다."
-                        />
-                        <div className="mt-8 space-y-4">
-                            {article.thoughts.map((thought, index) => (
-                                <section
-                                    key={thought.id}
-                                    className="rounded-[22px] border border-[#E2E5DF] bg-white p-5 md:p-7"
-                                >
-                                    <div className="flex items-start justify-between gap-4">
-                                        <div>
-                                            <p className="text-sm text-[#8B95A1]">{thought.hanja}</p>
-                                            <h3 className="mt-1 text-[24px] font-semibold">
-                                                {thought.term}
-                                            </h3>
-                                        </div>
-                                        <span className="text-2xl font-light text-[#D0D45A]">
-                                            0{index + 1}
+                                    <div className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                                        <h1 className="text-[36px] font-semibold leading-[1.15] tracking-[-0.05em] md:text-[52px]">
+                                            {master.name}
+                                        </h1>
+                                        <span className="text-sm text-[#8A8173] md:text-base">
+                                            {master.hanja}
                                         </span>
                                     </div>
-                                    <p className="mt-4 border-l-4 border-[#F4F54A] pl-4 text-[15px] leading-7 text-[#626A32]">
-                                        {thought.summary}
+
+                                    <p className="mt-3 text-sm text-[#746A57] md:text-[15px]">
+                                        {master.theme}
                                     </p>
-                                    <div className="mt-5 space-y-4">
-                                        {thought.explanation.map((p) => (
-                                            <p
-                                                key={p}
-                                                className="text-sm font-normal leading-7 text-[#596270] md:text-[15px] md:leading-8"
-                                            >
-                                                {p}
-                                            </p>
-                                        ))}
-                                    </div>
-                                </section>
-                            ))}
-                        </div>
-                    </section>
 
-                    <section id="works" className="scroll-mt-24 pt-20">
-                        <SectionTitle
-                            eyebrow="저술"
-                            title="주요 저술과 전승 상태"
-                            description="제목만 나열하지 않고 각 책이 무엇을 해결하려 했는지 살펴봅니다."
-                        />
-                        <div className="mt-8 grid gap-4 md:grid-cols-2">
-                            {article.works.map((work) => (
-                                <article
-                                    key={work.title}
-                                    className="rounded-[20px] border border-[#E2E5DF] bg-white p-5"
-                                >
-                                    <div className="flex items-start justify-between gap-3">
-                                        <div>
-                                            <p className="text-xs text-[#8B95A1]">{work.hanja}</p>
-                                            <h3 className="mt-1 text-lg font-medium">
-                                                『{work.title}』
-                                            </h3>
-                                        </div>
-                                        <span className="shrink-0 rounded-full bg-[#F1F3ED] px-2.5 py-1 text-[11px] text-[#6D7538]">
-                                            {work.status}
-                                        </span>
-                                    </div>
-                                    <p className="mt-4 text-sm font-normal leading-7 text-[#667085]">
-                                        {work.description}
+                                    <p className="mt-4 max-w-[640px] break-keep text-[15px] leading-7 text-[#667085] md:text-[17px] md:leading-8">
+                                        {article.subtitle}
                                     </p>
-                                </article>
-                            ))}
-                        </div>
-                    </section>
 
-                    <section id="stories" className="scroll-mt-24 pt-20">
-                        <SectionTitle
-                            eyebrow="기록과 기억"
-                            title="일화와 전승을 구분해 읽기"
-                            description="이야기의 재미는 살리되, 어느 문헌에서 언제 전해졌는지를 함께 밝힙니다."
-                        />
-                        <div className="mt-8 space-y-5">
-                            {article.stories.map((story) => (
-                                <article
-                                    key={story.title}
-                                    className="overflow-hidden rounded-[22px] border border-[#E2E5DF] bg-white"
-                                >
-                                    <div className="border-b border-[#ECEEE9] bg-[#F5F6F1] px-5 py-4 md:px-6">
-                                        <div className="flex flex-wrap items-center justify-between gap-2">
-                                            <h3 className="text-lg font-medium">{story.title}</h3>
-                                            <span className="rounded-full bg-white px-3 py-1 text-xs text-[#777900]">
-                                                {story.classification}
-                                            </span>
-                                        </div>
-                                        <p className="mt-1 text-xs text-[#8B95A1]">
-                                            출전: {story.source}
-                                        </p>
+                                    <div className="mt-5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-[#8B95A1]">
+                                        <span>{article.readingTime}</span>
+                                        <span>검토 {article.lastReviewed}</span>
                                     </div>
-                                    <div className="p-5 md:p-6">
-                                        <p className="text-[15px] font-normal leading-8 text-[#4E5968]">
-                                            {story.text}
-                                        </p>
-                                        <div className="mt-5 rounded-[16px] bg-[#F7F8FA] px-4 py-4">
-                                            <p className="text-xs text-[#8B95A1]">어떻게 읽을까</p>
-                                            <p className="mt-1.5 text-sm font-normal leading-7 text-[#596270]">
-                                                {story.meaning}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </article>
-                            ))}
-                        </div>
-                    </section>
 
-                    <section className="mt-20 rounded-[24px] bg-[#20242C] px-5 py-7 text-white md:px-8 md:py-9">
-                        <p className="text-sm text-[#D7D96A]">
-                            {master.name}이 오늘 우리에게 묻는 것
-                        </p>
-                        <ol className="mt-5 space-y-4">
-                            {article.today.map((question, index) => (
-                                <li
-                                    key={question}
-                                    className="flex gap-3 text-sm font-normal leading-7 text-white/80"
-                                >
-                                    <span className="text-[#D7D96A]">0{index + 1}</span>
-                                    <span>{question}</span>
-                                </li>
-                            ))}
-                        </ol>
-                    </section>
-
-                    {master.videos?.length ? (
-                        <section id="videos" className="scroll-mt-24 pt-20">
-                            <SectionTitle
-                                eyebrow="함께 보는 자료"
-                                title="다큐·영상"
-                                description="공식 채널에서 공개한 관련 영상을 연의 인물 자료와 함께 살펴봅니다."
-                            />
-
-                            <div className="mt-8 space-y-6">
-                                {master.videos.map((video) => (
-                                    <article
-                                        key={video.youtubeId}
-                                        className="overflow-hidden rounded-[22px] border border-[#E2E5DF] bg-white"
+                                    <dl
+                                        className="mt-6 hidden grid-cols-2 gap-x-8 gap-y-2.5 md:grid"
+                                        aria-label={`${master.name} 기본 정보`}
                                     >
-                                        <div className="aspect-video bg-black">
-                                            <iframe
-                                                src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}`}
-                                                title={video.title}
-                                                className="h-full w-full"
-                                                loading="lazy"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                referrerPolicy="strict-origin-when-cross-origin"
-                                                allowFullScreen
-                                            />
-                                        </div>
+                                        {article.quickFacts.map((fact) => (
+                                            <div
+                                                key={fact.label}
+                                                className="border-t border-[#DDE1D8] pt-2"
+                                            >
+                                                <dt className="text-[11px] leading-4 text-[#8B95A1]">
+                                                    {fact.label}
+                                                </dt>
+                                                <dd className="mt-1 break-keep text-[13px] leading-5 text-[#3F4752]">
+                                                    {fact.value}
+                                                </dd>
+                                            </div>
+                                        ))}
+                                    </dl>
+                                </div>
+                            </div>
+                        </section>
+                    </MobileArchiveDefault>
 
-                                        <div className="p-5 md:p-6">
-                                            <div className="flex flex-wrap items-start justify-between gap-3">
-                                                <div>
-                                                    <p className="text-xs text-[#777900]">
-                                                        {video.type ?? "관련 영상"}
+                    {/* PC: 인물 허브 */}
+                    <section className="hidden border-b border-[#E5E7EA] bg-white md:block">
+                        <div className="mx-auto max-w-[1000px] px-8">
+                            <div className="flex items-center gap-8 border-b border-[#ECEEE9] py-4">
+                                <span className="w-[76px] shrink-0 text-xs font-medium text-[#8B95A1]">
+                                    관련 자료
+                                </span>
+
+                                <nav
+                                    className="flex flex-wrap items-center gap-x-9 gap-y-3"
+                                    aria-label={`${master.name} 관련 자료`}
+                                >
+                                    <Link
+                                        href={`/resources/masters/${slug}/illustrations`}
+                                        className="text-sm text-[#303641] transition hover:text-[#777900]"
+                                    >
+                                        삽화로 보는 일화
+                                        <span className="ml-1.5 text-xs text-[#9AA1AB]">
+                                            {illustrationCount}편
+                                        </span>
+                                    </Link>
+
+                                    <Link
+                                        href={`/resources/masters/${slug}/videos`}
+                                        className="text-sm text-[#303641] transition hover:text-[#777900]"
+                                    >
+                                        다큐·영상
+                                        {master.videos?.length ? (
+                                            <span className="ml-1.5 text-xs text-[#9AA1AB]">
+                                                {master.videos.length}편
+                                            </span>
+                                        ) : null}
+                                    </Link>
+
+                                    <Link
+                                        href={`/resources/masters/${slug}/academic`}
+                                        className="text-sm text-[#303641] transition hover:text-[#777900]"
+                                    >
+                                        학술 자료
+                                    </Link>
+                                </nav>
+                            </div>
+
+                            <div className="flex items-center gap-8 py-5">
+                                <span className="w-[76px] shrink-0 text-xs font-medium text-[#8B95A1]">
+                                    깊이 읽기
+                                </span>
+
+                                <nav
+                                    className="flex flex-wrap items-center gap-x-8 gap-y-3"
+                                    aria-label={`${master.name} 상세 읽기`}
+                                >
+                                    {detailLinks.map((item) => (
+                                        <Link
+                                            key={item.href}
+                                            href={`/resources/masters/${slug}/${item.href}`}
+                                            className="group inline-flex items-center gap-1.5 text-sm text-[#303641] transition hover:text-[#777900]"
+                                        >
+                                            <span>{item.label}</span>
+                                            <span
+                                                aria-hidden="true"
+                                                className="text-[#AEB4BC] transition group-hover:translate-x-0.5 group-hover:text-[#777900]"
+                                            >
+                                                ›
+                                            </span>
+                                        </Link>
+                                    ))}
+                                </nav>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* 모바일: 기존 집중형 아코디언 유지 */}
+                    <div
+                        id="profile"
+                        className="mx-auto max-w-[900px] px-5 py-8 md:hidden"
+                    >
+                        <MobileArchiveDefault>
+                            <nav
+                                className="mb-5 grid grid-cols-3 overflow-hidden border-y border-[#E5E7EA]"
+                                aria-label={`${master.name} 모바일 자료 둘러보기`}
+                            >
+                                <Link
+                                    href={`/resources/masters/${slug}/illustrations`}
+                                    className="flex min-h-[58px] items-center justify-center border-r border-[#E5E7EA] px-2 text-center text-[13px] leading-5 text-[#303641]"
+                                >
+                                    삽화 일화 {illustrationCount}편
+                                </Link>
+
+                                <Link
+                                    href={`/resources/masters/${slug}/videos`}
+                                    className="flex min-h-[58px] items-center justify-center border-r border-[#E5E7EA] px-2 text-center text-[13px] leading-5 text-[#303641]"
+                                >
+                                    영상{master.videos?.length ? ` ${master.videos.length}편` : ""}
+                                </Link>
+
+                                <Link
+                                    href={`/resources/masters/${slug}/academic`}
+                                    className="flex min-h-[58px] items-center justify-center px-2 text-center text-[13px] leading-5 text-[#303641]"
+                                >
+                                    학술 자료
+                                </Link>
+                            </nav>
+                        </MobileArchiveDefault>
+
+                        <MobileArchiveSection id="basic" title="기본 정보">
+                            <dl className="divide-y divide-[#E5E7EA] border-y border-[#E5E7EA]">
+                                {article.quickFacts.map((fact) => (
+                                    <div
+                                        key={fact.label}
+                                        className="grid grid-cols-[88px_1fr] gap-4 py-4"
+                                    >
+                                        <dt className="text-xs leading-6 text-[#8B95A1]">
+                                            {fact.label}
+                                        </dt>
+                                        <dd className="break-keep text-sm leading-6 text-[#3F4752]">
+                                            {fact.value}
+                                        </dd>
+                                    </div>
+                                ))}
+                            </dl>
+                        </MobileArchiveSection>
+
+                        <MobileArchiveSection id="timeline" title="생애 연표">
+                            <section id="timeline" className="scroll-mt-24 pt-16">
+                                <SectionTitle
+                                    eyebrow={`${master.name}의 생애`}
+                                    title="생애 연표"
+                                    description="확정 가능한 기록과 후대 전승, 연구상 추정을 구분해서 살펴봅니다."
+                                />
+
+                                <div className="relative mt-8 space-y-0 before:absolute before:bottom-3 before:left-[5px] before:top-3 before:w-px before:bg-[#DDE1D8]">
+                                    {article.timeline.map((item) => (
+                                        <div
+                                            key={`${item.year}-${item.title}`}
+                                            className="relative grid gap-3 pb-8 pl-8"
+                                        >
+                                            <span className="absolute left-0 top-2 h-[11px] w-[11px] rounded-full border-[3px] border-[#F4F54A] bg-white" />
+
+                                            <div>
+                                                <p className="text-sm font-medium text-[#666B27]">
+                                                    {item.year}
+                                                </p>
+                                                {item.age && (
+                                                    <p className="mt-0.5 text-xs text-[#9AA1AB]">
+                                                        {item.age}
                                                     </p>
-                                                    <h3 className="mt-1.5 text-lg font-medium leading-7 text-[#303641]">
-                                                        {video.title}
+                                                )}
+                                            </div>
+
+                                            <div className="rounded-[18px] border border-[#E4E7E1] bg-white p-5">
+                                                <div className="flex flex-wrap items-center justify-between gap-2">
+                                                    <h3 className="text-[17px] font-medium">
+                                                        {item.title}
+                                                    </h3>
+                                                    <RecordBadge type={item.recordType} />
+                                                </div>
+
+                                                <p className="mt-3 text-sm font-normal leading-7 text-[#667085]">
+                                                    {item.description}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        </MobileArchiveSection>
+
+                        <MobileArchiveSection id="life" title="상세 일대기">
+                            <section id="life" className="scroll-mt-24 pt-16">
+                                <SectionTitle
+                                    eyebrow="깊이 읽기"
+                                    title="상세 일대기"
+                                    description="한 사람의 삶을 당시의 전쟁과 지식, 신앙의 변화 속에서 읽습니다."
+                                />
+
+                                <div className="mt-9 space-y-14">
+                                    {article.lifeSections.map((section) => (
+                                        <section
+                                            key={section.id}
+                                            id={section.id}
+                                            className="border-t border-[#E5E7EA] pt-8"
+                                        >
+                                            <p className="text-sm text-[#A0A60B]">
+                                                {section.eyebrow}
+                                            </p>
+                                            <h3 className="mt-2 text-[25px] font-semibold tracking-[-0.035em]">
+                                                {section.title}
+                                            </h3>
+
+                                            <div className="mt-5 space-y-5">
+                                                {section.paragraphs.map((p) => (
+                                                    <p
+                                                        key={p}
+                                                        className="text-[15px] font-normal leading-[1.95] text-[#4E5968]"
+                                                    >
+                                                        {p}
+                                                    </p>
+                                                ))}
+                                            </div>
+
+                                            {section.note && (
+                                                <p className="mt-6 rounded-[18px] bg-[#F1F3ED] px-5 py-4 text-sm font-normal leading-7 text-[#66705C]">
+                                                    {section.note}
+                                                </p>
+                                            )}
+                                        </section>
+                                    ))}
+                                </div>
+                            </section>
+                        </MobileArchiveSection>
+
+                        <MobileArchiveSection id="thought" title="핵심 사상">
+                            <section id="thought" className="scroll-mt-24 pt-20">
+                                <SectionTitle
+                                    eyebrow="사상"
+                                    title={`세 가지 핵심어로 읽는 ${master.name}`}
+                                    description="어려운 용어의 뜻을 먼저 잡고, 이 인물이 해결하려 한 문제를 함께 봅니다."
+                                />
+
+                                <div className="mt-8 space-y-4">
+                                    {article.thoughts.map((thought, index) => (
+                                        <section
+                                            key={thought.id}
+                                            className="rounded-[22px] border border-[#E2E5DF] bg-white p-5"
+                                        >
+                                            <div className="flex items-start justify-between gap-4">
+                                                <div>
+                                                    <p className="text-sm text-[#8B95A1]">
+                                                        {thought.hanja}
+                                                    </p>
+                                                    <h3 className="mt-1 text-[24px] font-semibold">
+                                                        {thought.term}
                                                     </h3>
                                                 </div>
 
-                                                {video.duration ? (
-                                                    <span className="shrink-0 rounded-full bg-[#F1F3ED] px-3 py-1.5 text-xs text-[#6D7538]">
-                                                        {video.duration}
-                                                    </span>
-                                                ) : null}
+                                                <span className="text-2xl font-light text-[#D0D45A]">
+                                                    0{index + 1}
+                                                </span>
                                             </div>
 
-                                            <p className="mt-3 text-sm text-[#8B95A1]">
-                                                제작·제공: {video.channel}
+                                            <p className="mt-4 border-l-4 border-[#F4F54A] pl-4 text-[15px] leading-7 text-[#626A32]">
+                                                {thought.summary}
                                             </p>
 
-                                            {video.note ? (
-                                                <p className="mt-4 text-sm font-normal leading-7 text-[#667085]">
-                                                    {video.note}
+                                            <div className="mt-5 space-y-4">
+                                                {thought.explanation.map((p) => (
+                                                    <p
+                                                        key={p}
+                                                        className="text-sm font-normal leading-7 text-[#596270]"
+                                                    >
+                                                        {p}
+                                                    </p>
+                                                ))}
+                                            </div>
+                                        </section>
+                                    ))}
+                                </div>
+                            </section>
+                        </MobileArchiveSection>
+
+                        <MobileArchiveSection id="works" title="주요 저술">
+                            <section id="works" className="scroll-mt-24 pt-20">
+                                <SectionTitle
+                                    eyebrow="저술"
+                                    title="주요 저술과 전승 상태"
+                                    description="제목만 나열하지 않고 각 책이 무엇을 해결하려 했는지 살펴봅니다."
+                                />
+
+                                <div className="mt-8 grid gap-4">
+                                    {article.works.map((work) => (
+                                        <article
+                                            key={work.title}
+                                            className="rounded-[20px] border border-[#E2E5DF] bg-white p-5"
+                                        >
+                                            <div className="flex items-start justify-between gap-3">
+                                                <div>
+                                                    <p className="text-xs text-[#8B95A1]">
+                                                        {work.hanja}
+                                                    </p>
+                                                    <h3 className="mt-1 text-lg font-medium">
+                                                        『{work.title}』
+                                                    </h3>
+                                                </div>
+
+                                                <span className="shrink-0 text-xs text-[#8B95A1]">
+                                                    {work.status}
+                                                </span>
+                                            </div>
+
+                                            <p className="mt-4 text-sm font-normal leading-7 text-[#667085]">
+                                                {work.description}
+                                            </p>
+                                        </article>
+                                    ))}
+                                </div>
+                            </section>
+                        </MobileArchiveSection>
+
+                        <MobileArchiveSection id="stories" title="일화와 전승">
+                            <section id="stories" className="scroll-mt-24 pt-20">
+                                <SectionTitle
+                                    eyebrow="기록과 기억"
+                                    title="일화와 전승을 구분해 읽기"
+                                    description="이야기의 재미는 살리되, 어느 문헌에서 언제 전해졌는지를 함께 밝힙니다."
+                                />
+
+                                <div className="mt-8 space-y-5">
+                                    {article.stories.map((story) => (
+                                        <article
+                                            key={story.title}
+                                            className="overflow-hidden rounded-[22px] border border-[#E2E5DF] bg-white"
+                                        >
+                                            <div className="border-b border-[#ECEEE9] bg-[#F5F6F1] px-5 py-4">
+                                                <div className="flex flex-wrap items-center justify-between gap-2">
+                                                    <h3 className="text-lg font-medium">
+                                                        {story.title}
+                                                    </h3>
+                                                    <span className="text-xs text-[#8B95A1]">
+                                                        {story.classification}
+                                                    </span>
+                                                </div>
+
+                                                <p className="mt-1 text-xs text-[#8B95A1]">
+                                                    출전: {story.source}
                                                 </p>
-                                            ) : null}
+                                            </div>
 
-                                            <p className="mt-4 border-t border-[#ECEEE9] pt-4 text-xs leading-5 text-[#8B95A1]">
-                                                영상은 원 게시자의 유튜브 플레이어를 통해 제공되며,
-                                                저작권과 운영 권한은 해당 제작자와 채널에 있습니다.
-                                            </p>
-                                        </div>
-                                    </article>
-                                ))}
-                            </div>
-                        </section>
-                    ) : null}
+                                            <div className="p-5">
+                                                <p className="text-[15px] font-normal leading-8 text-[#4E5968]">
+                                                    {story.text}
+                                                </p>
 
-                    <section id="sources" className="scroll-mt-24 pt-20">
-                        <SectionTitle
-                            eyebrow="검토 자료"
-                            title="출전과 참고자료"
-                            description="본문의 사실관계를 확인할 수 있는 기관 자료를 우선 연결했습니다."
-                        />
-                        <div className="mt-7 divide-y divide-[#E5E7EA] border-y border-[#E5E7EA]">
-                            {article.sources.map((source) => (
-                                <a
-                                    key={source.url}
-                                    href={source.url}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="group flex items-start justify-between gap-4 py-5"
+                                                <div className="mt-5 rounded-[16px] bg-[#F7F8FA] px-4 py-4">
+                                                    <p className="text-xs text-[#8B95A1]">
+                                                        어떻게 읽을까
+                                                    </p>
+                                                    <p className="mt-1.5 text-sm font-normal leading-7 text-[#596270]">
+                                                        {story.meaning}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    ))}
+                                </div>
+                            </section>
+                        </MobileArchiveSection>
+
+                        <MobileArchiveDefault>
+                            <section className="mt-20 rounded-[24px] bg-[#20242C] px-5 py-7 text-white">
+                                <p className="text-sm text-[#D7D96A]">
+                                    오늘 우리에게 묻는 것
+                                </p>
+
+                                <ol className="mt-5 space-y-4">
+                                    {article.today.map((question, index) => (
+                                        <li
+                                            key={question}
+                                            className="flex gap-3 text-sm font-normal leading-7 text-white/80"
+                                        >
+                                            <span className="text-[#D7D96A]">
+                                                0{index + 1}
+                                            </span>
+                                            <span>{question}</span>
+                                        </li>
+                                    ))}
+                                </ol>
+                            </section>
+
+                            <section id="sources" className="scroll-mt-24 pt-20">
+                                <SectionTitle
+                                    eyebrow="검토 자료"
+                                    title="출전과 참고자료"
+                                    description="본문의 사실관계를 확인할 수 있는 기관 자료를 우선 연결했습니다."
+                                />
+
+                                <div className="mt-7 divide-y divide-[#E5E7EA] border-y border-[#E5E7EA]">
+                                    {article.sources.map((source) => (
+                                        <a
+                                            key={source.url}
+                                            href={source.url}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="group flex items-start justify-between gap-4 py-5"
+                                        >
+                                            <div>
+                                                <p className="text-sm font-medium text-[#303641] group-hover:text-[#777900]">
+                                                    {source.label}
+                                                </p>
+                                                <p className="mt-1 text-xs text-[#8B95A1]">
+                                                    {source.organization}
+                                                </p>
+                                                <p className="mt-2 text-sm font-normal leading-6 text-[#667085]">
+                                                    {source.note}
+                                                </p>
+                                            </div>
+
+                                            <span className="mt-1 shrink-0 text-[#A0A60B]">
+                                                ↗
+                                            </span>
+                                        </a>
+                                    ))}
+                                </div>
+                            </section>
+
+                            <div className="mt-14 flex justify-center">
+                                <Link
+                                    href="/resources/masters"
+                                    className="rounded-full border border-[#DDE1D8] bg-white px-5 py-3 text-sm text-[#56606D]"
                                 >
-                                    <div>
-                                        <p className="text-sm font-medium text-[#303641] group-hover:text-[#777900]">
-                                            {source.label}
-                                        </p>
-                                        <p className="mt-1 text-xs text-[#8B95A1]">
-                                            {source.organization}
-                                        </p>
-                                        <p className="mt-2 text-sm font-normal leading-6 text-[#667085]">
-                                            {source.note}
-                                        </p>
-                                    </div>
-                                    <span className="mt-1 shrink-0 text-[#A0A60B]">↗</span>
-                                </a>
-                            ))}
-                        </div>
-                    </section>
-
-                    <div className="mt-14 flex justify-center">
-                        <Link
-                            href="/resources/masters"
-                            className="rounded-full border border-[#DDE1D8] bg-white px-5 py-3 text-sm text-[#56606D]"
-                        >
-                            한국의 고승 목록으로
-                        </Link>
+                                    한국의 고승 목록으로
+                                </Link>
+                            </div>
+                        </MobileArchiveDefault>
                     </div>
-                </div>
-            </article>
+                </article>
+            </MobileArchiveRoot>
         </main>
     );
 }
@@ -567,8 +659,8 @@ function SummaryPage({ slug }: { slug: string }) {
             <article>
                 <section className="border-b border-[#E4E7DF] bg-[#F4F6EF]">
                     <div
-                        className={`mx-auto max-w-[900px] px-5 py-12 md:px-8 md:py-20 ${hasWonkwangImage
-                            ? "grid gap-8 md:grid-cols-[1fr_280px] md:items-center"
+                        className={`mx-auto max-w-[1100px] px-4 py-12 md:px-8 md:py-20 ${hasWonkwangImage
+                            ? "grid gap-8 md:grid-cols-[1fr_300px] md:items-center"
                             : ""
                             }`}
                     >
@@ -597,11 +689,11 @@ function SummaryPage({ slug }: { slug: string }) {
 
                         {hasWonkwangImage && (
                             <figure>
-                                <div className="relative overflow-hidden rounded-[26px] border border-[#D7D9CF] bg-[#DED5C1]">
+                                <div className="relative mx-auto aspect-[4/5] w-full max-w-[320px] overflow-hidden rounded-[22px] border border-[#D7D9CF] bg-white md:max-w-none">
                                     <img
                                         src="/images/masters/wonkwang.webp"
                                         alt="원광법사가 귀산과 추항에게 세속오계를 전하는 장면"
-                                        className="h-auto w-full object-contain"
+                                        className="h-full w-full object-cover object-center"
                                     />
 
                                     <span
@@ -643,71 +735,6 @@ function SummaryPage({ slug }: { slug: string }) {
                             </div>
                         </section>
                     ))}
-                    {master.videos?.length ? (
-                        <section id="videos" className="scroll-mt-24 pt-16">
-                            <SectionTitle
-                                eyebrow="함께 보는 자료"
-                                title="다큐·영상"
-                                description="공식 채널에서 공개한 관련 영상을 연의 인물 자료와 함께 살펴봅니다."
-                            />
-
-                            <div className="mt-8 space-y-6">
-                                {master.videos.map((video) => (
-                                    <article
-                                        key={video.youtubeId}
-                                        className="overflow-hidden rounded-[22px] border border-[#E2E5DF] bg-white"
-                                    >
-                                        <div className="aspect-video bg-black">
-                                            <iframe
-                                                src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}`}
-                                                title={video.title}
-                                                className="h-full w-full"
-                                                loading="lazy"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                referrerPolicy="strict-origin-when-cross-origin"
-                                                allowFullScreen
-                                            />
-                                        </div>
-
-                                        <div className="p-5 md:p-6">
-                                            <div className="flex flex-wrap items-start justify-between gap-3">
-                                                <div>
-                                                    <p className="text-xs text-[#777900]">
-                                                        {video.type ?? "관련 영상"}
-                                                    </p>
-                                                    <h3 className="mt-1.5 text-lg font-medium leading-7 text-[#303641]">
-                                                        {video.title}
-                                                    </h3>
-                                                </div>
-
-                                                {video.duration ? (
-                                                    <span className="shrink-0 rounded-full bg-[#F1F3ED] px-3 py-1.5 text-xs text-[#6D7538]">
-                                                        {video.duration}
-                                                    </span>
-                                                ) : null}
-                                            </div>
-
-                                            <p className="mt-3 text-sm text-[#8B95A1]">
-                                                제작·제공: {video.channel}
-                                            </p>
-
-                                            {video.note ? (
-                                                <p className="mt-4 text-sm font-normal leading-7 text-[#667085]">
-                                                    {video.note}
-                                                </p>
-                                            ) : null}
-
-                                            <p className="mt-4 border-t border-[#ECEEE9] pt-4 text-xs leading-5 text-[#8B95A1]">
-                                                영상은 원 게시자의 유튜브 플레이어를 통해 제공되며,
-                                                저작권과 운영 권한은 해당 제작자와 채널에 있습니다.
-                                            </p>
-                                        </div>
-                                    </article>
-                                ))}
-                            </div>
-                        </section>
-                    ) : null}
-
                     <p className="mt-12 rounded-[20px] bg-[#F1F3ED] px-5 py-5 text-sm leading-7 text-[#66705C]">
                         이 인물의 심화 연표·원문·출전은 차례로 보완하고 있습니다.
                     </p>
