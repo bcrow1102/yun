@@ -12,6 +12,7 @@ import {
 import { useRouter } from "next/navigation";
 import BottomNav from "@/app/components/BottomNav";
 import MobileHome from "@/app/components/MobileHome";
+import SiteHeader from "@/app/components/SiteHeader";
 
 const quickMenus = [
   {
@@ -370,130 +371,12 @@ export default function Home() {
       <MobileHome />
 
       <div className="hidden min-h-screen bg-white text-[#191F28] md:block">
-        <header className="sticky top-0 z-50 border-b border-[#F0F1F2] bg-white/95 backdrop-blur">
-          <div className="mx-auto flex h-[76px] max-w-[1400px] items-center justify-between px-10 xl:px-14">
-            <Link
-              href="/"
-              onClick={(event) => {
-                event.preventDefault();
-                window.location.assign("/");
-              }}
-              className="flex items-center gap-2.5"
-              aria-label="연 홈"
-            >
-              <span className="text-[#191F28]">
-                <LotusIcon className="h-9 w-9" />
-              </span>
-              <span className="text-[25px] font-semibold tracking-[-0.05em]">
-                연
-              </span>
-            </Link>
-
-            <nav className="flex items-center gap-7" aria-label="주요 메뉴">
-              <Link
-                href="/jobs"
-                className="text-[15px] font-medium hover:text-[#777900]"
-              >
-                구인
-              </Link>
-              <Link
-                href="/events"
-                className="text-[15px] font-medium hover:text-[#777900]"
-              >
-                행사·교육
-              </Link>
-
-              <div className="group relative">
-                <button
-                  type="button"
-                  className="py-5 text-[15px] font-medium hover:text-[#777900]"
-                >
-                  사찰
-                </button>
-                <div className="invisible absolute left-1/2 top-full z-50 w-44 -translate-x-1/2 pt-1 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                  <div className="rounded-2xl border border-[#E7E9EC] bg-white p-2 shadow-[0_16px_40px_rgba(25,31,40,0.12)]">
-                    <Link
-                      href="/temples/guide"
-                      className="block rounded-xl px-4 py-3 text-sm hover:bg-[#FFFED7]"
-                    >
-                      사찰 안내
-                    </Link>
-                    <Link
-                      href="/temples/stay"
-                      className="block rounded-xl px-4 py-3 text-sm hover:bg-[#FFFED7]"
-                    >
-                      템플스테이
-                    </Link>
-                    <Link
-                      href="/temples/food"
-                      className="block rounded-xl px-4 py-3 text-sm hover:bg-[#FFFED7]"
-                    >
-                      사찰음식
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              <Link
-                href="/stories"
-                className="text-[15px] font-medium hover:text-[#777900]"
-              >
-                부처님 이야기
-              </Link>
-              <Link
-                href="/resources/masters"
-                className="text-[15px] font-medium hover:text-[#777900]"
-              >
-                한국의 고승
-              </Link>
-              <Link
-                href="/resources"
-                className="text-[15px] font-medium hover:text-[#777900]"
-              >
-                불교자료
-              </Link>
-              <Link
-                href="/events/promote"
-                className="group relative rounded-lg px-2.5 py-2 text-[15px] font-semibold text-[#777900] transition hover:bg-[#FDFEDB] hover:text-[#5F6100]"
-              >
-                홍보물 DIY
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-x-1/2 -bottom-0.5 h-[3px] w-7 -translate-x-1/2 rounded-full bg-[#F4F54A] transition-all group-hover:w-10"
-                />
-              </Link>
-            </nav>
-
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => {
-                  setActiveHeroSlide(0);
-                  window.setTimeout(() => searchInputRef.current?.focus(), 750);
-                }}
-                className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-[#F5F6F7]"
-                aria-label="검색창으로 이동"
-              >
-                <SearchIcon />
-              </button>
-              <button type="button" className="px-2 py-2 text-xs font-medium">
-                KR
-              </button>
-              <button
-                type="button"
-                className="px-1 py-2 text-xs text-[#98A1AC]"
-              >
-                EN
-              </button>
-              <button
-                type="button"
-                className="ml-1 rounded-xl border border-[#DDE1E5] px-4 py-2.5 text-sm font-medium hover:border-[#AEB5BC]"
-              >
-                로그인
-              </button>
-            </div>
-          </div>
-        </header>
+        <SiteHeader
+          onSearchClick={() => {
+            setActiveHeroSlide(0);
+            window.setTimeout(() => searchInputRef.current?.focus(), 750);
+          }}
+        />
 
         <main>
           <section

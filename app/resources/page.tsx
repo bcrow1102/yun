@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 const resources = [
     {
         group: "한국 불교 원전",
@@ -111,29 +109,9 @@ const principles = [
     "구전 자료는 채록 지역·전승자·채록 시기와 서로 다른 판본을 함께 확인합니다.",
 ];
 
-function LotusIcon() {
-    return (
-        <svg viewBox="0 0 32 32" fill="none" className="h-6 w-6">
-            <path d="M16 24c-4-4.1-5.2-8.2 0-15 5.2 6.8 4 10.9 0 15Z" stroke="currentColor" strokeWidth="1.6" />
-            <path d="M15 24C9.5 23.3 6.6 20.5 7 14c5.4.7 8.1 4 8 10Z" stroke="currentColor" strokeWidth="1.6" />
-            <path d="M17 24c5.5-.7 8.4-3.5 8-10-5.4.7-8.1 4-8 10Z" stroke="currentColor" strokeWidth="1.6" />
-            <path d="M7 25h18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-        </svg>
-    );
-}
-
 export default function ResourcesPage() {
     return (
         <div className="min-h-screen bg-white text-[#252A31]">
-            <header className="sticky top-0 z-30 border-b border-[#E7E9EC] bg-white/95 backdrop-blur">
-                <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:h-[72px] md:px-8">
-                    <Link href="/" className="flex items-center gap-2.5">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F4F54A] md:h-10 md:w-10"><LotusIcon /></span>
-                        <strong className="text-xl font-semibold tracking-[-0.04em]">연</strong>
-                    </Link>
-                    <Link href="/" className="rounded-xl border border-[#E3E8EF] bg-white px-4 py-2.5 text-sm font-medium">홈으로</Link>
-                </div>
-            </header>
 
             <main>
                 <section className="border-b border-[#E8EA8A] bg-[#FDFDC7]">

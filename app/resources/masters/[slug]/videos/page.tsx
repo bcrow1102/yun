@@ -6,39 +6,6 @@ type PageProps = {
     params: Promise<{ slug: string }>;
 };
 
-function LotusMark() {
-    return (
-        <svg
-            viewBox="0 0 32 32"
-            fill="none"
-            className="h-6 w-6"
-            aria-hidden="true"
-        >
-            <path
-                d="M16 24c-4-4.1-5.2-8.2 0-15 5.2 6.8 4 10.9 0 15Z"
-                stroke="currentColor"
-                strokeWidth="1.6"
-            />
-            <path
-                d="M15 24C9.5 23.3 6.6 20.5 7 14c5.4.7 8.1 4 8 10Z"
-                stroke="currentColor"
-                strokeWidth="1.6"
-            />
-            <path
-                d="M17 24c5.5-.7 8.4-3.5 8-10-5.4.7-8.1 4-8 10Z"
-                stroke="currentColor"
-                strokeWidth="1.6"
-            />
-            <path
-                d="M7 25h18"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-            />
-        </svg>
-    );
-}
-
 export default async function MasterVideosPage({ params }: PageProps) {
     const { slug } = await params;
     const master = getMaster(slug);
@@ -49,30 +16,10 @@ export default async function MasterVideosPage({ params }: PageProps) {
 
     return (
         <main className="min-h-screen bg-[#F7F8FA] text-[#171B22]">
-            <header className="border-b border-[#E9EBEE] bg-white">
-                <div className="mx-auto flex h-[68px] max-w-[1100px] items-center justify-between px-5 md:px-8">
-                    <Link
-                        href="/"
-                        className="flex items-center gap-2.5"
-                        aria-label="연 홈"
-                    >
-                        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F4F54A]">
-                            <LotusMark />
-                        </span>
-                        <span className="text-2xl font-semibold">연</span>
-                    </Link>
-
-                    <Link
-                        href={`/resources/masters/${slug}`}
-                        className="text-sm text-[#667085] transition-colors hover:text-[#20242B]"
-                    >
-                        ← {master.name}
-                    </Link>
-                </div>
-            </header>
 
             <section className="border-b border-[#E4E7DF] bg-[#F4F6EF]">
                 <div className="mx-auto max-w-[900px] px-5 py-9 md:px-8 md:py-14">
+                    <Link href={`/resources/masters/${slug}`} className="text-sm text-[#777900]">← {master.name}</Link>
                     <p className="text-sm text-[#777900]">
                         {master.eraLabel} · {master.years}
                     </p>
@@ -88,7 +35,7 @@ export default async function MasterVideosPage({ params }: PageProps) {
             </section>
 
             <nav
-                className="sticky top-0 z-20 hidden border-b border-[#E1E4E8] bg-white/95 backdrop-blur md:block"
+                className="sticky top-16 z-20 hidden border-b border-[#E1E4E8] bg-white/95 backdrop-blur md:block"
                 aria-label={`${master.name} 자료 탭`}
             >
                 <div className="mx-auto flex max-w-[900px] gap-9 px-8">

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import {
     useMemo,
     useRef,
@@ -665,34 +664,6 @@ function contrastShadow(color: string, opacity: number) {
     return light
         ? `rgba(0,0,0,${opacity})`
         : `rgba(255,255,255,${Math.min(opacity + 0.18, 0.95)})`;
-}
-
-function LotusMark() {
-    return (
-        <svg viewBox="0 0 32 32" fill="none" className="h-6 w-6" aria-hidden="true">
-            <path
-                d="M16 24c-4-4.1-5.2-8.2 0-15 5.2 6.8 4 10.9 0 15Z"
-                stroke="currentColor"
-                strokeWidth="1.6"
-            />
-            <path
-                d="M15 24C9.5 23.3 6.6 20.5 7 14c5.4.7 8.1 4 8 10Z"
-                stroke="currentColor"
-                strokeWidth="1.6"
-            />
-            <path
-                d="M17 24c5.5-.7 8.4-3.5 8-10-5.4.7-8.1 4-8 10Z"
-                stroke="currentColor"
-                strokeWidth="1.6"
-            />
-            <path
-                d="M7 25h18"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-            />
-        </svg>
-    );
 }
 
 function isRichTextKey(key: TextKey): key is RichTextKey {
@@ -2206,26 +2177,6 @@ export default function EventPromotePage() {
     return (
         <main className="min-h-screen bg-[#F7F8FA] text-[#171B22]">
             <style>{`@media (max-width: 639px) { .mobile-title { font-size: 24px !important; } .mobile-music-emphasis { font-size: var(--mobile-music-size) !important; } }`}</style>
-            <header className="border-b border-[#E9EBEE] bg-white">
-                <div className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between px-5 md:px-8">
-                    <Link
-                        href="/"
-                        className="flex items-center gap-2.5"
-                        aria-label="연 홈"
-                    >
-                        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F4F54A]">
-                            <LotusMark />
-                        </span>
-                        <span className="text-2xl font-semibold">연</span>
-                    </Link>
-                    <Link
-                        href="/"
-                        className="rounded-xl border border-[#E3E8EF] bg-white px-4 py-2.5 text-sm font-medium text-[#4D5562] transition hover:border-[#20242C] hover:text-[#20242C]"
-                    >
-                        홈으로
-                    </Link>
-                </div>
-            </header>
 
             <section className="mx-auto max-w-[1280px] px-4 py-7 sm:px-5 md:px-8 md:py-11">
                 <div className="mb-6 md:mb-8">

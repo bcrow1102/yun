@@ -331,7 +331,7 @@ export default function NewTempleFoodPage() {
 
     return (
         <main className="min-h-screen bg-[#F7F8FA] text-[#252A31]">
-            <header className="border-b border-[#E7E9EC] bg-white">
+            <header className="border-b border-[#E7E9EC] bg-white md:hidden">
                 <div className="mx-auto flex h-16 max-w-4xl items-center justify-between px-4 md:h-[72px] md:px-8">
                     <Link
                         href="/"
@@ -355,6 +355,13 @@ export default function NewTempleFoodPage() {
 
             <section className="border-b border-[#E8EA8A] bg-[#FDFDC7]">
                 <div className="mx-auto max-w-4xl px-5 py-10 md:px-8 md:py-14">
+                    <Link
+                        href="/temples/food"
+                        className="mb-5 hidden w-fit items-center text-sm font-medium text-[#667085] transition hover:text-[#252A31] md:inline-flex"
+                    >
+                        ← 사찰음식
+                    </Link>
+
                     <p className="text-sm font-medium text-[#5F610E]">
                         사찰음식 등록
                     </p>

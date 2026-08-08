@@ -275,7 +275,7 @@ export default async function TempleDetailPage({
 
     return (
         <div className="min-h-screen bg-white text-[#252A31]">
-            <header className="sticky top-0 z-30 border-b border-[#E7E9EC] bg-white/95 backdrop-blur">
+            <header className="sticky top-0 z-30 border-b border-[#E7E9EC] bg-white/95 backdrop-blur md:hidden">
                 <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:h-[72px] md:px-8">
                     <Link
                         href="/"

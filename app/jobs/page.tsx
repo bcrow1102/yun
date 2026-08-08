@@ -153,34 +153,6 @@ const generalJobs = [
     },
 ];
 
-function LotusIcon() {
-    return (
-        <svg viewBox="0 0 32 32" fill="none" className="h-6 w-6">
-            <path
-                d="M16 24c-4-4.1-5.2-8.2 0-15 5.2 6.8 4 10.9 0 15Z"
-                stroke="currentColor"
-                strokeWidth="1.6"
-            />
-            <path
-                d="M15 24C9.5 23.3 6.6 20.5 7 14c5.4.7 8.1 4 8 10Z"
-                stroke="currentColor"
-                strokeWidth="1.6"
-            />
-            <path
-                d="M17 24c5.5-.7 8.4-3.5 8-10-5.4.7-8.1 4-8 10Z"
-                stroke="currentColor"
-                strokeWidth="1.6"
-            />
-            <path
-                d="M7 25h18"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-            />
-        </svg>
-    );
-}
-
 function SearchIcon() {
     return (
         <svg
@@ -255,66 +227,6 @@ export default function JobsPage() {
 
     return (
         <div className="min-h-screen bg-white text-[#191F28]">
-            <header className="sticky top-0 z-30 border-b border-[#F2F4F6] bg-white/95 backdrop-blur">
-                <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:h-[72px] md:px-8">
-                    <Link href="/" className="flex items-center gap-2.5">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F4F54A] md:h-10 md:w-10">
-                            <LotusIcon />
-                        </span>
-
-                        <strong className="text-xl font-bold tracking-[-0.04em]">
-                            연
-                        </strong>
-                    </Link>
-
-                    <nav className="hidden items-center gap-1 md:flex">
-                        <Link
-                            href="/jobs"
-                            className="rounded-xl bg-[#F4F54A] px-4 py-2.5 text-sm font-bold"
-                        >
-                            구인
-                        </Link>
-
-                        <Link
-                            href="/events"
-                            className="rounded-xl px-4 py-2.5 text-sm font-semibold text-[#4E5968] hover:bg-[#F2F4F6]"
-                        >
-                            행사·교육
-                        </Link>
-
-                        <Link
-                            href="/temples/stay"
-                            className="rounded-xl px-4 py-2.5 text-sm font-semibold text-[#4E5968] hover:bg-[#F2F4F6]"
-                        >
-                            템플스테이
-                        </Link>
-
-                        <Link
-                            href="/temples/food"
-                            className="rounded-xl px-4 py-2.5 text-sm font-semibold text-[#4E5968] hover:bg-[#F2F4F6]"
-                        >
-                            사찰음식
-                        </Link>
-                    </nav>
-
-                    <div className="flex items-center gap-1">
-                        <Link
-                            href="/search"
-                            className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-[#F2F4F6]"
-                            aria-label="검색"
-                        >
-                            <SearchIcon />
-                        </Link>
-
-                        <Link
-                            href="/login"
-                            className="ml-1 rounded-xl bg-[#F4F54A] px-4 py-2.5 text-sm font-bold"
-                        >
-                            로그인
-                        </Link>
-                    </div>
-                </div>
-            </header>
 
             <main>
                 <section className="bg-[#F4F54A]">

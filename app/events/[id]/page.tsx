@@ -27,34 +27,6 @@ const eventProgram = [
     { time: "19:20", title: "차담과 자유로운 이야기" },
 ];
 
-function LotusIcon() {
-    return (
-        <svg viewBox="0 0 32 32" fill="none" className="h-6 w-6">
-            <path
-                d="M16 24c-4-4.1-5.2-8.2 0-15 5.2 6.8 4 10.9 0 15Z"
-                stroke="currentColor"
-                strokeWidth="1.6"
-            />
-            <path
-                d="M15 24C9.5 23.3 6.6 20.5 7 14c5.4.7 8.1 4 8 10Z"
-                stroke="currentColor"
-                strokeWidth="1.6"
-            />
-            <path
-                d="M17 24c5.5-.7 8.4-3.5 8-10-5.4.7-8.1 4-8 10Z"
-                stroke="currentColor"
-                strokeWidth="1.6"
-            />
-            <path
-                d="M7 25h18"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-            />
-        </svg>
-    );
-}
-
 export default async function EventDetailPage({
     params,
 }: {
@@ -69,23 +41,6 @@ export default async function EventDetailPage({
 
     return (
         <div className="min-h-screen bg-white text-[#252A31]">
-            <header className="sticky top-0 z-30 border-b border-[#EEF0F2] bg-white/95 backdrop-blur">
-                <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:h-[72px] md:px-8">
-                    <Link href="/" className="flex items-center gap-2.5">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FEE500] md:h-10 md:w-10">
-                            <LotusIcon />
-                        </span>
-                        <span className="text-xl font-semibold">연</span>
-                    </Link>
-
-                    <Link
-                        href="/events"
-                        className="rounded-xl border border-[#E3E8EF] px-4 py-2.5 text-sm font-medium text-[#4E5968]"
-                    >
-                        행사·교육 목록
-                    </Link>
-                </div>
-            </header>
 
             <main>
                 <section className="relative overflow-hidden bg-[#F4E9D5]">
