@@ -442,7 +442,104 @@ export default function MobileHome() {
                     </div>
                 </section>
 
-                <section className="grid grid-cols-4 gap-2">
+                <section className="mt-2" aria-labelledby="mobile-quick-actions-title">
+                    <h2 id="mobile-quick-actions-title" className="text-xl font-medium tracking-[-0.035em]">
+                        지금 바로 활용하기
+                    </h2>
+                    <div className="mt-3 space-y-2">
+                        <Link
+                            href="/events/promote"
+                            className="flex items-center justify-between border border-[#E7E9EC] bg-white px-4 py-4"
+                        >
+                            <span>
+                                <span className="block text-[15px] font-medium text-[#252A31]">홍보물 DIY</span>
+                                <span className="mt-1 block text-xs font-normal text-[#7A818D]">행사 홍보물을 직접 만들어보세요.</span>
+                            </span>
+                            <ChevronIcon />
+                        </Link>
+                        <Link
+                            href="/resources"
+                            className="flex items-center justify-between border border-[#E7E9EC] bg-white px-4 py-4"
+                        >
+                            <span>
+                                <span className="block text-[15px] font-medium text-[#252A31]">사찰 실무서식 / 자료실</span>
+                                <span className="mt-1 block text-xs font-normal text-[#7A818D]">사찰 운영에 필요한 자료를 찾아보세요.</span>
+                            </span>
+                            <ChevronIcon />
+                        </Link>
+                    </div>
+                </section>
+
+                <section className="mt-8" aria-labelledby="mobile-living-title">
+                    <h2 id="mobile-living-title" className="text-xl font-medium tracking-[-0.035em]">
+                        한국불교 생활 찾기
+                    </h2>
+                    <div className="mt-3 grid grid-cols-2 border-t border-l border-[#E7E9EC]">
+                        {[
+                            ["템플스테이", "/temples/stay"],
+                            ["사찰음식", "/temples/food"],
+                            ["행사교육", "/events"],
+                            ["사찰 안내", "/temples/guide"],
+                        ].map(([title, href]) => (
+                            <Link
+                                key={href}
+                                href={href}
+                                className="flex items-center justify-between border-b border-r border-[#E7E9EC] px-4 py-4 text-sm font-normal text-[#252A31]"
+                            >
+                                {title}
+                                <ChevronIcon />
+                            </Link>
+                        ))}
+                    </div>
+                </section>
+
+                <section className="mt-8" aria-labelledby="mobile-learn-title">
+                    <h2 id="mobile-learn-title" className="text-xl font-medium tracking-[-0.035em]">
+                        읽고 알아가기
+                    </h2>
+                    <div className="mt-3 space-y-2">
+                        <Link href="/resources/masters" className="block border border-[#E7E9EC] bg-white px-4 py-4">
+                            <span className="block text-[15px] font-medium text-[#252A31]">한국의 고승</span>
+                            <span className="mt-1 block text-xs font-normal text-[#7A818D]">한국불교의 큰스님과 가르침을 알아보세요.</span>
+                        </Link>
+                        <Link href="/stories" className="block border border-[#E7E9EC] bg-white px-4 py-4">
+                            <span className="block text-[15px] font-medium text-[#252A31]">부처님 이야기</span>
+                            <span className="mt-1 block text-xs font-normal text-[#7A818D]">잠시 쉬어가며 마음을 돌아보는 이야기입니다.</span>
+                        </Link>
+                        <Link href="/resources" className="block border border-[#E7E9EC] bg-white px-4 py-4">
+                            <span className="block text-[15px] font-medium text-[#252A31]">불교자료</span>
+                            <span className="mt-1 block text-xs font-normal text-[#7A818D]">불교와 사찰 생활에 필요한 자료를 모았습니다.</span>
+                        </Link>
+                    </div>
+                </section>
+
+                <section className="mt-8" aria-labelledby="mobile-latest-title">
+                    <h2 id="mobile-latest-title" className="text-xl font-medium tracking-[-0.035em]">
+                        새로 올라온 것
+                    </h2>
+                    <div className="mt-3 divide-y divide-[#E7E9EC] border-y border-[#E7E9EC] bg-white">
+                        {jobs.map((job) => (
+                            <Link key={`${job.temple}-${job.title}`} href={`/jobs/${job.id}`} className="flex items-center justify-between gap-3 px-4 py-4 text-left">
+                                <span className="min-w-0 flex-1">
+                                    <span className="block text-xs font-normal text-[#8B95A1]">구인 · {job.temple} · {job.location}</span>
+                                    <span className="mt-1 block truncate text-[14px] font-normal text-[#252A31]">{job.title}</span>
+                                </span>
+                                <span className="shrink-0 text-xs font-normal text-[#8B95A1]">{job.date}</span>
+                            </Link>
+                        ))}
+                        {templeStays.map((stay) => (
+                            <Link key={stay.name} href={`/temples/stay/${stay.id}`} className="flex items-center justify-between gap-3 px-4 py-4 text-left">
+                                <span className="min-w-0 flex-1">
+                                    <span className="block text-xs font-normal text-[#8B95A1]">템플스테이 · {stay.location}</span>
+                                    <span className="mt-1 block truncate text-[14px] font-normal text-[#252A31]">{stay.name}</span>
+                                </span>
+                                <ChevronIcon />
+                            </Link>
+                        ))}
+                    </div>
+                </section>
+
+                <section className="hidden">
                     {menus.map((menu) => (
                         <Link
                             key={menu.title}
@@ -468,7 +565,7 @@ export default function MobileHome() {
 
                 <Link
                     href="/events/promote"
-                    className="group relative mt-6 flex min-h-[88px] w-full items-center justify-between overflow-hidden rounded-[20px] border border-[#E7E9D5] bg-white px-5 py-4 text-left shadow-[0_4px_14px_rgba(25,31,40,0.04)] transition active:scale-[0.99]"
+                    className="hidden"
                 >
                     <span
                         aria-hidden="true"
@@ -494,7 +591,7 @@ export default function MobileHome() {
 
                 <Link
                     href="/stories"
-                    className="relative mt-7 flex w-full items-center justify-between overflow-hidden rounded-[22px] border border-[#E2E7DA] bg-[#F7F8F3] px-5 py-5 shadow-[0_4px_14px_rgba(25,31,40,0.04)] transition active:scale-[0.99]"
+                    className="hidden"
                 >
                     <span
                         aria-hidden="true"
@@ -566,7 +663,7 @@ export default function MobileHome() {
 
                 <Link
                     href="/resources/masters"
-                    className="relative mt-4 flex w-full items-center justify-between overflow-hidden rounded-[18px] border border-[#E2E7DA] bg-[#F7F8F3] px-5 py-4 transition active:scale-[0.99]"
+                    className="hidden"
                 >
                     <span
                         aria-hidden="true"
@@ -587,7 +684,7 @@ export default function MobileHome() {
 
                 <Link
                     href="/resources"
-                    className="relative mt-4 flex w-full items-center justify-between overflow-hidden rounded-[18px] border border-[#E2E7DA] bg-[#F7F8F3] px-5 py-4 transition active:scale-[0.99]"
+                    className="hidden"
                 >
                     <span
                         aria-hidden="true"
@@ -606,7 +703,7 @@ export default function MobileHome() {
                     </span>
                 </Link>
 
-                <section className="mt-7">
+                <section className="hidden">
                     <div className="mb-3 flex items-center justify-between px-1">
                         <h2 className="text-xl font-bold tracking-[-0.035em]">최신 구인</h2>
 
@@ -646,7 +743,7 @@ export default function MobileHome() {
                     </div>
                 </section>
 
-                <section className="mt-7">
+                <section className="hidden">
                     <div className="mb-3 flex items-center justify-between px-1">
                         <h2 className="text-xl font-bold tracking-[-0.035em]">
                             추천 템플스테이
@@ -691,7 +788,7 @@ export default function MobileHome() {
                     </div>
                 </section>
 
-                <section className="mt-7 grid grid-cols-2 gap-3">
+                <section className="hidden">
                     <Link
                         href="/temples/food"
                         className="rounded-[20px] border border-[#E7E9EC] bg-white px-4 py-4 text-left"
