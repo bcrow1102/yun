@@ -104,6 +104,67 @@ const featureSlides = [
 
 const HERO_SLIDE_COUNT = featureSlides.length + 1;
 
+const heroScenes = [
+  [
+    {
+      label: "템플스테이",
+      href: "/temples/stay",
+      image: "/images/hero/hero-temple.webp",
+      alt: "템플스테이 안내 이미지",
+      position: "top-[3%]",
+      line: "-top-10 h-10",
+      objectPosition: "center 45%",
+    },
+    {
+      label: "행사교육",
+      href: "/events",
+      image: "/images/hero/hero-event.webp",
+      alt: "산사 문화행사 이미지",
+      position: "top-[9%] xl:top-[10%]",
+      line: "-top-6 h-6",
+      objectPosition: "center 42%",
+    },
+    {
+      label: "사찰음식",
+      href: "/temples/food",
+      image: "/images/hero/hero-food.webp",
+      alt: "사찰음식 이미지",
+      position: "top-[1%]",
+      line: "-top-14 h-14",
+      objectPosition: "center 50%",
+    },
+  ],
+  [
+    {
+      label: "템플스테이",
+      href: "/temples/stay",
+      image: "/images/hero/temple-stay-novice.webp",
+      alt: "템플스테이에서 쉬어가는 모습",
+      position: "top-[8%]",
+      line: "-top-8 h-8",
+      objectPosition: "center 45%",
+    },
+    {
+      label: "사찰음식",
+      href: "/temples/food",
+      image: "/images/hero/temple-food-real.webp",
+      alt: "사찰음식 이미지",
+      position: "top-[1%]",
+      line: "-top-16 h-16",
+      objectPosition: "center 52%",
+    },
+    {
+      label: "행사교육",
+      href: "/events",
+      image: "/images/hero/temple-concert.webp",
+      alt: "산사 문화행사 이미지",
+      position: "top-[10%]",
+      line: "-top-5 h-5",
+      objectPosition: "center 40%",
+    },
+  ],
+] as const;
+
 function LotusIcon({ className = "h-7 w-7" }: { className?: string }) {
   return (
     <svg viewBox="0 0 32 32" fill="none" className={className}>
@@ -291,6 +352,7 @@ export default function Home() {
   const [activeHeroSlide, setActiveHeroSlide] = useState(0);
   const [storyPopupOpen, setStoryPopupOpen] = useState(true);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const activeHeroScene = Math.floor(activeHeroSlide / 2);
 
   useEffect(() => {
     if (isSearchFocused) return;
@@ -609,7 +671,7 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="mx-auto grid min-h-[520px] max-w-[1400px] grid-cols-[0.9fr_1.1fr] items-center gap-10 px-10 py-9 xl:gap-14 xl:px-14">
+            <div className="mx-auto grid min-h-[520px] max-w-[1400px] grid-cols-[0.86fr_1.14fr] items-center gap-8 px-10 py-9 xl:grid-cols-[0.7fr_1.3fr] xl:gap-8 xl:px-14">
               <div className="relative z-10 -mt-3 max-w-[560px]">
                 <p className="text-[15px] font-normal tracking-[-0.02em] text-[#667085]">
                   불교 생활을 더 가까이
@@ -682,9 +744,9 @@ export default function Home() {
                 )}
               </div>
 
-              <div className="relative min-w-0 self-stretch overflow-hidden py-2">
+              <div className="relative -mr-10 h-[440px] min-w-0 self-stretch overflow-visible py-2 xl:-mr-24">
                 <div
-                  className="flex h-[420px] touch-pan-y transition-transform duration-700 ease-in-out xl:h-[432px]"
+                  className="hidden"
                   style={{ transform: `translateX(-${activeHeroSlide * 100}%)` }}
                 >
                   <Link href="/temples/stay" className="group relative block h-full w-full shrink-0 overflow-hidden rounded-[21px] border border-[#E7E9EC]" aria-label="템플스테이 둘러보기">
@@ -699,13 +761,54 @@ export default function Home() {
                     </Link>
                   ))}
                 </div>
-                <div className="mt-3 flex items-center justify-center gap-1.5">
-                  {Array.from({ length: HERO_SLIDE_COUNT }).map((_, index) => (
+                <style>{`
+                  @keyframes hero-scroll-tie-release {
+                    0% { opacity: 1; transform: translateX(-50%) rotate(0deg) scale(1); }
+                    55% { opacity: 1; transform: translateX(-50%) rotate(8deg) scale(1.05); }
+                    100% { opacity: 0; transform: translateX(-50%) translateY(8px) rotate(-5deg) scale(.8); }
+                  }
+                  @keyframes hero-scroll-unfurl {
+                    0% { clip-path: inset(0 0 93% 0); }
+                    100% { clip-path: inset(0 0 0 0); }
+                  }
+                  .hero-scroll-tie { animation: hero-scroll-tie-release 450ms ease-out both; }
+                  .hero-scroll-frame { clip-path: inset(0 0 93% 0); animation: hero-scroll-unfurl 1500ms cubic-bezier(.2,.7,.3,1) both; }
+                  @media (prefers-reduced-motion: reduce) {
+                    .hero-scroll-tie { animation: none; opacity: 0; }
+                    .hero-scroll-frame { animation: none; clip-path: inset(0 0 0 0); }
+                  }
+                `}</style>
+                <div key={activeHeroScene} className="hero-scroll-stage absolute inset-y-0 left-0 grid h-[440px] w-[min(860px,100%)] grid-cols-3 gap-[clamp(38px,3.82vw,55px)]">
+                  {heroScenes[activeHeroScene].map((item, index) => (
+                    <div key={item.image} className="relative h-full">
+                      <Link
+                        href={item.href}
+                        className={`absolute left-1/2 z-10 box-border h-[clamp(360px,26.4vw,380px)] w-full -translate-x-1/2 overflow-visible ${item.position}`}
+                        aria-label={item.label}
+                      >
+                        <span className={`absolute left-1/2 w-px -translate-x-1/2 bg-[#D7D8CF] ${item.line}`} aria-hidden="true" />
+                        <span className="hero-scroll-tie absolute -top-2 left-1/2 flex h-4 w-5 -translate-x-1/2 items-end justify-center" style={{ animationDelay: `${600 + index * 2400}ms` }} aria-hidden="true">
+                          <span className={`block h-2.5 w-4 rounded-[45%] ${index === 0 ? "bg-[#F4F54A]" : index === 1 ? "bg-[#E8EBDD]" : "bg-[#FFF8E8]"}`} />
+                          <span className="absolute bottom-0 h-1.5 w-px bg-[#B8B9AD]" />
+                        </span>
+                        <span className="hero-scroll-frame relative block box-border h-full overflow-hidden rounded-[28px] bg-[#FAF9F6]" style={{ animationDelay: `${1050 + index * 2400}ms` }}>
+                          <img src={item.image} alt={item.alt} draggable={false} className="h-full w-full object-cover" style={{ objectPosition: item.objectPosition }} />
+                          <span className="absolute bottom-4 left-5 flex items-center gap-2 bg-white/80 px-2 py-1 text-[13px] font-normal text-[#191F28]">
+                            <span className="h-px w-4 bg-[#F4F54A]" />
+                            {item.label}
+                          </span>
+                        </span>
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+                <div className="absolute bottom-2 left-8 z-10 flex items-center gap-1.5">
+                  {heroScenes.map((_, index) => (
                     <button
                       key={index}
                       type="button"
-                      onClick={() => setActiveHeroSlide(index)}
-                      className={`h-1.5 rounded-full transition-all duration-300 ${activeHeroSlide === index
+                      onClick={() => setActiveHeroSlide(index === 0 ? 0 : 2)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${activeHeroScene === index
                         ? "w-6 bg-[#F4F54A]"
                         : "w-1.5 bg-[#B9B8B0] hover:bg-[#8B95A1]"
                         }`}
@@ -732,8 +835,129 @@ export default function Home() {
             </div>
           </section>
 
+          <section className="mx-auto max-w-[1400px] px-10 py-[108px] xl:px-14" aria-labelledby="editorial-quick-title">
+            <div className="mb-12 flex items-end justify-between border-b border-[#D9DAD4] pb-5">
+              <div>
+                <p className="text-xs font-normal tracking-[0.18em] text-[#8B95A1]">01</p>
+                <h2 id="editorial-quick-title" className="mt-3 text-[38px] font-medium tracking-[-0.05em] text-[#191F28]">지금 바로 활용하기</h2>
+              </div>
+              <p className="hidden max-w-[280px] text-sm font-normal leading-6 text-[#667085] md:block">연에서 바로 시작할 수 있는 실무 도구와 자료를 한곳에 모았습니다.</p>
+            </div>
+            <div className="grid grid-cols-[1.38fr_1fr] divide-x divide-[#D9DAD4]">
+              <Link href="/events/promote" className="group relative pr-10 transition duration-200 hover:-translate-y-0.5">
+                <div className="flex items-start justify-between gap-8">
+                  <div>
+                    <p className="text-xs font-normal tracking-[0.16em] text-[#8B95A1]">01 / MAKE</p>
+                    <h3 className="mt-5 text-[29px] font-medium tracking-[-0.045em] text-[#191F28]">홍보물 DIY</h3>
+                    <p className="mt-3 max-w-[330px] text-sm font-normal leading-6 text-[#667085]">행사와 소식을 직접 편집해 필요한 홍보물을 만들어보세요.</p>
+                    <span className="mt-7 inline-flex items-center gap-2 text-sm font-normal text-[#191F28]">바로 만들기 <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-1" /></span>
+                  </div>
+                  <img src="/images/menu/promote-diy.webp" alt="" className="h-28 w-28 object-contain" />
+                </div>
+              </Link>
+              <Link href="/downloads" className="group pl-10 transition duration-200 hover:-translate-y-0.5">
+                <p className="text-xs font-normal tracking-[0.16em] text-[#8B95A1]">02 / ARCHIVE</p>
+                <h3 className="mt-5 text-[25px] font-medium tracking-[-0.04em] text-[#191F28]">사찰 실무서식</h3>
+                <p className="mt-3 max-w-[300px] text-sm font-normal leading-6 text-[#667085]">사찰 운영에 필요한 자료를 찾아보고 실무에 활용해보세요.</p>
+                <span className="mt-7 inline-flex items-center gap-2 text-sm font-normal text-[#191F28]">서식 보기 <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-1" /></span>
+              </Link>
+            </div>
+          </section>
+
+          <section className="mx-auto max-w-[1400px] px-10 py-[112px] xl:px-14" aria-labelledby="editorial-living-title">
+            <div className="mb-9 flex items-end justify-between border-b border-[#D9DAD4] pb-5">
+              <div>
+                <p className="text-xs font-normal tracking-[0.18em] text-[#8B95A1]">02</p>
+                <h2 id="editorial-living-title" className="mt-3 text-[38px] font-medium tracking-[-0.05em] text-[#191F28]">한국불교 생활 찾기</h2>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 border-b border-[#D9DAD4]">
+              {[
+                ["01", "템플스테이", "머무르며 마음을 쉬어가는 시간", "/temples/stay"],
+                ["02", "사찰음식", "계절과 정성이 담긴 한 끼", "/temples/food"],
+                ["03", "행사교육", "산사에서 만나는 문화와 배움", "/events"],
+                ["04", "사찰 안내", "우리 곁의 사찰을 찾아보기", "/temples/guide"],
+              ].map(([number, title, description, href], index) => (
+                <Link key={href} href={href} className={`group min-h-[190px] px-5 py-4 transition duration-200 hover:-translate-y-0.5 ${index < 3 ? "border-r border-[#D9DAD4]" : ""}`}>
+                  <span className="text-xs font-normal tracking-[0.16em] text-[#8B95A1]">{number}</span>
+                  <h3 className="mt-10 text-[22px] font-medium tracking-[-0.04em] text-[#191F28] transition group-hover:translate-x-1">{title}</h3>
+                  <p className="mt-3 max-w-[170px] text-[13px] font-normal leading-5 text-[#667085]">{description}</p>
+                  <span className="mt-5 block h-px w-7 bg-[#D9DAD4] transition group-hover:w-12 group-hover:bg-[#F4F54A]" />
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          <section className="mx-auto max-w-[1400px] bg-[#F4F5EF] px-10 py-[112px] xl:px-14" aria-labelledby="editorial-learn-title">
+            <div className="grid grid-cols-[1.25fr_0.9fr] gap-16">
+              <Link href="/resources/masters" className="group relative block border-r border-[#D5D8CC] pr-16">
+                <p className="text-xs font-normal tracking-[0.18em] text-[#8B95A1]">03 / ARCHIVE</p>
+                <div className="mt-8 grid grid-cols-[0.9fr_1.1fr] items-end gap-8">
+                  <img src="/images/masters/wonhyo.webp" alt="한국의 고승" className="h-[250px] w-full object-cover object-top" />
+                  <div>
+                    <h2 id="editorial-learn-title" className="text-[36px] font-medium tracking-[-0.05em] text-[#191F28]">한국의 고승</h2>
+                    <p className="mt-4 max-w-[260px] text-sm font-normal leading-6 text-[#667085]">한국불교의 큰스님과 그 가르침을 따라 오래된 지혜를 읽어봅니다.</p>
+                    <span className="mt-7 inline-flex items-center gap-2 text-sm font-normal text-[#191F28]">아카이브 보기 <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-1" /></span>
+                  </div>
+                </div>
+              </Link>
+              <div className="flex flex-col">
+                <Link href="/stories" className="group flex flex-1 items-end justify-between border-b border-[#D5D8CC] py-5 transition hover:translate-x-1">
+                  <span>
+                    <span className="text-xs font-normal tracking-[0.16em] text-[#8B95A1]">01</span>
+                    <h3 className="mt-5 text-[23px] font-medium tracking-[-0.04em] text-[#191F28]">부처님 이야기</h3>
+                    <p className="mt-2 text-sm font-normal text-[#667085]">잠시 쉬어가는 마음의 이야기</p>
+                  </span>
+                  <ArrowIcon className="h-5 w-5 text-[#8B95A1] transition group-hover:translate-x-1" />
+                </Link>
+                <Link href="/resources" className="group flex flex-1 items-end justify-between py-5 transition hover:translate-x-1">
+                  <span>
+                    <span className="text-xs font-normal tracking-[0.16em] text-[#8B95A1]">02</span>
+                    <h3 className="mt-5 text-[23px] font-medium tracking-[-0.04em] text-[#191F28]">불교자료</h3>
+                    <p className="mt-2 text-sm font-normal text-[#667085]">불교 생활을 위한 자료 모음</p>
+                  </span>
+                  <ArrowIcon className="h-5 w-5 text-[#8B95A1] transition group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </div>
+          </section>
+
+          <section className="mx-auto max-w-[1400px] px-10 py-[112px] xl:px-14" aria-labelledby="editorial-latest-title">
+            <div className="grid grid-cols-[0.35fr_1fr] gap-16">
+              <div>
+                <p className="text-xs font-normal tracking-[0.18em] text-[#8B95A1]">04</p>
+                <h2 id="editorial-latest-title" className="mt-4 text-[38px] font-medium leading-[1.15] tracking-[-0.05em] text-[#191F28]">새로<br />올라온 것</h2>
+                <p className="mt-5 max-w-[180px] text-sm font-normal leading-6 text-[#667085]">연에 새로 더해진 소식과 콘텐츠를 차례로 만나보세요.</p>
+              </div>
+              <div className="border-t border-[#D9DAD4]">
+                {latestJobs.map((job, index) => (
+                  <Link key={job.id} href={`/jobs/${job.id}`} className="group flex items-center justify-between gap-6 border-b border-[#D9DAD4] py-6 transition hover:px-2">
+                    <span className="flex min-w-0 items-start gap-5">
+                      <span className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${index === 0 ? "bg-[#F4F54A]" : "bg-[#C9CDC4]"}`} />
+                      <span className="min-w-0">
+                        <span className="block text-xs font-normal tracking-[0.08em] text-[#8B95A1]">구인 · {job.location}</span>
+                        <span className="mt-2 block truncate text-[17px] font-normal text-[#191F28]">{job.title}</span>
+                      </span>
+                    </span>
+                    <span className="shrink-0 text-xs font-normal text-[#8B95A1]">{job.date}</span>
+                  </Link>
+                ))}
+                <Link href="/events/temple-concert" className="group flex items-center justify-between gap-6 border-b border-[#D9DAD4] py-6 transition hover:px-2">
+                  <span className="flex items-start gap-5"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#C9CDC4]" /><span><span className="block text-xs font-normal tracking-[0.08em] text-[#8B95A1]">행사교육 · 문화행사</span><span className="mt-2 block text-[17px] font-normal text-[#191F28]">산사에서 만나는 문화행사</span></span></span>
+                  <ArrowIcon className="h-5 w-5 shrink-0 text-[#8B95A1] transition group-hover:translate-x-1" />
+                </Link>
+                {recommendedTempleStays.map((stay) => (
+                  <Link key={stay.id} href={`/temples/stay/${stay.id}`} className="group flex items-center justify-between gap-6 border-b border-[#D9DAD4] py-6 transition hover:px-2">
+                    <span className="flex items-start gap-5"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#C9CDC4]" /><span><span className="block text-xs font-normal tracking-[0.08em] text-[#8B95A1]">템플스테이 · {stay.location}</span><span className="mt-2 block text-[17px] font-normal text-[#191F28]">{stay.name}</span></span></span>
+                    <ArrowIcon className="h-5 w-5 shrink-0 text-[#8B95A1] transition group-hover:translate-x-1" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+
           <section
-            className="mx-auto max-w-[1400px] px-10 py-10 xl:px-14"
+            className="hidden mx-auto max-w-[1400px] px-10 py-10 xl:px-14"
             aria-labelledby="quick-actions-title"
           >
             <h2 id="quick-actions-title" className="text-xl font-medium tracking-[-0.03em]">
@@ -751,11 +975,11 @@ export default function Home() {
                 <ArrowIcon className="h-5 w-5 text-[#8B95A1]" />
               </Link>
               <Link
-                href="/resources"
+                href="/downloads"
                 className="flex items-center justify-between border border-[#E7E9EC] bg-white px-6 py-5 transition hover:border-[#D8DA72]"
               >
                 <span>
-                  <span className="block text-[15px] font-medium text-[#191F28]">사찰 실무서식 / 자료실</span>
+                  <span className="block text-[15px] font-medium text-[#191F28]">사찰 실무서식</span>
                   <span className="mt-1 block text-sm font-normal text-[#667085]">사찰 운영에 필요한 자료를 찾아보세요.</span>
                 </span>
                 <ArrowIcon className="h-5 w-5 text-[#8B95A1]" />
@@ -764,7 +988,7 @@ export default function Home() {
           </section>
 
           <section
-            className="mx-auto max-w-[1400px] px-10 py-8 xl:px-14"
+            className="hidden mx-auto max-w-[1400px] px-10 py-8 xl:px-14"
             aria-labelledby="living-title"
           >
             <h2 id="living-title" className="text-xl font-medium tracking-[-0.03em]">
@@ -790,7 +1014,7 @@ export default function Home() {
           </section>
 
           <section
-            className="mx-auto max-w-[1400px] px-10 py-8 xl:px-14"
+            className="hidden mx-auto max-w-[1400px] px-10 py-8 xl:px-14"
             aria-labelledby="learn-title"
           >
             <h2 id="learn-title" className="text-xl font-medium tracking-[-0.03em]">
@@ -813,7 +1037,7 @@ export default function Home() {
           </section>
 
           <section
-            className="mx-auto max-w-[1400px] px-10 py-8 pb-16 xl:px-14"
+            className="hidden mx-auto max-w-[1400px] px-10 py-8 pb-16 xl:px-14"
             aria-labelledby="latest-title"
           >
             <h2 id="latest-title" className="text-xl font-medium tracking-[-0.03em]">
@@ -1014,9 +1238,9 @@ export default function Home() {
           </section>
         </main>
 
-        <footer className="border-t border-[#E7E9EC] bg-[#FAFAF8]">
-          <div className="mx-auto max-w-[1400px] px-10 py-10 xl:px-14">
-            <div className="grid grid-cols-[1.05fr_1fr_1.25fr] items-start gap-12">
+        <footer className="border-t border-[#D9DAD4] bg-[#FAF9F6]">
+          <div className="mx-auto max-w-[1400px] px-10 py-14 xl:px-14">
+            <div className="grid grid-cols-[0.9fr_0.9fr_1.2fr] items-start gap-16">
               <div>
                 <Link
                   href="/"
@@ -1076,7 +1300,7 @@ export default function Home() {
                     href="https://open.kakao.com/o/sulQHJGi"
                     target="_blank"
                     rel="noreferrer"
-                    className="flex min-h-[82px] items-center gap-3 rounded-2xl bg-[#F4F54A] px-5 text-left text-[#191F28] transition hover:bg-[#E8EA35] hover:shadow-[0_10px_25px_rgba(25,31,40,0.08)]"
+                        className="flex min-h-[64px] items-center gap-3 border-t border-[#D9DAD4] px-0 text-left text-[#191F28] transition hover:border-[#AEB5BC]"
                   >
                     <KakaoIcon />
                     <span>
@@ -1091,7 +1315,7 @@ export default function Home() {
 
                   <a
                     href="sms:01057861556"
-                    className="flex min-h-[82px] items-center gap-3 rounded-2xl border border-[#DDE1E5] bg-white px-5 text-left transition hover:border-[#AEB5BC] hover:shadow-[0_10px_25px_rgba(25,31,40,0.07)]"
+                        className="flex min-h-[64px] items-center gap-3 border-t border-[#D9DAD4] px-0 text-left transition hover:border-[#AEB5BC]"
                   >
                     <MessageIcon />
                     <span>
