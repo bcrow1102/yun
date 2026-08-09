@@ -104,7 +104,7 @@ const featureSlides = [
 
 const HERO_SLIDE_COUNT = featureSlides.length + 1;
 
-const heroScenes = [
+const scrollHeroItems = [
   [
     {
       label: "템플스테이",
@@ -136,34 +136,98 @@ const heroScenes = [
   ],
   [
     {
-      label: "템플스테이",
-      href: "/temples/stay",
-      image: "/images/hero/temple-stay-novice.webp",
-      alt: "템플스테이에서 쉬어가는 모습",
-      position: "top-[8%]",
-      line: "-top-8 h-8",
-      objectPosition: "center 45%",
+      label: "한국의 고승",
+      href: "/resources/masters",
+      image: "/images/masters/wonhyo-card.webp",
+      alt: "한국의 고승 원효대사 대표 이미지",
+      position: "top-[3%]",
+      line: "-top-10 h-10",
+      objectPosition: "center center",
     },
     {
-      label: "사찰음식",
-      href: "/temples/food",
-      image: "/images/hero/temple-food-real.webp",
-      alt: "사찰음식 이미지",
+      label: "부처님 이야기",
+      href: "/stories",
+      image: "/images/stories/story-01-scene-1.webp",
+      alt: "부처님 이야기 대표 삽화",
+      position: "top-[9%] xl:top-[10%]",
+      line: "-top-6 h-6",
+      objectPosition: "center center",
+    },
+    {
+      label: "홍보물 DIY",
+      href: "/events/promote",
+      image: "/images/showcase/yeon-diy-poster-lantern.webp",
+      alt: "연등 행사 홍보물 DIY 완성 예시",
       position: "top-[1%]",
-      line: "-top-16 h-16",
-      objectPosition: "center 52%",
-    },
-    {
-      label: "행사교육",
-      href: "/events",
-      image: "/images/hero/temple-concert.webp",
-      alt: "산사 문화행사 이미지",
-      position: "top-[10%]",
-      line: "-top-5 h-5",
-      objectPosition: "center 40%",
+      line: "-top-14 h-14",
+      objectPosition: "center center",
     },
   ],
 ] as const;
+
+const SCROLL_HOLD_MS = 4000;
+const SCROLL_REWIND_MS = 1950;
+const SCROLL_REWIND_STAGGER_MS = 420;
+
+type ScrollHeroItemData = {
+  label: string;
+  href: string;
+  image: string;
+  alt: string;
+  position: string;
+  line: string;
+  objectPosition: string;
+};
+
+function ScrollHeroItem({
+  item,
+  isUnfolding,
+  isSettled,
+  isRewinding,
+  onHoverChange,
+}: {
+  item: ScrollHeroItemData;
+  isUnfolding: boolean;
+  isSettled: boolean;
+  isRewinding: boolean;
+  onHoverChange: (isHovered: boolean) => void;
+}) {
+  return (
+    <Link
+      href={item.href}
+      className={`scroll-hero-item group absolute left-1/2 z-10 box-border h-[560px] aspect-[2/3] -translate-x-1/2 overflow-visible ${item.position}${isRewinding ? " scroll-hero-rewinding" : isUnfolding ? " scroll-hero-unfolding" : ""}${isSettled && !isRewinding ? " scroll-hero-settled" : ""}`}
+      aria-label={item.label}
+      onMouseEnter={() => onHoverChange(true)}
+      onMouseLeave={() => onHoverChange(false)}
+    >
+      <span className="scroll-hero-shell relative block h-full w-full">
+        <span className="scroll-hero-top-rod absolute overflow-hidden" aria-hidden="true">
+          <img src="/images/hero-scroll/scroll-master-open.webp" alt="" className="scroll-hero-master-image" />
+        </span>
+        <span className="scroll-hero-canvas absolute overflow-hidden">
+          <img src="/images/hero-scroll/scroll-master-open.webp" alt="" aria-hidden="true" className="scroll-hero-canvas-paper" />
+          <span className="scroll-hero-content absolute overflow-hidden">
+            <img
+              src={item.image}
+              alt={item.alt}
+              draggable={false}
+              className="h-full w-full object-cover"
+              style={{ objectPosition: item.objectPosition }}
+            />
+            <span className="absolute inset-0 bg-gradient-to-t from-[#191F28]/35 via-transparent to-transparent" />
+            <span className="scroll-hero-label absolute bottom-3 left-3 flex items-center gap-1.5 text-[12px] font-medium text-white">
+              {item.label}
+              <ArrowIcon className="h-3.5 w-3.5" />
+            </span>
+          </span>
+        </span>
+        <span className="scroll-hero-bottom-rod absolute overflow-hidden" aria-hidden="true">
+          <img src="/images/hero-scroll/scroll-master-open.webp" alt="" className="scroll-hero-bottom-rod-image" />
+        </span>
+      </span>
+    </Link>
+  );
+}
 
 function LotusIcon({ className = "h-7 w-7" }: { className?: string }) {
   return (
@@ -352,7 +416,92 @@ export default function Home() {
   const [activeHeroSlide, setActiveHeroSlide] = useState(0);
   const [storyPopupOpen, setStoryPopupOpen] = useState(true);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const activeHeroScene = Math.floor(activeHeroSlide / 2);
+  const [unfoldingScrolls, setUnfoldingScrolls] = useState<number[]>([]);
+  const [settledScrolls, setSettledScrolls] = useState<number[]>([]);
+  const [activeScrollSet, setActiveScrollSet] = useState(0);
+  const [scrollCycleIndex, setScrollCycleIndex] = useState(0);
+  const [isScrollHovered, setIsScrollHovered] = useState(false);
+  const [isScrollRewinding, setIsScrollRewinding] = useState(false);
+  const [rewindingScrolls, setRewindingScrolls] = useState<number[]>([]);
+  const [isPhoneCopyToastVisible, setIsPhoneCopyToastVisible] = useState(false);
+  const scrollHoldRemainingRef = useRef(SCROLL_HOLD_MS);
+  const phoneCopyToastTimerRef = useRef<number | null>(null);
+
+  useEffect(() => () => {
+    if (phoneCopyToastTimerRef.current !== null) {
+      window.clearTimeout(phoneCopyToastTimerRef.current);
+    }
+  }, []);
+
+  useEffect(() => {
+    const startTimes = [400, 2380, 4360];
+    const startTimers = startTimes.map((delay, index) =>
+      window.setTimeout(() => {
+        setUnfoldingScrolls((current) => current.includes(index) ? current : [...current, index]);
+      }, delay),
+    );
+    const settleTimers = startTimes.map((delay, index) =>
+      window.setTimeout(() => {
+        setSettledScrolls((current) => current.includes(index) ? current : [...current, index]);
+      }, delay + 1680),
+    );
+
+    return () => {
+      startTimers.forEach(window.clearTimeout);
+      settleTimers.forEach(window.clearTimeout);
+    };
+  }, [activeScrollSet, scrollCycleIndex]);
+
+  useEffect(() => {
+    if (settledScrolls.length !== 3 || isScrollHovered || isScrollRewinding) return;
+
+    const duration = scrollHoldRemainingRef.current;
+    const startedAt = performance.now();
+    let completed = false;
+    const timer = window.setTimeout(() => {
+      completed = true;
+      scrollHoldRemainingRef.current = 0;
+      setIsScrollHovered(false);
+      setIsScrollRewinding(true);
+    }, duration);
+
+    return () => {
+      window.clearTimeout(timer);
+      if (!completed) {
+        scrollHoldRemainingRef.current = Math.max(0, duration - (performance.now() - startedAt));
+      }
+    };
+  }, [isScrollHovered, isScrollRewinding, settledScrolls.length]);
+
+  useEffect(() => {
+    if (!isScrollRewinding) return;
+
+    const rewindOrder = [2, 1, 0];
+    const rewindTimers = rewindOrder.map((index, order) =>
+      window.setTimeout(() => {
+        setRewindingScrolls((current) => current.includes(index) ? current : [...current, index]);
+      }, order * SCROLL_REWIND_STAGGER_MS),
+    );
+    const resetTimer = window.setTimeout(() => {
+      setUnfoldingScrolls([]);
+      setSettledScrolls([]);
+      setRewindingScrolls([]);
+      setIsScrollHovered(false);
+      scrollHoldRemainingRef.current = SCROLL_HOLD_MS;
+      if (activeScrollSet === 0) {
+        setActiveScrollSet(1);
+      } else {
+        setScrollCycleIndex((current) => current + 1);
+        setActiveScrollSet(0);
+      }
+      setIsScrollRewinding(false);
+    }, (rewindOrder.length - 1) * SCROLL_REWIND_STAGGER_MS + SCROLL_REWIND_MS);
+
+    return () => {
+      rewindTimers.forEach(window.clearTimeout);
+      window.clearTimeout(resetTimer);
+    };
+  }, [activeScrollSet, isScrollRewinding]);
 
   useEffect(() => {
     if (isSearchFocused) return;
@@ -428,6 +577,33 @@ export default function Home() {
     router.push(`/search?q=${encoded}`);
   };
 
+  const handleFooterPhoneCopy = async () => {
+    const phoneNumber = "010-5786-1556";
+
+    try {
+      await navigator.clipboard.writeText(phoneNumber);
+    } catch {
+      const textarea = document.createElement("textarea");
+      textarea.value = phoneNumber;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      const copied = document.execCommand("copy");
+      textarea.remove();
+      if (!copied) return;
+    }
+
+    setIsPhoneCopyToastVisible(true);
+    if (phoneCopyToastTimerRef.current !== null) {
+      window.clearTimeout(phoneCopyToastTimerRef.current);
+    }
+    phoneCopyToastTimerRef.current = window.setTimeout(() => {
+      setIsPhoneCopyToastVisible(false);
+      phoneCopyToastTimerRef.current = null;
+    }, 1800);
+  };
+
   return (
     <>
       <MobileHome />
@@ -442,7 +618,7 @@ export default function Home() {
 
         <main>
           <section
-            className="relative cursor-grab touch-pan-y select-none overflow-hidden border-b border-[#F0EEE9] bg-[#FAF9F6] active:cursor-grabbing"
+            className="relative cursor-grab touch-pan-y select-none overflow-hidden border-b border-[#F0EEE9] bg-[#FAF6EE] active:cursor-grabbing"
             aria-label="주요 소식"
             onPointerDown={handleHeroPointerDown}
             onPointerMove={handleHeroPointerMove}
@@ -450,6 +626,10 @@ export default function Home() {
             onPointerCancel={handleHeroPointerCancel}
             onClickCapture={handleHeroClickCapture}
           >
+            <div
+              className="pointer-events-none absolute inset-0 z-0 h-full w-full bg-[url('/images/hero/hero-korean-ink-bg-v2.webp')] bg-cover bg-right bg-no-repeat opacity-[0.65]"
+              aria-hidden="true"
+            />
             <div
               className="hidden"
               style={{ transform: `translateX(-${activeHeroSlide * 100}%)` }}
@@ -671,7 +851,7 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="mx-auto grid min-h-[520px] max-w-[1400px] grid-cols-[0.86fr_1.14fr] items-center gap-8 px-10 py-9 xl:grid-cols-[0.7fr_1.3fr] xl:gap-8 xl:px-14">
+            <div className="relative z-10 mx-auto grid min-h-[600px] max-w-[1400px] grid-cols-[0.86fr_1.14fr] items-center gap-8 px-10 py-9 xl:grid-cols-[0.7fr_1.3fr] xl:gap-8 xl:px-14">
               <div className="relative z-10 -mt-3 max-w-[560px]">
                 <p className="text-[15px] font-normal tracking-[-0.02em] text-[#667085]">
                   불교 생활을 더 가까이
@@ -679,7 +859,7 @@ export default function Home() {
                 <span className="mt-3 block h-[2px] w-9 rounded-full bg-[#F4F54A]" />
 
                 <h1 className="mt-7 text-[40px] font-medium leading-[1.28] tracking-[-0.045em] text-[#191F28] xl:text-[44px]">
-                  머무름과 음식,
+                  사찰과 사람,
                   <br />
                   문화로 만나는 한국불교
                 </h1>
@@ -712,19 +892,6 @@ export default function Home() {
                   </button>
                 </form>
 
-                <div className="mt-4 flex items-center gap-4 text-[13px] font-normal text-[#8B95A1]">
-                  <span>추천</span>
-                  <button type="button" onClick={() => setKeyword("템플스테이")} className="hover:text-[#191F28]">
-                    템플스테이
-                  </button>
-                  <button type="button" onClick={() => setKeyword("산사 음악회")} className="hover:text-[#191F28]">
-                    산사 음악회
-                  </button>
-                  <button type="button" onClick={() => setKeyword("사찰 구인")} className="hover:text-[#191F28]">
-                    사찰 구인
-                  </button>
-                </div>
-
                 {storyPopupOpen && (
                   <div className="hidden">
                     <BookLotusIcon className="h-12 w-16 shrink-0" />
@@ -744,7 +911,7 @@ export default function Home() {
                 )}
               </div>
 
-              <div className="relative -mr-10 h-[440px] min-w-0 self-stretch overflow-visible py-2 xl:-mr-24">
+              <div className="relative -mr-10 h-[560px] min-w-0 self-stretch overflow-visible py-2 xl:-mr-24">
                 <div
                   className="hidden"
                   style={{ transform: `translateX(-${activeHeroSlide * 100}%)` }}
@@ -762,59 +929,68 @@ export default function Home() {
                   ))}
                 </div>
                 <style>{`
-                  @keyframes hero-scroll-tie-release {
-                    0% { opacity: 1; transform: translateX(-50%) rotate(0deg) scale(1); }
-                    55% { opacity: 1; transform: translateX(-50%) rotate(8deg) scale(1.05); }
-                    100% { opacity: 0; transform: translateX(-50%) translateY(8px) rotate(-5deg) scale(.8); }
+                  @property --scroll-progress {
+                    syntax: "<number>";
+                    inherits: true;
+                    initial-value: 0;
                   }
-                  @keyframes hero-scroll-unfurl {
-                    0% { clip-path: inset(0 0 93% 0); }
-                    100% { clip-path: inset(0 0 0 0); }
+                  @keyframes scroll-hero-unfold-progress {
+                    0% { --scroll-progress: 0; animation-timing-function: cubic-bezier(.55,.02,.82,.42); }
+                    19.23% { --scroll-progress: .18; animation-timing-function: cubic-bezier(.18,.55,.28,1); }
+                    67.95% { --scroll-progress: .74; animation-timing-function: cubic-bezier(.16,.72,.2,1); }
+                    100% { --scroll-progress: 1; }
                   }
-                  .hero-scroll-tie { animation: hero-scroll-tie-release 450ms ease-out both; }
-                  .hero-scroll-frame { clip-path: inset(0 0 93% 0); animation: hero-scroll-unfurl 1500ms cubic-bezier(.2,.7,.3,1) both; }
+                  @keyframes scroll-hero-rewind-progress {
+                    0% { --scroll-progress: 1; animation-timing-function: cubic-bezier(.5,.04,.72,.35); }
+                    25% { --scroll-progress: .86; animation-timing-function: cubic-bezier(.35,.18,.55,.88); }
+                    72% { --scroll-progress: .28; animation-timing-function: cubic-bezier(.18,.62,.25,1); }
+                    100% { --scroll-progress: 0; }
+                  }
+                  .scroll-hero-item { --scroll-progress: 0; cursor: pointer; }
+                  .scroll-hero-master-image, .scroll-hero-canvas-paper, .scroll-hero-bottom-rod-image { position: absolute; left: 50%; height: 560px; width: 563.37px; max-width: none; object-fit: fill; transform: translateX(-50%); }
+                  .scroll-hero-top-rod { z-index: 4; top: 2.13px; left: 50%; height: 69.4px; width: 563.37px; transform: translateX(-50%); }
+                  .scroll-hero-top-rod .scroll-hero-master-image { top: 0; }
+                  .scroll-hero-canvas { z-index: 2; top: 71.53px; left: 50%; height: calc(var(--scroll-progress) * 423.4px); width: 563.37px; transform: translateX(-50%); clip-path: inset(0); contain: paint; }
+                  .scroll-hero-canvas-paper { z-index: 1; top: -69.4px; }
+                  .scroll-hero-content { z-index: 2; left: 181.57px; top: 50.16px; height: 329px; width: 199.16px; overflow: hidden !important; clip-path: inset(0); contain: paint; }
+                  .scroll-hero-content > img { position: absolute; inset: 0; height: 100%; width: 100%; max-width: none; object-fit: cover; transform: none; }
+                  .scroll-hero-bottom-rod { z-index: 3; top: calc(71.53px + var(--scroll-progress) * 423.4px); left: 50%; height: 44.8px; width: 563.37px; transform: translate(-50%, -1px); }
+                  .scroll-hero-slot-third .scroll-hero-bottom-rod { transform: translate(-50%, -2px); }
+                  .scroll-hero-bottom-rod-image { top: -493px; }
+                  .scroll-hero-label { opacity: 0; }
+                  .scroll-hero-unfolding { animation: scroll-hero-unfold-progress 1560ms linear 120ms both; }
+                  .scroll-hero-rewinding { animation: scroll-hero-rewind-progress 1950ms linear both; }
+                  .scroll-hero-settled .scroll-hero-label { opacity: 1; }
+                  .scroll-hero-settled .scroll-hero-shell { transition: transform 220ms ease-out; }
+                  .scroll-hero-settled:hover .scroll-hero-shell { transform: translateY(-4px); }
                   @media (prefers-reduced-motion: reduce) {
-                    .hero-scroll-tie { animation: none; opacity: 0; }
-                    .hero-scroll-frame { animation: none; clip-path: inset(0 0 0 0); }
+                    .scroll-hero-item, .scroll-hero-item * { animation: none !important; }
+                    .scroll-hero-item { --scroll-progress: 1; }
+                    .scroll-hero-rewinding { --scroll-progress: 0 !important; }
+                    .scroll-hero-label { opacity: 1; }
+                    .scroll-hero-settled .scroll-hero-shell { transition: none; }
+                    .scroll-hero-settled:hover .scroll-hero-shell { transform: none; }
                   }
                 `}</style>
-                <div key={activeHeroScene} className="hero-scroll-stage absolute inset-y-0 left-0 grid h-[440px] w-[min(860px,100%)] grid-cols-3 gap-[clamp(38px,3.82vw,55px)]">
-                  {heroScenes[activeHeroScene].map((item, index) => (
-                    <div key={item.image} className="relative h-full">
-                      <Link
-                        href={item.href}
-                        className={`absolute left-1/2 z-10 box-border h-[clamp(360px,26.4vw,380px)] w-full -translate-x-1/2 overflow-visible ${item.position}`}
-                        aria-label={item.label}
+                <div className={`hero-scroll-stage absolute inset-y-0 left-0 grid h-[560px] w-[min(860px,100%)] grid-cols-3 gap-[clamp(38px,3.82vw,55px)]${isScrollRewinding ? " pointer-events-none" : ""}`}>
+                  {scrollHeroItems[activeScrollSet].map((slot, index, items) => {
+                    const rotation = scrollCycleIndex % items.length;
+                    const item = items[(index - rotation + items.length) % items.length];
+                    return (
+                      <div
+                        key={`${scrollCycleIndex}-${activeScrollSet}-${index}-${item.href}`}
+                        className={`relative h-full${index === 2 ? " scroll-hero-slot-third -translate-y-[2px]" : ""}`}
                       >
-                        <span className={`absolute left-1/2 w-px -translate-x-1/2 bg-[#D7D8CF] ${item.line}`} aria-hidden="true" />
-                        <span className="hero-scroll-tie absolute -top-2 left-1/2 flex h-4 w-5 -translate-x-1/2 items-end justify-center" style={{ animationDelay: `${600 + index * 2400}ms` }} aria-hidden="true">
-                          <span className={`block h-2.5 w-4 rounded-[45%] ${index === 0 ? "bg-[#F4F54A]" : index === 1 ? "bg-[#E8EBDD]" : "bg-[#FFF8E8]"}`} />
-                          <span className="absolute bottom-0 h-1.5 w-px bg-[#B8B9AD]" />
-                        </span>
-                        <span className="hero-scroll-frame relative block box-border h-full overflow-hidden rounded-[28px] bg-[#FAF9F6]" style={{ animationDelay: `${1050 + index * 2400}ms` }}>
-                          <img src={item.image} alt={item.alt} draggable={false} className="h-full w-full object-cover" style={{ objectPosition: item.objectPosition }} />
-                          <span className="absolute bottom-4 left-5 flex items-center gap-2 bg-white/80 px-2 py-1 text-[13px] font-normal text-[#191F28]">
-                            <span className="h-px w-4 bg-[#F4F54A]" />
-                            {item.label}
-                          </span>
-                        </span>
-                      </Link>
-                    </div>
-                  ))}
-                </div>
-                <div className="absolute bottom-2 left-8 z-10 flex items-center gap-1.5">
-                  {heroScenes.map((_, index) => (
-                    <button
-                      key={index}
-                      type="button"
-                      onClick={() => setActiveHeroSlide(index === 0 ? 0 : 2)}
-                      className={`h-1.5 rounded-full transition-all duration-300 ${activeHeroScene === index
-                        ? "w-6 bg-[#F4F54A]"
-                        : "w-1.5 bg-[#B9B8B0] hover:bg-[#8B95A1]"
-                        }`}
-                      aria-label={`${index + 1}번째 소식 보기`}
-                    />
-                  ))}
+                        <ScrollHeroItem
+                          item={{ ...item, position: slot.position, line: slot.line }}
+                          isUnfolding={unfoldingScrolls.includes(index)}
+                          isSettled={settledScrolls.includes(index)}
+                          isRewinding={rewindingScrolls.includes(index)}
+                          onHoverChange={setIsScrollHovered}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -835,89 +1011,112 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="mx-auto max-w-[1400px] px-10 py-[108px] xl:px-14" aria-labelledby="editorial-quick-title">
+          <section className="mx-auto max-w-[1400px] px-10 pb-[56px] pt-[108px] xl:px-14" aria-labelledby="editorial-quick-title">
             <div className="mb-12 flex items-end justify-between border-b border-[#D9DAD4] pb-5">
               <div>
-                <p className="text-xs font-normal tracking-[0.18em] text-[#8B95A1]">01</p>
-                <h2 id="editorial-quick-title" className="mt-3 text-[38px] font-medium tracking-[-0.05em] text-[#191F28]">지금 바로 활용하기</h2>
+                <h2 id="editorial-quick-title" className="mt-10 text-[38px] font-medium tracking-[-0.05em] text-[#191F28]">지금 바로 활용하기</h2>
               </div>
-              <p className="hidden max-w-[280px] text-sm font-normal leading-6 text-[#667085] md:block">연에서 바로 시작할 수 있는 실무 도구와 자료를 한곳에 모았습니다.</p>
+              <p className="hidden max-w-[340px] text-left text-[16px] font-normal leading-[1.65] text-[#4E5968] md:block">행사 홍보물은 직접 만들고,<br />필요한 실무서식은 바로 꺼내 쓰세요</p>
             </div>
-            <div className="grid grid-cols-[1.38fr_1fr] divide-x divide-[#D9DAD4]">
-              <Link href="/events/promote" className="group relative pr-10 transition duration-200 hover:-translate-y-0.5">
-                <div className="flex items-start justify-between gap-8">
-                  <div>
-                    <p className="text-xs font-normal tracking-[0.16em] text-[#8B95A1]">01 / MAKE</p>
-                    <h3 className="mt-5 text-[29px] font-medium tracking-[-0.045em] text-[#191F28]">홍보물 DIY</h3>
-                    <p className="mt-3 max-w-[330px] text-sm font-normal leading-6 text-[#667085]">행사와 소식을 직접 편집해 필요한 홍보물을 만들어보세요.</p>
-                    <span className="mt-7 inline-flex items-center gap-2 text-sm font-normal text-[#191F28]">바로 만들기 <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-1" /></span>
-                  </div>
-                  <img src="/images/menu/promote-diy.webp" alt="" className="h-28 w-28 object-contain" />
+            <div className="grid h-[240px] grid-cols-[1.27fr_1fr] gap-[52px]">
+              <Link
+                href="/events/promote"
+                className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[4px] bg-[#FFFCE2] p-8 pr-[42%] transition duration-200 hover:bg-[#FFFBD8] xl:p-10 xl:pr-[42%]"
+              >
+                <div className="relative z-10 -translate-y-2">
+                  <h3 className="mt-5 text-[28px] font-semibold tracking-[-0.045em] text-[#191F28]">홍보물 DIY</h3>
+                  <p className="mt-3 text-sm font-normal leading-6 text-[#667085]">행사 포스터와 홍보 문구를 직접 만들어보세요.</p>
                 </div>
+                <span className="relative z-10 inline-flex -translate-y-2 items-center gap-2 text-sm font-medium text-[#191F28]">
+                  바로 만들기
+                  <ArrowIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                </span>
+                <span className="pointer-events-none absolute inset-0" aria-hidden="true">
+                  <img src="/images/showcase/yeon-diy-poster-novice.webp" alt="" className="absolute right-12 top-[6px] h-[182px] w-auto rotate-[0.7deg] object-contain shadow-[0_3px_8px_rgba(25,31,40,0.06)]" />
+                  <img src="/images/showcase/yeon-diy-poster-lantern.webp" alt="" className="absolute right-[calc(9%+66px)] top-[16px] z-10 h-[207px] w-auto rotate-[-1.2deg] object-contain shadow-[0_3px_8px_rgba(25,31,40,0.06)]" />
+                </span>
               </Link>
-              <Link href="/downloads" className="group pl-10 transition duration-200 hover:-translate-y-0.5">
-                <p className="text-xs font-normal tracking-[0.16em] text-[#8B95A1]">02 / ARCHIVE</p>
-                <h3 className="mt-5 text-[25px] font-medium tracking-[-0.04em] text-[#191F28]">사찰 실무서식</h3>
-                <p className="mt-3 max-w-[300px] text-sm font-normal leading-6 text-[#667085]">사찰 운영에 필요한 자료를 찾아보고 실무에 활용해보세요.</p>
-                <span className="mt-7 inline-flex items-center gap-2 text-sm font-normal text-[#191F28]">서식 보기 <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-1" /></span>
+              <Link
+                href="/downloads"
+                className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[4px] bg-[#F2F5ED] p-8 pr-[40%] transition duration-200 hover:bg-[#EDF2E6] xl:p-10 xl:pr-[40%]"
+              >
+                <div className="relative z-10 -translate-y-2">
+                  <h3 className="mt-5 text-[25px] font-semibold tracking-[-0.04em] text-[#191F28]">사찰 실무서식 / 자료실</h3>
+                  <p className="mt-3 text-sm font-normal leading-6 text-[#667085]">
+                    신도명부 · 접수대장 · 행사관리 등
+                    <br />
+                    사찰에서 바로 쓰는 실무자료
+                  </p>
+                </div>
+                <span className="relative z-10 inline-flex -translate-y-2 items-center gap-2 text-sm font-medium text-[#191F28]">
+                  서식 보기
+                  <ArrowIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                </span>
+                <span className="pointer-events-none absolute inset-0 translate-y-2" aria-hidden="true">
+                  <span className="absolute right-[calc(9%+16px)] top-[7px] h-[121px] w-[142px] rotate-[0.7deg] overflow-hidden shadow-[0_3px_8px_rgba(25,31,40,0.06)]">
+                    <img src="/images/showcase/yeon-form-indung.webp" alt="" className="h-full w-full object-cover object-[center_20%]" />
+                  </span>
+                  <span className="absolute bottom-[23px] right-[calc(13.5%+16px)] z-10 h-[193px] w-[160px] rotate-[-0.8deg] overflow-hidden shadow-[0_3px_8px_rgba(25,31,40,0.06)]">
+                    <img src="/images/showcase/yeon-yeondeung-tag-sheet.webp" alt="" className="h-full w-full object-cover object-[center_42%]" />
+                  </span>
+                </span>
               </Link>
             </div>
           </section>
 
-          <section className="mx-auto max-w-[1400px] px-10 py-[112px] xl:px-14" aria-labelledby="editorial-living-title">
+          <section className="mx-auto max-w-[1400px] px-10 pb-[96px] pt-[112px] xl:px-14" aria-labelledby="editorial-living-title">
             <div className="mb-9 flex items-end justify-between border-b border-[#D9DAD4] pb-5">
               <div>
-                <p className="text-xs font-normal tracking-[0.18em] text-[#8B95A1]">02</p>
-                <h2 id="editorial-living-title" className="mt-3 text-[38px] font-medium tracking-[-0.05em] text-[#191F28]">한국불교 생활 찾기</h2>
+                <h2 id="editorial-living-title" className="mt-7 text-[38px] font-medium tracking-[-0.05em] text-[#191F28]">한국불교 생활 찾기</h2>
               </div>
             </div>
-            <div className="grid grid-cols-4 border-b border-[#D9DAD4]">
+            <div className="grid grid-cols-4 gap-7">
               {[
-                ["01", "템플스테이", "머무르며 마음을 쉬어가는 시간", "/temples/stay"],
-                ["02", "사찰음식", "계절과 정성이 담긴 한 끼", "/temples/food"],
-                ["03", "행사교육", "산사에서 만나는 문화와 배움", "/events"],
-                ["04", "사찰 안내", "우리 곁의 사찰을 찾아보기", "/temples/guide"],
-              ].map(([number, title, description, href], index) => (
-                <Link key={href} href={href} className={`group min-h-[190px] px-5 py-4 transition duration-200 hover:-translate-y-0.5 ${index < 3 ? "border-r border-[#D9DAD4]" : ""}`}>
-                  <span className="text-xs font-normal tracking-[0.16em] text-[#8B95A1]">{number}</span>
-                  <h3 className="mt-10 text-[22px] font-medium tracking-[-0.04em] text-[#191F28] transition group-hover:translate-x-1">{title}</h3>
-                  <p className="mt-3 max-w-[170px] text-[13px] font-normal leading-5 text-[#667085]">{description}</p>
-                  <span className="mt-5 block h-px w-7 bg-[#D9DAD4] transition group-hover:w-12 group-hover:bg-[#F4F54A]" />
+                ["템플스테이", "머무르며 마음을 쉬어가는 시간", "/temples/stay", "/images/showcase/yeon-life-templestay.webp", "산사에서 쉬어가는 템플스테이"],
+                ["사찰음식", "계절과 정성이 담긴 한 끼", "/temples/food", "/images/showcase/yeon-life-temple-food.webp", "사찰음식 한 상"],
+                ["행사·교육", "산사에서 만나는 문화와 배움", "/events", "/images/showcase/yeon-life-events-education.webp", "스님과 참여자가 함께하는 행사교육"],
+                ["사찰 안내", "우리 곁의 사찰을 찾아보기", "/temples/guide", "/images/showcase/yeon-life-temple-guide.webp", "사찰 전각과 진입 공간"],
+              ].map(([title, description, href, image, imageAlt]) => (
+                <Link key={href} href={href} className="group block">
+                  <span className="block aspect-[4/3] overflow-hidden rounded-[6px]">
+                    <img src={image} alt={imageAlt} className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-[1.015]" />
+                  </span>
+                  <span className="mt-5 flex items-center justify-between gap-3">
+                    <span className="text-[21px] font-semibold tracking-[-0.04em] text-[#191F28]">{title}</span>
+                    <ArrowIcon className="h-5 w-5 shrink-0 text-[#8B95A1] transition-transform duration-200 group-hover:translate-x-1" />
+                  </span>
+                  <span className="mt-3 block text-[13px] font-normal leading-5 text-[#667085]">{description}</span>
                 </Link>
               ))}
             </div>
           </section>
 
-          <section className="mx-auto max-w-[1400px] bg-[#F4F5EF] px-10 py-[112px] xl:px-14" aria-labelledby="editorial-learn-title">
-            <div className="grid grid-cols-[1.25fr_0.9fr] gap-16">
-              <Link href="/resources/masters" className="group relative block border-r border-[#D5D8CC] pr-16">
-                <p className="text-xs font-normal tracking-[0.18em] text-[#8B95A1]">03 / ARCHIVE</p>
-                <div className="mt-8 grid grid-cols-[0.9fr_1.1fr] items-end gap-8">
-                  <img src="/images/masters/wonhyo.webp" alt="한국의 고승" className="h-[250px] w-full object-cover object-top" />
-                  <div>
-                    <h2 id="editorial-learn-title" className="text-[36px] font-medium tracking-[-0.05em] text-[#191F28]">한국의 고승</h2>
-                    <p className="mt-4 max-w-[260px] text-sm font-normal leading-6 text-[#667085]">한국불교의 큰스님과 그 가르침을 따라 오래된 지혜를 읽어봅니다.</p>
-                    <span className="mt-7 inline-flex items-center gap-2 text-sm font-normal text-[#191F28]">아카이브 보기 <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-1" /></span>
-                  </div>
-                </div>
-              </Link>
-              <div className="flex flex-col">
-                <Link href="/stories" className="group flex flex-1 items-end justify-between border-b border-[#D5D8CC] py-5 transition hover:translate-x-1">
-                  <span>
-                    <span className="text-xs font-normal tracking-[0.16em] text-[#8B95A1]">01</span>
-                    <h3 className="mt-5 text-[23px] font-medium tracking-[-0.04em] text-[#191F28]">부처님 이야기</h3>
-                    <p className="mt-2 text-sm font-normal text-[#667085]">잠시 쉬어가는 마음의 이야기</p>
-                  </span>
-                  <ArrowIcon className="h-5 w-5 text-[#8B95A1] transition group-hover:translate-x-1" />
-                </Link>
-                <Link href="/resources" className="group flex flex-1 items-end justify-between py-5 transition hover:translate-x-1">
-                  <span>
-                    <span className="text-xs font-normal tracking-[0.16em] text-[#8B95A1]">02</span>
-                    <h3 className="mt-5 text-[23px] font-medium tracking-[-0.04em] text-[#191F28]">불교자료</h3>
-                    <p className="mt-2 text-sm font-normal text-[#667085]">불교 생활을 위한 자료 모음</p>
-                  </span>
-                  <ArrowIcon className="h-5 w-5 text-[#8B95A1] transition group-hover:translate-x-1" />
-                </Link>
+          <section className="mx-auto max-w-[1400px] px-10 py-[112px] xl:px-14" aria-labelledby="editorial-learn-title">
+            <div className="grid grid-cols-[0.5fr_1fr] gap-20">
+              <div>
+                <h2 id="editorial-learn-title" className="text-[38px] font-medium tracking-[-0.05em] text-[#191F28]">한국불교를 깊이 읽다</h2>
+                <p className="mt-6 whitespace-pre-line text-[16px] font-normal leading-[1.65] text-[#4E5968]">인물과 이야기, 자료를 따라{"\n"}한국불교의 삶과 가르침을 만나보세요</p>
+                <span className="mt-8 block h-px w-9 bg-[#F4F54A]" aria-hidden="true" />
+                <img src="/images/showcase/yeon-deep-reading-books.webp" alt="" className="ml-7 mt-10 h-auto w-[62%] max-w-[250px]" />
+              </div>
+              <div className="border-y border-[#D9DAD4]">
+                {[
+                  ["한국의 고승", "큰스님들의 삶과 사상을 시대를 따라 읽습니다", "/resources/masters"],
+                  ["부처님 이야기", "이야기로 만나는 부처님의 삶과 가르침", "/stories"],
+                  ["불교자료", "원문번역연구자료를 차근차근 모아갑니다", "/resources"],
+                ].map(([title, description, href], index) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    className={`group flex min-h-[120px] items-center justify-between gap-8 px-5 py-6 ${index < 2 ? "border-b border-[#D9DAD4]" : ""}`}
+                  >
+                    <span>
+                      <span className="block text-[23px] font-semibold tracking-[-0.04em] text-[#191F28]">{title}</span>
+                      <span className="mt-2 block text-[16px] font-normal leading-6 text-[#667085]">{description}</span>
+                    </span>
+                    <ArrowIcon className="h-5 w-5 shrink-0 text-[#8B95A1] transition-transform duration-200 group-hover:translate-x-1" />
+                  </Link>
+                ))}
               </div>
             </div>
           </section>
@@ -925,31 +1124,30 @@ export default function Home() {
           <section className="mx-auto max-w-[1400px] px-10 py-[112px] xl:px-14" aria-labelledby="editorial-latest-title">
             <div className="grid grid-cols-[0.35fr_1fr] gap-16">
               <div>
-                <p className="text-xs font-normal tracking-[0.18em] text-[#8B95A1]">04</p>
-                <h2 id="editorial-latest-title" className="mt-4 text-[38px] font-medium leading-[1.15] tracking-[-0.05em] text-[#191F28]">새로<br />올라온 것</h2>
+                <h2 id="editorial-latest-title" className="text-[38px] font-medium leading-[1.15] tracking-[-0.05em] text-[#191F28]">새로<br />올라온 것</h2>
                 <p className="mt-5 max-w-[180px] text-sm font-normal leading-6 text-[#667085]">연에 새로 더해진 소식과 콘텐츠를 차례로 만나보세요.</p>
               </div>
-              <div className="border-t border-[#D9DAD4]">
-                {latestJobs.map((job, index) => (
-                  <Link key={job.id} href={`/jobs/${job.id}`} className="group flex items-center justify-between gap-6 border-b border-[#D9DAD4] py-6 transition hover:px-2">
-                    <span className="flex min-w-0 items-start gap-5">
-                      <span className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${index === 0 ? "bg-[#F4F54A]" : "bg-[#C9CDC4]"}`} />
-                      <span className="min-w-0">
-                        <span className="block text-xs font-normal tracking-[0.08em] text-[#8B95A1]">구인 · {job.location}</span>
-                        <span className="mt-2 block truncate text-[17px] font-normal text-[#191F28]">{job.title}</span>
-                      </span>
-                    </span>
-                    <span className="shrink-0 text-xs font-normal text-[#8B95A1]">{job.date}</span>
+              <div className="border-t border-[#E1E3DE]">
+                {latestJobs.map((job) => (
+                  <Link key={job.id} href={`/jobs/${job.id}`} className="group grid min-h-[72px] grid-cols-[minmax(132px,0.36fr)_minmax(0,1fr)_84px_20px] items-center gap-6 border-b border-[#E1E3DE] py-4">
+                    <span className="text-[13px] font-normal tracking-[0.04em] text-[#667085]">구인 · {job.location}</span>
+                    <span className="min-w-0 truncate text-[17px] font-medium tracking-[-0.02em] text-[#191F28]">{job.title}</span>
+                    <span className="text-right text-xs font-normal text-[#667085]">{job.date}</span>
+                    <ArrowIcon className="h-[18px] w-[18px] shrink-0 text-[#667085] transition-transform duration-200 ease-out group-hover:translate-x-1" />
                   </Link>
                 ))}
-                <Link href="/events/temple-concert" className="group flex items-center justify-between gap-6 border-b border-[#D9DAD4] py-6 transition hover:px-2">
-                  <span className="flex items-start gap-5"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#C9CDC4]" /><span><span className="block text-xs font-normal tracking-[0.08em] text-[#8B95A1]">행사교육 · 문화행사</span><span className="mt-2 block text-[17px] font-normal text-[#191F28]">산사에서 만나는 문화행사</span></span></span>
-                  <ArrowIcon className="h-5 w-5 shrink-0 text-[#8B95A1] transition group-hover:translate-x-1" />
+                <Link href="/events/temple-concert" className="group grid min-h-[72px] grid-cols-[minmax(132px,0.36fr)_minmax(0,1fr)_84px_20px] items-center gap-6 border-b border-[#E1E3DE] py-4">
+                  <span className="text-[13px] font-normal tracking-[0.04em] text-[#667085]">행사교육 · 문화행사</span>
+                  <span className="min-w-0 truncate text-[17px] font-medium tracking-[-0.02em] text-[#191F28]">산사에서 만나는 문화행사</span>
+                  <span aria-hidden="true" />
+                  <ArrowIcon className="h-[18px] w-[18px] shrink-0 text-[#667085] transition-transform duration-200 ease-out group-hover:translate-x-1" />
                 </Link>
                 {recommendedTempleStays.map((stay) => (
-                  <Link key={stay.id} href={`/temples/stay/${stay.id}`} className="group flex items-center justify-between gap-6 border-b border-[#D9DAD4] py-6 transition hover:px-2">
-                    <span className="flex items-start gap-5"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#C9CDC4]" /><span><span className="block text-xs font-normal tracking-[0.08em] text-[#8B95A1]">템플스테이 · {stay.location}</span><span className="mt-2 block text-[17px] font-normal text-[#191F28]">{stay.name}</span></span></span>
-                    <ArrowIcon className="h-5 w-5 shrink-0 text-[#8B95A1] transition group-hover:translate-x-1" />
+                  <Link key={stay.id} href={`/temples/stay/${stay.id}`} className="group grid min-h-[72px] grid-cols-[minmax(132px,0.36fr)_minmax(0,1fr)_84px_20px] items-center gap-6 border-b border-[#E1E3DE] py-4">
+                    <span className="text-[13px] font-normal tracking-[0.04em] text-[#667085]">템플스테이 · {stay.location}</span>
+                    <span className="min-w-0 truncate text-[17px] font-medium tracking-[-0.02em] text-[#191F28]">{stay.name}</span>
+                    <span aria-hidden="true" />
+                    <ArrowIcon className="h-[18px] w-[18px] shrink-0 text-[#667085] transition-transform duration-200 ease-out group-hover:translate-x-1" />
                   </Link>
                 ))}
               </div>
@@ -1239,8 +1437,8 @@ export default function Home() {
         </main>
 
         <footer className="border-t border-[#D9DAD4] bg-[#FAF9F6]">
-          <div className="mx-auto max-w-[1400px] px-10 py-14 xl:px-14">
-            <div className="grid grid-cols-[0.9fr_0.9fr_1.2fr] items-start gap-16">
+          <div className="mx-auto max-w-[1400px] px-10 py-10 xl:px-14">
+            <div className="grid grid-cols-[0.9fr_0.9fr_1.2fr] items-start gap-12">
               <div>
                 <Link
                   href="/"
@@ -1252,7 +1450,7 @@ export default function Home() {
                     연
                   </span>
                 </Link>
-                <p className="mt-4 text-sm font-normal leading-6 text-[#667085]">
+                <p className="mt-2.5 text-sm font-normal leading-6 text-[#667085]">
                   <span className="block whitespace-nowrap">
                     불교 생활에 필요한 정보를 쉽고 가깝게 연결하는
                   </span>
@@ -1262,7 +1460,7 @@ export default function Home() {
 
               <div>
                 <h2 className="text-sm font-semibold">등록 안내</h2>
-                <div className="mt-4 grid grid-cols-2 gap-x-5 gap-y-3 text-sm font-normal text-[#667085]">
+                <div className="mt-3 grid grid-cols-2 gap-x-5 gap-y-2 text-sm font-normal text-[#667085]">
                   <Link href="/jobs/new" className="hover:text-[#191F28]">
                     구인 등록
                   </Link>
@@ -1285,7 +1483,7 @@ export default function Home() {
               </div>
 
               <div>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3">
                   <h2 className="shrink-0 text-sm font-semibold">문의하기</h2>
                   <a
                     href="mailto:bcrow1102@gmail.com"
@@ -1295,48 +1493,64 @@ export default function Home() {
                     <span>bcrow1102@gmail.com</span>
                   </a>
                 </div>
-                <div className="mt-4 grid grid-cols-2 gap-3">
+                <div className="mt-3 grid grid-cols-2 gap-2.5">
                   <a
                     href="https://open.kakao.com/o/sulQHJGi"
                     target="_blank"
                     rel="noreferrer"
-                        className="flex min-h-[64px] items-center gap-3 border-t border-[#D9DAD4] px-0 text-left text-[#191F28] transition hover:border-[#AEB5BC]"
+                        className="group flex min-h-[56px] cursor-pointer items-center gap-2.5 border-t border-[#D9DAD4] px-0 text-left text-[#191F28]"
                   >
                     <KakaoIcon />
                     <span>
-                      <strong className="block text-sm font-semibold">
-                        카카오톡 문의
-                      </strong>
+                      <span className="flex items-center gap-1.5">
+                        <strong className="block text-sm font-semibold">
+                          카카오톡 문의
+                        </strong>
+                        <ArrowIcon className="h-3.5 w-3.5 -rotate-45 text-[#667085] transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </span>
                       <span className="mt-1 block text-xs font-normal text-[#5F610E]">
                         오픈채팅으로 상담하세요
                       </span>
                     </span>
                   </a>
 
-                  <a
-                    href="sms:01057861556"
-                        className="flex min-h-[64px] items-center gap-3 border-t border-[#D9DAD4] px-0 text-left transition hover:border-[#AEB5BC]"
+                  <button
+                    type="button"
+                    onClick={handleFooterPhoneCopy}
+                    className="group flex min-h-[56px] w-full cursor-pointer items-center gap-2.5 border-t border-[#D9DAD4] px-0 text-left"
                   >
                     <MessageIcon />
                     <span>
-                      <strong className="block text-sm font-semibold">
-                        문자 문의
-                      </strong>
+                      <span className="flex items-center gap-1.5">
+                        <strong className="block text-sm font-semibold">
+                          문자 문의
+                        </strong>
+                        <ArrowIcon className="h-3.5 w-3.5 -rotate-45 text-[#667085] transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </span>
                       <span className="mt-1 block text-xs font-normal text-[#667085]">
                         궁금한 내용을 보내주세요
                       </span>
                     </span>
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
 
-            <div className="mt-9 flex items-center justify-between border-t border-[#E7E9EC] pt-5 text-xs font-normal text-[#8B95A1]">
+            <div className="mt-6 flex items-center justify-between border-t border-[#E7E9EC] pt-4 text-xs font-normal text-[#8B95A1]">
               <p>© 2026 연. All rights reserved.</p>
               <p>불교 정보와 사람을 잇는 공간</p>
             </div>
           </div>
         </footer>
+        {isPhoneCopyToastVisible && (
+          <div
+            role="status"
+            aria-live="polite"
+            className="fixed bottom-6 right-6 z-[100] bg-[#191F28] px-4 py-2 text-[13px] font-normal text-white"
+          >
+            전화번호가 복사되었습니다.
+          </div>
+        )}
       </div>
 
       <div className="md:hidden">

@@ -29,9 +29,9 @@ const templeMenus = [
 
 const resourceMenus = [
     {
-        title: "불교자료",
-        description: "원전·역사·학술 자료를 찾아봅니다",
-        href: "/resources",
+        title: "한국의 고승",
+        description: "시대별 고승의 삶과 자료를 살펴봅니다",
+        href: "/resources/masters",
     },
     {
         title: "부처님 이야기",
@@ -39,9 +39,9 @@ const resourceMenus = [
         href: "/stories",
     },
     {
-        title: "한국의 고승",
-        description: "시대별 고승의 삶과 자료를 살펴봅니다",
-        href: "/resources/masters",
+        title: "불교자료",
+        description: "원전·역사·학술 자료를 찾아봅니다",
+        href: "/resources",
     },
 ];
 
