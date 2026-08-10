@@ -2,6 +2,7 @@
 
 import {
     useMemo,
+    useEffect,
     useRef,
     useState,
     type CSSProperties,
@@ -38,6 +39,8 @@ type TextKey =
     | "place"
     | "description"
     | "application";
+type MovableTextKey = TextKey;
+type TextPosition = { x: number; y: number };
 type SelectedElement = TextKey | "divider" | "line";
 
 type LineVariant = "solid" | "dashed";
@@ -82,10 +85,26 @@ type RichTextRun = {
     color: string;
     fontWeight: number;
     scale: number;
+    shadowKey?: ShadowKey;
 };
 
 const LOTUS_SYMBOL = "❀";
 const PIN_SYMBOL = "⌖";
+const DEFAULT_TITLE = "♫ 연꽃 피는 산사 음악회";
+const DEFAULT_ORGANIZER = "연화사";
+const DEFAULT_DATE = "2026. 8. 22. 토요일 오후 6시";
+const DEFAULT_PLACE = `${PIN_SYMBOL} 연화사 앞마당`;
+const DEFAULT_DESCRIPTION =
+    "여름 저녁, 산사의 고요함과 음악이 만나는 시간\n차 한 잔과 함께 잠시 머물며\n마음에 작은 쉼표를 놓아보세요";
+const INITIAL_TITLE_RUNS: RichTextRun[] = [
+    {
+        start: 11,
+        end: 14,
+        color: "#B73535",
+        fontWeight: 700,
+        scale: 145,
+    },
+];
 
 const pictogramOptions: {
     key: PictogramKey;
@@ -371,7 +390,7 @@ const textLabels: Record<TextKey, string> = {
     date: "일시",
     place: "장소",
     description: "행사 내용",
-    application: "신청·문의",
+    application: "문의 문구",
 };
 
 type TextFormat = {
@@ -386,6 +405,7 @@ type ResolvedTextFormat = TextFormat & {
     size: number;
     family: string;
     shadow: { blur: number; opacity: number; offset: number };
+    shadowScale: number;
 };
 
 const initialTextFormats: Record<TextKey, TextFormat> = {
@@ -438,6 +458,59 @@ const SAFE_AREA = {
     right: 0.93,
     top: 0.08,
     bottom: 0.95,
+};
+
+type DividerStyle = {
+    color: string;
+    width: number;
+    visible: boolean;
+    variant: LineVariant;
+};
+
+type DiyHistorySnapshot = {
+    textValues: Record<TextKey, string>;
+    textFormats: Record<TextKey, TextFormat>;
+    richTextRuns: Record<RichTextKey, RichTextRun[]>;
+    textPositions: Record<MovableTextKey, TextPosition>;
+    dividerStyle: DividerStyle;
+    dividerPosition: TextPosition;
+    customLines: CustomLine[];
+    copyDrafts: Partial<Record<CopyKey, string>>;
+};
+
+const HISTORY_LIMIT = 75;
+const TEXT_HISTORY_DEBOUNCE_MS = 800;
+const CONTINUOUS_HISTORY_DEBOUNCE_MS = 500;
+
+const TEXT_SAFE_AREA = {
+    left: SAFE_AREA.left,
+    right: SAFE_AREA.right,
+    top: 0.08,
+    bottom: 0.895,
+};
+
+const FOOTER_TEXT_SAFE_AREA = {
+    left: SAFE_AREA.left,
+    right: SAFE_AREA.right,
+    top: TEXT_SAFE_AREA.bottom,
+    bottom: 0.98,
+};
+
+const DIVIDER_BASE_Y = TEXT_SAFE_AREA.bottom;
+const DIVIDER_MOVE_AREA = {
+    left: 0,
+    right: 1,
+    top: SAFE_AREA.top,
+    bottom: SAFE_AREA.bottom,
+};
+
+const initialTextPositions: Record<MovableTextKey, TextPosition> = {
+    organizer: { x: 0, y: 0 },
+    title: { x: 0, y: 0 },
+    date: { x: 0, y: 0 },
+    place: { x: 0, y: 0 },
+    description: { x: 0, y: 0 },
+    application: { x: 0, y: 0 },
 };
 
 const LINE_MIN_LENGTH = {
@@ -650,9 +723,9 @@ const shadowOptions: Record<
     { label: string; blur: number; opacity: number; offset: number }
 > = {
     none: { label: "없음", blur: 0, opacity: 0, offset: 0 },
-    soft: { label: "약하게", blur: 3, opacity: 0.45, offset: 1 },
-    normal: { label: "보통", blur: 6, opacity: 0.62, offset: 2 },
-    strong: { label: "선명하게", blur: 10, opacity: 0.8, offset: 2 },
+    soft: { label: "약하게", blur: 2, opacity: 0.36, offset: 1 },
+    normal: { label: "보통", blur: 4, opacity: 0.64, offset: 2 },
+    strong: { label: "선명하게", blur: 6, opacity: 0.86, offset: 3 },
 };
 
 function contrastShadow(color: string, opacity: number) {
@@ -663,10 +736,30 @@ function contrastShadow(color: string, opacity: number) {
     const light = (r * 299 + g * 587 + b * 114) / 1000 > 160;
     return light
         ? `rgba(0,0,0,${opacity})`
-        : `rgba(255,255,255,${Math.min(opacity + 0.18, 0.95)})`;
+        : `rgba(255,255,255,${Math.min(opacity * 0.48, 0.42)})`;
+}
+
+function cssTextShadow(color: string, shadowKey: ShadowKey) {
+    if (shadowKey === "none") return "none";
+
+    const shadow = shadowOptions[shadowKey];
+    return `0 ${shadow.offset}px ${shadow.blur}px ${contrastShadow(color, shadow.opacity)}`;
+}
+
+function resolvedCanvasShadow(shadowKey: ShadowKey, scale: number) {
+    const shadow = shadowOptions[shadowKey];
+    return {
+        ...shadow,
+        blur: shadow.blur * scale,
+        offset: shadow.offset * scale,
+    };
 }
 
 function isRichTextKey(key: TextKey): key is RichTextKey {
+    return Boolean(key);
+}
+
+function isMovableTextKey(key: TextKey): key is MovableTextKey {
     return Boolean(key);
 }
 
@@ -844,7 +937,7 @@ function layoutRichText(
     base: ResolvedTextFormat,
     runs: RichTextRun[],
     maxWidth: number,
-    maxLines: number,
+    maxLines = Number.POSITIVE_INFINITY,
 ) {
     type Glyph = {
         char: string;
@@ -868,12 +961,15 @@ function layoutRichText(
         }
 
         const run = richRunAt(runs, index);
+        const runShadowKey = run?.shadowKey ?? base.shadowKey;
         const style: ResolvedTextFormat = run
             ? {
                 ...base,
                 color: run.color,
                 fontWeight: run.fontWeight,
                 size: base.size * (run.scale / 100),
+                shadowKey: runShadowKey,
+                shadow: resolvedCanvasShadow(runShadowKey, base.shadowScale),
             }
             : base;
 
@@ -896,6 +992,31 @@ function layoutRichText(
     return lines;
 }
 
+function richTextMetrics(
+    lines: ReturnType<typeof layoutRichText>,
+    defaultLineHeight: number,
+) {
+    const lineHeights = lines.map((line) => {
+        const largestSize = Math.max(...line.map((glyph) => glyph.style.size), 0);
+        return Math.max(defaultLineHeight, largestSize * 1.28);
+    });
+
+    return {
+        width: Math.max(
+            ...lines.map((line) =>
+                line.reduce((total, glyph) => total + glyph.width, 0),
+            ),
+            0,
+        ),
+        height: lineHeights.reduce((total, height) => total + height, 0),
+        firstLineSize: Math.max(
+            ...(lines[0] ?? []).map((glyph) => glyph.style.size),
+            0,
+        ),
+        lineHeights,
+    };
+}
+
 function drawRichText(
     context: CanvasRenderingContext2D,
     lines: ReturnType<typeof layoutRichText>,
@@ -904,10 +1025,10 @@ function drawRichText(
     defaultLineHeight: number,
 ) {
     let baselineY = firstBaselineY;
+    const metrics = richTextMetrics(lines, defaultLineHeight);
 
     lines.forEach((line, lineIndex) => {
         let cursorX = x;
-        const largestSize = Math.max(...line.map((glyph) => glyph.style.size), 0);
 
         line.forEach((glyph) => {
             context.font = `${glyph.style.fontWeight} ${glyph.style.size}px ${glyph.style.family}`;
@@ -934,21 +1055,11 @@ function drawRichText(
         });
 
         if (lineIndex < lines.length - 1) {
-            baselineY += Math.max(defaultLineHeight, largestSize * 1.28);
+            baselineY += metrics.lineHeights[lineIndex];
         }
     });
 
-    const lastLine = lines[lines.length - 1] ?? [];
-    const lastLargestSize = Math.max(
-        ...lastLine.map((glyph) => glyph.style.size),
-        0,
-    );
-
-    return (
-        baselineY -
-        firstBaselineY +
-        Math.max(defaultLineHeight, lastLargestSize * 1.28)
-    );
+    return metrics.height;
 }
 
 function clamp(value: number, min: number, max: number) {
@@ -1013,7 +1124,6 @@ function createLineStyle(line: CustomLine, selected: boolean): CSSProperties {
             width: `${Math.max((bounds.right - bounds.left) * 100, 1)}%`,
             top: `calc(${line.start.y * 100}% - 9px)`,
             height: "18px",
-            cursor: "pointer",
         };
     }
 
@@ -1022,7 +1132,6 @@ function createLineStyle(line: CustomLine, selected: boolean): CSSProperties {
         width: "18px",
         top: `${bounds.top * 100}%`,
         height: `${Math.max((bounds.bottom - bounds.top) * 100, 1)}%`,
-        cursor: "pointer",
     };
 }
 
@@ -1054,17 +1163,15 @@ export default function EventPromotePage() {
     const [scene, setScene] = useState<SceneKey>("otherLotus");
     const [imageFit, setImageFit] = useState<ImageFit>("cover");
 
-    const [title, setTitle] = useState("♫ 연꽃 피는 산사 음악회");
+    const [title, setTitle] = useState(DEFAULT_TITLE);
 
-    const [organizer, setOrganizer] = useState("연화사");
+    const [organizer, setOrganizer] = useState(DEFAULT_ORGANIZER);
 
-    const [date, setDate] = useState("2026. 8. 22. 토요일 오후 6시");
+    const [date, setDate] = useState(DEFAULT_DATE);
 
-    const [place, setPlace] = useState(`${PIN_SYMBOL} 연화사 앞마당`);
+    const [place, setPlace] = useState(DEFAULT_PLACE);
 
-    const [description, setDescription] = useState(
-        "여름 저녁, 산사의 고요함과 음악이 만나는 시간\n차 한 잔과 함께 잠시 머물며\n마음에 작은 쉼표를 놓아보세요",
-    );
+    const [description, setDescription] = useState(DEFAULT_DESCRIPTION);
 
     const [application, setApplication] = useState(
         "문의 02-000-0000 · 참가비 무료",
@@ -1077,18 +1184,22 @@ export default function EventPromotePage() {
     const [copied, setCopied] = useState("");
     const [editorTab, setEditorTab] = useState<EditorTab>("content");
     const [copyChannel, setCopyChannel] = useState<CopyKey>("instagram");
+    const [copyDrafts, setCopyDrafts] = useState<
+        Partial<Record<CopyKey, string>>
+    >({});
     const [imageCategory, setImageCategory] = useState<ImageCategory>("featured");
     const [visibleOtherCount, setVisibleOtherCount] = useState(6);
     const [selectedText, setSelectedText] = useState<TextKey>("title");
     const [activeContentText, setActiveContentText] = useState<TextKey>("title");
     const [selectedElement, setSelectedElement] =
         useState<SelectedElement>("title");
-    const [dividerStyle, setDividerStyle] = useState({
+    const [dividerStyle, setDividerStyle] = useState<DividerStyle>({
         color: "#171B22",
         width: 2,
         visible: true,
         variant: "solid" as LineVariant,
     });
+    const [dividerPosition, setDividerPosition] = useState<TextPosition>({ x: 0, y: 0 });
     const [customLines, setCustomLines] = useState<CustomLine[]>([]);
     const [selectedLineId, setSelectedLineId] = useState<string | null>(null);
     const [lineDraftVariant, setLineDraftVariant] = useState<LineVariant | null>(null);
@@ -1096,6 +1207,11 @@ export default function EventPromotePage() {
     const [drawingLine, setDrawingLine] = useState<CustomLine | null>(null);
     const [textFormats, setTextFormats] =
         useState<Record<TextKey, TextFormat>>(initialTextFormats);
+    const [textPositions, setTextPositions] =
+        useState<Record<MovableTextKey, TextPosition>>(initialTextPositions);
+    const [selectedPreviewText, setSelectedPreviewText] =
+        useState<MovableTextKey | null>(null);
+    const [isDividerPreviewSelected, setIsDividerPreviewSelected] = useState(false);
     const [textIcons] = useState<Record<TextKey, PictogramKey>>({
         title: "none",
         organizer: "none",
@@ -1107,15 +1223,7 @@ export default function EventPromotePage() {
     const [richTextRuns, setRichTextRuns] = useState<
         Record<RichTextKey, RichTextRun[]>
     >({
-        title: [
-            {
-                start: 11,
-                end: 14,
-                color: "#B73535",
-                fontWeight: 700,
-                scale: 145,
-            },
-        ],
+        title: INITIAL_TITLE_RUNS,
         organizer: [],
         date: [],
         place: [],
@@ -1130,7 +1238,26 @@ export default function EventPromotePage() {
     const imageObjectUrl = useRef<string | null>(null);
     const copyTextareaRef = useRef<HTMLTextAreaElement | null>(null);
     const styleTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+    const lineAddButtonRef = useRef<HTMLButtonElement | null>(null);
     const previewFrameRef = useRef<HTMLDivElement | null>(null);
+    const textSafeAreaRef = useRef<HTMLDivElement | null>(null);
+    const footerTextSafeAreaRef = useRef<HTMLDivElement | null>(null);
+    const textBlockRefs = useRef<
+        Partial<Record<MovableTextKey, HTMLElement | null>>
+    >({});
+    const textInteractionRef = useRef<{
+        pointerId: number;
+        key: MovableTextKey;
+        origin: { x: number; y: number };
+        original: TextPosition;
+        bounds: {
+            minX: number;
+            maxX: number;
+            minY: number;
+            maxY: number;
+        };
+        historyRecorded: boolean;
+    } | null>(null);
     const linePointerIdRef = useRef<number | null>(null);
     const lineStartRef = useRef<{ x: number; y: number } | null>(null);
     const lineOrientationRef = useRef<LineOrientation | null>(null);
@@ -1140,7 +1267,219 @@ export default function EventPromotePage() {
         mode: LineInteractionMode;
         origin: { x: number; y: number };
         original: CustomLine;
+        historyRecorded: boolean;
     } | null>(null);
+    const historyPastRef = useRef<DiyHistorySnapshot[]>([]);
+    const historyFutureRef = useRef<DiyHistorySnapshot[]>([]);
+    const currentHistorySnapshotRef = useRef<DiyHistorySnapshot | null>(null);
+    const textHistoryGroupRef = useRef<{
+        key: string | null;
+        timer: ReturnType<typeof setTimeout> | null;
+    }>({ key: null, timer: null });
+    const continuousHistoryGroupRef = useRef<{
+        key: string | null;
+        timer: ReturnType<typeof setTimeout> | null;
+    }>({ key: null, timer: null });
+    const [historyAvailability, setHistoryAvailability] = useState({
+        canUndo: false,
+        canRedo: false,
+    });
+    const undoActionRef = useRef<() => void>(() => undefined);
+    const redoActionRef = useRef<() => void>(() => undefined);
+
+    const captureHistorySnapshot = (): DiyHistorySnapshot => ({
+        textValues: {
+            title,
+            organizer,
+            date,
+            place,
+            description,
+            application,
+        },
+        textFormats: Object.fromEntries(
+            (Object.keys(textFormats) as TextKey[]).map((key) => [
+                key,
+                { ...textFormats[key] },
+            ]),
+        ) as Record<TextKey, TextFormat>,
+        richTextRuns: Object.fromEntries(
+            (Object.keys(richTextRuns) as RichTextKey[]).map((key) => [
+                key,
+                richTextRuns[key].map((run) => ({ ...run })),
+            ]),
+        ) as Record<RichTextKey, RichTextRun[]>,
+        textPositions: Object.fromEntries(
+            (Object.keys(textPositions) as MovableTextKey[]).map((key) => [
+                key,
+                { ...textPositions[key] },
+            ]),
+        ) as Record<MovableTextKey, TextPosition>,
+        dividerStyle: { ...dividerStyle },
+        dividerPosition: { ...dividerPosition },
+        customLines: customLines.map((line) => ({
+            ...line,
+            start: { ...line.start },
+            end: { ...line.end },
+        })),
+        copyDrafts: { ...copyDrafts },
+    });
+
+    currentHistorySnapshotRef.current = captureHistorySnapshot();
+
+    const syncHistoryAvailability = () => {
+        setHistoryAvailability({
+            canUndo: historyPastRef.current.length > 0,
+            canRedo: historyFutureRef.current.length > 0,
+        });
+    };
+
+    const finishTextHistoryGroup = () => {
+        if (textHistoryGroupRef.current.timer) {
+            clearTimeout(textHistoryGroupRef.current.timer);
+        }
+        textHistoryGroupRef.current = { key: null, timer: null };
+    };
+
+    const finishContinuousHistoryGroup = () => {
+        if (continuousHistoryGroupRef.current.timer) {
+            clearTimeout(continuousHistoryGroupRef.current.timer);
+        }
+        continuousHistoryGroupRef.current = { key: null, timer: null };
+    };
+
+    const finishHistoryGroups = () => {
+        finishTextHistoryGroup();
+        finishContinuousHistoryGroup();
+    };
+
+    const recordHistory = () => {
+        const snapshot = currentHistorySnapshotRef.current;
+        if (!snapshot) return;
+
+        historyPastRef.current.push(snapshot);
+        if (historyPastRef.current.length > HISTORY_LIMIT) {
+            historyPastRef.current.shift();
+        }
+        historyFutureRef.current = [];
+        syncHistoryAvailability();
+    };
+
+    const beginTextHistoryGroup = (key: string) => {
+        const group = textHistoryGroupRef.current;
+        if (group.key !== key) {
+            finishTextHistoryGroup();
+            finishContinuousHistoryGroup();
+            recordHistory();
+            textHistoryGroupRef.current.key = key;
+        } else if (group.timer) {
+            clearTimeout(group.timer);
+        }
+
+        textHistoryGroupRef.current.timer = setTimeout(() => {
+            textHistoryGroupRef.current = { key: null, timer: null };
+        }, TEXT_HISTORY_DEBOUNCE_MS);
+    };
+
+    const beginContinuousHistoryGroup = (key: string) => {
+        const group = continuousHistoryGroupRef.current;
+        if (group.key !== key) {
+            finishContinuousHistoryGroup();
+            finishTextHistoryGroup();
+            recordHistory();
+            continuousHistoryGroupRef.current.key = key;
+        } else if (group.timer) {
+            clearTimeout(group.timer);
+        }
+
+        continuousHistoryGroupRef.current.timer = setTimeout(() => {
+            continuousHistoryGroupRef.current = { key: null, timer: null };
+        }, CONTINUOUS_HISTORY_DEBOUNCE_MS);
+    };
+
+    const applyHistorySnapshot = (snapshot: DiyHistorySnapshot) => {
+        setTitle(snapshot.textValues.title);
+        setOrganizer(snapshot.textValues.organizer);
+        setDate(snapshot.textValues.date);
+        setPlace(snapshot.textValues.place);
+        setDescription(snapshot.textValues.description);
+        setApplication(snapshot.textValues.application);
+        setTextFormats(snapshot.textFormats);
+        setRichTextRuns(snapshot.richTextRuns);
+        setTextPositions(snapshot.textPositions);
+        setDividerStyle(snapshot.dividerStyle);
+        setDividerPosition(snapshot.dividerPosition);
+        setCustomLines(snapshot.customLines);
+        setCopyDrafts(snapshot.copyDrafts);
+        setTextSelection(null);
+
+        if (
+            selectedLineId &&
+            !snapshot.customLines.some((line) => line.id === selectedLineId)
+        ) {
+            setSelectedLineId(null);
+            setSelectedElement(selectedText);
+        }
+    };
+
+    const undoHistory = () => {
+        const previous = historyPastRef.current.pop();
+        const current = currentHistorySnapshotRef.current;
+        if (!previous || !current) return;
+
+        finishHistoryGroups();
+        historyFutureRef.current.push(current);
+        if (historyFutureRef.current.length > HISTORY_LIMIT) {
+            historyFutureRef.current.shift();
+        }
+        applyHistorySnapshot(previous);
+        syncHistoryAvailability();
+    };
+
+    const redoHistory = () => {
+        const next = historyFutureRef.current.pop();
+        const current = currentHistorySnapshotRef.current;
+        if (!next || !current) return;
+
+        finishHistoryGroups();
+        historyPastRef.current.push(current);
+        if (historyPastRef.current.length > HISTORY_LIMIT) {
+            historyPastRef.current.shift();
+        }
+        applyHistorySnapshot(next);
+        syncHistoryAvailability();
+    };
+
+    undoActionRef.current = undoHistory;
+    redoActionRef.current = redoHistory;
+
+    useEffect(() => {
+        const handleHistoryShortcut = (event: KeyboardEvent) => {
+            if (!(event.ctrlKey || event.metaKey) || event.altKey) return;
+
+            const key = event.key.toLowerCase();
+            if (key === "z") {
+                event.preventDefault();
+                if (event.shiftKey) {
+                    redoActionRef.current();
+                } else {
+                    undoActionRef.current();
+                }
+                return;
+            }
+
+            if (key === "y" && !event.shiftKey) {
+                event.preventDefault();
+                redoActionRef.current();
+            }
+        };
+
+        window.addEventListener("keydown", handleHistoryShortcut);
+        return () => {
+            window.removeEventListener("keydown", handleHistoryShortcut);
+            finishTextHistoryGroup();
+            finishContinuousHistoryGroup();
+        };
+    }, []);
 
     const copy = useMemo(() => {
         return {
@@ -1156,16 +1495,27 @@ export default function EventPromotePage() {
         };
     }, [application, date, description, organizer, place, title]);
 
-    const [copyDrafts, setCopyDrafts] = useState<
-        Partial<Record<CopyKey, string>>
-    >({});
-
     const activeCopy = copyDrafts[copyChannel] ?? copy[copyChannel];
     const visibleScenes =
         imageCategory === "other"
             ? scenesByCategory.other.slice(0, visibleOtherCount)
             : scenesByCategory.featured;
     const selectedLine = customLines.find((line) => line.id === selectedLineId) ?? null;
+    const fixedDividerLine: CustomLine = {
+        id: "divider",
+        variant: dividerStyle.variant,
+        orientation: "horizontal",
+        start: {
+            x: SAFE_AREA.left + dividerPosition.x,
+            y: DIVIDER_BASE_Y + dividerPosition.y,
+        },
+        end: {
+            x: SAFE_AREA.right + dividerPosition.x,
+            y: DIVIDER_BASE_Y + dividerPosition.y,
+        },
+        color: dividerStyle.color,
+        width: dividerStyle.width,
+    };
     const isFixedDividerSelected = selectedElement === "divider";
     const activeLineVariant = isFixedDividerSelected
         ? dividerStyle.variant
@@ -1183,6 +1533,8 @@ export default function EventPromotePage() {
         setLineMenuOpen(false);
         setSelectedLineId(null);
         setSelectedElement("line");
+        setSelectedPreviewText(null);
+        setIsDividerPreviewSelected(false);
     };
 
     const cancelLineInsert = () => {
@@ -1193,9 +1545,24 @@ export default function EventPromotePage() {
         lineOrientationRef.current = null;
     };
 
+    const focusContentLineControls = () => {
+        if (editorTab !== "content") return;
+
+        window.requestAnimationFrame(() => {
+            lineAddButtonRef.current?.focus({ preventScroll: true });
+            lineAddButtonRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            });
+        });
+    };
+
     const selectCustomLine = (lineId: string) => {
         setSelectedLineId(lineId);
         setSelectedElement("line");
+        setSelectedPreviewText(null);
+        setIsDividerPreviewSelected(false);
+        focusContentLineControls();
     };
 
     const clearLineInteraction = () => {
@@ -1204,6 +1571,8 @@ export default function EventPromotePage() {
 
     const deleteSelectedLine = () => {
         if (!selectedLineId) return;
+        finishHistoryGroups();
+        recordHistory();
         setCustomLines((current) => current.filter((line) => line.id !== selectedLineId));
         setSelectedLineId(null);
         setSelectedElement("title");
@@ -1221,7 +1590,15 @@ export default function EventPromotePage() {
 
     const updateActiveLineStyle = (
         patch: Partial<Pick<CustomLine, "variant" | "width" | "color">>,
+        historyGroup?: string,
     ) => {
+        if (historyGroup) {
+            beginContinuousHistoryGroup(historyGroup);
+        } else {
+            finishHistoryGroups();
+            recordHistory();
+        }
+
         if (isFixedDividerSelected) {
             setDividerStyle((current) => ({
                 ...current,
@@ -1236,6 +1613,8 @@ export default function EventPromotePage() {
 
     const deleteActiveLine = () => {
         if (isFixedDividerSelected) {
+            finishHistoryGroups();
+            recordHistory();
             setDividerStyle((current) => ({ ...current, visible: false }));
             setSelectedElement("title");
             setSelectedLineId(null);
@@ -1251,9 +1630,9 @@ export default function EventPromotePage() {
         line: CustomLine,
         mode: LineInteractionMode,
     ) => {
-        selectCustomLine(line.id);
+        if (editorTab !== "style" || lineDraftVariant) return;
 
-        if (editorTab !== "content" || lineDraftVariant) return;
+        selectCustomLine(line.id);
 
         const bounds = previewFrameRef.current?.getBoundingClientRect();
         if (!bounds) return;
@@ -1272,8 +1651,33 @@ export default function EventPromotePage() {
             mode,
             origin,
             original: line,
+            historyRecorded: false,
         };
 
+        previewFrameRef.current?.setPointerCapture(event.pointerId);
+    };
+
+    const startDividerInteraction = (event: ReactPointerEvent<HTMLButtonElement>) => {
+        if (editorTab !== "style" || lineDraftVariant) return;
+
+        selectDivider();
+
+        const bounds = previewFrameRef.current?.getBoundingClientRect();
+        if (!bounds) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        lineInteractionRef.current = {
+            pointerId: event.pointerId,
+            lineId: "divider",
+            mode: "move",
+            origin: {
+                x: (event.clientX - bounds.left) / bounds.width,
+                y: (event.clientY - bounds.top) / bounds.height,
+            },
+            original: fixedDividerLine,
+            historyRecorded: false,
+        };
         previewFrameRef.current?.setPointerCapture(event.pointerId);
     };
 
@@ -1281,11 +1685,12 @@ export default function EventPromotePage() {
         line: CustomLine,
         dx: number,
         dy: number,
+        safeArea = SAFE_AREA,
     ) => {
-        const minDx = SAFE_AREA.left - Math.min(line.start.x, line.end.x);
-        const maxDx = SAFE_AREA.right - Math.max(line.start.x, line.end.x);
-        const minDy = SAFE_AREA.top - Math.min(line.start.y, line.end.y);
-        const maxDy = SAFE_AREA.bottom - Math.max(line.start.y, line.end.y);
+        const minDx = safeArea.left - Math.min(line.start.x, line.end.x);
+        const maxDx = safeArea.right - Math.max(line.start.x, line.end.x);
+        const minDy = safeArea.top - Math.min(line.start.y, line.end.y);
+        const maxDy = safeArea.bottom - Math.max(line.start.y, line.end.y);
         const safeDx = clamp(dx, minDx, maxDx);
         const safeDy = clamp(dy, minDy, maxDy);
 
@@ -1395,18 +1800,26 @@ export default function EventPromotePage() {
         });
     };
 
-    const previewPoint = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const previewPoint = (
+        event: ReactPointerEvent<HTMLDivElement>,
+        safeArea = SAFE_AREA,
+    ) => {
         const bounds = previewFrameRef.current?.getBoundingClientRect();
         if (!bounds) return null;
 
         return {
-            x: clamp((event.clientX - bounds.left) / bounds.width, SAFE_AREA.left, SAFE_AREA.right),
-            y: clamp((event.clientY - bounds.top) / bounds.height, SAFE_AREA.top, SAFE_AREA.bottom),
+            x: clamp((event.clientX - bounds.left) / bounds.width, safeArea.left, safeArea.right),
+            y: clamp((event.clientY - bounds.top) / bounds.height, safeArea.top, safeArea.bottom),
         };
     };
 
     const handlePreviewPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
-        if (!lineDraftVariant) return;
+        if (!lineDraftVariant) {
+            setSelectedPreviewText(null);
+            setIsDividerPreviewSelected(false);
+            setSelectedLineId(null);
+            return;
+        }
 
         const point = previewPoint(event);
         if (!point) return;
@@ -1436,7 +1849,10 @@ export default function EventPromotePage() {
         const interaction = lineInteractionRef.current;
 
         if (interaction && interaction.pointerId === event.pointerId) {
-            const point = previewPoint(event);
+            const point = previewPoint(
+                event,
+                interaction.lineId === "divider" ? DIVIDER_MOVE_AREA : SAFE_AREA,
+            );
             if (!point) return;
 
             const nextLine =
@@ -1445,6 +1861,9 @@ export default function EventPromotePage() {
                         interaction.original,
                         point.x - interaction.origin.x,
                         point.y - interaction.origin.y,
+                        interaction.lineId === "divider"
+                            ? DIVIDER_MOVE_AREA
+                            : SAFE_AREA,
                     )
                     : resizeLineFromHandle(
                         interaction.original,
@@ -1453,11 +1872,31 @@ export default function EventPromotePage() {
                         interaction.origin,
                     );
 
-            setCustomLines((current) =>
-                current.map((line) =>
-                    line.id === interaction.lineId ? nextLine : line,
-                ),
-            );
+            const lineChanged =
+                nextLine.start.x !== interaction.original.start.x ||
+                nextLine.start.y !== interaction.original.start.y ||
+                nextLine.end.x !== interaction.original.end.x ||
+                nextLine.end.y !== interaction.original.end.y;
+            if (!lineChanged) return;
+
+            if (!interaction.historyRecorded) {
+                finishHistoryGroups();
+                recordHistory();
+                interaction.historyRecorded = true;
+            }
+
+            if (interaction.lineId === "divider") {
+                setDividerPosition({
+                    x: nextLine.start.x - SAFE_AREA.left,
+                    y: nextLine.start.y - DIVIDER_BASE_Y,
+                });
+            } else {
+                setCustomLines((current) =>
+                    current.map((line) =>
+                        line.id === interaction.lineId ? nextLine : line,
+                    ),
+                );
+            }
             return;
         }
 
@@ -1507,6 +1946,8 @@ export default function EventPromotePage() {
         const draft = drawingLine;
         if (draft) {
             const finalized = normalizeLine(draft);
+            finishHistoryGroups();
+            recordHistory();
             setCustomLines((current) => [...current, finalized]);
             setSelectedLineId(finalized.id);
             setSelectedElement("line");
@@ -1528,6 +1969,7 @@ export default function EventPromotePage() {
     };
 
     const insertCopyEmoji = (emoji: string) => {
+        if (!emoji) return;
         const textarea = copyTextareaRef.current;
         const selectionStart = textarea?.selectionStart ?? activeCopy.length;
         const selectionEnd = textarea?.selectionEnd ?? selectionStart;
@@ -1537,6 +1979,8 @@ export default function EventPromotePage() {
             activeCopy.slice(selectionEnd);
         const nextCursor = selectionStart + emoji.length;
 
+        finishHistoryGroups();
+        recordHistory();
         setCopyDrafts((current) => ({
             ...current,
             [copyChannel]: nextValue,
@@ -1549,6 +1993,8 @@ export default function EventPromotePage() {
     };
 
     const updateCopyDraft = (value: string) => {
+        if (value === activeCopy) return;
+        beginTextHistoryGroup(`copy:${copyChannel}`);
         setCopyDrafts((current) => ({
             ...current,
             [copyChannel]: value,
@@ -1565,6 +2011,7 @@ export default function EventPromotePage() {
     const activeScale = selectedRichRun?.scale ?? selectedFormat.scale;
     const activeWeight = selectedRichRun?.fontWeight ?? selectedFormat.fontWeight;
     const activeColor = selectedRichRun?.color ?? selectedFormat.color;
+    const activeShadowKey = selectedRichRun?.shadowKey ?? selectedFormat.shadowKey;
     const selectedTextValue: Record<TextKey, string> = {
         title,
         organizer,
@@ -1574,8 +2021,135 @@ export default function EventPromotePage() {
         application,
     };
 
-    const updateTextValuePreservingRuns = (key: TextKey, nextValue: string) => {
+    const startTextInteraction = (
+        event: ReactPointerEvent<HTMLButtonElement>,
+        key: MovableTextKey,
+    ) => {
+        if (editorTab !== "style" || lineDraftVariant) return;
+
+        const safeArea = (
+            key === "application" ? footerTextSafeAreaRef : textSafeAreaRef
+        ).current?.getBoundingClientRect();
+        const block = textBlockRefs.current[key]?.getBoundingClientRect();
+
+        if (!safeArea || !block || safeArea.width <= 0 || safeArea.height <= 0) {
+            selectPreviewText(key);
+            return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+        selectPreviewText(key);
+
+        const original = textPositions[key];
+        textInteractionRef.current = {
+            pointerId: event.pointerId,
+            key,
+            origin: { x: event.clientX, y: event.clientY },
+            original,
+            bounds: {
+                minX: original.x + (safeArea.left - block.left) / safeArea.width,
+                maxX: original.x + (safeArea.right - block.right) / safeArea.width,
+                minY: original.y + (safeArea.top - block.top) / safeArea.height,
+                maxY: original.y + (safeArea.bottom - block.bottom) / safeArea.height,
+            },
+            historyRecorded: false,
+        };
+        event.currentTarget.setPointerCapture(event.pointerId);
+    };
+
+    const moveTextInteraction = (
+        event: ReactPointerEvent<HTMLButtonElement>,
+        key: MovableTextKey,
+    ) => {
+        const interaction = textInteractionRef.current;
+        if (
+            !interaction ||
+            interaction.pointerId !== event.pointerId ||
+            interaction.key !== key
+        ) {
+            return;
+        }
+
+        const safeArea = textSafeAreaRef.current?.getBoundingClientRect();
+        if (!safeArea || safeArea.width <= 0 || safeArea.height <= 0) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        const requestedX =
+            interaction.original.x + (event.clientX - interaction.origin.x) / safeArea.width;
+        const requestedY =
+            interaction.original.y + (event.clientY - interaction.origin.y) / safeArea.height;
+        const { minX, maxX, minY, maxY } = interaction.bounds;
+        const nextPosition = {
+            x: minX <= maxX ? clamp(requestedX, minX, maxX) : minX,
+            y: minY <= maxY ? clamp(requestedY, minY, maxY) : minY,
+        };
+
+        if (
+            nextPosition.x === interaction.original.x &&
+            nextPosition.y === interaction.original.y
+        ) {
+            return;
+        }
+
+        if (!interaction.historyRecorded) {
+            finishHistoryGroups();
+            recordHistory();
+            interaction.historyRecorded = true;
+        }
+
+        setTextPositions((current) => ({
+            ...current,
+            [key]: nextPosition,
+        }));
+    };
+
+    const finishTextInteraction = (
+        event: ReactPointerEvent<HTMLButtonElement>,
+        key: MovableTextKey,
+    ) => {
+        const interaction = textInteractionRef.current;
+        if (
+            !interaction ||
+            interaction.pointerId !== event.pointerId ||
+            interaction.key !== key
+        ) {
+            return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+        if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+            event.currentTarget.releasePointerCapture(event.pointerId);
+        }
+        textInteractionRef.current = null;
+    };
+
+    const movableTextInteractionProps = (key: MovableTextKey) => ({
+        onPointerDown: (event: ReactPointerEvent<HTMLButtonElement>) =>
+            startTextInteraction(event, key),
+        onPointerMove: (event: ReactPointerEvent<HTMLButtonElement>) =>
+            moveTextInteraction(event, key),
+        onPointerUp: (event: ReactPointerEvent<HTMLButtonElement>) =>
+            finishTextInteraction(event, key),
+        onPointerCancel: (event: ReactPointerEvent<HTMLButtonElement>) =>
+            finishTextInteraction(event, key),
+        "aria-pressed": selectedPreviewText === key,
+        onClick: () => {
+            if (!lineDraftVariant) selectPreviewText(key);
+        },
+    });
+
+    const updateTextValuePreservingRuns = (
+        key: TextKey,
+        nextValue: string,
+        recordChange = true,
+    ) => {
         const previousValue = selectedTextValue[key];
+        if (previousValue === nextValue) return;
+        if (recordChange) beginTextHistoryGroup(key);
         const setters: Record<TextKey, (next: string) => void> = {
             title: setTitle,
             organizer: setOrganizer,
@@ -1642,7 +2216,9 @@ export default function EventPromotePage() {
         const start = field?.selectionStart ?? value.length;
         const end = field?.selectionEnd ?? start;
         const nextValue = value.slice(0, start) + symbol + value.slice(end);
-        updateTextValuePreservingRuns(key, nextValue);
+        finishHistoryGroups();
+        recordHistory();
+        updateTextValuePreservingRuns(key, nextValue, false);
 
         const nextCursor = start + symbol.length;
         window.requestAnimationFrame(() => {
@@ -1655,7 +2231,19 @@ export default function EventPromotePage() {
         updateTextValuePreservingRuns(selectedText, value);
         setTextSelection(null);
     };
-    const updateSelectedFormat = (patch: Partial<TextFormat>) => {
+    const recordStyleHistory = (historyGroup?: string) => {
+        if (historyGroup) {
+            beginContinuousHistoryGroup(historyGroup);
+        } else {
+            finishHistoryGroups();
+            recordHistory();
+        }
+    };
+    const updateSelectedFormat = (
+        patch: Partial<TextFormat>,
+        historyGroup?: string,
+    ) => {
+        recordStyleHistory(historyGroup);
         setTextFormats((current) => ({
             ...current,
             [selectedText]: { ...current[selectedText], ...patch },
@@ -1667,16 +2255,25 @@ export default function EventPromotePage() {
         setSelectedElement(key);
         setSelectedLineId(null);
         setTextSelection(null);
+        setSelectedPreviewText(isMovableTextKey(key) ? key : null);
+        setIsDividerPreviewSelected(false);
 
-        // 내용 입력 중에는 작업 흐름을 유지한다.
-        // 미리보기의 글자를 눌러도 편집 탭으로 강제 이동하지 않는다.
-        if (editorTab !== "content") {
+        if (editorTab === "content") {
+            window.requestAnimationFrame(() => {
+                const field = document.getElementById(`promote-${key}`) as
+                    | HTMLInputElement
+                    | HTMLTextAreaElement
+                    | null;
+                field?.focus({ preventScroll: true });
+                field?.scrollIntoView({ behavior: "smooth", block: "center" });
+            });
+        } else {
             setEditorTab("style");
         }
     };
 
     const applyPartialStyle = (
-        patch: Partial<Pick<RichTextRun, "color" | "fontWeight" | "scale">>,
+        patch: Partial<Pick<RichTextRun, "color" | "fontWeight" | "scale" | "shadowKey">>,
     ) => {
         if (!isRichTextKey(selectedText) || !textSelection) return;
 
@@ -1695,6 +2292,7 @@ export default function EventPromotePage() {
                 fontWeight:
                     existing?.fontWeight ?? textFormats[selectedText].fontWeight,
                 scale: existing?.scale ?? 100,
+                shadowKey: existing?.shadowKey,
                 ...patch,
             };
 
@@ -1711,19 +2309,26 @@ export default function EventPromotePage() {
     };
 
     const updateSizeWeightOrColor = (
-        patch: Partial<Pick<RichTextRun, "color" | "fontWeight" | "scale">>,
+        patch: Partial<Pick<RichTextRun, "color" | "fontWeight" | "scale" | "shadowKey">>,
+        historyGroup?: string,
     ) => {
+        recordStyleHistory(historyGroup);
         if (isRichTextKey(selectedText) && textSelection) {
             applyPartialStyle(patch);
             return;
         }
-        updateSelectedFormat(patch);
+        setTextFormats((current) => ({
+            ...current,
+            [selectedText]: { ...current[selectedText], ...patch },
+        }));
     };
 
     const selectDivider = () => {
-        if (editorTab !== "style") return;
         setSelectedLineId(null);
         setSelectedElement("divider");
+        setSelectedPreviewText(null);
+        setIsDividerPreviewSelected(true);
+        focusContentLineControls();
     };
 
     const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
@@ -1837,6 +2442,7 @@ export default function EventPromotePage() {
 
         const isLandscape = selected.width / selected.height > 1.45;
         const outputScale = channel === "a4" ? selected.width / 1080 : 1;
+        const exportShadowScale = selected.width / 480;
 
         const side = (isLandscape ? 62 : 76) * outputScale;
         const top = (isLandscape ? 62 : 105) * outputScale;
@@ -1850,50 +2456,89 @@ export default function EventPromotePage() {
                 ...value,
                 size: Math.round(baseSize * (value.scale / 100)),
                 family: fontOptions[value.fontKey].canvas,
-                shadow: shadowOptions[value.shadowKey],
+                shadow: resolvedCanvasShadow(value.shadowKey, exportShadowScale),
+                shadowScale: exportShadowScale,
             };
         };
-        const organizerFormat = format(
-            "organizer",
-            (isLandscape ? 27 : 34) * outputScale,
-        );
-        const titleFormat = format("title", (isLandscape ? 55 : 68) * outputScale);
-        const dateFormat = format("date", (isLandscape ? 29 : 36) * outputScale);
-        const placeFormat = format("place", (isLandscape ? 27 : 34) * outputScale);
-        const descriptionFormat = format(
-            "description",
-            (isLandscape ? 25 : 31) * outputScale,
-        );
+        const organizerBaseSize = (isLandscape ? 27 : 34) * outputScale;
+        const titleBaseSize = (isLandscape ? 55 : 68) * outputScale;
+        const dateBaseSize = (isLandscape ? 29 : 36) * outputScale;
+        const placeBaseSize = (isLandscape ? 27 : 34) * outputScale;
+        const descriptionBaseSize = (isLandscape ? 25 : 31) * outputScale;
+        const organizerFormat = format("organizer", organizerBaseSize);
+        const titleFormat = format("title", titleBaseSize);
+        const dateFormat = format("date", dateBaseSize);
+        const placeFormat = format("place", placeBaseSize);
+        const descriptionFormat = format("description", descriptionBaseSize);
         const applicationFormat = format(
             "application",
             (isLandscape ? 25 : 32) * outputScale,
         );
         const iconOffset = (key: TextKey, size: number) =>
             textIcons[key] === "none" ? 0 : size * 1.35;
+        const contactLineY =
+            selected.height - (isLandscape ? 87 : 122) * outputScale;
+        const textSafeTop = top - organizerBaseSize;
+        const textSafeHeight = contactLineY - textSafeTop;
+
+        const resolveCanvasTextPosition = (
+            key: MovableTextKey,
+            lines: ReturnType<typeof layoutRichText>,
+            formatValue: ResolvedTextFormat,
+            baseBaselineY: number,
+            lineHeight: number,
+        ) => {
+            const metrics = richTextMetrics(lines, lineHeight);
+            const pictogramWidth = iconOffset(key, formatValue.size);
+            const blockWidth = pictogramWidth + metrics.width;
+            const blockTop = baseBaselineY - Math.max(metrics.firstLineSize, formatValue.size);
+            const rawDeltaX = textPositions[key].x * contentWidth;
+            const rawDeltaY = textPositions[key].y * textSafeHeight;
+            const maxDeltaX = contentWidth - blockWidth;
+            const minDeltaY = textSafeTop - blockTop;
+            const maxDeltaY = contactLineY - (blockTop + metrics.height);
+
+            return {
+                x: side + (maxDeltaX >= 0 ? clamp(rawDeltaX, 0, maxDeltaX) : 0),
+                baselineY:
+                    baseBaselineY +
+                    (minDeltaY <= maxDeltaY
+                        ? clamp(rawDeltaY, minDeltaY, maxDeltaY)
+                        : minDeltaY),
+            };
+        };
 
         context.textBaseline = "alphabetic";
         context.font = `${organizerFormat.fontWeight} ${organizerFormat.size}px ${organizerFormat.family}`;
+        const organizerLineHeight = organizerFormat.size * 1.28;
+        const organizerLines = layoutRichText(
+            context,
+            organizer,
+            organizerFormat,
+            richTextRuns.organizer,
+            contentWidth - iconOffset("organizer", organizerFormat.size),
+        );
+        const organizerPosition = resolveCanvasTextPosition(
+            "organizer",
+            organizerLines,
+            organizerFormat,
+            top,
+            organizerLineHeight,
+        );
         drawCanvasPictogram(
             context,
             textIcons.organizer,
-            side,
-            top - organizerFormat.size * 0.35,
+            organizerPosition.x,
+            organizerPosition.baselineY - organizerFormat.size * 0.35,
             organizerFormat.size * 0.9,
             organizerFormat.color,
         );
         drawRichText(
             context,
-            layoutRichText(
-                context,
-                organizer,
-                organizerFormat,
-                richTextRuns.organizer,
-                contentWidth - iconOffset("organizer", organizerFormat.size),
-                1,
-            ),
-            side + iconOffset("organizer", organizerFormat.size),
-            top,
-            organizerFormat.size * 1.28,
+            organizerLines,
+            organizerPosition.x + iconOffset("organizer", organizerFormat.size),
+            organizerPosition.baselineY,
+            organizerLineHeight,
         );
 
         const titleOffset = iconOffset("title", titleFormat.size);
@@ -1903,110 +2548,161 @@ export default function EventPromotePage() {
             titleFormat,
             richTextRuns.title,
             contentWidth - titleOffset,
-            isLandscape ? 2 : 3,
         );
 
-        const titleStartY = top + Math.round(titleFormat.size * 1.42);
+        const titleStartY = top + Math.round(titleBaseSize * 1.42);
         const titleLineHeight = Math.round(titleFormat.size * 1.18);
-        drawCanvasPictogram(
-            context,
-            textIcons.title,
-            side,
-            titleStartY - titleFormat.size * 0.35,
-            titleFormat.size,
-            titleFormat.color,
-        );
-        const titleBlockHeight = drawRichText(
-            context,
+        const titlePosition = resolveCanvasTextPosition(
+            "title",
             titleLines,
-            side + titleOffset,
+            titleFormat,
             titleStartY,
             titleLineHeight,
         );
+        drawCanvasPictogram(
+            context,
+            textIcons.title,
+            titlePosition.x,
+            titlePosition.baselineY - titleFormat.size * 0.35,
+            titleFormat.size,
+            titleFormat.color,
+        );
+        drawRichText(
+            context,
+            titleLines,
+            titlePosition.x + titleOffset,
+            titlePosition.baselineY,
+            titleLineHeight,
+        );
+
+        const initialTitleFormat: ResolvedTextFormat = {
+            ...titleFormat,
+            ...initialTextFormats.title,
+            size: titleBaseSize,
+            family: fontOptions[initialTextFormats.title.fontKey].canvas,
+            shadow: resolvedCanvasShadow(
+                initialTextFormats.title.shadowKey,
+                exportShadowScale,
+            ),
+            shadowScale: exportShadowScale,
+        };
+        const initialTitleLines = layoutRichText(
+            context,
+            DEFAULT_TITLE,
+            initialTitleFormat,
+            INITIAL_TITLE_RUNS,
+            contentWidth,
+            isLandscape ? 2 : 3,
+        );
+        const initialTitleLineHeight = Math.round(initialTitleFormat.size * 1.18);
+        const initialTitleBlockHeight = richTextMetrics(
+            initialTitleLines,
+            initialTitleLineHeight,
+        ).height;
 
         const infoY =
             titleStartY +
-            Math.max(0, titleBlockHeight - titleLineHeight) +
-            Math.round(dateFormat.size * 1.9);
+            Math.max(0, initialTitleBlockHeight - initialTitleLineHeight) +
+            Math.round(dateBaseSize * 1.9);
 
         context.font = `${dateFormat.fontWeight} ${dateFormat.size}px ${dateFormat.family}`;
+        const dateLineHeight = dateFormat.size * 1.28;
+        const dateLines = layoutRichText(
+            context,
+            date,
+            dateFormat,
+            richTextRuns.date,
+            contentWidth - iconOffset("date", dateFormat.size),
+        );
+        const datePosition = resolveCanvasTextPosition(
+            "date",
+            dateLines,
+            dateFormat,
+            infoY,
+            dateLineHeight,
+        );
         drawCanvasPictogram(
             context,
             textIcons.date,
-            side,
-            infoY - dateFormat.size * 0.35,
+            datePosition.x,
+            datePosition.baselineY - dateFormat.size * 0.35,
             dateFormat.size * 0.9,
             dateFormat.color,
         );
         drawRichText(
             context,
-            layoutRichText(
-                context,
-                date,
-                dateFormat,
-                richTextRuns.date,
-                contentWidth - iconOffset("date", dateFormat.size),
-                1,
-            ),
-            side + iconOffset("date", dateFormat.size),
-            infoY,
-            dateFormat.size * 1.28,
+            dateLines,
+            datePosition.x + iconOffset("date", dateFormat.size),
+            datePosition.baselineY,
+            dateLineHeight,
         );
 
         context.font = `${placeFormat.fontWeight} ${placeFormat.size}px ${placeFormat.family}`;
         const placeY =
-            infoY + Math.round(Math.max(dateFormat.size, placeFormat.size) * 1.55);
+            infoY + Math.round(Math.max(dateBaseSize, placeBaseSize) * 1.55);
+        const placeLineHeight = placeFormat.size * 1.28;
+        const placeLines = layoutRichText(
+            context,
+            place,
+            placeFormat,
+            richTextRuns.place,
+            contentWidth - iconOffset("place", placeFormat.size),
+        );
+        const placePosition = resolveCanvasTextPosition(
+            "place",
+            placeLines,
+            placeFormat,
+            placeY,
+            placeLineHeight,
+        );
         drawCanvasPictogram(
             context,
             textIcons.place,
-            side,
-            placeY - placeFormat.size * 0.35,
+            placePosition.x,
+            placePosition.baselineY - placeFormat.size * 0.35,
             placeFormat.size * 0.9,
             placeFormat.color,
         );
         drawRichText(
             context,
-            layoutRichText(
-                context,
-                place,
-                placeFormat,
-                richTextRuns.place,
-                contentWidth - iconOffset("place", placeFormat.size),
-                1,
-            ),
-            side + iconOffset("place", placeFormat.size),
-            placeY,
-            placeFormat.size * 1.28,
+            placeLines,
+            placePosition.x + iconOffset("place", placeFormat.size),
+            placePosition.baselineY,
+            placeLineHeight,
         );
 
         const descriptionOffset = iconOffset("description", descriptionFormat.size);
-        const descriptionY = placeY + Math.round(placeFormat.size * 1.7);
+        const descriptionY = placeY + Math.round(placeBaseSize * 1.7);
         const descriptionLines = layoutRichText(
             context,
             description,
             descriptionFormat,
             richTextRuns.description,
             contentWidth - descriptionOffset,
-            4,
+        );
+        const descriptionLineHeight = Math.round(descriptionFormat.size * 1.45);
+        const descriptionPosition = resolveCanvasTextPosition(
+            "description",
+            descriptionLines,
+            descriptionFormat,
+            descriptionY,
+            descriptionLineHeight,
         );
         drawCanvasPictogram(
             context,
             textIcons.description,
-            side,
-            descriptionY - descriptionFormat.size * 0.35,
+            descriptionPosition.x,
+            descriptionPosition.baselineY - descriptionFormat.size * 0.35,
             descriptionFormat.size * 0.9,
             descriptionFormat.color,
         );
         drawRichText(
             context,
             descriptionLines,
-            side + descriptionOffset,
-            descriptionY,
-            Math.round(descriptionFormat.size * 1.45),
+            descriptionPosition.x + descriptionOffset,
+            descriptionPosition.baselineY,
+            descriptionLineHeight,
         );
-
-        const contactLineY =
-            selected.height - (isLandscape ? 87 : 122) * outputScale;
 
         if (dividerStyle.visible) {
             context.save();
@@ -2018,8 +2714,14 @@ export default function EventPromotePage() {
                     : [],
             );
             context.beginPath();
-            context.moveTo(side, contactLineY);
-            context.lineTo(selected.width - side, contactLineY);
+            context.moveTo(
+                side + dividerPosition.x * selected.width,
+                contactLineY + dividerPosition.y * selected.height,
+            );
+            context.lineTo(
+                selected.width - side + dividerPosition.x * selected.width,
+                contactLineY + dividerPosition.y * selected.height,
+            );
             context.stroke();
             context.restore();
         }
@@ -2042,28 +2744,65 @@ export default function EventPromotePage() {
 
         context.font = `${applicationFormat.fontWeight} ${applicationFormat.size}px ${applicationFormat.family}`;
         const applicationY = contactLineY + (isLandscape ? 44 : 57) * outputScale;
+        const applicationLineHeight = applicationFormat.size * 1.28;
+        const applicationOffset = iconOffset("application", applicationFormat.size);
+        const applicationLines = layoutRichText(
+            context,
+            application,
+            applicationFormat,
+            richTextRuns.application,
+            contentWidth - applicationOffset,
+        );
+        const applicationMetrics = richTextMetrics(
+            applicationLines,
+            applicationLineHeight,
+        );
+        const applicationBlockWidth = applicationOffset + applicationMetrics.width;
+        const applicationBlockTop = applicationY - Math.max(
+            applicationMetrics.firstLineSize,
+            applicationFormat.size,
+        );
+        const footerSafeBottom = selected.height * FOOTER_TEXT_SAFE_AREA.bottom;
+        const footerSafeHeight = Math.max(footerSafeBottom - contactLineY, 1);
+        const applicationMaxDeltaX = contentWidth - applicationBlockWidth;
+        const applicationMinDeltaY = contactLineY - applicationBlockTop;
+        const applicationMaxDeltaY =
+            footerSafeBottom - (applicationBlockTop + applicationMetrics.height);
+        const applicationPosition = {
+            x:
+                side +
+                (applicationMaxDeltaX >= 0
+                    ? clamp(
+                        textPositions.application.x * contentWidth,
+                        0,
+                        applicationMaxDeltaX,
+                    )
+                    : 0),
+            baselineY:
+                applicationY +
+                (applicationMinDeltaY <= applicationMaxDeltaY
+                    ? clamp(
+                        textPositions.application.y * footerSafeHeight,
+                        applicationMinDeltaY,
+                        applicationMaxDeltaY,
+                    )
+                    : applicationMinDeltaY),
+        };
         drawCanvasPictogram(
             context,
             textIcons.application,
-            side,
-            applicationY - applicationFormat.size * 0.35,
+            applicationPosition.x,
+            applicationPosition.baselineY - applicationFormat.size * 0.35,
             applicationFormat.size * 0.9,
             applicationFormat.color,
         );
 
         drawRichText(
             context,
-            layoutRichText(
-                context,
-                application,
-                applicationFormat,
-                richTextRuns.application,
-                contentWidth - iconOffset("application", applicationFormat.size),
-                1,
-            ),
-            side + iconOffset("application", applicationFormat.size),
-            applicationY,
-            applicationFormat.size * 1.28,
+            applicationLines,
+            applicationPosition.x + applicationOffset,
+            applicationPosition.baselineY,
+            applicationLineHeight,
         );
 
         const link = document.createElement("a");
@@ -2108,18 +2847,28 @@ export default function EventPromotePage() {
 
     const textStyle = (key: TextKey, size: number) => {
         const value = textFormats[key];
-        const previewShadow = shadowOptions[value.shadowKey];
         return {
             color: value.color,
             fontFamily: fontOptions[value.fontKey].css,
             fontWeight: value.fontWeight,
             fontSize: `${size * (value.scale / 100)}px`,
-            textShadow:
-                value.shadowKey === "none"
-                    ? "none"
-                    : `0 ${previewShadow.offset}px ${previewShadow.blur}px ${contrastShadow(value.color, previewShadow.opacity)}`,
+            textShadow: cssTextShadow(value.color, value.shadowKey),
         };
     };
+
+    const initialTextStyle = (key: MovableTextKey, size: number) => ({
+        color: initialTextFormats[key].color,
+        fontFamily: fontOptions[initialTextFormats[key].fontKey].css,
+        fontWeight: initialTextFormats[key].fontWeight,
+        fontSize: `${size}px`,
+    });
+
+    const textPositionStyle = (key: MovableTextKey): CSSProperties => ({
+        transform:
+            key === "application"
+                ? `translate(${textPositions[key].x * (FOOTER_TEXT_SAFE_AREA.right - FOOTER_TEXT_SAFE_AREA.left) * 100}cqw, ${textPositions[key].y * (FOOTER_TEXT_SAFE_AREA.bottom - FOOTER_TEXT_SAFE_AREA.top) * 100}cqh)`
+                : `translate(${textPositions[key].x * 100}cqw, ${textPositions[key].y * 100}cqh)`,
+    });
 
     const renderTextCharacters = (key: TextKey, text: string, size: number) => {
         if (
@@ -2145,6 +2894,10 @@ export default function EventPromotePage() {
                                 ? {
                                     color: run.color,
                                     fontSize: `${size * (base.scale / 100) * (run.scale / 100)}px`,
+                                    textShadow: cssTextShadow(
+                                        run.color,
+                                        run.shadowKey ?? base.shadowKey,
+                                    ),
                                 }
                                 : undefined
                         }
@@ -2173,6 +2926,10 @@ export default function EventPromotePage() {
                             color: run.color,
                             fontWeight: run.fontWeight,
                             fontSize: `${size * (base.scale / 100) * (run.scale / 100)}px`,
+                            textShadow: cssTextShadow(
+                                run.color,
+                                run.shadowKey ?? base.shadowKey,
+                            ),
                             "--mobile-music-size": `${size * (base.scale / 100) * 1.05}px`,
                         } as CSSProperties
                     }
@@ -2183,12 +2940,22 @@ export default function EventPromotePage() {
         });
     };
 
-    const previewButtonClass = (key: TextKey, extra = "") =>
-        `${extra} cursor-pointer ${editorTab === "style" && selectedElement === key ? "rounded-md outline outline-1 outline-dashed outline-[#777900] outline-offset-4" : ""}`;
+    const previewButtonClass = (key: TextKey, extra = "") => {
+        const movable = isMovableTextKey(key);
+        const selected = movable && selectedPreviewText === key;
+        const canDrag = editorTab === "style" && movable;
+
+        return `${extra} ${selected && canDrag ? "cursor-grab active:cursor-grabbing" : "cursor-pointer"} ${canDrag ? "touch-none select-none" : ""} ${selected ? "rounded-[2px] outline outline-2 outline-[#1677FF] outline-offset-2" : ""}`;
+    };
 
     return (
         <main className="min-h-screen bg-[#F7F8FA] text-[#171B22]">
-            <style>{`@media (max-width: 639px) { .mobile-title { font-size: 24px !important; } .mobile-music-emphasis { font-size: var(--mobile-music-size) !important; } }`}</style>
+            <style>{`
+                @media (max-width: 639px) {
+                    .mobile-title { font-size: 24px !important; }
+                    .mobile-music-emphasis { font-size: var(--mobile-music-size) !important; }
+                }
+            `}</style>
 
             <section className="mx-auto max-w-[1280px] px-4 py-7 sm:px-5 md:px-8 md:py-11">
                 <div className="mb-6 md:mb-8">
@@ -2246,6 +3013,7 @@ export default function EventPromotePage() {
                                 onPointerUp={handlePreviewPointerUp}
                                 onPointerCancel={handlePreviewPointerCancel}
                                 className={`relative mx-auto w-full max-w-[480px] overflow-hidden rounded-[24px] bg-[#E8ECEF] shadow-[0_16px_38px_rgba(25,31,40,0.14)] ${aspectClass} ${lineDraftVariant ? "cursor-crosshair" : ""}`}
+                                style={{ containerType: "size" }}
                             >
                                 {scene === "custom" && imageFit === "contain" ? (
                                     <>
@@ -2272,7 +3040,7 @@ export default function EventPromotePage() {
 
                                 {customLines.map((line) => {
                                     const selected = selectedLineId === line.id;
-                                    const canArrange = editorTab === "content" && !lineDraftVariant;
+                                    const canArrange = editorTab === "style" && !lineDraftVariant;
                                     return (
                                         <div
                                             key={line.id}
@@ -2291,7 +3059,7 @@ export default function EventPromotePage() {
                                             onPointerDown={(event) =>
                                                 startLineInteraction(event, line, "move")
                                             }
-                                            className={`absolute z-[1] bg-transparent outline-none ${lineDraftVariant ? "pointer-events-none" : ""} ${canArrange ? "cursor-move touch-none" : "cursor-pointer"}`}
+                                            className={`absolute z-[1] bg-transparent outline-none ${lineDraftVariant ? "pointer-events-none" : ""} ${canArrange ? "cursor-grab touch-none active:cursor-grabbing" : "cursor-pointer"} ${selected ? "rounded-sm outline outline-2 outline-[#1677FF] outline-offset-1" : ""}`}
                                             style={createLineStyle(line, selected)}
                                             aria-label={`${line.variant === "dashed" ? "점선" : "실선"} 선택`}
                                         >
@@ -2358,115 +3126,243 @@ export default function EventPromotePage() {
                                     </div>
                                 )}
 
-                                <div className="absolute inset-x-0 top-0 px-[7%] pb-4 pt-[8%]">
-                                    <button
-                                        type="button"
-                                        onClick={() => selectPreviewText("organizer")}
-                                        className={previewButtonClass(
-                                            "organizer",
-                                            "block text-left",
-                                        )}
-                                        aria-label="사찰 기관명 편집"
-                                    >
+                                <div
+                                    ref={textSafeAreaRef}
+                                    className="pointer-events-none absolute"
+                                    style={{
+                                        left: `${TEXT_SAFE_AREA.left * 100}%`,
+                                        right: `${(1 - TEXT_SAFE_AREA.right) * 100}%`,
+                                        top: `${TEXT_SAFE_AREA.top * 100}%`,
+                                        bottom: `${(1 - TEXT_SAFE_AREA.bottom) * 100}%`,
+                                        containerType: "size",
+                                    }}
+                                >
+                                    <div className="relative">
                                         <span
-                                            className="inline-flex items-center gap-[0.35em]"
-                                            style={textStyle("organizer", 15)}
+                                            aria-hidden="true"
+                                            className="invisible inline-flex items-center"
+                                            style={initialTextStyle("organizer", 15)}
                                         >
-                                            <PictogramIcon icon={textIcons.organizer} />
-                                            <span>
-                                                {renderTextCharacters("organizer", organizer, 15)}
-                                            </span>
+                                            {DEFAULT_ORGANIZER}
                                         </span>
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => selectPreviewText("title")}
-                                        className={previewButtonClass(
-                                            "title",
-                                            "mt-1.5 block text-left",
-                                        )}
-                                        aria-label="행사명 편집"
-                                    >
-                                        <span
-                                            className="mobile-title flex max-w-full items-start gap-[0.35em] leading-[1.1] tracking-[-0.05em]"
-                                            style={textStyle("title", channel === "story" ? 34 : 32)}
+                                        <button
+                                            type="button"
+                                            {...movableTextInteractionProps("organizer")}
+                                            className={previewButtonClass(
+                                                "organizer",
+                                                "pointer-events-auto absolute left-0 top-0 block max-w-full text-left",
+                                            )}
+                                            style={textPositionStyle("organizer")}
+                                            aria-label="사찰 기관명 편집"
                                         >
-                                            <PictogramIcon
-                                                icon={textIcons.title}
-                                                className="mt-[0.08em] h-[1em] w-[1em] shrink-0"
-                                            />
+                                            <span
+                                                ref={(node) => {
+                                                    textBlockRefs.current.organizer = node;
+                                                }}
+                                                className="flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words"
+                                                style={textStyle("organizer", 15)}
+                                            >
+                                                <PictogramIcon
+                                                    icon={textIcons.organizer}
+                                                    className="mt-[0.08em] h-[1em] w-[1em] shrink-0"
+                                                />
+                                                <span className="min-w-0 whitespace-pre-wrap break-words">
+                                                    {renderTextCharacters("organizer", organizer, 15)}
+                                                </span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div className="relative mt-1.5">
+                                        <span
+                                            aria-hidden="true"
+                                            className="mobile-title invisible flex max-w-full leading-[1.1] tracking-[-0.05em]"
+                                            style={initialTextStyle(
+                                                "title",
+                                                channel === "story" ? 34 : 32,
+                                            )}
+                                        >
                                             <span className="min-w-0 whitespace-pre-wrap break-words">
-                                                {renderTextCharacters(
-                                                    "title",
-                                                    title,
-                                                    channel === "story" ? 34 : 32,
-                                                )}
+                                                ♫ 연꽃 피는 산사{" "}
+                                                <span
+                                                    className="mobile-music-emphasis"
+                                                    style={
+                                                        {
+                                                            color: INITIAL_TITLE_RUNS[0].color,
+                                                            fontWeight: INITIAL_TITLE_RUNS[0].fontWeight,
+                                                            fontSize: `${(channel === "story" ? 34 : 32) * 1.45}px`,
+                                                            "--mobile-music-size": `${(channel === "story" ? 34 : 32) * 1.05}px`,
+                                                        } as CSSProperties
+                                                    }
+                                                >
+                                                    음악회
+                                                </span>
                                             </span>
                                         </span>
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => selectPreviewText("date")}
-                                        className={previewButtonClass(
-                                            "date",
-                                            "mt-4 block text-left",
-                                        )}
-                                        aria-label="일시 편집"
-                                    >
-                                        <span
-                                            className="inline-flex items-center gap-[0.35em]"
-                                            style={textStyle("date", 15)}
+                                        <button
+                                            type="button"
+                                            {...movableTextInteractionProps("title")}
+                                            className={previewButtonClass(
+                                                "title",
+                                                "pointer-events-auto absolute left-0 top-0 block max-w-full text-left",
+                                            )}
+                                            style={textPositionStyle("title")}
+                                            aria-label="행사명 편집"
                                         >
-                                            <PictogramIcon icon={textIcons.date} />
-                                            <span>{renderTextCharacters("date", date, 15)}</span>
-                                        </span>
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => selectPreviewText("place")}
-                                        className={previewButtonClass(
-                                            "place",
-                                            "mt-1 block text-left",
-                                        )}
-                                        aria-label="장소 편집"
-                                    >
-                                        <span
-                                            className="inline-flex items-center gap-[0.35em]"
-                                            style={textStyle("place", 14)}
-                                        >
-                                            <PictogramIcon icon={textIcons.place} />
-                                            <span>{renderTextCharacters("place", place, 14)}</span>
-                                        </span>
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => selectPreviewText("description")}
-                                        className={previewButtonClass(
-                                            "description",
-                                            "mt-2 block max-w-full text-left",
-                                        )}
-                                        aria-label="행사 내용 편집"
-                                    >
-                                        <span
-                                            className="flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words leading-[1.55]"
-                                            style={textStyle("description", 14)}
-                                        >
-                                            <PictogramIcon
-                                                icon={textIcons.description}
-                                                className="mt-[0.2em] h-[1em] w-[1em] shrink-0"
-                                            />
-                                            <span className="line-clamp-4 min-w-0 whitespace-pre-wrap break-words">
-                                                {renderTextCharacters("description", description, 14)}
+                                            <span
+                                                ref={(node) => {
+                                                    textBlockRefs.current.title = node;
+                                                }}
+                                                className="mobile-title flex max-w-full items-start gap-[0.35em] leading-[1.1] tracking-[-0.05em]"
+                                                style={textStyle("title", channel === "story" ? 34 : 32)}
+                                            >
+                                                <PictogramIcon
+                                                    icon={textIcons.title}
+                                                    className="mt-[0.08em] h-[1em] w-[1em] shrink-0"
+                                                />
+                                                <span className="min-w-0 whitespace-pre-wrap break-words">
+                                                    {renderTextCharacters(
+                                                        "title",
+                                                        title,
+                                                        channel === "story" ? 34 : 32,
+                                                    )}
+                                                </span>
                                             </span>
+                                        </button>
+                                    </div>
+                                    <div className="relative mt-4">
+                                        <span
+                                            aria-hidden="true"
+                                            className="invisible inline-flex items-center"
+                                            style={initialTextStyle("date", 15)}
+                                        >
+                                            {DEFAULT_DATE}
                                         </span>
-                                    </button>
+                                        <button
+                                            type="button"
+                                            {...movableTextInteractionProps("date")}
+                                            className={previewButtonClass(
+                                                "date",
+                                                "pointer-events-auto absolute left-0 top-0 block max-w-full text-left",
+                                            )}
+                                            style={textPositionStyle("date")}
+                                            aria-label="일시 편집"
+                                        >
+                                            <span
+                                                ref={(node) => {
+                                                    textBlockRefs.current.date = node;
+                                                }}
+                                                className="flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words"
+                                                style={textStyle("date", 15)}
+                                            >
+                                                <PictogramIcon
+                                                    icon={textIcons.date}
+                                                    className="mt-[0.08em] h-[1em] w-[1em] shrink-0"
+                                                />
+                                                <span className="min-w-0 whitespace-pre-wrap break-words">
+                                                    {renderTextCharacters("date", date, 15)}
+                                                </span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div className="relative mt-1">
+                                        <span
+                                            aria-hidden="true"
+                                            className="invisible inline-flex items-center gap-[0.35em]"
+                                            style={initialTextStyle("place", 14)}
+                                        >
+                                            <span className="inline-flex w-[1.05em] items-center justify-center align-[-0.12em]">
+                                                <PictogramIcon icon="pin" />
+                                            </span>
+                                            연화사 앞마당
+                                        </span>
+                                        <button
+                                            type="button"
+                                            {...movableTextInteractionProps("place")}
+                                            className={previewButtonClass(
+                                                "place",
+                                                "pointer-events-auto absolute left-0 top-0 block max-w-full text-left",
+                                            )}
+                                            style={textPositionStyle("place")}
+                                            aria-label="장소 편집"
+                                        >
+                                            <span
+                                                ref={(node) => {
+                                                    textBlockRefs.current.place = node;
+                                                }}
+                                                className="flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words"
+                                                style={textStyle("place", 14)}
+                                            >
+                                                <PictogramIcon
+                                                    icon={textIcons.place}
+                                                    className="mt-[0.08em] h-[1em] w-[1em] shrink-0"
+                                                />
+                                                <span className="min-w-0 whitespace-pre-wrap break-words">
+                                                    {renderTextCharacters("place", place, 14)}
+                                                </span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div className="relative mt-2">
+                                        <span
+                                            aria-hidden="true"
+                                            className="invisible flex max-w-full whitespace-pre-wrap break-words leading-[1.55]"
+                                            style={initialTextStyle("description", 14)}
+                                        >
+                                            {DEFAULT_DESCRIPTION}
+                                        </span>
+                                        <button
+                                            type="button"
+                                            {...movableTextInteractionProps("description")}
+                                            className={previewButtonClass(
+                                                "description",
+                                                "pointer-events-auto absolute left-0 top-0 block max-w-full text-left",
+                                            )}
+                                            style={textPositionStyle("description")}
+                                            aria-label="행사 내용 편집"
+                                        >
+                                            <span
+                                                ref={(node) => {
+                                                    textBlockRefs.current.description = node;
+                                                }}
+                                                className="flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words leading-[1.55]"
+                                                style={textStyle("description", 14)}
+                                            >
+                                                <PictogramIcon
+                                                    icon={textIcons.description}
+                                                    className="mt-[0.2em] h-[1em] w-[1em] shrink-0"
+                                                />
+                                                <span className="min-w-0 whitespace-pre-wrap break-words">
+                                                    {renderTextCharacters("description", description, 14)}
+                                                </span>
+                                            </span>
+                                        </button>
+                                    </div>
                                 </div>
+
+                                <div
+                                    ref={footerTextSafeAreaRef}
+                                    className="pointer-events-none absolute"
+                                    style={{
+                                        left: `${FOOTER_TEXT_SAFE_AREA.left * 100}%`,
+                                        right: `${(1 - FOOTER_TEXT_SAFE_AREA.right) * 100}%`,
+                                        top: `${FOOTER_TEXT_SAFE_AREA.top * 100}%`,
+                                        bottom: `${(1 - FOOTER_TEXT_SAFE_AREA.bottom) * 100}%`,
+                                    }}
+                                    aria-hidden="true"
+                                />
 
                                 <button
                                     type="button"
                                     onClick={selectDivider}
-                                    className={`absolute inset-x-[7%] bottom-[10.5%] h-4 -translate-y-1/2 ${editorTab === "style" ? "cursor-pointer" : "pointer-events-none"} ${editorTab === "style" && selectedElement === "divider" ? "rounded outline outline-1 outline-dashed outline-[#777900] outline-offset-2" : ""} ${editorTab === "style" && !dividerStyle.visible ? "border border-dashed border-[#AAB0B8]/60" : ""}`}
+                                    onPointerDown={startDividerInteraction}
+                                    className={`absolute h-4 -translate-y-1/2 ${editorTab === "style" ? "cursor-grab touch-none active:cursor-grabbing" : "cursor-pointer"} ${isDividerPreviewSelected ? "rounded-sm outline outline-2 outline-[#1677FF] outline-offset-1" : ""} ${editorTab === "style" && !dividerStyle.visible ? "border border-dashed border-[#AAB0B8]/60" : ""}`}
+                                    style={{
+                                        left: `${(SAFE_AREA.left + dividerPosition.x) * 100}%`,
+                                        width: `${(SAFE_AREA.right - SAFE_AREA.left) * 100}%`,
+                                        top: `${(DIVIDER_BASE_Y + dividerPosition.y) * 100}%`,
+                                    }}
                                     aria-label="구분선 편집"
+                                    aria-pressed={isDividerPreviewSelected}
                                 >
                                     {dividerStyle.visible && (
                                         <span
@@ -2480,19 +3376,26 @@ export default function EventPromotePage() {
 
                                 <button
                                     type="button"
-                                    onClick={() => selectPreviewText("application")}
+                                    {...movableTextInteractionProps("application")}
                                     className={previewButtonClass(
                                         "application",
-                                        "absolute inset-x-[7%] bottom-[5%] text-left",
+                                        "absolute left-[7%] bottom-[5%] max-w-[86%] text-left",
                                     )}
+                                    style={textPositionStyle("application")}
                                     aria-label="신청 문의 편집"
                                 >
                                     <span
-                                        className="inline-flex items-center gap-[0.35em]"
+                                        ref={(node) => {
+                                            textBlockRefs.current.application = node;
+                                        }}
+                                        className="flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words"
                                         style={textStyle("application", 14)}
                                     >
-                                        <PictogramIcon icon={textIcons.application} />
-                                        <span>
+                                        <PictogramIcon
+                                            icon={textIcons.application}
+                                            className="mt-[0.08em] h-[1em] w-[1em] shrink-0"
+                                        />
+                                        <span className="min-w-0 whitespace-pre-wrap break-words">
                                             {renderTextCharacters("application", application, 14)}
                                         </span>
                                     </span>
@@ -2504,20 +3407,73 @@ export default function EventPromotePage() {
                         </div>
 
                         <div className="min-w-0 p-5 md:p-7 lg:p-8">
-                            <div className="flex border-b border-[#E7E9EC]">
-                                {tabs.map((tab) => (
-                                    <button
-                                        key={tab.key}
-                                        type="button"
-                                        onClick={() => setEditorTab(tab.key)}
-                                        className={`relative flex-1 px-2 pb-3 text-sm transition sm:flex-none sm:px-6 ${editorTab === tab.key ? "font-semibold text-[#171B22]" : "font-medium text-[#8B95A1] hover:text-[#4E5968]"}`}
+                            <div className="sticky top-0 z-20 border-b border-[#E7E9EC] bg-white/95 backdrop-blur-sm">
+                                <div className="mr-[68px] flex min-w-0">
+                                    {tabs.map((tab) => (
+                                        <button
+                                            key={tab.key}
+                                            type="button"
+                                            onClick={() => setEditorTab(tab.key)}
+                                            className={`relative min-w-[52px] flex-1 whitespace-nowrap px-2 pb-3 text-sm transition sm:flex-none sm:px-6 ${editorTab === tab.key ? "font-semibold text-[#171B22]" : "font-medium text-[#8B95A1] hover:text-[#4E5968]"}`}
+                                        >
+                                            {tab.label}
+                                            {editorTab === tab.key && (
+                                                <span className="absolute inset-x-2 -bottom-px h-0.5 bg-[#F4F54A] sm:inset-x-5" />
+                                            )}
+                                        </button>
+                                    ))}
+                                </div>
+                                {editorTab !== "image" && (
+                                    <div
+                                        className="absolute right-0 top-1/2 flex -translate-y-1/2 items-center gap-1"
+                                        aria-label="편집 기록"
                                     >
-                                        {tab.label}
-                                        {editorTab === tab.key && (
-                                            <span className="absolute inset-x-2 -bottom-px h-0.5 bg-[#F4F54A] sm:inset-x-5" />
-                                        )}
-                                    </button>
-                                ))}
+                                        <button
+                                            type="button"
+                                            onClick={undoHistory}
+                                            disabled={!historyAvailability.canUndo}
+                                            aria-label="되돌리기"
+                                            title="되돌리기"
+                                            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#4E5968] outline-none transition hover:bg-[#F4F5F6] focus-visible:ring-2 focus-visible:ring-[#8B95A1]/35 disabled:cursor-not-allowed disabled:text-[#C7CCD2] disabled:hover:bg-transparent"
+                                        >
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                className="h-[18px] w-[18px]"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="1.8"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                aria-hidden="true"
+                                            >
+                                                <path d="M9 7 4.5 11.5 9 16" />
+                                                <path d="M5 11.5h7.5a6 6 0 0 1 6 6" />
+                                            </svg>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={redoHistory}
+                                            disabled={!historyAvailability.canRedo}
+                                            aria-label="다시 실행"
+                                            title="다시 실행"
+                                            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#4E5968] outline-none transition hover:bg-[#F4F5F6] focus-visible:ring-2 focus-visible:ring-[#8B95A1]/35 disabled:cursor-not-allowed disabled:text-[#C7CCD2] disabled:hover:bg-transparent"
+                                        >
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                className="h-[18px] w-[18px]"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="1.8"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                aria-hidden="true"
+                                            >
+                                                <path d="m15 7 4.5 4.5L15 16" />
+                                                <path d="M19 11.5h-7.5a6 6 0 0 0-6 6" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                )}
                             </div>
 
                             {editorTab === "content" && (
@@ -2527,9 +3483,10 @@ export default function EventPromotePage() {
                                         <div className="text-sm font-medium sm:col-span-2">
                                             <label htmlFor="promote-title">행사명</label>
                                             <div className="flex items-start gap-2">
-                                                <input
+                                                <textarea
                                                     id="promote-title"
                                                     onFocus={() => setActiveContentText("title")}
+                                                    onBlur={finishTextHistoryGroup}
                                                     value={title}
                                                     onChange={(event) =>
                                                         updateTextValuePreservingRuns(
@@ -2537,7 +3494,8 @@ export default function EventPromotePage() {
                                                             event.target.value,
                                                         )
                                                     }
-                                                    className={fieldClass}
+                                                    rows={1}
+                                                    className={`${fieldClass} min-h-[46px] resize-y leading-6`}
                                                 />
                                                 <PictogramPicker
                                                     targetLabel={textLabels[activeContentText]}
@@ -2550,9 +3508,10 @@ export default function EventPromotePage() {
                                         <div className="text-sm font-medium">
                                             <label htmlFor="promote-organizer">사찰·기관명</label>
                                             <div className="flex items-start gap-2">
-                                                <input
+                                                <textarea
                                                     id="promote-organizer"
                                                     onFocus={() => setActiveContentText("organizer")}
+                                                    onBlur={finishTextHistoryGroup}
                                                     value={organizer}
                                                     onChange={(event) =>
                                                         updateTextValuePreservingRuns(
@@ -2560,16 +3519,18 @@ export default function EventPromotePage() {
                                                             event.target.value,
                                                         )
                                                     }
-                                                    className={fieldClass}
+                                                    rows={1}
+                                                    className={`${fieldClass} min-h-[46px] resize-y leading-6`}
                                                 />
                                             </div>
                                         </div>
                                         <div className="text-sm font-medium">
                                             <label htmlFor="promote-date">일시</label>
                                             <div className="flex items-start gap-2">
-                                                <input
+                                                <textarea
                                                     id="promote-date"
                                                     onFocus={() => setActiveContentText("date")}
+                                                    onBlur={finishTextHistoryGroup}
                                                     value={date}
                                                     onChange={(event) =>
                                                         updateTextValuePreservingRuns(
@@ -2577,16 +3538,18 @@ export default function EventPromotePage() {
                                                             event.target.value,
                                                         )
                                                     }
-                                                    className={fieldClass}
+                                                    rows={1}
+                                                    className={`${fieldClass} min-h-[46px] resize-y leading-6`}
                                                 />
                                             </div>
                                         </div>
                                         <div className="text-sm font-medium">
                                             <label htmlFor="promote-place">장소</label>
                                             <div className="flex items-start gap-2">
-                                                <input
+                                                <textarea
                                                     id="promote-place"
                                                     onFocus={() => setActiveContentText("place")}
+                                                    onBlur={finishTextHistoryGroup}
                                                     value={place}
                                                     onChange={(event) =>
                                                         updateTextValuePreservingRuns(
@@ -2594,16 +3557,18 @@ export default function EventPromotePage() {
                                                             event.target.value,
                                                         )
                                                     }
-                                                    className={fieldClass}
+                                                    rows={1}
+                                                    className={`${fieldClass} min-h-[46px] resize-y leading-6`}
                                                 />
                                             </div>
                                         </div>
                                         <div className="text-sm font-medium">
                                             <label htmlFor="promote-application">신청·문의</label>
                                             <div className="flex items-start gap-2">
-                                                <input
+                                                <textarea
                                                     id="promote-application"
                                                     onFocus={() => setActiveContentText("application")}
+                                                    onBlur={finishTextHistoryGroup}
                                                     value={application}
                                                     onChange={(event) =>
                                                         updateTextValuePreservingRuns(
@@ -2611,7 +3576,8 @@ export default function EventPromotePage() {
                                                             event.target.value,
                                                         )
                                                     }
-                                                    className={fieldClass}
+                                                    rows={1}
+                                                    className={`${fieldClass} min-h-[46px] resize-y leading-6`}
                                                 />
                                             </div>
                                         </div>
@@ -2621,6 +3587,7 @@ export default function EventPromotePage() {
                                                 <textarea
                                                     id="promote-description"
                                                     onFocus={() => setActiveContentText("description")}
+                                                    onBlur={finishTextHistoryGroup}
                                                     value={description}
                                                     onChange={(event) =>
                                                         updateTextValuePreservingRuns(
@@ -2638,9 +3605,10 @@ export default function EventPromotePage() {
                                     <div className="mt-6 flex flex-wrap items-center gap-2.5 border-t border-[#E7E9EC] pt-5">
                                         <div className="relative">
                                             <button
+                                                ref={lineAddButtonRef}
                                                 type="button"
                                                 onClick={() => setLineMenuOpen((open) => !open)}
-                                                className={`rounded-xl border px-4 py-2.5 text-sm font-medium transition ${lineDraftVariant ? "border-[#2E90FA] bg-[#EEF5FF] text-[#1B5FC1]" : "border-[#E1E4E8] bg-white text-[#4E5968] hover:border-[#B8BEC6] hover:bg-[#F8F9FA]"}`}
+                                                className={`rounded-xl border px-4 py-2.5 text-sm font-medium outline-none transition focus:border-[#2E90FA] focus:ring-2 focus:ring-[#2E90FA]/20 ${lineDraftVariant ? "border-[#2E90FA] bg-[#EEF5FF] text-[#1B5FC1]" : "border-[#E1E4E8] bg-white text-[#4E5968] hover:border-[#B8BEC6] hover:bg-[#F8F9FA]"}`}
                                             >
                                                 ＋ 선 추가
                                             </button>
@@ -2716,6 +3684,7 @@ export default function EventPromotePage() {
                                                     ? Math.round((selectedLine.end.x - selectedLine.start.x) * 100)
                                                     : Math.round((selectedLine.end.y - selectedLine.start.y) * 100)}
                                                 onChange={(event) => {
+                                                    beginContinuousHistoryGroup("line-length");
                                                     const nextLength = Number(event.target.value) / 100;
                                                     updateSelectedLine({
                                                         end:
@@ -2738,6 +3707,9 @@ export default function EventPromotePage() {
                                                                 },
                                                     });
                                                 }}
+                                                onPointerUp={finishContinuousHistoryGroup}
+                                                onPointerCancel={finishContinuousHistoryGroup}
+                                                onBlur={finishContinuousHistoryGroup}
                                                 className="mt-3 w-full accent-[#BABB25]"
                                             />
                                         </div>
@@ -2952,6 +3924,7 @@ export default function EventPromotePage() {
                                             </span>
                                             <textarea
                                                 ref={styleTextareaRef}
+                                                onBlur={finishTextHistoryGroup}
                                                 value={selectedTextValue[selectedText]}
                                                 onChange={(event) =>
                                                     updateSelectedTextValue(event.target.value)
@@ -2968,8 +3941,14 @@ export default function EventPromotePage() {
                                                         start === end ? null : { start, end },
                                                     );
                                                 }}
-                                                rows={selectedText === "description" ? 4 : 1}
-                                                className="mt-2 w-full resize-none rounded-xl border border-[#E1E4E8] bg-white px-4 py-3 text-[15px] font-normal leading-6 text-[#6B7280] outline-none transition focus:border-[#B9BA28] focus:ring-2 focus:ring-[#F4F54A]/30"
+                                                rows={
+                                                    selectedText === "description"
+                                                        ? 4
+                                                        : isMovableTextKey(selectedText)
+                                                            ? 2
+                                                            : 1
+                                                }
+                                                className="mt-2 w-full resize-y rounded-xl border border-[#E1E4E8] bg-white px-4 py-3 text-[15px] font-normal leading-6 text-[#6B7280] outline-none transition focus:border-[#B9BA28] focus:ring-2 focus:ring-[#F4F54A]/30"
                                             />
                                             {isRichTextKey(selectedText) && (
                                                 <span className="mt-1.5 block text-xs text-[#8B95A1]">
@@ -2983,9 +3962,9 @@ export default function EventPromotePage() {
                                     {(selectedElement === "divider" || selectedElement === "line") && (
                                         <div>
                                             <div className="flex items-center justify-between gap-3 text-sm text-[#4E5968]">
-                                                <span>추가한 선 편집</span>
+                                                <span>선 편집</span>
                                                 <span className="shrink-0 text-xs font-medium text-[#777900]">
-                                                    선택: 사용자 선
+                                                    선택: {isFixedDividerSelected ? "기본 구분선" : "사용자 선"}
                                                 </span>
                                             </div>
 
@@ -3034,8 +4013,11 @@ export default function EventPromotePage() {
                                                             onChange={(event) =>
                                                                 updateActiveLineStyle({
                                                                     width: Number(event.target.value),
-                                                                })
+                                                                }, "line-width")
                                                             }
+                                                            onPointerUp={finishContinuousHistoryGroup}
+                                                            onPointerCancel={finishContinuousHistoryGroup}
+                                                            onBlur={finishContinuousHistoryGroup}
                                                             className="mt-3 w-full accent-[#BABB25]"
                                                         />
                                                     </div>
@@ -3063,7 +4045,12 @@ export default function EventPromotePage() {
                                                             ))}
                                                             <ModernColorPicker
                                                                 value={activeLineColor}
-                                                                onChange={(color) => updateActiveLineStyle({ color })}
+                                                                onChange={(color) =>
+                                                                    updateActiveLineStyle(
+                                                                        { color },
+                                                                        "line-color-picker",
+                                                                    )
+                                                                }
                                                                 label="선 색상 직접 선택"
                                                             />
                                                         </div>
@@ -3103,8 +4090,11 @@ export default function EventPromotePage() {
                                                         onChange={(event) =>
                                                             updateSizeWeightOrColor({
                                                                 scale: Number(event.target.value),
-                                                            })
+                                                            }, "text-scale")
                                                         }
+                                                        onPointerUp={finishContinuousHistoryGroup}
+                                                        onPointerCancel={finishContinuousHistoryGroup}
+                                                        onBlur={finishContinuousHistoryGroup}
                                                         className="mt-2 w-full accent-[#BABB25]"
                                                     />
                                                 </label>
@@ -3117,9 +4107,9 @@ export default function EventPromotePage() {
                                                                     key={key}
                                                                     type="button"
                                                                     onClick={() =>
-                                                                        updateSelectedFormat({ shadowKey: key })
+                                                                        updateSizeWeightOrColor({ shadowKey: key })
                                                                     }
-                                                                    className={`rounded-lg border px-2 py-1.5 text-[11px] ${selectedFormat.shadowKey === key ? "border-[#BABB25] bg-[#FFFFD8]" : "border-[#E1E4E8]"}`}
+                                                                    className={`rounded-lg border px-2 py-1.5 text-[11px] ${activeShadowKey === key ? "border-[#BABB25] bg-[#FFFFD8]" : "border-[#E1E4E8]"}`}
                                                                 >
                                                                     {shadowOptions[key].label}
                                                                 </button>
@@ -3204,7 +4194,10 @@ export default function EventPromotePage() {
                                                 <ModernColorPicker
                                                     value={activeColor}
                                                     onChange={(color) =>
-                                                        updateSizeWeightOrColor({ color })
+                                                        updateSizeWeightOrColor(
+                                                            { color },
+                                                            "text-color-picker",
+                                                        )
                                                     }
                                                     label="글자색 직접 선택"
                                                 />
@@ -3253,6 +4246,7 @@ export default function EventPromotePage() {
                                             <textarea
                                                 id="promote-copy-editor"
                                                 ref={copyTextareaRef}
+                                                onBlur={finishTextHistoryGroup}
                                                 value={activeCopy}
                                                 onChange={(event) =>
                                                     updateCopyDraft(event.target.value)

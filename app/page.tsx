@@ -206,6 +206,7 @@ function ScrollHeroItem({
         </span>
         <span className="scroll-hero-canvas absolute overflow-hidden">
           <img src="/images/hero-scroll/scroll-master-open.webp" alt="" aria-hidden="true" className="scroll-hero-canvas-paper" />
+          <span className="scroll-hero-fabric-finish absolute" aria-hidden="true" />
           <span className="scroll-hero-content absolute overflow-hidden">
             <img
               src={item.image}
@@ -618,7 +619,7 @@ export default function Home() {
 
         <main>
           <section
-            className="relative cursor-grab touch-pan-y select-none overflow-hidden border-b border-[#F0EEE9] bg-[#FAF6EE] active:cursor-grabbing"
+            className="relative cursor-grab touch-pan-y select-none overflow-hidden border-b border-[#ECEBE7] bg-[#F7F5F0] active:cursor-grabbing"
             aria-label="주요 소식"
             onPointerDown={handleHeroPointerDown}
             onPointerMove={handleHeroPointerMove}
@@ -627,7 +628,15 @@ export default function Home() {
             onClickCapture={handleHeroClickCapture}
           >
             <div
-              className="pointer-events-none absolute inset-0 z-0 h-full w-full bg-[url('/images/hero/hero-korean-ink-bg-v2.webp')] bg-cover bg-right bg-no-repeat opacity-[0.65]"
+              className="pointer-events-none absolute inset-0 z-0 h-full w-full bg-[url('/images/hero/hero-korean-ink-bg-v2.webp')] bg-cover bg-right bg-no-repeat opacity-[0.68] [filter:grayscale(72%)_saturate(45%)_contrast(94%)]"
+              aria-hidden="true"
+            />
+            <div
+              className="pointer-events-none absolute inset-0 z-[1]"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent 0%, transparent 43%, rgba(72, 78, 82, 0.012) 68%, rgba(72, 78, 82, 0.038) 100%), linear-gradient(180deg, transparent 46%, rgba(67, 73, 77, 0.032) 100%)",
+              }}
               aria-hidden="true"
             />
             <div
@@ -952,6 +961,7 @@ export default function Home() {
                   .scroll-hero-top-rod .scroll-hero-master-image { top: 0; }
                   .scroll-hero-canvas { z-index: 2; top: 71.53px; left: 50%; height: calc(var(--scroll-progress) * 423.4px); width: 563.37px; transform: translateX(-50%); clip-path: inset(0); contain: paint; }
                   .scroll-hero-canvas-paper { z-index: 1; top: -69.4px; }
+                  .scroll-hero-fabric-finish { z-index: 1; left: 156.2px; top: 0; height: 100%; width: 251.9px; background-color: rgba(232, 226, 211, .94); background-image: radial-gradient(ellipse 34% 20% at 24% 8%, rgba(255, 255, 255, .06), transparent 72%), radial-gradient(ellipse 30% 18% at 76% 15%, rgba(126, 103, 69, .024), transparent 74%), radial-gradient(ellipse 38% 20% at 28% 92%, rgba(122, 99, 66, .022), transparent 72%), radial-gradient(ellipse 32% 18% at 76% 96%, rgba(255, 255, 255, .045), transparent 74%), linear-gradient(90deg, rgba(105, 86, 57, .075), transparent 10%, transparent 90%, rgba(105, 86, 57, .075)), linear-gradient(180deg, rgba(104, 85, 57, .055), transparent 10%, transparent 90%, rgba(104, 85, 57, .05)); box-shadow: inset 1px 0 rgba(104, 85, 57, .15), inset -1px 0 rgba(104, 85, 57, .15), inset 0 1px rgba(255, 255, 255, .045), inset 0 -1px rgba(104, 85, 57, .085); }
                   .scroll-hero-content { z-index: 2; left: 181.57px; top: 50.16px; height: 329px; width: 199.16px; overflow: hidden !important; clip-path: inset(0); contain: paint; }
                   .scroll-hero-content > img { position: absolute; inset: 0; height: 100%; width: 100%; max-width: none; object-fit: cover; transform: none; }
                   .scroll-hero-bottom-rod { z-index: 3; top: calc(71.53px + var(--scroll-progress) * 423.4px); left: 50%; height: 44.8px; width: 563.37px; transform: translate(-50%, -1px); }

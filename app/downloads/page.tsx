@@ -1,6 +1,6 @@
 export default function DownloadsPage() {
   return (
-    <main className="min-h-screen bg-white px-6 py-20 text-[#191F28] md:px-10">
+    <main className="flex-1 bg-white px-6 py-20 text-[#191F28] md:px-10">
       <div className="mx-auto max-w-[900px]">
         <p className="text-sm font-normal text-[#667085]">연 · 자료실</p>
         <h1 className="mt-4 text-4xl font-medium tracking-[-0.04em]">사찰 실무서식</h1>

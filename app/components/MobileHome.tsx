@@ -622,7 +622,7 @@ export default function MobileHome() {
                     <div className="mt-5 space-y-2.5">
                         <Link
                             href="/resources/masters"
-                            className="grid h-[116px] grid-cols-[64px_minmax(0,1fr)_36px] items-center gap-3 rounded-[18px] bg-[#FAF8F2] px-4 py-3"
+                            className="grid h-[116px] grid-cols-[64px_minmax(0,1fr)_36px] items-center gap-3 rounded-[18px] border border-[#E3E1D9] bg-[#FFFDF8] px-4 py-3 shadow-[0_3px_10px_rgba(45,48,40,0.055)]"
                         >
                             <span
                                 aria-hidden="true"
@@ -641,7 +641,7 @@ export default function MobileHome() {
 
                         <Link
                             href="/stories"
-                            className="grid h-[116px] grid-cols-[64px_minmax(0,1fr)_36px] items-center gap-3 rounded-[18px] bg-[#FAF8F2] px-4 py-3"
+                            className="grid h-[116px] grid-cols-[64px_minmax(0,1fr)_36px] items-center gap-3 rounded-[18px] border border-[#E3E1D9] bg-[#FFFDF8] px-4 py-3 shadow-[0_3px_10px_rgba(45,48,40,0.055)]"
                         >
                             <span className="flex h-16 w-16 items-center justify-center text-[#786B5A]">
                                 <OpenBookIcon />
@@ -658,7 +658,7 @@ export default function MobileHome() {
 
                         <Link
                             href="/resources"
-                            className="grid h-[116px] grid-cols-[64px_minmax(0,1fr)_36px] items-center gap-3 rounded-[18px] bg-[#FAF8F2] px-4 py-3"
+                            className="grid h-[116px] grid-cols-[64px_minmax(0,1fr)_36px] items-center gap-3 rounded-[18px] border border-[#E3E1D9] bg-[#FFFDF8] px-4 py-3 shadow-[0_3px_10px_rgba(45,48,40,0.055)]"
                         >
                             <span className="flex h-16 w-16 items-center justify-center text-[#786B5A]">
                                 <ArchiveDocumentIcon />

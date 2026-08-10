@@ -112,24 +112,29 @@ button {
 
 /* 연 사이트 오른쪽 스크롤바 */
 html {
-  scrollbar-width: auto;
-  scrollbar-color: #b9b18a #f5f3e8;
+  scrollbar-gutter: stable;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #b8bdc3 #f4f5f6;
 }
 
 ::-webkit-scrollbar {
-  width: 14px;
+  width: 12px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f5f3e8;
+  background: #f4f5f6;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #b9b18a;
-  border: 3px solid #f5f3e8;
+  background: #b8bdc3;
+  border: 3px solid #f4f5f6;
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #8f875f;
+  background: #9299a1;
 }
