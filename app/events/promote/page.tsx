@@ -697,6 +697,58 @@ function PictogramIcon({
     );
 }
 
+function PictogramPicker({
+    targetLabel,
+    onSelect,
+    compact = false,
+    className = "relative mt-2 shrink-0",
+}: {
+    targetLabel: string;
+    onSelect: (symbol: string) => void;
+    compact?: boolean;
+    className?: string;
+}) {
+    return (
+        <details className={`group ${className}`}>
+            <summary
+                className={`flex cursor-pointer list-none items-center justify-center border font-normal transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 [&::-webkit-details-marker]:hidden ${compact ? "h-10 w-10 rounded-[10px] border-[#747D6F] bg-[#BABB25] text-lg text-[#FFFDF3] hover:bg-[#B9BA28] focus-visible:ring-[#7E8977]" : "h-[46px] w-[46px] rounded-xl border-[#E2E32E] bg-[#F4F54A] text-xl text-[#252A31] hover:bg-[#EDEF36] focus-visible:ring-[#B9BA28]"}`}
+                title="픽토그램 넣기"
+                aria-label={`${targetLabel}에 픽토그램 넣기`}
+            >
+                ＋
+            </summary>
+            <div
+                className={`absolute right-0 z-40 grid w-[246px] grid-cols-3 gap-1.5 rounded-2xl border border-[#E1E4E8] bg-white p-2 shadow-[0_12px_30px_rgba(25,31,40,0.14)] ${compact ? "top-[44px]" : "top-[52px]"}`}
+                role="group"
+                aria-label={`${targetLabel} 픽토그램 선택표`}
+            >
+                {pictogramOptions.map((item) => (
+                    <button
+                        key={item.key}
+                        type="button"
+                        onClick={(event) => {
+                            onSelect(item.symbol);
+                            event.currentTarget.closest("details")?.removeAttribute("open");
+                        }}
+                        className="flex items-center gap-1.5 rounded-lg px-2 py-2 text-left text-[11px] transition hover:bg-[#FFFFD8]"
+                        title={`${item.label} 삽입`}
+                        aria-label={`${targetLabel}에 ${item.label} 삽입`}
+                    >
+                        {item.key === "none" ? (
+                            <span className="flex h-4 w-4 items-center justify-center text-[#A1A8B2]">
+                                —
+                            </span>
+                        ) : (
+                            <PictogramIcon icon={item.key} className="h-4 w-4 shrink-0" />
+                        )}
+                        <span>{item.label}</span>
+                    </button>
+                ))}
+            </div>
+        </details>
+    );
+}
+
 function wrapText(
     context: CanvasRenderingContext2D,
     text: string,
@@ -1599,46 +1651,6 @@ export default function EventPromotePage() {
         });
     };
 
-    const pictogramPicker = () => (
-        <details className="group relative mt-2 shrink-0">
-            <summary
-                className="flex h-[46px] w-[46px] cursor-pointer list-none items-center justify-center rounded-xl border border-[#E2E32E] bg-[#F4F54A] text-xl font-normal text-[#252A31] transition hover:bg-[#EDEF36] [&::-webkit-details-marker]:hidden"
-                title="픽토그램 넣기"
-                aria-label={`${textLabels[activeContentText]}에 픽토그램 넣기`}
-            >
-                ＋
-            </summary>
-            <div
-                className="absolute right-0 top-[52px] z-40 grid w-[246px] grid-cols-3 gap-1.5 rounded-2xl border border-[#E1E4E8] bg-white p-2 shadow-[0_12px_30px_rgba(25,31,40,0.14)]"
-                role="group"
-                aria-label={`${textLabels[activeContentText]} 픽토그램 선택표`}
-            >
-                {pictogramOptions.map((item) => (
-                    <button
-                        key={item.key}
-                        type="button"
-                        onClick={(event) => {
-                            insertPictogram(activeContentText, item.symbol);
-                            event.currentTarget.closest("details")?.removeAttribute("open");
-                        }}
-                        className="flex items-center gap-1.5 rounded-lg px-2 py-2 text-left text-[11px] transition hover:bg-[#FFFFD8]"
-                        title={`${item.label} 삽입`}
-                        aria-label={`${textLabels[activeContentText]}에 ${item.label} 삽입`}
-                    >
-                        {item.key === "none" ? (
-                            <span className="flex h-4 w-4 items-center justify-center text-[#A1A8B2]">
-                                —
-                            </span>
-                        ) : (
-                            <PictogramIcon icon={item.key} className="h-4 w-4 shrink-0" />
-                        )}
-                        <span>{item.label}</span>
-                    </button>
-                ))}
-            </div>
-        </details>
-    );
-
     const updateSelectedTextValue = (value: string) => {
         updateTextValuePreservingRuns(selectedText, value);
         setTextSelection(null);
@@ -2527,7 +2539,12 @@ export default function EventPromotePage() {
                                                     }
                                                     className={fieldClass}
                                                 />
-                                                {pictogramPicker()}
+                                                <PictogramPicker
+                                                    targetLabel={textLabels[activeContentText]}
+                                                    onSelect={(symbol) =>
+                                                        insertPictogram(activeContentText, symbol)
+                                                    }
+                                                />
                                             </div>
                                         </div>
                                         <div className="text-sm font-medium">
@@ -2734,22 +2751,25 @@ export default function EventPromotePage() {
                                     <p className="mt-1 text-sm text-[#8B95A1]">
                                         대표 또는 기타 배경 중 하나를 선택해 주세요.
                                     </p>
-                                    <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
-                                        {imageCategories.map((category) => (
-                                            <button
-                                                key={category.key}
-                                                type="button"
-                                                onClick={() => {
-                                                    setImageCategory(category.key);
-                                                    const firstScene = scenesByCategory[category.key][0];
-                                                    setScene(firstScene.key);
-                                                    setImageSrc(firstScene.image);
-                                                }}
-                                                className={`shrink-0 rounded-full px-4 py-2 text-sm transition ${imageCategory === category.key ? "bg-[#F4F54A] text-[#252A31]" : "bg-[#F2F4F6] text-[#737B87]"}`}
-                                            >
-                                                {category.label}
-                                            </button>
-                                        ))}
+                                    <div className="mt-4 inline-flex rounded-xl bg-[#F7F8FA] p-1">
+                                        {imageCategories.map((category) => {
+                                            const isSelected = imageCategory === category.key;
+
+                                            return (
+                                                <button
+                                                    key={category.key}
+                                                    type="button"
+                                                    onClick={() => setImageCategory(category.key)}
+                                                    className={`relative min-w-[72px] rounded-lg px-4 py-2 text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#B9BA28] ${isSelected ? "bg-white font-medium text-[#252A31]" : "bg-transparent font-normal text-[#737B87] hover:bg-white/60 hover:text-[#4E5968]"}`}
+                                                    aria-pressed={isSelected}
+                                                >
+                                                    {category.label}
+                                                    {isSelected && (
+                                                        <span className="absolute bottom-1 left-1/2 h-0.5 w-6 -translate-x-1/2 rounded-full bg-[#F4F54A]" />
+                                                    )}
+                                                </button>
+                                            );
+                                        })}
                                     </div>
                                     <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
                                         {visibleScenes.map((item) => (
@@ -3200,31 +3220,55 @@ export default function EventPromotePage() {
                                     <p className="mt-1 text-sm text-[#8B95A1]">
                                         자동으로 만든 문구에 내용을 자유롭게 덧붙이거나 고쳐보세요.
                                     </p>
-                                    <div className="mt-5 flex gap-2 overflow-x-auto pb-2">
-                                        {(Object.keys(copyLabels) as CopyKey[]).map((key) => (
-                                            <button
-                                                key={key}
-                                                type="button"
-                                                onClick={() => setCopyChannel(key)}
-                                                className={`shrink-0 rounded-full px-3.5 py-2 text-xs font-medium ${copyChannel === key ? "bg-[#F4F54A] text-[#252A31]" : "bg-[#F2F4F6] text-[#737B87]"}`}
-                                            >
-                                                {copyLabels[key]}
-                                            </button>
-                                        ))}
+                                    <div className="mt-5 overflow-x-auto pb-1">
+                                        <div className="inline-flex min-w-max rounded-xl bg-[#F7F8FA] p-1">
+                                            {(Object.keys(copyLabels) as CopyKey[]).map((key) => {
+                                                const isSelected = copyChannel === key;
+
+                                                return (
+                                                    <button
+                                                        key={key}
+                                                        type="button"
+                                                        onClick={() => setCopyChannel(key)}
+                                                        className={`relative shrink-0 rounded-lg px-3.5 py-2 text-xs transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#B9BA28] ${isSelected ? "bg-white font-medium text-[#252A31]" : "bg-transparent font-normal text-[#737B87] hover:bg-white/60 hover:text-[#4E5968]"}`}
+                                                        aria-pressed={isSelected}
+                                                    >
+                                                        {copyLabels[key]}
+                                                        {isSelected && (
+                                                            <span className="absolute bottom-1 left-1/2 h-0.5 w-5 -translate-x-1/2 rounded-full bg-[#F4F54A]" />
+                                                        )}
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
                                     </div>
-                                    <label className="mt-4 block">
-                                        <span className="text-xs font-normal text-[#8B95A1]">
+                                    <div className="mt-4">
+                                        <label
+                                            htmlFor="promote-copy-editor"
+                                            className="text-xs font-normal text-[#8B95A1]"
+                                        >
                                             {copyLabels[copyChannel]} 문구 편집
-                                        </span>
-                                        <textarea
-                                            ref={copyTextareaRef}
-                                            value={activeCopy}
-                                            onChange={(event) => updateCopyDraft(event.target.value)}
-                                            rows={copyChannel === "sms" ? 4 : 11}
-                                            className="mt-2 w-full resize-y rounded-xl border border-[#E1E4E8] bg-white px-4 py-3 text-sm font-normal leading-7 text-[#59616D] outline-none transition focus:border-[#B9BA28] focus:ring-2 focus:ring-[#F4F54A]/30"
-                                            aria-label={`${copyLabels[copyChannel]} 홍보 문구 편집`}
-                                        />
-                                    </label>
+                                        </label>
+                                        <div className="relative mt-2">
+                                            <textarea
+                                                id="promote-copy-editor"
+                                                ref={copyTextareaRef}
+                                                value={activeCopy}
+                                                onChange={(event) =>
+                                                    updateCopyDraft(event.target.value)
+                                                }
+                                                rows={copyChannel === "sms" ? 4 : 11}
+                                                className="w-full resize-y rounded-xl border border-[#E1E4E8] bg-white pb-3 pl-4 pr-16 pt-14 text-sm font-normal leading-7 text-[#59616D] outline-none transition focus:border-[#B9BA28] focus:ring-2 focus:ring-[#F4F54A]/30"
+                                                aria-label={`${copyLabels[copyChannel]} 홍보 문구 편집`}
+                                            />
+                                            <PictogramPicker
+                                                targetLabel={`${copyLabels[copyChannel]} 홍보 문구`}
+                                                onSelect={insertCopyEmoji}
+                                                compact
+                                                className="absolute right-6 top-3 z-20"
+                                            />
+                                        </div>
+                                    </div>
                                     <details className="group mt-3 rounded-xl bg-[#F7F8FA] px-3 py-3">
                                         <summary className="flex cursor-pointer list-none items-center justify-between gap-3 [&::-webkit-details-marker]:hidden">
                                             <span className="text-xs font-medium text-[#667085]">
