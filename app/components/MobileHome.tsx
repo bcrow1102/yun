@@ -155,6 +155,111 @@ function ChevronIcon() {
     );
 }
 
+function FooterArrowIcon() {
+    return (
+        <svg viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5 -rotate-45" aria-hidden="true">
+            <path
+                d="M5 12h14m-5-5 5 5-5 5"
+                stroke="currentColor"
+                strokeWidth="1.7"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </svg>
+    );
+}
+
+function KakaoIcon() {
+    return (
+        <svg viewBox="0 0 32 32" className="h-7 w-7" aria-hidden="true">
+            <path
+                d="M16 5C9.4 5 4 9.2 4 14.4c0 3.4 2.3 6.4 5.8 8.1l-1.5 5.2c-.1.4.4.7.7.5l6.1-4.1h.9c6.6 0 12-4.2 12-9.5S22.6 5 16 5Z"
+                fill="currentColor"
+            />
+        </svg>
+    );
+}
+
+function MessageIcon() {
+    return (
+        <svg
+            viewBox="0 0 32 32"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.7"
+            className="h-7 w-7"
+            aria-hidden="true"
+        >
+            <path d="M6 7.5h20v15H14l-6 4v-4H6v-15Z" strokeLinejoin="round" />
+            <path d="M11 14.8h.1m4.9 0h.1m4.9 0h.1" strokeLinecap="round" strokeWidth="2.6" />
+        </svg>
+    );
+}
+
+function OpenBookIcon() {
+    return (
+        <svg viewBox="0 0 64 64" fill="none" className="h-14 w-14" aria-hidden="true">
+            <path
+                d="M8 15.5c8.5-2.5 16.5-.8 24 5v31c-7.5-5.8-15.5-7.5-24-5V15.5Z"
+                fill="#FFFDF3"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinejoin="round"
+            />
+            <path
+                d="M56 15.5c-8.5-2.5-16.5-.8-24 5v31c7.5-5.8 15.5-7.5 24-5V15.5Z"
+                fill="#FFFDF3"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinejoin="round"
+            />
+            <path d="M32 20.5v31" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            <path
+                d="M32 39c-4.2-3.4-5.2-7.4 0-12.5 5.2 5.1 4.2 9.1 0 12.5Z"
+                fill="#F4F54A"
+                stroke="currentColor"
+                strokeWidth="1.6"
+            />
+            <path
+                d="M30.5 40c-4.7-.4-7.2-2.8-7.5-7 4.6.3 7.1 2.7 7.5 7Z"
+                fill="#F4F54A"
+                stroke="currentColor"
+                strokeWidth="1.6"
+            />
+            <path
+                d="M33.5 40c4.7-.4 7.2-2.8 7.5-7-4.6.3-7.1 2.7-7.5 7Z"
+                fill="#F4F54A"
+                stroke="currentColor"
+                strokeWidth="1.6"
+            />
+        </svg>
+    );
+}
+
+function ArchiveDocumentIcon() {
+    return (
+        <svg viewBox="0 0 64 64" fill="none" className="h-14 w-14" aria-hidden="true">
+            <path
+                d="M17 11h25l8 8v34H17V11Z"
+                fill="#FFFDF3"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinejoin="round"
+            />
+            <path d="M42 11v9h8" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+            <path d="M24 29h19M24 36h19M24 43h13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            <path
+                d="M12 18v38h31"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            <path d="M24 23h8" stroke="#A3A86B" strokeWidth="3" strokeLinecap="round" />
+        </svg>
+    );
+}
+
 function TempleImage() {
     return (
         <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-[#EAF3FF] text-[#3182F6]">
@@ -196,8 +301,6 @@ export default function MobileHome() {
             introStartedHere.current = true;
             hasShownMobileIntro = true;
         }
-
-        setIntroLeaving(false);
 
         const fadeTimer = window.setTimeout(() => setIntroLeaving(true), 3000);
         const hideTimer = window.setTimeout(() => setShowIntro(false), 3500);
@@ -442,98 +545,161 @@ export default function MobileHome() {
                     </div>
                 </section>
 
-                <section className="mt-2" aria-labelledby="mobile-quick-actions-title">
-                    <h2 id="mobile-quick-actions-title" className="text-xl font-medium tracking-[-0.035em]">
-                        지금 바로 활용하기
-                    </h2>
-                    <div className="mt-3 space-y-2">
-                        <Link
-                            href="/events/promote"
-                            className="flex items-center justify-between border border-[#E7E9EC] bg-white px-4 py-4"
-                        >
-                            <span>
-                                <span className="block text-[15px] font-medium text-[#252A31]">홍보물 DIY</span>
-                                <span className="mt-1 block text-xs font-normal text-[#7A818D]">행사 홍보물을 직접 만들어보세요.</span>
-                            </span>
-                            <ChevronIcon />
-                        </Link>
-                        <Link
-                            href="/resources"
-                            className="flex items-center justify-between border border-[#E7E9EC] bg-white px-4 py-4"
-                        >
-                            <span>
-                                <span className="block text-[15px] font-medium text-[#252A31]">사찰 실무서식 / 자료실</span>
-                                <span className="mt-1 block text-xs font-normal text-[#7A818D]">사찰 운영에 필요한 자료를 찾아보세요.</span>
-                            </span>
-                            <ChevronIcon />
-                        </Link>
-                    </div>
-                </section>
-
-                <section className="mt-8" aria-labelledby="mobile-living-title">
-                    <h2 id="mobile-living-title" className="text-xl font-medium tracking-[-0.035em]">
+                <section className="-mx-4 bg-white px-5 pb-10" aria-labelledby="mobile-living-title">
+                    <h2 id="mobile-living-title" className="text-[17px] font-medium tracking-[-0.03em] text-[#252A31]">
                         한국불교 생활 찾기
                     </h2>
-                    <div className="mt-3 grid grid-cols-2 border-t border-l border-[#E7E9EC]">
+                    <div className="mt-4 grid grid-cols-4 gap-2">
                         {[
-                            ["템플스테이", "/temples/stay"],
-                            ["사찰음식", "/temples/food"],
-                            ["행사교육", "/events"],
-                            ["사찰 안내", "/temples/guide"],
-                        ].map(([title, href]) => (
+                            { title: "템플스테이", href: "/temples/stay", image: "/images/menu/temple-stay-icon.webp", size: "88%", position: "center" },
+                            { title: "사찰음식", href: "/temples/food", image: "/images/menu/temple-food-icon.webp", size: "88%", position: "center" },
+                            { title: "행사교육", href: "/events", image: "/images/menu/event-education.webp", size: "82%", position: "center" },
+                            { title: "사찰 안내", href: "/temples/guide", image: "/images/menu/temple-guide-icon.webp", size: "88%", position: "center" },
+                        ].map((item) => (
                             <Link
-                                key={href}
-                                href={href}
-                                className="flex items-center justify-between border-b border-r border-[#E7E9EC] px-4 py-4 text-sm font-normal text-[#252A31]"
+                                key={item.href}
+                                href={item.href}
+                                className="min-w-0 overflow-hidden rounded-[18px] border border-[#E7E9EC] bg-[#FFFBE0] text-center shadow-[0_2px_8px_rgba(25,31,40,0.035)] transition-[transform,box-shadow,border-color] duration-150 active:scale-[0.98] active:border-[#DCDD36] active:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B9BA28] focus-visible:ring-offset-2"
                             >
-                                {title}
-                                <ChevronIcon />
+                                <span className="block h-2 bg-[#F4F54A]" />
+                                <span className="flex h-[82px] items-center justify-center px-1.5 pt-2">
+                                    <span
+                                        aria-hidden="true"
+                                        className="h-full w-full bg-transparent bg-no-repeat"
+                                        style={{
+                                            backgroundImage: `url(${item.image})`,
+                                            backgroundPosition: item.position,
+                                            backgroundSize: item.size,
+                                        }}
+                                    />
+                                </span>
+                                <strong className="block truncate whitespace-nowrap px-1 pb-3 pt-1 text-[12px] font-semibold text-[#252A31]">
+                                    {item.title}
+                                </strong>
                             </Link>
                         ))}
                     </div>
                 </section>
 
-                <section className="mt-8" aria-labelledby="mobile-learn-title">
-                    <h2 id="mobile-learn-title" className="text-xl font-medium tracking-[-0.035em]">
+                <section className="-mx-4 mt-2 bg-[#FAF8F2] px-5 pb-10 pt-8" aria-labelledby="mobile-quick-actions-title">
+                    <h2 id="mobile-quick-actions-title" className="text-[17px] font-medium tracking-[-0.03em] text-[#252A31]">
+                        지금 바로 활용하기
+                    </h2>
+
+                    <Link
+                        href="/events/promote"
+                        className="relative mt-4 flex min-h-24 items-center justify-between overflow-hidden rounded-[18px] bg-[#FFFEFA] py-4 pl-5 pr-4 shadow-[0_1px_2px_rgba(37,42,49,0.035)]"
+                    >
+                        <span aria-hidden="true" className="absolute inset-y-4 left-0 w-1 rounded-r-full bg-[#F4F54A]" />
+                        <span className="min-w-0 pr-4">
+                            <span className="block text-[11px] font-medium tracking-[0.02em] text-[#777900]">내 손으로 쉽고 빠르게</span>
+                            <span className="mt-1 block text-[17px] font-medium tracking-[-0.04em] text-[#252A31]">홍보물 DIY</span>
+                            <span className="mt-1 block break-keep text-[11px] font-normal leading-5 text-[#667067]">행사 홍보물을 직접 만들어보세요.</span>
+                        </span>
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F4F54A] text-[#4D4E00]">
+                            <ChevronIcon />
+                        </span>
+                    </Link>
+
+                    <Link href="/resources" className="relative mt-3 flex min-h-24 items-center justify-between overflow-hidden rounded-[18px] bg-[#FFFEFA] py-4 pl-5 pr-4 shadow-[0_1px_2px_rgba(37,42,49,0.035)]">
+                        <span aria-hidden="true" className="absolute inset-y-4 left-0 w-1 rounded-r-full bg-[#F4F54A]" />
+                        <span className="min-w-0 pr-4">
+                            <span className="block text-[11px] font-medium tracking-[0.02em] text-[#777900]">실무에 바로 쓰는 자료</span>
+                            <span className="mt-1 block whitespace-nowrap text-[17px] font-medium tracking-[-0.04em] text-[#252A31]">사찰 실무서식 / 자료실</span>
+                            <span className="mt-1 block break-keep text-[11px] font-normal leading-5 text-[#667067]">사찰 운영에 필요한 자료를 찾아보세요.</span>
+                        </span>
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F4F54A] text-[#4D4E00]">
+                            <ChevronIcon />
+                        </span>
+                    </Link>
+                </section>
+
+                <section className="-mx-4 bg-sage-50 px-5 pb-14 pt-12" aria-labelledby="mobile-learn-title">
+                    <h2 id="mobile-learn-title" className="text-[22px] font-medium tracking-[-0.04em] text-[#252A31]">
                         읽고 알아가기
                     </h2>
-                    <div className="mt-3 space-y-2">
-                        <Link href="/resources/masters" className="block border border-[#E7E9EC] bg-white px-4 py-4">
-                            <span className="block text-[15px] font-medium text-[#252A31]">한국의 고승</span>
-                            <span className="mt-1 block text-xs font-normal text-[#7A818D]">한국불교의 큰스님과 가르침을 알아보세요.</span>
+
+                    <div className="mt-5 space-y-2.5">
+                        <Link
+                            href="/resources/masters"
+                            className="grid h-[116px] grid-cols-[64px_minmax(0,1fr)_36px] items-center gap-3 rounded-[18px] bg-[#FAF8F2] px-4 py-3"
+                        >
+                            <span
+                                aria-hidden="true"
+                                className="h-16 w-16 bg-contain bg-center bg-no-repeat"
+                                style={{ backgroundImage: "url('/images/showcase/yeon-deep-reading-books.webp')" }}
+                            />
+                            <span className="min-w-0">
+                                <span className="block text-[11px] font-medium tracking-[0.02em] text-[#7E8977]">한국불교의 사람들</span>
+                                <span className="mt-1 block text-[19px] font-medium tracking-[-0.04em] text-[#252A31]">한국의 고승</span>
+                                <span className="mt-1 block break-keep text-xs font-normal leading-5 text-[#667067]">한국불교의 큰스님과 가르침을 알아보세요.</span>
+                            </span>
+                            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-[#7E8977]">
+                                <ChevronIcon />
+                            </span>
                         </Link>
-                        <Link href="/stories" className="block border border-[#E7E9EC] bg-white px-4 py-4">
-                            <span className="block text-[15px] font-medium text-[#252A31]">부처님 이야기</span>
-                            <span className="mt-1 block text-xs font-normal text-[#7A818D]">잠시 쉬어가며 마음을 돌아보는 이야기입니다.</span>
+
+                        <Link
+                            href="/stories"
+                            className="grid h-[116px] grid-cols-[64px_minmax(0,1fr)_36px] items-center gap-3 rounded-[18px] bg-[#FAF8F2] px-4 py-3"
+                        >
+                            <span className="flex h-16 w-16 items-center justify-center text-[#786B5A]">
+                                <OpenBookIcon />
+                            </span>
+                            <span className="min-w-0">
+                                <span className="block text-[11px] font-medium tracking-[0.02em] text-[#7E8977]">마음을 쉬어가는 이야기</span>
+                                <span className="mt-1 block text-[19px] font-medium tracking-[-0.04em] text-[#252A31]">부처님 이야기</span>
+                                <span className="mt-1 block break-keep text-xs font-normal leading-5 text-[#667067]">잠시 쉬어가며 마음을 돌아보는 이야기입니다.</span>
+                            </span>
+                            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-[#7E8977]">
+                                <ChevronIcon />
+                            </span>
                         </Link>
-                        <Link href="/resources" className="block border border-[#E7E9EC] bg-white px-4 py-4">
-                            <span className="block text-[15px] font-medium text-[#252A31]">불교자료</span>
-                            <span className="mt-1 block text-xs font-normal text-[#7A818D]">불교와 사찰 생활에 필요한 자료를 모았습니다.</span>
+
+                        <Link
+                            href="/resources"
+                            className="grid h-[116px] grid-cols-[64px_minmax(0,1fr)_36px] items-center gap-3 rounded-[18px] bg-[#FAF8F2] px-4 py-3"
+                        >
+                            <span className="flex h-16 w-16 items-center justify-center text-[#786B5A]">
+                                <ArchiveDocumentIcon />
+                            </span>
+                            <span className="min-w-0">
+                                <span className="block text-[11px] font-medium tracking-[0.02em] text-[#7E8977]">깊이 알아보는 한국불교</span>
+                                <span className="mt-1 block text-[19px] font-medium tracking-[-0.04em] text-[#252A31]">불교자료</span>
+                                <span className="mt-1 block break-keep text-xs font-normal leading-5 text-[#667067]">불교와 사찰 생활에 필요한 자료를 모았습니다.</span>
+                            </span>
+                            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-[#7E8977]">
+                                <ChevronIcon />
+                            </span>
                         </Link>
                     </div>
                 </section>
 
-                <section className="mt-8" aria-labelledby="mobile-latest-title">
-                    <h2 id="mobile-latest-title" className="text-xl font-medium tracking-[-0.035em]">
+                <section className="-mx-4 bg-white px-5 py-12" aria-labelledby="mobile-latest-title">
+                    <h2 id="mobile-latest-title" className="text-[18px] font-medium tracking-[-0.03em] text-[#252A31]">
                         새로 올라온 것
                     </h2>
-                    <div className="mt-3 divide-y divide-[#E7E9EC] border-y border-[#E7E9EC] bg-white">
+                    <div className="mt-4 space-y-1">
                         {jobs.map((job) => (
-                            <Link key={`${job.temple}-${job.title}`} href={`/jobs/${job.id}`} className="flex items-center justify-between gap-3 px-4 py-4 text-left">
+                            <Link key={`${job.temple}-${job.title}`} href={`/jobs/${job.id}`} className="flex min-h-16 items-center justify-between gap-4 py-2.5 text-left">
                                 <span className="min-w-0 flex-1">
-                                    <span className="block text-xs font-normal text-[#8B95A1]">구인 · {job.temple} · {job.location}</span>
-                                    <span className="mt-1 block truncate text-[14px] font-normal text-[#252A31]">{job.title}</span>
+                                    <span className="block truncate text-xs font-normal text-[#8B95A1]">구인 · {job.temple} · {job.location} · {job.date}</span>
+                                    <span className="mt-1 block truncate text-[15px] font-medium text-[#252A31]">{job.title}</span>
                                 </span>
-                                <span className="shrink-0 text-xs font-normal text-[#8B95A1]">{job.date}</span>
+                                <span className="shrink-0 text-[#A1A99B]">
+                                    <ChevronIcon />
+                                </span>
                             </Link>
                         ))}
                         {templeStays.map((stay) => (
-                            <Link key={stay.name} href={`/temples/stay/${stay.id}`} className="flex items-center justify-between gap-3 px-4 py-4 text-left">
+                            <Link key={stay.name} href={`/temples/stay/${stay.id}`} className="flex min-h-16 items-center justify-between gap-4 py-2.5 text-left">
                                 <span className="min-w-0 flex-1">
-                                    <span className="block text-xs font-normal text-[#8B95A1]">템플스테이 · {stay.location}</span>
-                                    <span className="mt-1 block truncate text-[14px] font-normal text-[#252A31]">{stay.name}</span>
+                                    <span className="block truncate text-xs font-normal text-[#8B95A1]">템플스테이 · {stay.location}</span>
+                                    <span className="mt-1 block truncate text-[15px] font-medium text-[#252A31]">{stay.name}</span>
                                 </span>
-                                <ChevronIcon />
+                                <span className="shrink-0 text-[#A1A99B]">
+                                    <ChevronIcon />
+                                </span>
                             </Link>
                         ))}
                     </div>
@@ -813,7 +979,7 @@ export default function MobileHome() {
                 </section>
             </main>
 
-            <footer className="border-t border-[#E7E9EC] bg-[#FAFAF8] px-5 pb-8 pt-8">
+            <footer className="border-t border-[#D9DAD4] bg-white px-5 pb-6 pt-7">
                 <Link
                     href="/"
                     className="inline-flex items-center gap-2"
@@ -823,50 +989,67 @@ export default function MobileHome() {
                     <span className="text-lg font-semibold tracking-[-0.04em]">연</span>
                 </Link>
 
-                <p className="mt-3 text-[13px] leading-5 text-[#667085]">
+                <p className="mt-2 text-[13px] font-normal leading-5 text-[#667085]">
                     불교 생활에 필요한 정보를 쉽고 가깝게 연결하는 공간입니다.
                 </p>
 
-                <div className="mt-6">
-                    <h2 className="text-[13px] font-semibold text-[#252A31]">
+                <div className="mt-7">
+                    <h2 className="text-[13px] font-medium text-[#252A31]">
                         등록 안내
                     </h2>
 
-                    <div className="mt-3 grid grid-cols-2 gap-x-5 gap-y-3 text-[13px] text-[#667085]">
-                        <Link href="/jobs/new">구인 등록</Link>
-                        <Link href="/events/new">행사·교육 등록</Link>
-                        <Link href="/temples/stay/new">템플스테이 등록</Link>
-                        <Link href="/temples/food/new">사찰음식 등록</Link>
+                    <div className="mt-2 grid grid-cols-2 gap-x-5 text-[13px] font-normal text-[#667085]">
+                        <Link href="/jobs/new" className="flex min-h-9 items-center">구인 등록</Link>
+                        <Link href="/events/new" className="flex min-h-9 items-center">행사·교육 등록</Link>
+                        <Link href="/temples/stay/new" className="flex min-h-9 items-center">템플스테이 등록</Link>
+                        <Link href="/temples/food/new" className="flex min-h-9 items-center">사찰음식 등록</Link>
                     </div>
+                </div>
 
+                <div className="mt-7">
+                    <h2 className="text-[13px] font-medium text-[#252A31]">문의하기</h2>
                     <a
                         href="mailto:bcrow1102@gmail.com"
-                        className="mt-3 inline-flex gap-2 whitespace-nowrap text-xs text-[#2563EB]"
+                        className="mt-2 flex min-h-11 flex-col justify-center text-xs font-normal"
                     >
-                        <span>이메일 문의</span>
-                        <span>bcrow1102@gmail.com</span>
+                        <span className="text-[#252A31]">이메일 문의</span>
+                        <span className="mt-0.5 text-[#2563EB]">bcrow1102@gmail.com</span>
                     </a>
+
+                    <div className="mt-2.5 grid gap-2.5">
+                        <a
+                            href="https://open.kakao.com/o/sulQHJGi"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="relative flex min-h-16 items-center gap-2.5 rounded-[8px] border border-[#E7E9EC] bg-[#FFFEFA] py-2.5 pl-3.5 pr-11 text-left text-[#252A31]"
+                        >
+                            <KakaoIcon />
+                            <span className="min-w-0 flex-1">
+                                <span className="block text-[13px] font-medium">카카오톡 문의</span>
+                                <span className="mt-0.5 block text-[11px] font-normal text-[#667085]">오픈채팅으로 상담하세요</span>
+                            </span>
+                            <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#8B95A1]">
+                                <FooterArrowIcon />
+                            </span>
+                        </a>
+
+                        <a
+                            href="sms:01057861556"
+                            className="relative flex min-h-16 items-center gap-2.5 rounded-[8px] border border-[#E7E9EC] bg-[#FFFEFA] py-2.5 pl-3.5 pr-11 text-left text-[#252A31]"
+                        >
+                            <MessageIcon />
+                            <span className="min-w-0 flex-1">
+                                <span className="block text-[13px] font-medium">문자 문의</span>
+                                <span className="mt-0.5 block text-[11px] font-normal text-[#667085]">궁금한 내용을 보내주세요</span>
+                            </span>
+                            <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#8B95A1]">
+                                <FooterArrowIcon />
+                            </span>
+                        </a>
+                    </div>
                 </div>
 
-                <div className="mt-6 grid grid-cols-2 gap-2.5">
-                    <a
-                        href="https://open.kakao.com/o/sulQHJGi"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex min-h-12 items-center justify-center rounded-xl bg-[#FEE500] px-3 text-[13px] font-medium text-[#191F28]"
-                    >
-                        카카오톡 문의
-                    </a>
-
-                    <a
-                        href="sms:01057861556"
-                        className="flex min-h-12 items-center justify-center rounded-xl border border-[#DDE1E5] bg-white px-3 text-[13px] font-medium text-[#252A31]"
-                    >
-                        문자 문의
-                    </a>
-                </div>
-
-                <div className="mt-7 border-t border-[#E7E9EC] pt-4 text-[11px] text-[#8B95A1]">
+                <div className="mt-6 border-t border-[#E7E9EC] pt-4 text-[11px] font-normal text-[#8B95A1]">
                     <p>© 2026 연. All rights reserved.</p>
                     <p className="mt-1">불교 정보와 사람을 잇는 공간</p>
                 </div>
