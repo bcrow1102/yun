@@ -29,9 +29,9 @@ const templeMenus = [
 
 const resourceMenus = [
     {
-        title: "불교자료",
-        description: "원전·역사·학술 자료를 찾아봅니다",
-        href: "/resources",
+        title: "한국의 고승",
+        description: "시대별 고승의 삶과 자료를 살펴봅니다",
+        href: "/resources/masters",
     },
     {
         title: "부처님 이야기",
@@ -39,9 +39,9 @@ const resourceMenus = [
         href: "/stories",
     },
     {
-        title: "한국의 고승",
-        description: "시대별 고승의 삶과 자료를 살펴봅니다",
-        href: "/resources/masters",
+        title: "불교자료",
+        description: "원전·역사·학술 자료를 찾아봅니다",
+        href: "/resources",
     },
 ];
 
@@ -277,7 +277,7 @@ function DropdownMenu({
                                     {item.description}
                                 </span>
                             </span>
-                            <span className="shrink-0 text-[#A7AFB7] transition-all duration-200 group-hover/item:translate-x-0.5 group-hover/item:text-[#4E5968]">
+                            <span className="shrink-0 translate-x-0 text-[#A7AFB7] opacity-0 transition-[opacity,transform,color] duration-[180ms] ease-out group-hover/item:translate-x-1 group-hover/item:text-[#4E5968] group-hover/item:opacity-100 group-focus/item:translate-x-1 group-focus/item:text-[#4E5968] group-focus/item:opacity-100 group-focus-visible/item:translate-x-1 group-focus-visible/item:opacity-100">
                                 <ArrowIcon />
                             </span>
                         </Link>
