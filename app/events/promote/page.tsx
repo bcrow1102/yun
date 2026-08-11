@@ -30,8 +30,44 @@ type SceneKey =
     | "moreTea"
     | "moreMoonLanterns"
     | "custom";
+type ImageComposition =
+    | "bottom-left"
+    | "bottom-center"
+    | "bottom-right"
+    | "upper-left"
+    | "upper-right"
+    | "center"
+    | "full";
+type CropAnchor = Readonly<{ x: number; y: number }>;
+
+const CENTER_CROP_ANCHOR: CropAnchor = { x: 0.5, y: 0.5 };
+const CONTAIN_BACKGROUND_SCALE = 1.12;
+const CONTAIN_BACKGROUND_BLUR_RATIO = 0.035;
+const STORY_CONTAIN_BACKGROUND_BLUR_RATIO = 0.06;
+const STORY_CONTAIN_BACKGROUND_OVERLAY_ALPHA = 0;
+const CUSTOM_CONTAIN_BACKGROUND_OVERLAY_ALPHA = 0.18;
+const STORY_CONTAIN_BLEND_SIZE = 60;
+
+const cropAnchorByComposition: Readonly<
+    Record<ImageComposition, CropAnchor>
+> = {
+    "bottom-left": { x: 0.15, y: 0.9 },
+    "bottom-center": { x: 0.5, y: 0.9 },
+    "bottom-right": { x: 0.85, y: 0.9 },
+    "upper-left": { x: 0.15, y: 0.1 },
+    "upper-right": { x: 0.85, y: 0.1 },
+    center: CENTER_CROP_ANCHOR,
+    full: CENTER_CROP_ANCHOR,
+};
+
+function resolveCompositionAnchor(
+    composition: ImageComposition,
+): CropAnchor {
+    return cropAnchorByComposition[composition];
+}
 type ImageCategory = "featured" | "other";
 type ImageFit = "cover" | "contain";
+type ImageFitOverride = ImageFit | null;
 type TextKey =
     | "title"
     | "organizer"
@@ -90,12 +126,25 @@ type RichTextRun = {
 
 const LOTUS_SYMBOL = "❀";
 const PIN_SYMBOL = "⌖";
+
+function focusContentField(key: TextKey) {
+    const field = document.getElementById(`promote-${key}`) as
+        | HTMLInputElement
+        | HTMLTextAreaElement
+        | null;
+
+    field?.focus({ preventScroll: true });
+    field?.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
 const DEFAULT_TITLE = "♫ 연꽃 피는 산사 음악회";
 const DEFAULT_ORGANIZER = "연화사";
 const DEFAULT_DATE = "2026. 8. 22. 토요일 오후 6시";
 const DEFAULT_PLACE = `${PIN_SYMBOL} 연화사 앞마당`;
 const DEFAULT_DESCRIPTION =
     "여름 저녁, 산사의 고요함과 음악이 만나는 시간\n차 한 잔과 함께 잠시 머물며\n마음에 작은 쉼표를 놓아보세요";
+const YOUTUBE_DEFAULT_DESCRIPTION =
+    "여름 저녁, 산사의 고요함과 음악이 만나는 시간\n차 한 잔과 함께 잠시 머물며 마음에 작은 쉼표를 놓아보세요";
 const INITIAL_TITLE_RUNS: RichTextRun[] = [
     {
         start: 11,
@@ -223,6 +272,318 @@ const channels: Record<
     },
 };
 
+const allVisibleFields: Readonly<Record<TextKey, boolean>> = {
+    organizer: true,
+    title: true,
+    date: true,
+    place: true,
+    application: true,
+    description: true,
+};
+
+const visibleFieldsByChannel: Record<
+    ChannelKey,
+    Readonly<Record<TextKey, boolean>>
+> = {
+    instagram: allVisibleFields,
+    story: allVisibleFields,
+    a4: allVisibleFields,
+    kakao: allVisibleFields,
+    share: allVisibleFields,
+    youtube: {
+        organizer: true,
+        title: true,
+        date: true,
+        place: false,
+        application: false,
+        description: true,
+    },
+    blog: {
+        organizer: true,
+        title: true,
+        date: true,
+        place: true,
+        application: false,
+        description: true,
+    },
+};
+
+type DescriptionMode = "full" | "compact";
+type PosterLayoutTextKey =
+    | "organizer"
+    | "title"
+    | "date"
+    | "place"
+    | "description";
+
+type ChannelPosterLayout = {
+    textSide: "left" | "right";
+    textArea: {
+        left: number;
+        right: number;
+        top: number;
+        bottom: number;
+    };
+    elementTop: Readonly<Record<PosterLayoutTextKey, number>>;
+    baseFontSizes: Readonly<Record<PosterLayoutTextKey, number>>;
+    lineHeightRatios?: Readonly<Partial<Record<PosterLayoutTextKey, number>>>;
+    titleMaxLines: number;
+    descriptionMaxLines: number;
+    defaultDividerVisible: boolean;
+};
+
+const youtubePosterLayoutBase = {
+    elementTop: {
+        organizer: 0.095,
+        title: 0.18,
+        date: 0.535,
+        place: 0.67,
+        description: 0.655,
+    },
+    baseFontSizes: {
+        organizer: 40,
+        title: 96,
+        date: 48,
+        place: 27,
+        description: 42,
+    },
+    lineHeightRatios: {
+        organizer: 1.2,
+        title: 1.12,
+        date: 1.22,
+        description: 1.28,
+    },
+    titleMaxLines: 2,
+    descriptionMaxLines: 2,
+    defaultDividerVisible: false,
+} as const;
+
+const blogPosterLayoutBase = {
+    elementTop: {
+        organizer: 0.075,
+        title: 0.16,
+        date: 0.56,
+        place: 0.66,
+        description: 0.765,
+    },
+    baseFontSizes: {
+        organizer: 38,
+        title: 84,
+        date: 46,
+        place: 42,
+        description: 40,
+    },
+    lineHeightRatios: {
+        title: 1.11,
+        description: 1.3,
+    },
+    titleMaxLines: 2,
+    descriptionMaxLines: 2,
+    defaultDividerVisible: false,
+} as const;
+
+const blogTextAreaBySide = {
+    left: {
+        left: 0.06,
+        right: 0.55,
+        top: 0.085,
+        bottom: 0.94,
+    },
+    right: {
+        left: 0.45,
+        right: 0.94,
+        top: 0.085,
+        bottom: 0.94,
+    },
+} as const;
+
+function resolveCompositionTextSide(
+    composition: ImageComposition,
+): ChannelPosterLayout["textSide"] {
+    return composition === "bottom-left" || composition === "upper-left"
+        ? "right"
+        : "left";
+}
+
+const youtubeTextAreaBySide = {
+    left: {
+        left: 0.065,
+        right: 0.55,
+        top: 0.09,
+        bottom: 0.91,
+    },
+    right: {
+        left: 0.45,
+        right: 0.935,
+        top: 0.09,
+        bottom: 0.91,
+    },
+} as const;
+
+function resolveYoutubeCompositionLayout(
+    composition: ImageComposition,
+): ChannelPosterLayout {
+    const textSide = resolveCompositionTextSide(composition);
+
+    return {
+        ...youtubePosterLayoutBase,
+        textSide,
+        textArea: youtubeTextAreaBySide[textSide],
+    };
+};
+
+function resolveBlogCompositionLayout(
+    composition: ImageComposition,
+): ChannelPosterLayout {
+    const textSide = resolveCompositionTextSide(composition);
+
+    return {
+        ...blogPosterLayoutBase,
+        textSide,
+        textArea: blogTextAreaBySide[textSide],
+    };
+}
+
+const descriptionModeByChannel: Record<ChannelKey, DescriptionMode> = {
+    instagram: "full",
+    story: "full",
+    kakao: "compact",
+    share: "compact",
+    youtube: "compact",
+    blog: "compact",
+    a4: "full",
+};
+
+type ChannelLayout = (typeof channels)[ChannelKey] & {
+    aspectRatio: number;
+    isLandscape: boolean;
+    visibleFields: Readonly<Record<TextKey, boolean>>;
+    descriptionMode: DescriptionMode;
+    posterLayout: ChannelPosterLayout | null;
+    defaultDividerVisible: boolean;
+    coverCropAnchor: CropAnchor;
+    preview: {
+        aspectClass: string;
+        titleSize: number;
+        mobileFontSizes: Record<TextKey, number>;
+        mobileScaleMode: "legacy" | "proportional" | "preset";
+    };
+    png: {
+        outputScale: number;
+        shadowScale: number;
+        side: number;
+        top: number;
+        contentWidth: number;
+        baseFontSizes: Record<TextKey, number>;
+        contactInset: number;
+        applicationOffset: number;
+        titleMaxLines: number;
+    };
+};
+
+function resolveChannelLayout(
+    channel: ChannelKey,
+    imageComposition: ImageComposition = "center",
+): ChannelLayout {
+    const selected = channels[channel];
+    const posterLayout =
+        channel === "youtube"
+            ? resolveYoutubeCompositionLayout(imageComposition)
+            : channel === "blog"
+                ? resolveBlogCompositionLayout(imageComposition)
+                : null;
+    const aspectRatio = selected.width / selected.height;
+    const isLandscape = aspectRatio > 1.45;
+    const outputScale = channel === "a4" ? selected.width / 1080 : 1;
+    const side = posterLayout
+        ? posterLayout.textArea.left * selected.width
+        : (isLandscape ? 62 : 76) * outputScale;
+    const baseFontSizes: Record<TextKey, number> = {
+        organizer:
+            posterLayout?.baseFontSizes.organizer ??
+            (isLandscape ? 27 : 34) * outputScale,
+        title:
+            posterLayout?.baseFontSizes.title ??
+            (isLandscape ? 55 : 68) * outputScale,
+        date:
+            posterLayout?.baseFontSizes.date ??
+            (isLandscape ? 29 : 36) * outputScale,
+        place:
+            posterLayout?.baseFontSizes.place ??
+            (isLandscape ? 27 : 34) * outputScale,
+        description:
+            posterLayout?.baseFontSizes.description ??
+            (isLandscape ? 25 : 31) * outputScale,
+        application: (isLandscape ? 25 : 32) * outputScale,
+    };
+    const previewLogicalWidth = posterLayout
+        ? selected.width * (TEXT_SAFE_AREA.right - TEXT_SAFE_AREA.left)
+        : selected.width;
+    const mobileFontSizes = Object.fromEntries(
+        (Object.keys(baseFontSizes) as TextKey[]).map((key) => [
+            key,
+            (baseFontSizes[key] / previewLogicalWidth) * 100,
+        ]),
+    ) as Record<TextKey, number>;
+
+    const aspectClass =
+        channel === "instagram"
+            ? "aspect-[4/5]"
+            : channel === "story"
+                ? "aspect-[9/16]"
+                : channel === "blog"
+                    ? "aspect-[1200/628]"
+                    : channel === "youtube"
+                        ? "aspect-video"
+                        : channel === "a4"
+                            ? "aspect-[210/297]"
+                            : "aspect-square";
+
+    return {
+        ...selected,
+        aspectRatio,
+        isLandscape,
+        visibleFields: visibleFieldsByChannel[channel],
+        descriptionMode: descriptionModeByChannel[channel],
+        posterLayout,
+        defaultDividerVisible: posterLayout?.defaultDividerVisible ?? true,
+        coverCropAnchor:
+            channel === "youtube" || channel === "blog"
+                ? resolveCompositionAnchor(imageComposition)
+                : CENTER_CROP_ANCHOR,
+        preview: {
+            aspectClass,
+            titleSize: channel === "story" ? 34 : 32,
+            mobileFontSizes,
+            mobileScaleMode:
+                channel === "youtube" || channel === "blog"
+                    ? "preset"
+                    : isLandscape
+                        ? "proportional"
+                        : "legacy",
+        },
+        png: {
+            outputScale,
+            shadowScale: selected.width / 480,
+            side,
+            top: posterLayout
+                ? posterLayout.elementTop.organizer * selected.height +
+                  baseFontSizes.organizer
+                : (isLandscape ? 62 : 105) * outputScale,
+            contentWidth: posterLayout
+                ? selected.width *
+                  (posterLayout.textArea.right - posterLayout.textArea.left)
+                : isLandscape
+                    ? selected.width * 0.56
+                    : selected.width - side * 2,
+            baseFontSizes,
+            contactInset: (isLandscape ? 87 : 122) * outputScale,
+            applicationOffset: (isLandscape ? 44 : 57) * outputScale,
+            titleMaxLines: posterLayout?.titleMaxLines ?? (isLandscape ? 2 : 3),
+        },
+    };
+}
+
 const copyEmojiOptions = [
     "📅",
     "📍",
@@ -247,10 +608,11 @@ const copyEmojiOptions = [
 ];
 
 type SceneOption = {
-    key: SceneKey;
+    key: Exclude<SceneKey, "custom">;
     label: string;
     description: string;
     image: string;
+    composition: ImageComposition;
 };
 
 const featuredScenes: SceneOption[] = [
@@ -259,18 +621,21 @@ const featuredScenes: SceneOption[] = [
         label: "연꽃 동자승",
         description: "따뜻한 인사와 일반 행사에 어울려요",
         image: "/images/promote/promote-other-lotus-novice.webp",
+        composition: "bottom-right",
     },
     {
         key: "otherMoon",
         label: "고요한 달빛",
         description: "명상·기도·교육 안내에 어울려요",
         image: "/images/promote/promote-other-moon-novice.webp",
+        composition: "bottom-right",
     },
     {
         key: "otherLanterns",
         label: "한지 연등",
         description: "어떤 불교 행사에도 편하게 사용할 수 있어요",
         image: "/images/promote/promote-other-lanterns.webp",
+        composition: "upper-right",
     },
 ];
 
@@ -280,36 +645,42 @@ const otherScenes: SceneOption[] = [
         label: "산사 능선",
         description: "사찰 안내와 일반 행사에 어울려요",
         image: "/images/promote/promote-more-mountain.webp",
+        composition: "bottom-right",
     },
     {
         key: "moreBamboo",
         label: "대나무 바람",
         description: "명상·교육·자연 행사에 어울려요",
         image: "/images/promote/promote-more-bamboo.webp",
+        composition: "bottom-right",
     },
     {
         key: "moreLotus",
         label: "연꽃 물결",
         description: "법회와 문화행사에 어울려요",
         image: "/images/promote/promote-more-lotus.webp",
+        composition: "bottom-center",
     },
     {
         key: "moreTwilight",
         label: "초저녁 산사",
         description: "음악회와 저녁 행사에 어울려요",
         image: "/images/promote/promote-more-twilight.webp",
+        composition: "bottom-right",
     },
     {
         key: "moreTea",
         label: "차와 다식",
         description: "사찰음식과 차 행사에 어울려요",
         image: "/images/promote/promote-more-tea.webp",
+        composition: "bottom-right",
     },
     {
         key: "moreMoonLanterns",
         label: "달과 연등",
         description: "기도·법회·연등 행사에 어울려요",
         image: "/images/promote/promote-more-moon-lanterns.webp",
+        composition: "upper-right",
     },
 ];
 
@@ -408,6 +779,10 @@ type ResolvedTextFormat = TextFormat & {
     shadowScale: number;
 };
 
+const scenesByKey = Object.fromEntries(
+    [...featuredScenes, ...otherScenes].map((item) => [item.key, item]),
+) as Record<Exclude<SceneKey, "custom">, SceneOption>;
+
 const initialTextFormats: Record<TextKey, TextFormat> = {
     title: {
         fontKey: "pretendard",
@@ -451,6 +826,15 @@ const initialTextFormats: Record<TextKey, TextFormat> = {
         scale: 100,
         shadowKey: "soft",
     },
+};
+
+const initialRichTextRuns: Record<RichTextKey, RichTextRun[]> = {
+    title: INITIAL_TITLE_RUNS,
+    organizer: [],
+    date: [],
+    place: [],
+    description: [],
+    application: [],
 };
 
 const SAFE_AREA = {
@@ -512,6 +896,39 @@ const initialTextPositions: Record<MovableTextKey, TextPosition> = {
     description: { x: 0, y: 0 },
     application: { x: 0, y: 0 },
 };
+
+function isInitialTextPresentation(
+    key: MovableTextKey,
+    position: TextPosition,
+    format: TextFormat,
+    runs: RichTextRun[],
+) {
+    const initialPosition = initialTextPositions[key];
+    const initialFormat = initialTextFormats[key];
+    const initialRuns = initialRichTextRuns[key];
+
+    return (
+        position.x === initialPosition.x &&
+        position.y === initialPosition.y &&
+        format.fontKey === initialFormat.fontKey &&
+        format.color === initialFormat.color &&
+        format.fontWeight === initialFormat.fontWeight &&
+        format.scale === initialFormat.scale &&
+        format.shadowKey === initialFormat.shadowKey &&
+        runs.length === initialRuns.length &&
+        runs.every((run, index) => {
+            const initialRun = initialRuns[index];
+            return (
+                run.start === initialRun.start &&
+                run.end === initialRun.end &&
+                run.color === initialRun.color &&
+                run.fontWeight === initialRun.fontWeight &&
+                run.scale === initialRun.scale &&
+                run.shadowKey === initialRun.shadowKey
+            );
+        })
+    );
+}
 
 const LINE_MIN_LENGTH = {
     horizontal: 0.08,
@@ -1023,6 +1440,7 @@ function drawRichText(
     x: number,
     firstBaselineY: number,
     defaultLineHeight: number,
+    noteBaselineShift = 0,
 ) {
     let baselineY = firstBaselineY;
     const metrics = richTextMetrics(lines, defaultLineHeight);
@@ -1046,7 +1464,7 @@ function drawRichText(
                     context,
                     glyph.char,
                     cursorX,
-                    baselineY,
+                    baselineY - (glyph.char === "♫" ? noteBaselineShift : 0),
                     glyph.style.color,
                     glyph.style.shadow,
                 );
@@ -1161,7 +1579,8 @@ export default function EventPromotePage() {
     const [channel, setChannel] = useState<ChannelKey>("instagram");
 
     const [scene, setScene] = useState<SceneKey>("otherLotus");
-    const [imageFit, setImageFit] = useState<ImageFit>("cover");
+    const [imageFitOverride, setImageFitOverride] =
+        useState<ImageFitOverride>(null);
 
     const [title, setTitle] = useState(DEFAULT_TITLE);
 
@@ -1183,6 +1602,7 @@ export default function EventPromotePage() {
 
     const [copied, setCopied] = useState("");
     const [editorTab, setEditorTab] = useState<EditorTab>("content");
+    const [pendingFocusField, setPendingFocusField] = useState<TextKey | null>(null);
     const [copyChannel, setCopyChannel] = useState<CopyKey>("instagram");
     const [copyDrafts, setCopyDrafts] = useState<
         Partial<Record<CopyKey, string>>
@@ -1222,14 +1642,7 @@ export default function EventPromotePage() {
     });
     const [richTextRuns, setRichTextRuns] = useState<
         Record<RichTextKey, RichTextRun[]>
-    >({
-        title: INITIAL_TITLE_RUNS,
-        organizer: [],
-        date: [],
-        place: [],
-        description: [],
-        application: [],
-    });
+    >(initialRichTextRuns);
     const [textSelection, setTextSelection] = useState<{
         start: number;
         end: number;
@@ -1453,6 +1866,17 @@ export default function EventPromotePage() {
     redoActionRef.current = redoHistory;
 
     useEffect(() => {
+        if (editorTab !== "content" || !pendingFocusField) return;
+
+        const frame = window.requestAnimationFrame(() => {
+            focusContentField(pendingFocusField);
+            setPendingFocusField(null);
+        });
+
+        return () => window.cancelAnimationFrame(frame);
+    }, [editorTab, pendingFocusField]);
+
+    useEffect(() => {
         const handleHistoryShortcut = (event: KeyboardEvent) => {
             if (!(event.ctrlKey || event.metaKey) || event.altKey) return;
 
@@ -1496,6 +1920,163 @@ export default function EventPromotePage() {
     }, [application, date, description, organizer, place, title]);
 
     const activeCopy = copyDrafts[copyChannel] ?? copy[copyChannel];
+    const renderedDescription =
+        channel === "youtube" && description === DEFAULT_DESCRIPTION
+            ? YOUTUBE_DEFAULT_DESCRIPTION
+            : description;
+    const imageComposition: ImageComposition =
+        scene === "custom" ? "center" : scenesByKey[scene].composition;
+    const channelLayout = resolveChannelLayout(channel, imageComposition);
+    const visibleFields = channelLayout.visibleFields;
+    const effectiveImageFit: ImageFit =
+        imageFitOverride ??
+        (channel === "story" && scene !== "custom" ? "contain" : "cover");
+    const shouldRenderContainedImage =
+        effectiveImageFit === "contain" &&
+        (scene === "custom" || channel === "story");
+    const usesSharedStoryContainBackground =
+        channel === "story" && shouldRenderContainedImage;
+    const coverCropAnchor =
+        channel === "kakao" || channel === "share" || channel === "story"
+            ? resolveCompositionAnchor(imageComposition)
+            : channelLayout.coverCropAnchor;
+    const hasLateralImageComposition =
+        imageComposition === "bottom-left" ||
+        imageComposition === "upper-left" ||
+        imageComposition === "bottom-right" ||
+        imageComposition === "upper-right";
+    const kakaoTextSide = hasLateralImageComposition
+        ? resolveCompositionTextSide(imageComposition)
+        : null;
+    const usesRecommendedTextLayout = (key: MovableTextKey) =>
+        isInitialTextPresentation(
+            key,
+            textPositions[key],
+            textFormats[key],
+            richTextRuns[key],
+        );
+    const resolveRenderedRichTextRuns = (key: RichTextKey) => {
+        const runs = richTextRuns[key];
+        if (
+            channel !== "youtube" ||
+            key !== "title" ||
+            !title.startsWith("♫") ||
+            richRunAt(runs, 0)
+        ) {
+            return runs;
+        }
+
+        const titleFormat = textFormats.title;
+        return [
+            {
+                start: 0,
+                end: 1,
+                color: titleFormat.color,
+                fontWeight: titleFormat.fontWeight,
+                scale: 68,
+                shadowKey: titleFormat.shadowKey,
+            },
+            ...runs,
+        ];
+    };
+    const resolveKakaoTitleDescriptionArea = (key: MovableTextKey) =>
+        channel === "kakao" &&
+        (key === "title" || key === "description") &&
+        kakaoTextSide &&
+        usesRecommendedTextLayout(key)
+            ? {
+                  start: kakaoTextSide === "right" ? 0.34 : 0,
+                  width: 0.66,
+              }
+            : { start: 0, width: 1 };
+    const resolvePosterTextPlacement = (key: PosterLayoutTextKey) => {
+        const posterLayout = channelLayout.posterLayout;
+        if (!posterLayout) return null;
+
+        const recommended = usesRecommendedTextLayout(key);
+        const commonWidth = TEXT_SAFE_AREA.right - TEXT_SAFE_AREA.left;
+        const commonHeight = TEXT_SAFE_AREA.bottom - TEXT_SAFE_AREA.top;
+        const safeArea = recommended ? posterLayout.textArea : TEXT_SAFE_AREA;
+        const renderLeft = recommended
+            ? posterLayout.textArea.left
+            : clamp(
+                  posterLayout.textArea.left + textPositions[key].x * commonWidth,
+                  TEXT_SAFE_AREA.left,
+                  TEXT_SAFE_AREA.right,
+              );
+        const renderTop = recommended
+            ? posterLayout.elementTop[key]
+            : clamp(
+                  posterLayout.elementTop[key] + textPositions[key].y * commonHeight,
+                  TEXT_SAFE_AREA.top,
+                  TEXT_SAFE_AREA.bottom,
+              );
+
+        return { safeArea, renderLeft, renderTop };
+    };
+    const previewCoverImageStyle = {
+        objectPosition: `${coverCropAnchor.x * 100}% ${coverCropAnchor.y * 100}%`,
+    } as CSSProperties;
+    const previewContainBackgroundImageStyle = {
+        objectPosition: "50% 50%",
+        transform: `scale(${CONTAIN_BACKGROUND_SCALE})`,
+        filter: `blur(${STORY_CONTAIN_BACKGROUND_BLUR_RATIO * 100}cqmax)`,
+    } as CSSProperties;
+    const previewContainBackgroundOverlayStyle = {
+        backgroundColor: `rgba(23, 27, 34, ${STORY_CONTAIN_BACKGROUND_OVERLAY_ALPHA})`,
+    } as CSSProperties;
+    const previewStoryContainForegroundStyle = {
+        maskImage: `linear-gradient(to bottom, transparent 0, black ${(STORY_CONTAIN_BLEND_SIZE / channels.story.height) * 100}cqh, black calc(100% - ${(STORY_CONTAIN_BLEND_SIZE / channels.story.height) * 100}cqh), transparent 100%)`,
+        WebkitMaskImage: `linear-gradient(to bottom, transparent 0, black ${(STORY_CONTAIN_BLEND_SIZE / channels.story.height) * 100}cqh, black calc(100% - ${(STORY_CONTAIN_BLEND_SIZE / channels.story.height) * 100}cqh), transparent 100%)`,
+    } as CSSProperties;
+    const activeTextSafeArea = TEXT_SAFE_AREA;
+    const isSelectedElementVisible =
+        selectedElement === "divider"
+            ? channelLayout.defaultDividerVisible
+            : selectedElement === "line"
+                ? true
+                : visibleFields[selectedElement];
+    const changeChannel = (nextChannel: ChannelKey) => {
+        const nextLayout = resolveChannelLayout(nextChannel, imageComposition);
+        const nextVisibleFields = nextLayout.visibleFields;
+
+        if (!nextVisibleFields[selectedText]) {
+            setSelectedText("title");
+            setTextSelection(null);
+        }
+        if (
+            (selectedElement === "divider" && !nextLayout.defaultDividerVisible) ||
+            (selectedElement !== "divider" &&
+                selectedElement !== "line" &&
+                !nextVisibleFields[selectedElement])
+        ) {
+            setSelectedElement("title");
+            setSelectedPreviewText(null);
+            setIsDividerPreviewSelected(false);
+        }
+        if (selectedPreviewText && !nextVisibleFields[selectedPreviewText]) {
+            setSelectedPreviewText(null);
+        }
+        if (!nextVisibleFields[activeContentText]) {
+            setActiveContentText("title");
+        }
+
+        setChannel(nextChannel);
+    };
+    const mobilePreviewStyle = {
+        containerType: "size",
+        "--mobile-preview-organizer-size": `${channelLayout.preview.mobileFontSizes.organizer}cqw`,
+        "--mobile-preview-organizer-text-size": `${channelLayout.preview.mobileFontSizes.organizer * (textFormats.organizer.scale / 100)}cqw`,
+        "--mobile-preview-title-size": `${channelLayout.preview.mobileFontSizes.title}cqw`,
+        "--mobile-preview-title-text-size": `${channelLayout.preview.mobileFontSizes.title * (textFormats.title.scale / 100)}cqw`,
+        "--mobile-preview-date-size": `${channelLayout.preview.mobileFontSizes.date}cqw`,
+        "--mobile-preview-date-text-size": `${channelLayout.preview.mobileFontSizes.date * (textFormats.date.scale / 100)}cqw`,
+        "--mobile-preview-place-size": `${channelLayout.preview.mobileFontSizes.place}cqw`,
+        "--mobile-preview-place-text-size": `${channelLayout.preview.mobileFontSizes.place * (textFormats.place.scale / 100)}cqw`,
+        "--mobile-preview-description-size": `${channelLayout.preview.mobileFontSizes.description}cqw`,
+        "--mobile-preview-description-text-size": `${channelLayout.preview.mobileFontSizes.description * (textFormats.description.scale / 100)}cqw`,
+        "--mobile-preview-application-text-size": `${channelLayout.preview.mobileFontSizes.application * (textFormats.application.scale / 100)}cqw`,
+    } as CSSProperties;
     const visibleScenes =
         imageCategory === "other"
             ? scenesByCategory.other.slice(0, visibleOtherCount)
@@ -2259,14 +2840,10 @@ export default function EventPromotePage() {
         setIsDividerPreviewSelected(false);
 
         if (editorTab === "content") {
-            window.requestAnimationFrame(() => {
-                const field = document.getElementById(`promote-${key}`) as
-                    | HTMLInputElement
-                    | HTMLTextAreaElement
-                    | null;
-                field?.focus({ preventScroll: true });
-                field?.scrollIntoView({ behavior: "smooth", block: "center" });
-            });
+            window.requestAnimationFrame(() => focusContentField(key));
+        } else if (editorTab === "copy") {
+            setPendingFocusField(key);
+            setEditorTab("content");
         } else {
             setEditorTab("style");
         }
@@ -2343,7 +2920,7 @@ export default function EventPromotePage() {
         imageObjectUrl.current = URL.createObjectURL(file);
 
         setImageSrc(imageObjectUrl.current);
-        setImageFit("cover");
+        setImageFitOverride(null);
     };
 
     const copyText = async (key: CopyKey) => {
@@ -2358,7 +2935,7 @@ export default function EventPromotePage() {
 
     const downloadFlyer = async () => {
         await document.fonts.ready;
-        const selected = channels[channel];
+        const selected = channelLayout;
 
         const canvas = document.createElement("canvas");
 
@@ -2379,17 +2956,21 @@ export default function EventPromotePage() {
 
             await image.decode();
 
-            if (scene === "custom" && imageFit === "contain") {
+            if (shouldRenderContainedImage) {
                 const backgroundScale =
                     Math.max(
                         selected.width / image.width,
                         selected.height / image.height,
-                    ) * 1.12;
+                    ) * CONTAIN_BACKGROUND_SCALE;
                 const backgroundWidth = image.width * backgroundScale;
                 const backgroundHeight = image.height * backgroundScale;
+                const backgroundBlurRatio =
+                    channel === "story"
+                        ? STORY_CONTAIN_BACKGROUND_BLUR_RATIO
+                        : CONTAIN_BACKGROUND_BLUR_RATIO;
 
                 context.save();
-                context.filter = `blur(${Math.max(selected.width, selected.height) * 0.035}px)`;
+                context.filter = `blur(${Math.max(selected.width, selected.height) * backgroundBlurRatio}px)`;
                 context.drawImage(
                     image,
                     (selected.width - backgroundWidth) / 2,
@@ -2399,7 +2980,11 @@ export default function EventPromotePage() {
                 );
                 context.restore();
 
-                context.fillStyle = "rgba(23,27,34,0.18)";
+                const backgroundOverlayAlpha =
+                    channel === "story"
+                        ? STORY_CONTAIN_BACKGROUND_OVERLAY_ALPHA
+                        : CUSTOM_CONTAIN_BACKGROUND_OVERLAY_ALPHA;
+                context.fillStyle = `rgba(23,27,34,${backgroundOverlayAlpha})`;
                 context.fillRect(0, 0, selected.width, selected.height);
 
                 const foregroundScale = Math.min(
@@ -2409,13 +2994,65 @@ export default function EventPromotePage() {
                 const foregroundWidth = image.width * foregroundScale;
                 const foregroundHeight = image.height * foregroundScale;
 
-                context.drawImage(
-                    image,
-                    (selected.width - foregroundWidth) / 2,
-                    (selected.height - foregroundHeight) / 2,
-                    foregroundWidth,
-                    foregroundHeight,
-                );
+                const foregroundX = (selected.width - foregroundWidth) / 2;
+                const foregroundY = (selected.height - foregroundHeight) / 2;
+
+                if (channel === "story") {
+                    const foregroundCanvas = document.createElement("canvas");
+                    foregroundCanvas.width = selected.width;
+                    foregroundCanvas.height = selected.height;
+                    const foregroundContext = foregroundCanvas.getContext("2d");
+
+                    if (foregroundContext) {
+                        foregroundContext.drawImage(
+                            image,
+                            foregroundX,
+                            foregroundY,
+                            foregroundWidth,
+                            foregroundHeight,
+                        );
+                        const blendSize = Math.min(
+                            STORY_CONTAIN_BLEND_SIZE,
+                            foregroundHeight / 2,
+                        );
+                        const blendRatio = blendSize / foregroundHeight;
+                        const feather = foregroundContext.createLinearGradient(
+                            0,
+                            foregroundY,
+                            0,
+                            foregroundY + foregroundHeight,
+                        );
+                        feather.addColorStop(0, "rgba(0,0,0,0)");
+                        feather.addColorStop(blendRatio, "rgba(0,0,0,1)");
+                        feather.addColorStop(1 - blendRatio, "rgba(0,0,0,1)");
+                        feather.addColorStop(1, "rgba(0,0,0,0)");
+                        foregroundContext.globalCompositeOperation = "destination-in";
+                        foregroundContext.fillStyle = feather;
+                        foregroundContext.fillRect(
+                            foregroundX,
+                            foregroundY,
+                            foregroundWidth,
+                            foregroundHeight,
+                        );
+                        context.drawImage(foregroundCanvas, 0, 0);
+                    } else {
+                        context.drawImage(
+                            image,
+                            foregroundX,
+                            foregroundY,
+                            foregroundWidth,
+                            foregroundHeight,
+                        );
+                    }
+                } else {
+                    context.drawImage(
+                        image,
+                        foregroundX,
+                        foregroundY,
+                        foregroundWidth,
+                        foregroundHeight,
+                    );
+                }
             } else {
                 const scale = Math.max(
                     selected.width / image.width,
@@ -2426,8 +3063,8 @@ export default function EventPromotePage() {
 
                 context.drawImage(
                     image,
-                    (selected.width - drawWidth) / 2,
-                    (selected.height - drawHeight) / 2,
+                    (selected.width - drawWidth) * coverCropAnchor.x,
+                    (selected.height - drawHeight) * coverCropAnchor.y,
                     drawWidth,
                     drawHeight,
                 );
@@ -2440,16 +3077,17 @@ export default function EventPromotePage() {
             context.fillText("행사 이미지를 올려주세요", 72, 100);
         }
 
-        const isLandscape = selected.width / selected.height > 1.45;
-        const outputScale = channel === "a4" ? selected.width / 1080 : 1;
-        const exportShadowScale = selected.width / 480;
-
-        const side = (isLandscape ? 62 : 76) * outputScale;
-        const top = (isLandscape ? 62 : 105) * outputScale;
-
-        const contentWidth = isLandscape
-            ? selected.width * 0.56
-            : selected.width - side * 2;
+        const {
+            outputScale,
+            shadowScale: exportShadowScale,
+            side,
+            top,
+            contentWidth,
+            baseFontSizes,
+            contactInset,
+            applicationOffset: applicationBaselineOffset,
+            titleMaxLines,
+        } = selected.png;
         const format = (key: TextKey, baseSize: number): ResolvedTextFormat => {
             const value = textFormats[key];
             return {
@@ -2460,26 +3098,55 @@ export default function EventPromotePage() {
                 shadowScale: exportShadowScale,
             };
         };
-        const organizerBaseSize = (isLandscape ? 27 : 34) * outputScale;
-        const titleBaseSize = (isLandscape ? 55 : 68) * outputScale;
-        const dateBaseSize = (isLandscape ? 29 : 36) * outputScale;
-        const placeBaseSize = (isLandscape ? 27 : 34) * outputScale;
-        const descriptionBaseSize = (isLandscape ? 25 : 31) * outputScale;
+        const organizerBaseSize = baseFontSizes.organizer;
+        const titleBaseSize = baseFontSizes.title;
+        const dateBaseSize = baseFontSizes.date;
+        const placeBaseSize = baseFontSizes.place;
+        const descriptionBaseSize = baseFontSizes.description;
         const organizerFormat = format("organizer", organizerBaseSize);
         const titleFormat = format("title", titleBaseSize);
         const dateFormat = format("date", dateBaseSize);
         const placeFormat = format("place", placeBaseSize);
         const descriptionFormat = format("description", descriptionBaseSize);
-        const applicationFormat = format(
-            "application",
-            (isLandscape ? 25 : 32) * outputScale,
-        );
+        const applicationFormat = format("application", baseFontSizes.application);
         const iconOffset = (key: TextKey, size: number) =>
             textIcons[key] === "none" ? 0 : size * 1.35;
-        const contactLineY =
-            selected.height - (isLandscape ? 87 : 122) * outputScale;
-        const textSafeTop = top - organizerBaseSize;
-        const textSafeHeight = contactLineY - textSafeTop;
+        const contactLineY = selected.height - contactInset;
+        const posterLayout = selected.posterLayout;
+        const textSafeTop = posterLayout
+            ? posterLayout.textArea.top * selected.height
+            : top - organizerBaseSize;
+        const textSafeBottom = posterLayout
+            ? posterLayout.textArea.bottom * selected.height
+            : contactLineY;
+        const textSafeHeight = textSafeBottom - textSafeTop;
+
+        const resolveCanvasTextMaxWidth = (
+            key: PosterLayoutTextKey,
+            pictogramWidth: number,
+            horizontalArea = { start: 0, width: 1 },
+        ) => {
+            const placement = resolvePosterTextPlacement(key);
+            return placement
+                ? Math.max(
+                      1,
+                      (placement.safeArea.right - placement.renderLeft) *
+                          selected.width -
+                          pictogramWidth,
+                  )
+                : contentWidth * horizontalArea.width - pictogramWidth;
+        };
+
+        const resolveCanvasBaselineY = (
+            key: PosterLayoutTextKey,
+            formatSize: number,
+            fallback: number,
+        ) => {
+            const placement = resolvePosterTextPlacement(key);
+            return placement
+                ? placement.renderTop * selected.height + formatSize
+                : fallback;
+        };
 
         const resolveCanvasTextPosition = (
             key: MovableTextKey,
@@ -2487,19 +3154,47 @@ export default function EventPromotePage() {
             formatValue: ResolvedTextFormat,
             baseBaselineY: number,
             lineHeight: number,
+            horizontalArea = { start: 0, width: 1 },
         ) => {
+            const placement =
+                key === "application"
+                    ? null
+                    : resolvePosterTextPlacement(key as PosterLayoutTextKey);
             const metrics = richTextMetrics(lines, lineHeight);
             const pictogramWidth = iconOffset(key, formatValue.size);
             const blockWidth = pictogramWidth + metrics.width;
             const blockTop = baseBaselineY - Math.max(metrics.firstLineSize, formatValue.size);
-            const rawDeltaX = textPositions[key].x * contentWidth;
-            const rawDeltaY = textPositions[key].y * textSafeHeight;
-            const maxDeltaX = contentWidth - blockWidth;
-            const minDeltaY = textSafeTop - blockTop;
-            const maxDeltaY = contactLineY - (blockTop + metrics.height);
+            const safeLeft = placement
+                ? placement.safeArea.left * selected.width
+                : side + horizontalArea.start * contentWidth;
+            const safeRight = placement
+                ? placement.safeArea.right * selected.width
+                : safeLeft + horizontalArea.width * contentWidth;
+            const safeTop = placement
+                ? placement.safeArea.top * selected.height
+                : textSafeTop;
+            const safeBottom = placement
+                ? placement.safeArea.bottom * selected.height
+                : textSafeBottom;
+            const originX = placement
+                ? placement.renderLeft * selected.width
+                : safeLeft;
+            const horizontalWidth = safeRight - safeLeft;
+            const verticalHeight = safeBottom - safeTop;
+            const rawDeltaX = placement
+                ? 0
+                : textPositions[key].x * horizontalWidth;
+            const rawDeltaY = placement ? 0 : textPositions[key].y * verticalHeight;
+            const minDeltaX = safeLeft - originX;
+            const maxDeltaX = safeRight - originX - blockWidth;
+            const minDeltaY = safeTop - blockTop;
+            const maxDeltaY = safeBottom - (blockTop + metrics.height);
 
             return {
-                x: side + (maxDeltaX >= 0 ? clamp(rawDeltaX, 0, maxDeltaX) : 0),
+                x: originX +
+                    (minDeltaX <= maxDeltaX
+                        ? clamp(rawDeltaX, minDeltaX, maxDeltaX)
+                        : minDeltaX),
                 baselineY:
                     baseBaselineY +
                     (minDeltaY <= maxDeltaY
@@ -2510,70 +3205,96 @@ export default function EventPromotePage() {
 
         context.textBaseline = "alphabetic";
         context.font = `${organizerFormat.fontWeight} ${organizerFormat.size}px ${organizerFormat.family}`;
-        const organizerLineHeight = organizerFormat.size * 1.28;
+        const organizerLineHeight =
+            organizerFormat.size *
+            (posterLayout?.lineHeightRatios?.organizer ?? 1.28);
         const organizerLines = layoutRichText(
             context,
             organizer,
             organizerFormat,
             richTextRuns.organizer,
-            contentWidth - iconOffset("organizer", organizerFormat.size),
+            resolveCanvasTextMaxWidth(
+                "organizer",
+                iconOffset("organizer", organizerFormat.size),
+            ),
+        );
+        const organizerY = resolveCanvasBaselineY(
+            "organizer",
+            organizerFormat.size,
+            top,
         );
         const organizerPosition = resolveCanvasTextPosition(
             "organizer",
             organizerLines,
             organizerFormat,
-            top,
+            organizerY,
             organizerLineHeight,
         );
-        drawCanvasPictogram(
-            context,
-            textIcons.organizer,
-            organizerPosition.x,
-            organizerPosition.baselineY - organizerFormat.size * 0.35,
-            organizerFormat.size * 0.9,
-            organizerFormat.color,
-        );
-        drawRichText(
-            context,
-            organizerLines,
-            organizerPosition.x + iconOffset("organizer", organizerFormat.size),
-            organizerPosition.baselineY,
-            organizerLineHeight,
-        );
+        if (selected.visibleFields.organizer) {
+            drawCanvasPictogram(
+                context,
+                textIcons.organizer,
+                organizerPosition.x,
+                organizerPosition.baselineY - organizerFormat.size * 0.35,
+                organizerFormat.size * 0.9,
+                organizerFormat.color,
+            );
+            drawRichText(
+                context,
+                organizerLines,
+                organizerPosition.x + iconOffset("organizer", organizerFormat.size),
+                organizerPosition.baselineY,
+                organizerLineHeight,
+            );
+        }
 
         const titleOffset = iconOffset("title", titleFormat.size);
+        const titleHorizontalArea = resolveKakaoTitleDescriptionArea("title");
         const titleLines = layoutRichText(
             context,
             title,
             titleFormat,
-            richTextRuns.title,
-            contentWidth - titleOffset,
+            resolveRenderedRichTextRuns("title"),
+            resolveCanvasTextMaxWidth("title", titleOffset, titleHorizontalArea),
+            usesRecommendedTextLayout("title")
+                ? (posterLayout?.titleMaxLines ?? Number.POSITIVE_INFINITY)
+                : Number.POSITIVE_INFINITY,
         );
 
-        const titleStartY = top + Math.round(titleBaseSize * 1.42);
-        const titleLineHeight = Math.round(titleFormat.size * 1.18);
+        const titleStartY = resolveCanvasBaselineY(
+            "title",
+            titleFormat.size,
+            top + Math.round(titleBaseSize * 1.42),
+        );
+        const titleLineHeight = Math.round(
+            titleFormat.size * (posterLayout?.lineHeightRatios?.title ?? 1.18),
+        );
         const titlePosition = resolveCanvasTextPosition(
             "title",
             titleLines,
             titleFormat,
             titleStartY,
             titleLineHeight,
+            titleHorizontalArea,
         );
-        drawCanvasPictogram(
-            context,
-            textIcons.title,
-            titlePosition.x,
-            titlePosition.baselineY - titleFormat.size * 0.35,
-            titleFormat.size,
-            titleFormat.color,
-        );
-        drawRichText(
-            context,
-            titleLines,
-            titlePosition.x + titleOffset,
+        if (selected.visibleFields.title) {
+            drawCanvasPictogram(
+                context,
+                textIcons.title,
+                titlePosition.x,
+                titlePosition.baselineY - titleFormat.size * 0.35,
+                titleFormat.size,
+                titleFormat.color,
+            );
+            drawRichText(
+                context,
+                titleLines,
+                titlePosition.x + titleOffset,
             titlePosition.baselineY,
             titleLineHeight,
+            channel === "youtube" ? titleFormat.size * 0.68 * 0.06 : 0,
         );
+        }
 
         const initialTitleFormat: ResolvedTextFormat = {
             ...titleFormat,
@@ -2592,7 +3313,7 @@ export default function EventPromotePage() {
             initialTitleFormat,
             INITIAL_TITLE_RUNS,
             contentWidth,
-            isLandscape ? 2 : 3,
+            titleMaxLines,
         );
         const initialTitleLineHeight = Math.round(initialTitleFormat.size * 1.18);
         const initialTitleBlockHeight = richTextMetrics(
@@ -2600,19 +3321,26 @@ export default function EventPromotePage() {
             initialTitleLineHeight,
         ).height;
 
-        const infoY =
+        const infoY = resolveCanvasBaselineY(
+            "date",
+            dateFormat.size,
             titleStartY +
-            Math.max(0, initialTitleBlockHeight - initialTitleLineHeight) +
-            Math.round(dateBaseSize * 1.9);
+                Math.max(0, initialTitleBlockHeight - initialTitleLineHeight) +
+                Math.round(dateBaseSize * 1.9),
+        );
 
         context.font = `${dateFormat.fontWeight} ${dateFormat.size}px ${dateFormat.family}`;
-        const dateLineHeight = dateFormat.size * 1.28;
+        const dateLineHeight =
+            dateFormat.size * (posterLayout?.lineHeightRatios?.date ?? 1.28);
         const dateLines = layoutRichText(
             context,
             date,
             dateFormat,
             richTextRuns.date,
-            contentWidth - iconOffset("date", dateFormat.size),
+            resolveCanvasTextMaxWidth(
+                "date",
+                iconOffset("date", dateFormat.size),
+            ),
         );
         const datePosition = resolveCanvasTextPosition(
             "date",
@@ -2621,32 +3349,40 @@ export default function EventPromotePage() {
             infoY,
             dateLineHeight,
         );
-        drawCanvasPictogram(
-            context,
-            textIcons.date,
-            datePosition.x,
-            datePosition.baselineY - dateFormat.size * 0.35,
-            dateFormat.size * 0.9,
-            dateFormat.color,
-        );
-        drawRichText(
-            context,
-            dateLines,
-            datePosition.x + iconOffset("date", dateFormat.size),
-            datePosition.baselineY,
-            dateLineHeight,
-        );
+        if (selected.visibleFields.date) {
+            drawCanvasPictogram(
+                context,
+                textIcons.date,
+                datePosition.x,
+                datePosition.baselineY - dateFormat.size * 0.35,
+                dateFormat.size * 0.9,
+                dateFormat.color,
+            );
+            drawRichText(
+                context,
+                dateLines,
+                datePosition.x + iconOffset("date", dateFormat.size),
+                datePosition.baselineY,
+                dateLineHeight,
+            );
+        }
 
         context.font = `${placeFormat.fontWeight} ${placeFormat.size}px ${placeFormat.family}`;
-        const placeY =
-            infoY + Math.round(Math.max(dateBaseSize, placeBaseSize) * 1.55);
+        const placeY = resolveCanvasBaselineY(
+            "place",
+            placeFormat.size,
+            infoY + Math.round(Math.max(dateBaseSize, placeBaseSize) * 1.55),
+        );
         const placeLineHeight = placeFormat.size * 1.28;
         const placeLines = layoutRichText(
             context,
             place,
             placeFormat,
             richTextRuns.place,
-            contentWidth - iconOffset("place", placeFormat.size),
+            resolveCanvasTextMaxWidth(
+                "place",
+                iconOffset("place", placeFormat.size),
+            ),
         );
         const placePosition = resolveCanvasTextPosition(
             "place",
@@ -2655,56 +3391,77 @@ export default function EventPromotePage() {
             placeY,
             placeLineHeight,
         );
-        drawCanvasPictogram(
-            context,
-            textIcons.place,
-            placePosition.x,
-            placePosition.baselineY - placeFormat.size * 0.35,
-            placeFormat.size * 0.9,
-            placeFormat.color,
-        );
-        drawRichText(
-            context,
-            placeLines,
-            placePosition.x + iconOffset("place", placeFormat.size),
-            placePosition.baselineY,
-            placeLineHeight,
-        );
+        if (selected.visibleFields.place) {
+            drawCanvasPictogram(
+                context,
+                textIcons.place,
+                placePosition.x,
+                placePosition.baselineY - placeFormat.size * 0.35,
+                placeFormat.size * 0.9,
+                placeFormat.color,
+            );
+            drawRichText(
+                context,
+                placeLines,
+                placePosition.x + iconOffset("place", placeFormat.size),
+                placePosition.baselineY,
+                placeLineHeight,
+            );
+        }
 
         const descriptionOffset = iconOffset("description", descriptionFormat.size);
-        const descriptionY = placeY + Math.round(placeBaseSize * 1.7);
+        const descriptionHorizontalArea =
+            resolveKakaoTitleDescriptionArea("description");
+        const descriptionY = resolveCanvasBaselineY(
+            "description",
+            descriptionFormat.size,
+            placeY + Math.round(placeBaseSize * 1.7),
+        );
         const descriptionLines = layoutRichText(
             context,
-            description,
+            renderedDescription,
             descriptionFormat,
             richTextRuns.description,
-            contentWidth - descriptionOffset,
+            resolveCanvasTextMaxWidth(
+                "description",
+                descriptionOffset,
+                descriptionHorizontalArea,
+            ),
+            selected.descriptionMode === "compact"
+                ? (posterLayout?.descriptionMaxLines ?? 2)
+                : Number.POSITIVE_INFINITY,
         );
-        const descriptionLineHeight = Math.round(descriptionFormat.size * 1.45);
+        const descriptionLineHeight = Math.round(
+            descriptionFormat.size *
+                (posterLayout?.lineHeightRatios?.description ?? 1.45),
+        );
         const descriptionPosition = resolveCanvasTextPosition(
             "description",
             descriptionLines,
             descriptionFormat,
             descriptionY,
             descriptionLineHeight,
+            descriptionHorizontalArea,
         );
-        drawCanvasPictogram(
-            context,
-            textIcons.description,
-            descriptionPosition.x,
-            descriptionPosition.baselineY - descriptionFormat.size * 0.35,
-            descriptionFormat.size * 0.9,
-            descriptionFormat.color,
-        );
-        drawRichText(
-            context,
-            descriptionLines,
-            descriptionPosition.x + descriptionOffset,
-            descriptionPosition.baselineY,
-            descriptionLineHeight,
-        );
+        if (selected.visibleFields.description) {
+            drawCanvasPictogram(
+                context,
+                textIcons.description,
+                descriptionPosition.x,
+                descriptionPosition.baselineY - descriptionFormat.size * 0.35,
+                descriptionFormat.size * 0.9,
+                descriptionFormat.color,
+            );
+            drawRichText(
+                context,
+                descriptionLines,
+                descriptionPosition.x + descriptionOffset,
+                descriptionPosition.baselineY,
+                descriptionLineHeight,
+            );
+        }
 
-        if (dividerStyle.visible) {
+        if (selected.defaultDividerVisible && dividerStyle.visible) {
             context.save();
             context.strokeStyle = dividerStyle.color;
             context.lineWidth = dividerStyle.width * outputScale;
@@ -2743,7 +3500,7 @@ export default function EventPromotePage() {
         });
 
         context.font = `${applicationFormat.fontWeight} ${applicationFormat.size}px ${applicationFormat.family}`;
-        const applicationY = contactLineY + (isLandscape ? 44 : 57) * outputScale;
+        const applicationY = contactLineY + applicationBaselineOffset;
         const applicationLineHeight = applicationFormat.size * 1.28;
         const applicationOffset = iconOffset("application", applicationFormat.size);
         const applicationLines = layoutRichText(
@@ -2788,22 +3545,24 @@ export default function EventPromotePage() {
                     )
                     : applicationMinDeltaY),
         };
-        drawCanvasPictogram(
-            context,
-            textIcons.application,
-            applicationPosition.x,
-            applicationPosition.baselineY - applicationFormat.size * 0.35,
-            applicationFormat.size * 0.9,
-            applicationFormat.color,
-        );
+        if (selected.visibleFields.application) {
+            drawCanvasPictogram(
+                context,
+                textIcons.application,
+                applicationPosition.x,
+                applicationPosition.baselineY - applicationFormat.size * 0.35,
+                applicationFormat.size * 0.9,
+                applicationFormat.color,
+            );
 
-        drawRichText(
-            context,
-            applicationLines,
-            applicationPosition.x + applicationOffset,
-            applicationPosition.baselineY,
-            applicationLineHeight,
-        );
+            drawRichText(
+                context,
+                applicationLines,
+                applicationPosition.x + applicationOffset,
+                applicationPosition.baselineY,
+                applicationLineHeight,
+            );
+        }
 
         const link = document.createElement("a");
 
@@ -2816,19 +3575,6 @@ export default function EventPromotePage() {
 
         link.click();
     };
-
-    const aspectClass =
-        channel === "instagram"
-            ? "aspect-[4/5]"
-            : channel === "story"
-                ? "aspect-[9/16]"
-                : channel === "blog"
-                    ? "aspect-[1200/628]"
-                    : channel === "youtube"
-                        ? "aspect-video"
-                        : channel === "a4"
-                            ? "aspect-[210/297]"
-                            : "aspect-square";
 
     const copyLabels: Record<CopyKey, string> = {
         kakao: "카카오톡",
@@ -2847,33 +3593,99 @@ export default function EventPromotePage() {
 
     const textStyle = (key: TextKey, size: number) => {
         const value = textFormats[key];
+        const lineHeight =
+            key === "application"
+                ? undefined
+                : channelLayout.posterLayout?.lineHeightRatios?.[key];
         return {
             color: value.color,
             fontFamily: fontOptions[value.fontKey].css,
             fontWeight: value.fontWeight,
             fontSize: `${size * (value.scale / 100)}px`,
             textShadow: cssTextShadow(value.color, value.shadowKey),
+            ...(lineHeight ? { lineHeight } : {}),
         };
     };
 
-    const initialTextStyle = (key: MovableTextKey, size: number) => ({
-        color: initialTextFormats[key].color,
-        fontFamily: fontOptions[initialTextFormats[key].fontKey].css,
-        fontWeight: initialTextFormats[key].fontWeight,
-        fontSize: `${size}px`,
-    });
-
-    const textPositionStyle = (key: MovableTextKey): CSSProperties => ({
-        transform:
+    const initialTextStyle = (key: MovableTextKey, size: number) => {
+        const lineHeight =
             key === "application"
-                ? `translate(${textPositions[key].x * (FOOTER_TEXT_SAFE_AREA.right - FOOTER_TEXT_SAFE_AREA.left) * 100}cqw, ${textPositions[key].y * (FOOTER_TEXT_SAFE_AREA.bottom - FOOTER_TEXT_SAFE_AREA.top) * 100}cqh)`
-                : `translate(${textPositions[key].x * 100}cqw, ${textPositions[key].y * 100}cqh)`,
-    });
+                ? undefined
+                : channelLayout.posterLayout?.lineHeightRatios?.[key];
+        return {
+            color: initialTextFormats[key].color,
+            fontFamily: fontOptions[initialTextFormats[key].fontKey].css,
+            fontWeight: initialTextFormats[key].fontWeight,
+            fontSize: `${size}px`,
+            ...(lineHeight ? { lineHeight } : {}),
+        };
+    };
+
+    const textPositionStyle = (key: MovableTextKey): CSSProperties => {
+        if (channelLayout.posterLayout && key !== "application") return {};
+
+        const kakaoArea = resolveKakaoTitleDescriptionArea(key);
+        return {
+            transform:
+                key === "application"
+                    ? `translate(${textPositions[key].x * (FOOTER_TEXT_SAFE_AREA.right - FOOTER_TEXT_SAFE_AREA.left) * 100}cqw, ${textPositions[key].y * (FOOTER_TEXT_SAFE_AREA.bottom - FOOTER_TEXT_SAFE_AREA.top) * 100}cqh)`
+                    : `translate(${textPositions[key].x * kakaoArea.width * 100}cqw, ${textPositions[key].y * 100}cqh)`,
+        };
+    };
+
+    const previewKakaoTextAreaStyle = (
+        key: MovableTextKey,
+    ): CSSProperties | undefined => {
+        const kakaoArea = resolveKakaoTitleDescriptionArea(key);
+        return kakaoArea.width < 1
+            ? {
+                  left: `${kakaoArea.start * 100}%`,
+                  right: "auto",
+                  width: `${kakaoArea.width * 100}%`,
+              }
+            : undefined;
+    };
+
+    const previewRowStyle = (
+        key: PosterLayoutTextKey,
+    ): CSSProperties | undefined => {
+        const posterLayout = channelLayout.posterLayout;
+        if (!posterLayout) return undefined;
+
+        const placement = resolvePosterTextPlacement(key);
+        if (!placement) return undefined;
+
+        const areaWidth = TEXT_SAFE_AREA.right - TEXT_SAFE_AREA.left;
+        const areaHeight = TEXT_SAFE_AREA.bottom - TEXT_SAFE_AREA.top;
+        return {
+            position: "absolute",
+            left: `${((placement.renderLeft - TEXT_SAFE_AREA.left) / areaWidth) * 100}%`,
+            right: "auto",
+            width: `${((placement.safeArea.right - placement.renderLeft) / areaWidth) * 100}%`,
+            top: `${((placement.renderTop - TEXT_SAFE_AREA.top) / areaHeight) * 100}%`,
+            marginTop: 0,
+        };
+    };
+
+    const previewLineClampStyle = (
+        maxLines: number | undefined,
+    ): CSSProperties | undefined =>
+        maxLines
+            ? {
+                display: "-webkit-box",
+                WebkitBoxOrient: "vertical",
+                WebkitLineClamp: maxLines,
+                overflow: "hidden",
+            }
+            : undefined;
 
     const renderTextCharacters = (key: TextKey, text: string, size: number) => {
+        const renderedRuns = isRichTextKey(key)
+            ? resolveRenderedRichTextRuns(key)
+            : [];
         if (
             !isRichTextKey(key) ||
-            (!richTextRuns[key].length &&
+            (!renderedRuns.length &&
                 !text.includes(LOTUS_SYMBOL) &&
                 !text.includes(PIN_SYMBOL))
         )
@@ -2882,13 +3694,19 @@ export default function EventPromotePage() {
         const base = textFormats[key];
 
         return text.split("").map((char, index) => {
-            const run = richRunAt(richTextRuns[key], index);
+            const run = richRunAt(renderedRuns, index);
+            const isRecommendedYoutubeNote =
+                channel === "youtube" &&
+                key === "title" &&
+                index === 0 &&
+                char === "♫" &&
+                !richRunAt(richTextRuns.title, 0);
 
             if (char === LOTUS_SYMBOL || char === PIN_SYMBOL) {
                 return (
                     <span
                         key={`${key}-${index}`}
-                        className="inline-flex w-[1.05em] items-center justify-center align-[-0.12em]"
+                        className={`${run ? "preview-rich-run " : ""}inline-flex w-[1.05em] items-center justify-center align-[-0.12em]`}
                         style={
                             run
                                 ? {
@@ -2898,7 +3716,8 @@ export default function EventPromotePage() {
                                         run.color,
                                         run.shadowKey ?? base.shadowKey,
                                     ),
-                                }
+                                    "--mobile-run-size": `${channelLayout.preview.mobileFontSizes[key] * (base.scale / 100) * (run.scale / 100)}cqw`,
+                                } as CSSProperties
                                 : undefined
                         }
                     >
@@ -2918,9 +3737,7 @@ export default function EventPromotePage() {
             return (
                 <span
                     key={`${key}-${index}`}
-                    className={
-                        isDefaultMusicEmphasis ? "mobile-music-emphasis" : undefined
-                    }
+                    className={`preview-rich-run${isDefaultMusicEmphasis ? " mobile-music-emphasis" : ""}`}
                     style={
                         {
                             color: run.color,
@@ -2930,7 +3747,15 @@ export default function EventPromotePage() {
                                 run.color,
                                 run.shadowKey ?? base.shadowKey,
                             ),
+                            "--mobile-run-size": `${channelLayout.preview.mobileFontSizes[key] * (base.scale / 100) * (run.scale / 100)}cqw`,
                             "--mobile-music-size": `${size * (base.scale / 100) * 1.05}px`,
+                            "--proportional-mobile-music-size": `${channelLayout.preview.mobileFontSizes[key] * (base.scale / 100) * 1.05}cqw`,
+                            ...(isRecommendedYoutubeNote
+                                ? {
+                                      position: "relative",
+                                      top: "-0.06em",
+                                  }
+                                : {}),
                         } as CSSProperties
                     }
                 >
@@ -2948,13 +3773,91 @@ export default function EventPromotePage() {
         return `${extra} ${selected && canDrag ? "cursor-grab active:cursor-grabbing" : "cursor-pointer"} ${canDrag ? "touch-none select-none" : ""} ${selected ? "rounded-[2px] outline outline-2 outline-[#1677FF] outline-offset-2" : ""}`;
     };
 
+    const renderHistoryControls = (className: string) => (
+        <div className={className} aria-label="편집 기록">
+            <button
+                type="button"
+                onClick={undoHistory}
+                disabled={!historyAvailability.canUndo}
+                aria-label="되돌리기"
+                title="되돌리기"
+                className="flex h-9 w-9 items-center justify-center rounded-lg text-[#4E5968] outline-none transition hover:bg-[#F4F5F6] focus-visible:ring-2 focus-visible:ring-[#8B95A1]/35 disabled:cursor-not-allowed disabled:text-[#C7CCD2] disabled:hover:bg-transparent sm:h-8 sm:w-8"
+            >
+                <svg
+                    viewBox="0 0 24 24"
+                    className="h-[18px] w-[18px]"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="M9 7 4.5 11.5 9 16" />
+                    <path d="M5 11.5h7.5a6 6 0 0 1 6 6" />
+                </svg>
+            </button>
+            <button
+                type="button"
+                onClick={redoHistory}
+                disabled={!historyAvailability.canRedo}
+                aria-label="다시 실행"
+                title="다시 실행"
+                className="flex h-9 w-9 items-center justify-center rounded-lg text-[#4E5968] outline-none transition hover:bg-[#F4F5F6] focus-visible:ring-2 focus-visible:ring-[#8B95A1]/35 disabled:cursor-not-allowed disabled:text-[#C7CCD2] disabled:hover:bg-transparent sm:h-8 sm:w-8"
+            >
+                <svg
+                    viewBox="0 0 24 24"
+                    className="h-[18px] w-[18px]"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="m15 7 4.5 4.5L15 16" />
+                    <path d="M19 11.5h-7.5a6 6 0 0 0-6 6" />
+                </svg>
+            </button>
+        </div>
+    );
+
     return (
         <main className="min-h-screen bg-[#F7F8FA] text-[#171B22]">
             <style>{`
                 @media (max-width: 639px) {
                     .mobile-title { font-size: 24px !important; }
                     .mobile-music-emphasis { font-size: var(--mobile-music-size) !important; }
+                    .proportional-mobile-preview .preview-organizer-placeholder { --mobile-preview-base-size: var(--mobile-preview-organizer-size); font-size: var(--mobile-preview-base-size) !important; }
+                    .proportional-mobile-preview .preview-organizer-text { --mobile-preview-base-size: var(--mobile-preview-organizer-text-size); font-size: var(--mobile-preview-base-size) !important; }
+                    .proportional-mobile-preview .preview-title-placeholder { --mobile-preview-base-size: var(--mobile-preview-title-size); font-size: var(--mobile-preview-base-size) !important; }
+                    .proportional-mobile-preview .preview-title-text { --mobile-preview-base-size: var(--mobile-preview-title-text-size); font-size: var(--mobile-preview-base-size) !important; }
+                    .proportional-mobile-preview .preview-date-placeholder { --mobile-preview-base-size: var(--mobile-preview-date-size); font-size: var(--mobile-preview-base-size) !important; }
+                    .proportional-mobile-preview .preview-date-text { --mobile-preview-base-size: var(--mobile-preview-date-text-size); font-size: var(--mobile-preview-base-size) !important; }
+                    .proportional-mobile-preview .preview-place-placeholder { --mobile-preview-base-size: var(--mobile-preview-place-size); font-size: var(--mobile-preview-base-size) !important; }
+                    .proportional-mobile-preview .preview-place-text { --mobile-preview-base-size: var(--mobile-preview-place-text-size); font-size: var(--mobile-preview-base-size) !important; }
+                    .proportional-mobile-preview .preview-description-placeholder { --mobile-preview-base-size: var(--mobile-preview-description-size); font-size: var(--mobile-preview-base-size) !important; }
+                    .proportional-mobile-preview .preview-description-text { --mobile-preview-base-size: var(--mobile-preview-description-text-size); font-size: var(--mobile-preview-base-size) !important; }
+                    .proportional-mobile-preview .preview-application-text { --mobile-preview-base-size: var(--mobile-preview-application-text-size); font-size: var(--mobile-preview-base-size) !important; }
+                    .proportional-mobile-preview .preview-rich-run { font-size: var(--mobile-run-size) !important; }
+                    .proportional-mobile-preview .mobile-music-emphasis { font-size: var(--proportional-mobile-music-size) !important; }
+                    .proportional-mobile-preview .preview-title-row { margin-top: 1.25cqw !important; }
+                    .proportional-mobile-preview .preview-date-row { margin-top: 3.333333cqw !important; }
+                    .proportional-mobile-preview .preview-place-row { margin-top: 0.833333cqw !important; }
+                    .proportional-mobile-preview .preview-description-row { margin-top: 1.666667cqw !important; }
                 }
+                .channel-preset-preview .preview-organizer-placeholder { --mobile-preview-base-size: var(--mobile-preview-organizer-size); font-size: var(--mobile-preview-base-size) !important; }
+                .channel-preset-preview .preview-organizer-text { --mobile-preview-base-size: var(--mobile-preview-organizer-text-size); font-size: var(--mobile-preview-base-size) !important; }
+                .channel-preset-preview .preview-title-placeholder { --mobile-preview-base-size: var(--mobile-preview-title-size); font-size: var(--mobile-preview-base-size) !important; }
+                .channel-preset-preview .preview-title-text { --mobile-preview-base-size: var(--mobile-preview-title-text-size); font-size: var(--mobile-preview-base-size) !important; }
+                .channel-preset-preview .preview-date-placeholder { --mobile-preview-base-size: var(--mobile-preview-date-size); font-size: var(--mobile-preview-base-size) !important; }
+                .channel-preset-preview .preview-date-text { --mobile-preview-base-size: var(--mobile-preview-date-text-size); font-size: var(--mobile-preview-base-size) !important; }
+                .channel-preset-preview .preview-place-placeholder { --mobile-preview-base-size: var(--mobile-preview-place-size); font-size: var(--mobile-preview-base-size) !important; }
+                .channel-preset-preview .preview-place-text { --mobile-preview-base-size: var(--mobile-preview-place-text-size); font-size: var(--mobile-preview-base-size) !important; }
+                .channel-preset-preview .preview-description-placeholder { --mobile-preview-base-size: var(--mobile-preview-description-size); font-size: var(--mobile-preview-base-size) !important; }
+                .channel-preset-preview .preview-description-text { --mobile-preview-base-size: var(--mobile-preview-description-text-size); font-size: var(--mobile-preview-base-size) !important; }
+                .channel-preset-preview .preview-rich-run { font-size: var(--mobile-run-size) !important; }
+                .channel-preset-preview .mobile-music-emphasis { font-size: var(--proportional-mobile-music-size) !important; }
             `}</style>
 
             <section className="mx-auto max-w-[1280px] px-4 py-7 sm:px-5 md:px-8 md:py-11">
@@ -2981,7 +3884,7 @@ export default function EventPromotePage() {
                                 id="promote-channel"
                                 value={channel}
                                 onChange={(event) =>
-                                    setChannel(event.target.value as ChannelKey)
+                                    changeChannel(event.target.value as ChannelKey)
                                 }
                                 className="min-w-0 rounded-xl border border-[#DDE1E5] bg-white px-3 py-2.5 text-sm font-medium outline-none focus:border-[#B9BA28] focus:ring-2 focus:ring-[#F4F54A]/30"
                             >
@@ -3003,31 +3906,66 @@ export default function EventPromotePage() {
 
                     <div className="grid lg:grid-cols-[0.94fr_1.06fr]">
                         <div className="border-b border-[#ECEEF1] bg-[#F4F5F6] p-4 sm:p-6 lg:border-b-0 lg:border-r lg:p-8">
-                            <p className="mb-3 text-center text-xs text-[#7A818D]">
-                                {channels[channel].label} · {channels[channel].size}px
-                            </p>
+                            <div className="mb-3 flex items-center justify-between gap-3 sm:block">
+                                <p className="min-w-0 text-left text-xs text-[#7A818D] sm:text-center">
+                                    {channels[channel].label} · {channels[channel].size}px
+                                </p>
+                                {editorTab !== "image" &&
+                                    renderHistoryControls(
+                                        "flex shrink-0 items-center gap-1 sm:hidden",
+                                    )}
+                            </div>
                             <div
                                 ref={previewFrameRef}
                                 onPointerDown={handlePreviewPointerDown}
                                 onPointerMove={handlePreviewPointerMove}
                                 onPointerUp={handlePreviewPointerUp}
                                 onPointerCancel={handlePreviewPointerCancel}
-                                className={`relative mx-auto w-full max-w-[480px] overflow-hidden rounded-[24px] bg-[#E8ECEF] shadow-[0_16px_38px_rgba(25,31,40,0.14)] ${aspectClass} ${lineDraftVariant ? "cursor-crosshair" : ""}`}
-                                style={{ containerType: "size" }}
+                                className={`relative mx-auto w-full max-w-[480px] overflow-hidden rounded-[24px] bg-[#E8ECEF] shadow-[0_16px_38px_rgba(25,31,40,0.14)] ${channelLayout.preview.aspectClass} ${channelLayout.preview.mobileScaleMode === "proportional" ? "proportional-mobile-preview" : ""} ${channelLayout.posterLayout ? "channel-preset-preview" : ""} ${lineDraftVariant ? "cursor-crosshair" : ""}`}
+                                style={mobilePreviewStyle}
                             >
-                                {scene === "custom" && imageFit === "contain" ? (
+                                {shouldRenderContainedImage ? (
                                     <>
                                         <img
                                             src={imageSrc}
                                             alt=""
                                             aria-hidden="true"
-                                            className="absolute -inset-[6%] h-[112%] w-[112%] scale-110 object-cover blur-xl"
+                                            className={
+                                                usesSharedStoryContainBackground
+                                                    ? "absolute inset-0 h-full w-full object-cover"
+                                                    : "absolute -inset-[6%] h-[112%] w-[112%] scale-110 object-cover blur-xl"
+                                            }
+                                            style={
+                                                usesSharedStoryContainBackground
+                                                    ? previewContainBackgroundImageStyle
+                                                    : previewCoverImageStyle
+                                            }
                                         />
-                                        <span className="absolute inset-0 bg-[#171B22]/20" />
+                                        <span
+                                            className={
+                                                usesSharedStoryContainBackground
+                                                    ? "absolute inset-0"
+                                                    : "absolute inset-0 bg-[#171B22]/20"
+                                            }
+                                            style={
+                                                usesSharedStoryContainBackground
+                                                    ? previewContainBackgroundOverlayStyle
+                                                    : undefined
+                                            }
+                                        />
                                         <img
                                             src={imageSrc}
                                             alt="웹전단 대표 이미지"
-                                            className="absolute inset-0 h-full w-full object-contain"
+                                            className={
+                                                usesSharedStoryContainBackground
+                                                    ? "absolute left-1/2 top-1/2 h-auto max-h-full w-auto max-w-full -translate-x-1/2 -translate-y-1/2"
+                                                    : "absolute inset-0 h-full w-full object-contain"
+                                            }
+                                            style={
+                                                usesSharedStoryContainBackground
+                                                    ? previewStoryContainForegroundStyle
+                                                    : undefined
+                                            }
                                         />
                                     </>
                                 ) : (
@@ -3035,6 +3973,7 @@ export default function EventPromotePage() {
                                         src={imageSrc}
                                         alt="웹전단 대표 이미지"
                                         className="absolute inset-0 h-full w-full object-cover"
+                                        style={previewCoverImageStyle}
                                     />
                                 )}
 
@@ -3130,23 +4069,27 @@ export default function EventPromotePage() {
                                     ref={textSafeAreaRef}
                                     className="pointer-events-none absolute"
                                     style={{
-                                        left: `${TEXT_SAFE_AREA.left * 100}%`,
-                                        right: `${(1 - TEXT_SAFE_AREA.right) * 100}%`,
-                                        top: `${TEXT_SAFE_AREA.top * 100}%`,
-                                        bottom: `${(1 - TEXT_SAFE_AREA.bottom) * 100}%`,
+                                        left: `${activeTextSafeArea.left * 100}%`,
+                                        right: `${(1 - activeTextSafeArea.right) * 100}%`,
+                                        top: `${activeTextSafeArea.top * 100}%`,
+                                        bottom: `${(1 - activeTextSafeArea.bottom) * 100}%`,
                                         containerType: "size",
                                     }}
                                 >
-                                    <div className="relative">
+                                    <div
+                                        className="preview-organizer-row relative"
+                                        style={previewRowStyle("organizer")}
+                                    >
                                         <span
                                             aria-hidden="true"
-                                            className="invisible inline-flex items-center"
+                                            className="preview-organizer-placeholder invisible inline-flex items-center"
                                             style={initialTextStyle("organizer", 15)}
                                         >
                                             {DEFAULT_ORGANIZER}
                                         </span>
                                         <button
                                             type="button"
+                                            hidden={!visibleFields.organizer}
                                             {...movableTextInteractionProps("organizer")}
                                             className={previewButtonClass(
                                                 "organizer",
@@ -3159,7 +4102,7 @@ export default function EventPromotePage() {
                                                 ref={(node) => {
                                                     textBlockRefs.current.organizer = node;
                                                 }}
-                                                className="flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words"
+                                                className="preview-organizer-text flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words"
                                                 style={textStyle("organizer", 15)}
                                             >
                                                 <PictogramIcon
@@ -3172,13 +4115,16 @@ export default function EventPromotePage() {
                                             </span>
                                         </button>
                                     </div>
-                                    <div className="relative mt-1.5">
+                                    <div
+                                        className="preview-title-row relative mt-1.5"
+                                        style={previewRowStyle("title")}
+                                    >
                                         <span
                                             aria-hidden="true"
-                                            className="mobile-title invisible flex max-w-full leading-[1.1] tracking-[-0.05em]"
+                                            className="mobile-title preview-title-placeholder invisible flex max-w-full leading-[1.1] tracking-[-0.05em]"
                                             style={initialTextStyle(
                                                 "title",
-                                                channel === "story" ? 34 : 32,
+                                                channelLayout.preview.titleSize,
                                             )}
                                         >
                                             <span className="min-w-0 whitespace-pre-wrap break-words">
@@ -3189,8 +4135,9 @@ export default function EventPromotePage() {
                                                         {
                                                             color: INITIAL_TITLE_RUNS[0].color,
                                                             fontWeight: INITIAL_TITLE_RUNS[0].fontWeight,
-                                                            fontSize: `${(channel === "story" ? 34 : 32) * 1.45}px`,
-                                                            "--mobile-music-size": `${(channel === "story" ? 34 : 32) * 1.05}px`,
+                                                            fontSize: `${channelLayout.preview.titleSize * 1.45}px`,
+                                                            "--mobile-music-size": `${channelLayout.preview.titleSize * 1.05}px`,
+                                                            "--proportional-mobile-music-size": `${channelLayout.preview.mobileFontSizes.title * 1.05}cqw`,
                                                         } as CSSProperties
                                                     }
                                                 >
@@ -3200,45 +4147,64 @@ export default function EventPromotePage() {
                                         </span>
                                         <button
                                             type="button"
+                                            hidden={!visibleFields.title}
                                             {...movableTextInteractionProps("title")}
                                             className={previewButtonClass(
                                                 "title",
                                                 "pointer-events-auto absolute left-0 top-0 block max-w-full text-left",
                                             )}
-                                            style={textPositionStyle("title")}
+                                            style={{
+                                                ...previewKakaoTextAreaStyle("title"),
+                                                ...textPositionStyle("title"),
+                                            }}
                                             aria-label="행사명 편집"
                                         >
                                             <span
                                                 ref={(node) => {
                                                     textBlockRefs.current.title = node;
                                                 }}
-                                                className="mobile-title flex max-w-full items-start gap-[0.35em] leading-[1.1] tracking-[-0.05em]"
-                                                style={textStyle("title", channel === "story" ? 34 : 32)}
+                                                className="mobile-title preview-title-text flex max-w-full items-start gap-[0.35em] leading-[1.1] tracking-[-0.05em]"
+                                                style={textStyle(
+                                                    "title",
+                                                    channelLayout.preview.titleSize,
+                                                )}
                                             >
                                                 <PictogramIcon
                                                     icon={textIcons.title}
                                                     className="mt-[0.08em] h-[1em] w-[1em] shrink-0"
                                                 />
-                                                <span className="min-w-0 whitespace-pre-wrap break-words">
+                                                <span
+                                                    className="min-w-0 whitespace-pre-wrap break-words"
+                                                    style={previewLineClampStyle(
+                                                        usesRecommendedTextLayout("title")
+                                                            ? channelLayout.posterLayout
+                                                                  ?.titleMaxLines
+                                                            : undefined,
+                                                    )}
+                                                >
                                                     {renderTextCharacters(
                                                         "title",
                                                         title,
-                                                        channel === "story" ? 34 : 32,
+                                                        channelLayout.preview.titleSize,
                                                     )}
                                                 </span>
                                             </span>
                                         </button>
                                     </div>
-                                    <div className="relative mt-4">
+                                    <div
+                                        className="preview-date-row relative mt-4"
+                                        style={previewRowStyle("date")}
+                                    >
                                         <span
                                             aria-hidden="true"
-                                            className="invisible inline-flex items-center"
+                                            className="preview-date-placeholder invisible inline-flex items-center"
                                             style={initialTextStyle("date", 15)}
                                         >
                                             {DEFAULT_DATE}
                                         </span>
                                         <button
                                             type="button"
+                                            hidden={!visibleFields.date}
                                             {...movableTextInteractionProps("date")}
                                             className={previewButtonClass(
                                                 "date",
@@ -3251,7 +4217,7 @@ export default function EventPromotePage() {
                                                 ref={(node) => {
                                                     textBlockRefs.current.date = node;
                                                 }}
-                                                className="flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words"
+                                                className="preview-date-text flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words"
                                                 style={textStyle("date", 15)}
                                             >
                                                 <PictogramIcon
@@ -3264,10 +4230,13 @@ export default function EventPromotePage() {
                                             </span>
                                         </button>
                                     </div>
-                                    <div className="relative mt-1">
+                                    <div
+                                        className="preview-place-row relative mt-1"
+                                        style={previewRowStyle("place")}
+                                    >
                                         <span
                                             aria-hidden="true"
-                                            className="invisible inline-flex items-center gap-[0.35em]"
+                                            className="preview-place-placeholder invisible inline-flex items-center gap-[0.35em]"
                                             style={initialTextStyle("place", 14)}
                                         >
                                             <span className="inline-flex w-[1.05em] items-center justify-center align-[-0.12em]">
@@ -3277,6 +4246,7 @@ export default function EventPromotePage() {
                                         </span>
                                         <button
                                             type="button"
+                                            hidden={!visibleFields.place}
                                             {...movableTextInteractionProps("place")}
                                             className={previewButtonClass(
                                                 "place",
@@ -3289,7 +4259,7 @@ export default function EventPromotePage() {
                                                 ref={(node) => {
                                                     textBlockRefs.current.place = node;
                                                 }}
-                                                className="flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words"
+                                                className="preview-place-text flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words"
                                                 style={textStyle("place", 14)}
                                             >
                                                 <PictogramIcon
@@ -3302,37 +4272,56 @@ export default function EventPromotePage() {
                                             </span>
                                         </button>
                                     </div>
-                                    <div className="relative mt-2">
+                                    <div
+                                        className="preview-description-row relative mt-2"
+                                        style={previewRowStyle("description")}
+                                    >
                                         <span
                                             aria-hidden="true"
-                                            className="invisible flex max-w-full whitespace-pre-wrap break-words leading-[1.55]"
+                                            className={`preview-description-placeholder invisible flex max-w-full whitespace-pre-wrap break-words leading-[1.55] ${channelLayout.descriptionMode === "compact" && !channelLayout.posterLayout ? "max-h-[3.1em] overflow-hidden" : ""}`}
                                             style={initialTextStyle("description", 14)}
                                         >
-                                            {DEFAULT_DESCRIPTION}
+                                            {channel === "youtube"
+                                                ? YOUTUBE_DEFAULT_DESCRIPTION
+                                                : DEFAULT_DESCRIPTION}
                                         </span>
                                         <button
                                             type="button"
+                                            hidden={!visibleFields.description}
                                             {...movableTextInteractionProps("description")}
                                             className={previewButtonClass(
                                                 "description",
                                                 "pointer-events-auto absolute left-0 top-0 block max-w-full text-left",
                                             )}
-                                            style={textPositionStyle("description")}
+                                            style={{
+                                                ...previewKakaoTextAreaStyle("description"),
+                                                ...textPositionStyle("description"),
+                                            }}
                                             aria-label="행사 내용 편집"
                                         >
                                             <span
                                                 ref={(node) => {
                                                     textBlockRefs.current.description = node;
                                                 }}
-                                                className="flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words leading-[1.55]"
+                                                className={`preview-description-text flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words leading-[1.55] ${channelLayout.descriptionMode === "compact" && !channelLayout.posterLayout ? "max-h-[3.1em] overflow-hidden" : ""}`}
                                                 style={textStyle("description", 14)}
                                             >
                                                 <PictogramIcon
                                                     icon={textIcons.description}
                                                     className="mt-[0.2em] h-[1em] w-[1em] shrink-0"
                                                 />
-                                                <span className="min-w-0 whitespace-pre-wrap break-words">
-                                                    {renderTextCharacters("description", description, 14)}
+                                                <span
+                                                    className="min-w-0 whitespace-pre-wrap break-words"
+                                                    style={previewLineClampStyle(
+                                                        channelLayout.posterLayout
+                                                            ?.descriptionMaxLines,
+                                                    )}
+                                                >
+                                                    {renderTextCharacters(
+                                                        "description",
+                                                        renderedDescription,
+                                                        14,
+                                                    )}
                                                 </span>
                                             </span>
                                         </button>
@@ -3351,31 +4340,34 @@ export default function EventPromotePage() {
                                     aria-hidden="true"
                                 />
 
-                                <button
-                                    type="button"
-                                    onClick={selectDivider}
-                                    onPointerDown={startDividerInteraction}
-                                    className={`absolute h-4 -translate-y-1/2 ${editorTab === "style" ? "cursor-grab touch-none active:cursor-grabbing" : "cursor-pointer"} ${isDividerPreviewSelected ? "rounded-sm outline outline-2 outline-[#1677FF] outline-offset-1" : ""} ${editorTab === "style" && !dividerStyle.visible ? "border border-dashed border-[#AAB0B8]/60" : ""}`}
-                                    style={{
-                                        left: `${(SAFE_AREA.left + dividerPosition.x) * 100}%`,
-                                        width: `${(SAFE_AREA.right - SAFE_AREA.left) * 100}%`,
-                                        top: `${(DIVIDER_BASE_Y + dividerPosition.y) * 100}%`,
-                                    }}
-                                    aria-label="구분선 편집"
-                                    aria-pressed={isDividerPreviewSelected}
-                                >
-                                    {dividerStyle.visible && (
-                                        <span
-                                            className="absolute inset-x-0 top-1/2 block -translate-y-1/2"
-                                            style={{
-                                                borderTop: `${Math.max(1, dividerStyle.width / 2)}px ${dividerStyle.variant === "dashed" ? "dashed" : "solid"} ${dividerStyle.color}`,
-                                            }}
-                                        />
-                                    )}
-                                </button>
+                                {channelLayout.defaultDividerVisible && (
+                                    <button
+                                        type="button"
+                                        onClick={selectDivider}
+                                        onPointerDown={startDividerInteraction}
+                                        className={`absolute h-4 -translate-y-1/2 ${editorTab === "style" ? "cursor-grab touch-none active:cursor-grabbing" : "cursor-pointer"} ${isDividerPreviewSelected ? "rounded-sm outline outline-2 outline-[#1677FF] outline-offset-1" : ""} ${editorTab === "style" && !dividerStyle.visible ? "border border-dashed border-[#AAB0B8]/60" : ""}`}
+                                        style={{
+                                            left: `${(SAFE_AREA.left + dividerPosition.x) * 100}%`,
+                                            width: `${(SAFE_AREA.right - SAFE_AREA.left) * 100}%`,
+                                            top: `${(DIVIDER_BASE_Y + dividerPosition.y) * 100}%`,
+                                        }}
+                                        aria-label="구분선 편집"
+                                        aria-pressed={isDividerPreviewSelected}
+                                    >
+                                        {dividerStyle.visible && (
+                                            <span
+                                                className="absolute inset-x-0 top-1/2 block -translate-y-1/2"
+                                                style={{
+                                                    borderTop: `${Math.max(1, dividerStyle.width / 2)}px ${dividerStyle.variant === "dashed" ? "dashed" : "solid"} ${dividerStyle.color}`,
+                                                }}
+                                            />
+                                        )}
+                                    </button>
+                                )}
 
                                 <button
                                     type="button"
+                                    hidden={!visibleFields.application}
                                     {...movableTextInteractionProps("application")}
                                     className={previewButtonClass(
                                         "application",
@@ -3388,7 +4380,7 @@ export default function EventPromotePage() {
                                         ref={(node) => {
                                             textBlockRefs.current.application = node;
                                         }}
-                                        className="flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words"
+                                        className="preview-application-text flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words"
                                         style={textStyle("application", 14)}
                                     >
                                         <PictogramIcon
@@ -3408,7 +4400,7 @@ export default function EventPromotePage() {
 
                         <div className="min-w-0 p-5 md:p-7 lg:p-8">
                             <div className="sticky top-0 z-20 border-b border-[#E7E9EC] bg-white/95 backdrop-blur-sm">
-                                <div className="mr-[68px] flex min-w-0">
+                                <div className="flex min-w-0 sm:mr-[68px]">
                                     {tabs.map((tab) => (
                                         <button
                                             key={tab.key}
@@ -3423,64 +4415,20 @@ export default function EventPromotePage() {
                                         </button>
                                     ))}
                                 </div>
-                                {editorTab !== "image" && (
-                                    <div
-                                        className="absolute right-0 top-1/2 flex -translate-y-1/2 items-center gap-1"
-                                        aria-label="편집 기록"
-                                    >
-                                        <button
-                                            type="button"
-                                            onClick={undoHistory}
-                                            disabled={!historyAvailability.canUndo}
-                                            aria-label="되돌리기"
-                                            title="되돌리기"
-                                            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#4E5968] outline-none transition hover:bg-[#F4F5F6] focus-visible:ring-2 focus-visible:ring-[#8B95A1]/35 disabled:cursor-not-allowed disabled:text-[#C7CCD2] disabled:hover:bg-transparent"
-                                        >
-                                            <svg
-                                                viewBox="0 0 24 24"
-                                                className="h-[18px] w-[18px]"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth="1.8"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M9 7 4.5 11.5 9 16" />
-                                                <path d="M5 11.5h7.5a6 6 0 0 1 6 6" />
-                                            </svg>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={redoHistory}
-                                            disabled={!historyAvailability.canRedo}
-                                            aria-label="다시 실행"
-                                            title="다시 실행"
-                                            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#4E5968] outline-none transition hover:bg-[#F4F5F6] focus-visible:ring-2 focus-visible:ring-[#8B95A1]/35 disabled:cursor-not-allowed disabled:text-[#C7CCD2] disabled:hover:bg-transparent"
-                                        >
-                                            <svg
-                                                viewBox="0 0 24 24"
-                                                className="h-[18px] w-[18px]"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth="1.8"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="m15 7 4.5 4.5L15 16" />
-                                                <path d="M19 11.5h-7.5a6 6 0 0 0-6 6" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                )}
+                                {editorTab !== "image" &&
+                                    renderHistoryControls(
+                                        "absolute right-0 top-1/2 hidden -translate-y-1/2 items-center gap-1 sm:flex",
+                                    )}
                             </div>
 
                             {editorTab === "content" && (
                                 <div className="pt-6">
                                     <h2 className="text-lg font-semibold">행사 내용</h2>
                                     <div className="mt-4 grid gap-x-4 gap-y-4 sm:grid-cols-2">
-                                        <div className="text-sm font-medium sm:col-span-2">
+                                        <div
+                                            hidden={!visibleFields.title}
+                                            className="text-sm font-medium sm:col-span-2"
+                                        >
                                             <label htmlFor="promote-title">행사명</label>
                                             <div className="flex items-start gap-2">
                                                 <textarea
@@ -3505,7 +4453,10 @@ export default function EventPromotePage() {
                                                 />
                                             </div>
                                         </div>
-                                        <div className="text-sm font-medium">
+                                        <div
+                                            hidden={!visibleFields.organizer}
+                                            className="text-sm font-medium"
+                                        >
                                             <label htmlFor="promote-organizer">사찰·기관명</label>
                                             <div className="flex items-start gap-2">
                                                 <textarea
@@ -3524,7 +4475,10 @@ export default function EventPromotePage() {
                                                 />
                                             </div>
                                         </div>
-                                        <div className="text-sm font-medium">
+                                        <div
+                                            hidden={!visibleFields.date}
+                                            className="text-sm font-medium"
+                                        >
                                             <label htmlFor="promote-date">일시</label>
                                             <div className="flex items-start gap-2">
                                                 <textarea
@@ -3543,7 +4497,10 @@ export default function EventPromotePage() {
                                                 />
                                             </div>
                                         </div>
-                                        <div className="text-sm font-medium">
+                                        <div
+                                            hidden={!visibleFields.place}
+                                            className="text-sm font-medium"
+                                        >
                                             <label htmlFor="promote-place">장소</label>
                                             <div className="flex items-start gap-2">
                                                 <textarea
@@ -3562,7 +4519,10 @@ export default function EventPromotePage() {
                                                 />
                                             </div>
                                         </div>
-                                        <div className="text-sm font-medium">
+                                        <div
+                                            hidden={!visibleFields.application}
+                                            className="text-sm font-medium"
+                                        >
                                             <label htmlFor="promote-application">신청·문의</label>
                                             <div className="flex items-start gap-2">
                                                 <textarea
@@ -3581,8 +4541,15 @@ export default function EventPromotePage() {
                                                 />
                                             </div>
                                         </div>
-                                        <div className="text-sm font-medium sm:col-span-2">
-                                            <label htmlFor="promote-description">행사 내용</label>
+                                        <div
+                                            hidden={!visibleFields.description}
+                                            className="text-sm font-medium sm:col-span-2"
+                                        >
+                                            <label htmlFor="promote-description">
+                                                {channelLayout.descriptionMode === "compact"
+                                                    ? "짧은 내용"
+                                                    : "행사 내용"}
+                                            </label>
                                             <div className="flex items-start gap-2">
                                                 <textarea
                                                     id="promote-description"
@@ -3599,6 +4566,11 @@ export default function EventPromotePage() {
                                                     className={`${fieldClass} min-h-[96px] resize-y leading-6`}
                                                 />
                                             </div>
+                                            {channelLayout.descriptionMode === "compact" && (
+                                                <p className="mt-1 text-xs font-normal leading-5 text-[#8B95A1]">
+                                                    게시 이미지에는 최대 2줄 정도로 표시돼요.
+                                                </p>
+                                            )}
                                         </div>
                                     </div>
 
@@ -3880,7 +4852,7 @@ export default function EventPromotePage() {
                                         />
                                     </label>
 
-                                    {scene === "custom" && (
+                                    {(scene === "custom" || channel === "story") && (
                                         <div className="flex items-center justify-between gap-3 border-t border-[#E7E9EC] py-4">
                                             <span className="text-sm font-normal text-[#4E5968]">
                                                 사진 맞춤
@@ -3899,9 +4871,13 @@ export default function EventPromotePage() {
                                                     <button
                                                         key={item.key}
                                                         type="button"
-                                                        onClick={() => setImageFit(item.key)}
-                                                        aria-pressed={imageFit === item.key}
-                                                        className={`rounded-lg px-3 py-2 text-xs font-normal transition ${imageFit === item.key ? "bg-white text-[#252A31] shadow-sm ring-1 ring-[#E1E4E8]" : "text-[#737B87]"}`}
+                                                        onClick={() =>
+                                                            setImageFitOverride(item.key)
+                                                        }
+                                                        aria-pressed={
+                                                            effectiveImageFit === item.key
+                                                        }
+                                                        className={`rounded-lg px-3 py-2 text-xs font-normal transition ${effectiveImageFit === item.key ? "bg-white text-[#252A31] shadow-sm ring-1 ring-[#E1E4E8]" : "text-[#737B87]"}`}
                                                     >
                                                         {item.label}
                                                     </button>
@@ -3912,7 +4888,7 @@ export default function EventPromotePage() {
                                 </div>
                             )}
 
-                            {editorTab === "style" && (
+                            {editorTab === "style" && isSelectedElementVisible && (
                                 <div className="pt-3 sm:pt-6">
                                     {selectedElement !== "divider" && selectedElement !== "line" && (
                                         <label className="block text-sm font-normal text-[#4E5968]">
@@ -4325,8 +5301,8 @@ export default function EventPromotePage() {
                             )}
 
                             <p className="mt-7 border-t border-[#ECEEF1] pt-4 text-xs leading-5 text-[#8B95A1]">
-                                저장 전 행사 정보와 이미지 사용 권한을 확인해 주세요. 홍보
-                                문구는 선택한 서비스에서 직접 붙여 넣을 수 있어요.
+                                게시 크기에 따라 입력·표시 항목이 달라져요. 작성한 내용은
+                                크기를 바꿔도 유지됩니다.
                             </p>
                         </div>
                     </div>
