@@ -538,9 +538,9 @@ const blogPosterLayoutBase = {
     elementTop: {
         organizer: 0.075,
         title: 0.16,
-        date: 0.56,
-        place: 0.66,
-        description: 0.765,
+        date: 0.56 - 12 / 628,
+        place: 0.66 - 12 / 628,
+        description: 0.765 - 15 / 628,
     },
     baseFontSizes: {
         organizer: 38,
