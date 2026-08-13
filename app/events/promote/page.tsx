@@ -3,6 +3,7 @@
 import {
     useMemo,
     useEffect,
+    useLayoutEffect,
     useRef,
     useState,
     type CSSProperties,
@@ -138,13 +139,35 @@ function focusContentField(key: TextKey) {
 }
 
 const DEFAULT_TITLE = "♫ 연꽃 피는 산사 음악회";
+const KAKAO_RECOMMENDED_TITLE = "♫ 연꽃 피는 산사\n음악회";
 const DEFAULT_ORGANIZER = "연화사";
 const DEFAULT_DATE = "2026. 8. 22. 토요일 오후 6시";
 const DEFAULT_PLACE = `${PIN_SYMBOL} 연화사 앞마당`;
+const DEFAULT_APPLICATION = "문의 02-000-0000 · 참가비 무료";
 const DEFAULT_DESCRIPTION =
-    "여름 저녁, 산사의 고요함과 음악이 만나는 시간\n차 한 잔과 함께 잠시 머물며\n마음에 작은 쉼표를 놓아보세요";
-const YOUTUBE_DEFAULT_DESCRIPTION =
-    "여름 저녁, 산사의 고요함과 음악이 만나는 시간\n차 한 잔과 함께 잠시 머물며 마음에 작은 쉼표를 놓아보세요";
+    "여름 저녁, 산사의 고요함과\n음악이 만나는 시간";
+const KAKAO_RECOMMENDED_DESCRIPTION =
+    "고요한 산사의 여름밤\n음악과 연꽃의 만남.\n\n은은한 등불 아래\n편안한 쉼을 누려보세요.\n\n가족, 친구와 함께\n산사의 밤을 즐겨보세요.";
+const INSTAGRAM_DEFAULT_DESCRIPTION =
+    "여름 저녁, 산사의 고요함과\n음악이 만나는 특별한 시간\n\n연꽃 향기 머무는 뜰에서\n편안한 선율과 함께 쉬어가 보세요.\n\n가족, 친구와 함께\n산사의 여름밤을 천천히 즐겨보세요.";
+const INSTAGRAM_RECOMMENDED_TITLE = "♫ 연꽃 피는 산사\n음악회";
+const STORY_RECOMMENDED_TITLE = "♫ 연꽃 피는 산사 음악회";
+const STORY_RECOMMENDED_DESCRIPTION =
+    "여름 저녁, 산사의 고요함과\n음악이 만나는 특별한 시간\n\n연꽃 향기 머무는 뜰에서\n편안한 선율과 함께 쉬어가 보세요.\n\n가족, 친구와 함께\n산사의 여름밤을 천천히 즐겨보세요.";
+const STORY_RECOMMENDED_APPLICATION = "문의 02-000-0000  참가비 무료";
+const LANDSCAPE_RECOMMENDED_DESCRIPTION =
+    "여름 저녁, 산사의 고요함과\n음악이 만나는 특별한 시간";
+const A4_RECOMMENDED_DESCRIPTION = INSTAGRAM_DEFAULT_DESCRIPTION;
+const A4_RECOMMENDED_APPLICATION = "문의 02-000-0000  참가비 무료";
+const defaultDescriptionByChannel: Record<ChannelKey, string> = {
+    instagram: INSTAGRAM_DEFAULT_DESCRIPTION,
+    story: STORY_RECOMMENDED_DESCRIPTION,
+    kakao: KAKAO_RECOMMENDED_DESCRIPTION,
+    share: KAKAO_RECOMMENDED_DESCRIPTION,
+    youtube: LANDSCAPE_RECOMMENDED_DESCRIPTION,
+    blog: LANDSCAPE_RECOMMENDED_DESCRIPTION,
+    a4: A4_RECOMMENDED_DESCRIPTION,
+};
 const INITIAL_TITLE_RUNS: RichTextRun[] = [
     {
         start: 11,
@@ -154,6 +177,161 @@ const INITIAL_TITLE_RUNS: RichTextRun[] = [
         scale: 145,
     },
 ];
+
+const STORY_RECOMMENDED_TITLE_RUNS: RichTextRun[] = [
+    {
+        start: STORY_RECOMMENDED_TITLE.indexOf("음악회"),
+        end:
+            STORY_RECOMMENDED_TITLE.indexOf("음악회") + "음악회".length,
+        color: "#B73535",
+        fontWeight: 700,
+        scale: 110,
+    },
+];
+
+const KAKAO_RECOMMENDED_DESCRIPTION_RUNS: RichTextRun[] = [
+    {
+        start: KAKAO_RECOMMENDED_DESCRIPTION.indexOf("고요한 산사"),
+        end:
+            KAKAO_RECOMMENDED_DESCRIPTION.indexOf("고요한 산사") +
+            "고요한 산사".length,
+        color: "#B73535",
+        fontWeight: 600,
+        scale: 125,
+        shadowKey: "soft",
+    },
+    {
+        start: KAKAO_RECOMMENDED_DESCRIPTION.indexOf("음악과 연꽃"),
+        end:
+            KAKAO_RECOMMENDED_DESCRIPTION.indexOf("음악과 연꽃") +
+            "음악과 연꽃".length,
+        color: "#B73535",
+        fontWeight: 600,
+        scale: 140,
+        shadowKey: "soft",
+    },
+    {
+        start: KAKAO_RECOMMENDED_DESCRIPTION.indexOf("편안한 쉼"),
+        end:
+            KAKAO_RECOMMENDED_DESCRIPTION.indexOf("편안한 쉼") +
+            "편안한 쉼".length,
+        color: "#285943",
+        fontWeight: 600,
+        scale: 125,
+        shadowKey: "soft",
+    },
+    {
+        start: KAKAO_RECOMMENDED_DESCRIPTION.indexOf("가족, 친구와 함께"),
+        end:
+            KAKAO_RECOMMENDED_DESCRIPTION.indexOf("가족, 친구와 함께") +
+            "가족, 친구와 함께".length,
+        color: "#5A3E2B",
+        fontWeight: 600,
+        scale: 112,
+        shadowKey: "soft",
+    },
+];
+
+const INSTAGRAM_RECOMMENDED_DESCRIPTION_RUNS: RichTextRun[] = [
+    {
+        start: INSTAGRAM_DEFAULT_DESCRIPTION.indexOf("산사의 고요함"),
+        end:
+            INSTAGRAM_DEFAULT_DESCRIPTION.indexOf("산사의 고요함") +
+            "산사의 고요함".length,
+        color: "#B73535",
+        fontWeight: 600,
+        scale: 118,
+        shadowKey: "soft",
+    },
+    {
+        start: INSTAGRAM_DEFAULT_DESCRIPTION.indexOf(
+            "음악이 만나는 특별한 시간",
+        ),
+        end:
+            INSTAGRAM_DEFAULT_DESCRIPTION.indexOf(
+                "음악이 만나는 특별한 시간",
+            ) + "음악이 만나는 특별한 시간".length,
+        color: "#B73535",
+        fontWeight: 600,
+        scale: 126,
+        shadowKey: "soft",
+    },
+    {
+        start: INSTAGRAM_DEFAULT_DESCRIPTION.indexOf("편안한 선율"),
+        end:
+            INSTAGRAM_DEFAULT_DESCRIPTION.indexOf("편안한 선율") +
+            "편안한 선율".length,
+        color: "#285943",
+        fontWeight: 600,
+        scale: 114,
+        shadowKey: "soft",
+    },
+];
+
+const STORY_RECOMMENDED_DESCRIPTION_RUNS: RichTextRun[] = [
+    {
+        start: STORY_RECOMMENDED_DESCRIPTION.indexOf("산사의 고요함"),
+        end:
+            STORY_RECOMMENDED_DESCRIPTION.indexOf("산사의 고요함") +
+            "산사의 고요함".length,
+        color: "#B73535",
+        fontWeight: 600,
+        scale: 118,
+        shadowKey: "soft",
+    },
+    {
+        start: STORY_RECOMMENDED_DESCRIPTION.indexOf(
+            "음악이 만나는 특별한 시간",
+        ),
+        end:
+            STORY_RECOMMENDED_DESCRIPTION.indexOf(
+                "음악이 만나는 특별한 시간",
+            ) + "음악이 만나는 특별한 시간".length,
+        color: "#B73535",
+        fontWeight: 600,
+        scale: 126,
+        shadowKey: "soft",
+    },
+    {
+        start: STORY_RECOMMENDED_DESCRIPTION.indexOf("편안한 선율"),
+        end:
+            STORY_RECOMMENDED_DESCRIPTION.indexOf("편안한 선율") +
+            "편안한 선율".length,
+        color: "#285943",
+        fontWeight: 600,
+        scale: 114,
+        shadowKey: "soft",
+    },
+];
+
+const LANDSCAPE_RECOMMENDED_DESCRIPTION_RUNS: RichTextRun[] = [
+    {
+        start: LANDSCAPE_RECOMMENDED_DESCRIPTION.indexOf("산사의 고요함"),
+        end:
+            LANDSCAPE_RECOMMENDED_DESCRIPTION.indexOf("산사의 고요함") +
+            "산사의 고요함".length,
+        color: "#B73535",
+        fontWeight: 600,
+        scale: 118,
+        shadowKey: "soft",
+    },
+    {
+        start: LANDSCAPE_RECOMMENDED_DESCRIPTION.indexOf(
+            "음악이 만나는 특별한 시간",
+        ),
+        end:
+            LANDSCAPE_RECOMMENDED_DESCRIPTION.indexOf(
+                "음악이 만나는 특별한 시간",
+            ) + "음악이 만나는 특별한 시간".length,
+        color: "#B73535",
+        fontWeight: 600,
+        scale: 120,
+        shadowKey: "soft",
+    },
+];
+
+const A4_RECOMMENDED_DESCRIPTION_RUNS: RichTextRun[] =
+    INSTAGRAM_RECOMMENDED_DESCRIPTION_RUNS.map((run) => ({ ...run }));
 
 const pictogramOptions: {
     key: PictogramKey;
@@ -328,7 +506,6 @@ type ChannelPosterLayout = {
     baseFontSizes: Readonly<Record<PosterLayoutTextKey, number>>;
     lineHeightRatios?: Readonly<Partial<Record<PosterLayoutTextKey, number>>>;
     titleMaxLines: number;
-    descriptionMaxLines: number;
     defaultDividerVisible: boolean;
 };
 
@@ -354,7 +531,6 @@ const youtubePosterLayoutBase = {
         description: 1.28,
     },
     titleMaxLines: 2,
-    descriptionMaxLines: 2,
     defaultDividerVisible: false,
 } as const;
 
@@ -378,7 +554,6 @@ const blogPosterLayoutBase = {
         description: 1.3,
     },
     titleMaxLines: 2,
-    descriptionMaxLines: 2,
     defaultDividerVisible: false,
 } as const;
 
@@ -454,6 +629,67 @@ const descriptionModeByChannel: Record<ChannelKey, DescriptionMode> = {
     a4: "full",
 };
 
+const KAKAO_RECOMMENDED_BASE_FONT_SIZES = {
+    organizer: 34.875,
+    title: 72,
+    date: 36.45,
+    place: 32.625,
+    description: 31.5,
+    application: 33.525,
+} as const;
+
+const KAKAO_RECOMMENDED_PREVIEW_FONT_SIZES = {
+    organizer: 15.5,
+    date: 16.2,
+    place: 14.5,
+    description: 14,
+    application: 14.9,
+} as const;
+
+const INSTAGRAM_RECOMMENDED_BASE_FONT_SIZES = {
+    organizer: 34.875,
+    title: 72,
+    date: 35.55,
+    place: 32.625,
+    description: 33.75,
+    application: 33.525,
+} as const;
+
+const INSTAGRAM_RECOMMENDED_PREVIEW_FONT_SIZES = {
+    organizer: 15.5,
+    date: 15.8,
+    place: 14.5,
+    description: 15,
+    application: 14.9,
+} as const;
+
+const STORY_RECOMMENDED_BASE_FONT_SIZES = {
+    organizer: 40,
+    title: 82,
+    date: 40,
+    place: 36,
+    description: 37,
+    application: 35,
+} as const;
+
+const A4_RECOMMENDED_BASE_FONT_SIZES = {
+    organizer: 80,
+    title: 170,
+    date: 90,
+    place: 84,
+    description: 75,
+    application: 76,
+} as const;
+
+const KAKAO_RECOMMENDED_DESCRIPTION_LINE_HEIGHT = 1.42;
+const INSTAGRAM_RECOMMENDED_DESCRIPTION_LINE_HEIGHT = 1.58;
+const STORY_RECOMMENDED_DESCRIPTION_LINE_HEIGHT = 1.52;
+const KAKAO_RECOMMENDED_DATE_GAP_FACTOR = 2.45;
+const KAKAO_RECOMMENDED_DATE_MARGIN_TOP = 22;
+const KAKAO_RECOMMENDED_APPLICATION_OFFSET = 76;
+const KAKAO_RECOMMENDED_APPLICATION_BOTTOM = "3.4%";
+const KAKAO_RECOMMENDED_NOTE_BASELINE_SHIFT = 3;
+
 type ChannelLayout = (typeof channels)[ChannelKey] & {
     aspectRatio: number;
     isLandscape: boolean;
@@ -466,7 +702,7 @@ type ChannelLayout = (typeof channels)[ChannelKey] & {
         aspectClass: string;
         titleSize: number;
         mobileFontSizes: Record<TextKey, number>;
-        mobileScaleMode: "legacy" | "proportional" | "preset";
+        mobileScaleMode: "proportional" | "preset";
     };
     png: {
         outputScale: number;
@@ -495,26 +731,88 @@ function resolveChannelLayout(
     const aspectRatio = selected.width / selected.height;
     const isLandscape = aspectRatio > 1.45;
     const outputScale = channel === "a4" ? selected.width / 1080 : 1;
+    const baseFontScale = channel === "a4" ? 1 : outputScale;
     const side = posterLayout
         ? posterLayout.textArea.left * selected.width
         : (isLandscape ? 62 : 76) * outputScale;
     const baseFontSizes: Record<TextKey, number> = {
         organizer:
             posterLayout?.baseFontSizes.organizer ??
-            (isLandscape ? 27 : 34) * outputScale,
+            (channel === "a4"
+                ? A4_RECOMMENDED_BASE_FONT_SIZES.organizer
+                : channel === "instagram"
+                ? INSTAGRAM_RECOMMENDED_BASE_FONT_SIZES.organizer
+                : channel === "story"
+                  ? STORY_RECOMMENDED_BASE_FONT_SIZES.organizer
+                : channel === "kakao"
+                  ? KAKAO_RECOMMENDED_BASE_FONT_SIZES.organizer
+                : isLandscape
+                  ? 27
+                  : 34) * baseFontScale,
         title:
             posterLayout?.baseFontSizes.title ??
-            (isLandscape ? 55 : 68) * outputScale,
+            (channel === "a4"
+                ? A4_RECOMMENDED_BASE_FONT_SIZES.title
+                : channel === "story"
+                ? STORY_RECOMMENDED_BASE_FONT_SIZES.title
+                : channel === "kakao" || channel === "instagram"
+                ? channel === "kakao"
+                    ? KAKAO_RECOMMENDED_BASE_FONT_SIZES.title
+                    : INSTAGRAM_RECOMMENDED_BASE_FONT_SIZES.title
+                : isLandscape
+                  ? 55
+                  : 68) * baseFontScale,
         date:
             posterLayout?.baseFontSizes.date ??
-            (isLandscape ? 29 : 36) * outputScale,
+            (channel === "a4"
+                ? A4_RECOMMENDED_BASE_FONT_SIZES.date
+                : channel === "instagram"
+                ? INSTAGRAM_RECOMMENDED_BASE_FONT_SIZES.date
+                : channel === "story"
+                  ? STORY_RECOMMENDED_BASE_FONT_SIZES.date
+                : channel === "kakao"
+                  ? KAKAO_RECOMMENDED_BASE_FONT_SIZES.date
+                : isLandscape
+                  ? 29
+                  : 36) * baseFontScale,
         place:
             posterLayout?.baseFontSizes.place ??
-            (isLandscape ? 27 : 34) * outputScale,
+            (channel === "a4"
+                ? A4_RECOMMENDED_BASE_FONT_SIZES.place
+                : channel === "instagram"
+                ? INSTAGRAM_RECOMMENDED_BASE_FONT_SIZES.place
+                : channel === "story"
+                  ? STORY_RECOMMENDED_BASE_FONT_SIZES.place
+                : channel === "kakao"
+                  ? KAKAO_RECOMMENDED_BASE_FONT_SIZES.place
+                : isLandscape
+                  ? 27
+                  : 34) * baseFontScale,
         description:
             posterLayout?.baseFontSizes.description ??
-            (isLandscape ? 25 : 31) * outputScale,
-        application: (isLandscape ? 25 : 32) * outputScale,
+            (channel === "a4"
+                ? A4_RECOMMENDED_BASE_FONT_SIZES.description
+                : channel === "instagram"
+                ? INSTAGRAM_RECOMMENDED_BASE_FONT_SIZES.description
+                : channel === "story"
+                  ? STORY_RECOMMENDED_BASE_FONT_SIZES.description
+                : channel === "kakao"
+                  ? KAKAO_RECOMMENDED_BASE_FONT_SIZES.description
+                : isLandscape
+                  ? 25
+                  : 31) * baseFontScale,
+        application:
+            (channel === "a4"
+                ? A4_RECOMMENDED_BASE_FONT_SIZES.application
+                : channel === "instagram"
+                ? INSTAGRAM_RECOMMENDED_BASE_FONT_SIZES.application
+                : channel === "story"
+                  ? STORY_RECOMMENDED_BASE_FONT_SIZES.application
+                : channel === "kakao"
+                  ? KAKAO_RECOMMENDED_BASE_FONT_SIZES.application
+                : isLandscape
+                  ? 25
+                  : 32) * baseFontScale,
     };
     const previewLogicalWidth = posterLayout
         ? selected.width * (TEXT_SAFE_AREA.right - TEXT_SAFE_AREA.left)
@@ -522,7 +820,13 @@ function resolveChannelLayout(
     const mobileFontSizes = Object.fromEntries(
         (Object.keys(baseFontSizes) as TextKey[]).map((key) => [
             key,
-            (baseFontSizes[key] / previewLogicalWidth) * 100,
+            (baseFontSizes[key] /
+                (channel !== "kakao" && key !== "application"
+                    ? selected.width * (TEXT_SAFE_AREA.right - TEXT_SAFE_AREA.left)
+                    : key === "application"
+                      ? selected.width
+                      : previewLogicalWidth)) *
+                100,
         ]),
     ) as Record<TextKey, number>;
 
@@ -558,9 +862,7 @@ function resolveChannelLayout(
             mobileScaleMode:
                 channel === "youtube" || channel === "blog"
                     ? "preset"
-                    : isLandscape
-                        ? "proportional"
-                        : "legacy",
+                    : "proportional",
         },
         png: {
             outputScale,
@@ -578,7 +880,12 @@ function resolveChannelLayout(
                     : selected.width - side * 2,
             baseFontSizes,
             contactInset: (isLandscape ? 87 : 122) * outputScale,
-            applicationOffset: (isLandscape ? 44 : 57) * outputScale,
+            applicationOffset:
+                (channel === "kakao"
+                    ? KAKAO_RECOMMENDED_APPLICATION_OFFSET
+                    : isLandscape
+                      ? 44
+                      : 57) * outputScale,
             titleMaxLines: posterLayout?.titleMaxLines ?? (isLandscape ? 2 : 3),
         },
     };
@@ -853,13 +1160,24 @@ type DividerStyle = {
 
 type DiyHistorySnapshot = {
     textValues: Record<TextKey, string>;
+    editedTextFields: TextKey[];
+    scene: SceneKey;
+    imageFitOverride: ImageFitOverride;
+    imageSrc: string;
     textFormats: Record<TextKey, TextFormat>;
     richTextRuns: Record<RichTextKey, RichTextRun[]>;
     textPositions: Record<MovableTextKey, TextPosition>;
+    textIcons: Record<TextKey, PictogramKey>;
     dividerStyle: DividerStyle;
     dividerPosition: TextPosition;
     customLines: CustomLine[];
     copyDrafts: Partial<Record<CopyKey, string>>;
+};
+
+type ChannelEditorDraft = {
+    snapshot: DiyHistorySnapshot;
+    historyPast: DiyHistorySnapshot[];
+    historyFuture: DiyHistorySnapshot[];
 };
 
 const HISTORY_LIMIT = 75;
@@ -902,10 +1220,10 @@ function isInitialTextPresentation(
     position: TextPosition,
     format: TextFormat,
     runs: RichTextRun[],
+    expectedRuns: RichTextRun[] = initialRichTextRuns[key],
 ) {
     const initialPosition = initialTextPositions[key];
     const initialFormat = initialTextFormats[key];
-    const initialRuns = initialRichTextRuns[key];
 
     return (
         position.x === initialPosition.x &&
@@ -915,9 +1233,9 @@ function isInitialTextPresentation(
         format.fontWeight === initialFormat.fontWeight &&
         format.scale === initialFormat.scale &&
         format.shadowKey === initialFormat.shadowKey &&
-        runs.length === initialRuns.length &&
+        runs.length === expectedRuns.length &&
         runs.every((run, index) => {
-            const initialRun = initialRuns[index];
+            const initialRun = expectedRuns[index];
             return (
                 run.start === initialRun.start &&
                 run.end === initialRun.end &&
@@ -1554,6 +1872,8 @@ function createLineStyle(line: CustomLine, selected: boolean): CSSProperties {
 }
 
 function createLineStrokeStyle(line: CustomLine): CSSProperties {
+    const logicalWidth = `${(line.width / 1080) * 100}cqw`;
+
     if (line.orientation === "horizontal") {
         return {
             position: "absolute",
@@ -1561,7 +1881,7 @@ function createLineStrokeStyle(line: CustomLine): CSSProperties {
             right: 0,
             top: "50%",
             transform: "translateY(-50%)",
-            borderTop: `${line.width}px ${line.variant === "dashed" ? "dashed" : "solid"} ${line.color}`,
+            borderTop: `${logicalWidth} ${line.variant === "dashed" ? "dashed" : "solid"} ${line.color}`,
         };
     }
 
@@ -1571,7 +1891,7 @@ function createLineStrokeStyle(line: CustomLine): CSSProperties {
         bottom: 0,
         left: "50%",
         transform: "translateX(-50%)",
-        borderLeft: `${line.width}px ${line.variant === "dashed" ? "dashed" : "solid"} ${line.color}`,
+        borderLeft: `${logicalWidth} ${line.variant === "dashed" ? "dashed" : "solid"} ${line.color}`,
     };
 }
 
@@ -1590,11 +1910,11 @@ export default function EventPromotePage() {
 
     const [place, setPlace] = useState(DEFAULT_PLACE);
 
-    const [description, setDescription] = useState(DEFAULT_DESCRIPTION);
-
-    const [application, setApplication] = useState(
-        "문의 02-000-0000 · 참가비 무료",
+    const [description, setDescription] = useState(
+        INSTAGRAM_DEFAULT_DESCRIPTION,
     );
+
+    const [application, setApplication] = useState(DEFAULT_APPLICATION);
 
     const [imageSrc, setImageSrc] = useState(
         "/images/promote/promote-other-lotus-novice.webp",
@@ -1629,10 +1949,14 @@ export default function EventPromotePage() {
         useState<Record<TextKey, TextFormat>>(initialTextFormats);
     const [textPositions, setTextPositions] =
         useState<Record<MovableTextKey, TextPosition>>(initialTextPositions);
+    const [descriptionUserViewport, setDescriptionUserViewport] = useState<{
+        maxHeight: number;
+        maxLines: number;
+    } | null>(null);
     const [selectedPreviewText, setSelectedPreviewText] =
         useState<MovableTextKey | null>(null);
     const [isDividerPreviewSelected, setIsDividerPreviewSelected] = useState(false);
-    const [textIcons] = useState<Record<TextKey, PictogramKey>>({
+    const [textIcons, setTextIcons] = useState<Record<TextKey, PictogramKey>>({
         title: "none",
         organizer: "none",
         date: "none",
@@ -1642,13 +1966,21 @@ export default function EventPromotePage() {
     });
     const [richTextRuns, setRichTextRuns] = useState<
         Record<RichTextKey, RichTextRun[]>
-    >(initialRichTextRuns);
+    >(() => ({
+        ...initialRichTextRuns,
+        description: INSTAGRAM_RECOMMENDED_DESCRIPTION_RUNS.map((run) => ({
+            ...run,
+        })),
+    }));
+    const [editedTextFields, setEditedTextFields] = useState<ReadonlySet<TextKey>>(
+        () => new Set(),
+    );
     const [textSelection, setTextSelection] = useState<{
         start: number;
         end: number;
     } | null>(null);
 
-    const imageObjectUrl = useRef<string | null>(null);
+    const imageObjectUrlsRef = useRef<Set<string>>(new Set());
     const copyTextareaRef = useRef<HTMLTextAreaElement | null>(null);
     const styleTextareaRef = useRef<HTMLTextAreaElement | null>(null);
     const lineAddButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -1684,6 +2016,9 @@ export default function EventPromotePage() {
     } | null>(null);
     const historyPastRef = useRef<DiyHistorySnapshot[]>([]);
     const historyFutureRef = useRef<DiyHistorySnapshot[]>([]);
+    const channelDraftsRef = useRef<Partial<Record<ChannelKey, ChannelEditorDraft>>>(
+        {},
+    );
     const currentHistorySnapshotRef = useRef<DiyHistorySnapshot | null>(null);
     const textHistoryGroupRef = useRef<{
         key: string | null;
@@ -1700,6 +2035,14 @@ export default function EventPromotePage() {
     const undoActionRef = useRef<() => void>(() => undefined);
     const redoActionRef = useRef<() => void>(() => undefined);
 
+    useEffect(
+        () => () => {
+            imageObjectUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+            imageObjectUrlsRef.current.clear();
+        },
+        [],
+    );
+
     const captureHistorySnapshot = (): DiyHistorySnapshot => ({
         textValues: {
             title,
@@ -1709,6 +2052,10 @@ export default function EventPromotePage() {
             description,
             application,
         },
+        editedTextFields: Array.from(editedTextFields),
+        scene,
+        imageFitOverride,
+        imageSrc,
         textFormats: Object.fromEntries(
             (Object.keys(textFormats) as TextKey[]).map((key) => [
                 key,
@@ -1727,6 +2074,7 @@ export default function EventPromotePage() {
                 { ...textPositions[key] },
             ]),
         ) as Record<MovableTextKey, TextPosition>,
+        textIcons: { ...textIcons },
         dividerStyle: { ...dividerStyle },
         dividerPosition: { ...dividerPosition },
         customLines: customLines.map((line) => ({
@@ -1737,7 +2085,9 @@ export default function EventPromotePage() {
         copyDrafts: { ...copyDrafts },
     });
 
-    currentHistorySnapshotRef.current = captureHistorySnapshot();
+    useEffect(() => {
+        currentHistorySnapshotRef.current = captureHistorySnapshot();
+    });
 
     const syncHistoryAvailability = () => {
         setHistoryAvailability({
@@ -1816,9 +2166,14 @@ export default function EventPromotePage() {
         setPlace(snapshot.textValues.place);
         setDescription(snapshot.textValues.description);
         setApplication(snapshot.textValues.application);
+        setEditedTextFields(new Set(snapshot.editedTextFields));
+        setScene(snapshot.scene);
+        setImageFitOverride(snapshot.imageFitOverride);
+        setImageSrc(snapshot.imageSrc);
         setTextFormats(snapshot.textFormats);
         setRichTextRuns(snapshot.richTextRuns);
         setTextPositions(snapshot.textPositions);
+        setTextIcons(snapshot.textIcons);
         setDividerStyle(snapshot.dividerStyle);
         setDividerPosition(snapshot.dividerPosition);
         setCustomLines(snapshot.customLines);
@@ -1920,10 +2275,6 @@ export default function EventPromotePage() {
     }, [application, date, description, organizer, place, title]);
 
     const activeCopy = copyDrafts[copyChannel] ?? copy[copyChannel];
-    const renderedDescription =
-        channel === "youtube" && description === DEFAULT_DESCRIPTION
-            ? YOUTUBE_DEFAULT_DESCRIPTION
-            : description;
     const imageComposition: ImageComposition =
         scene === "custom" ? "center" : scenesByKey[scene].composition;
     const channelLayout = resolveChannelLayout(channel, imageComposition);
@@ -1948,15 +2299,96 @@ export default function EventPromotePage() {
     const kakaoTextSide = hasLateralImageComposition
         ? resolveCompositionTextSide(imageComposition)
         : null;
+    const currentTextValue = (key: MovableTextKey) => {
+        const values: Record<MovableTextKey, string> = {
+            organizer,
+            title,
+            date,
+            place,
+            description,
+            application,
+        };
+        return values[key];
+    };
+    const defaultTextValue = (key: MovableTextKey) => {
+        const values: Record<MovableTextKey, string> = {
+            organizer: DEFAULT_ORGANIZER,
+            title: DEFAULT_TITLE,
+            date: DEFAULT_DATE,
+            place: DEFAULT_PLACE,
+            description: defaultDescriptionByChannel[channel],
+            application:
+                channel === "story"
+                    ? STORY_RECOMMENDED_APPLICATION
+                    : channel === "a4"
+                      ? A4_RECOMMENDED_APPLICATION
+                    : DEFAULT_APPLICATION,
+        };
+        return values[key];
+    };
     const usesRecommendedTextLayout = (key: MovableTextKey) =>
+        !editedTextFields.has(key) &&
+        currentTextValue(key) === defaultTextValue(key) &&
         isInitialTextPresentation(
             key,
             textPositions[key],
             textFormats[key],
             richTextRuns[key],
+            key === "description" && channel === "kakao"
+                ? KAKAO_RECOMMENDED_DESCRIPTION_RUNS
+                : key === "description" && channel === "instagram"
+                  ? INSTAGRAM_RECOMMENDED_DESCRIPTION_RUNS
+                  : key === "description" && channel === "story"
+                    ? STORY_RECOMMENDED_DESCRIPTION_RUNS
+                    : key === "description" &&
+                        (channel === "blog" || channel === "youtube")
+                      ? LANDSCAPE_RECOMMENDED_DESCRIPTION_RUNS
+                : key === "description" && channel === "share"
+                  ? KAKAO_RECOMMENDED_DESCRIPTION_RUNS
+                  : key === "description" && channel === "a4"
+                    ? A4_RECOMMENDED_DESCRIPTION_RUNS
+                : initialRichTextRuns[key],
         );
+    const renderedTitle =
+        title === DEFAULT_TITLE && usesRecommendedTextLayout("title")
+            ? channel === "kakao"
+                ? KAKAO_RECOMMENDED_TITLE
+                : channel === "instagram"
+                  ? INSTAGRAM_RECOMMENDED_TITLE
+                  : channel === "story"
+                    ? STORY_RECOMMENDED_TITLE
+                  : title
+            : title;
     const resolveRenderedRichTextRuns = (key: RichTextKey) => {
         const runs = richTextRuns[key];
+        if (
+            channel === "story" &&
+            key === "title" &&
+            usesRecommendedTextLayout("title")
+        ) {
+            return STORY_RECOMMENDED_TITLE_RUNS;
+        }
+        if (
+            channel === "kakao" &&
+            key === "description" &&
+            usesRecommendedTextLayout("description")
+        ) {
+            return KAKAO_RECOMMENDED_DESCRIPTION_RUNS;
+        }
+        if (
+            channel === "instagram" &&
+            key === "description" &&
+            usesRecommendedTextLayout("description")
+        ) {
+            return INSTAGRAM_RECOMMENDED_DESCRIPTION_RUNS;
+        }
+        if (
+            channel === "story" &&
+            key === "description" &&
+            usesRecommendedTextLayout("description")
+        ) {
+            return STORY_RECOMMENDED_DESCRIPTION_RUNS;
+        }
         if (
             channel !== "youtube" ||
             key !== "title" ||
@@ -1978,6 +2410,23 @@ export default function EventPromotePage() {
             },
             ...runs,
         ];
+    };
+    const resolvedTextIcon = (key: TextKey): PictogramKey => {
+        if (channel === "kakao" && usesRecommendedTextLayout(key)) {
+            if (key === "date") return "clock";
+            if (key === "application") return "phone";
+        }
+        if (channel === "instagram" && usesRecommendedTextLayout(key)) {
+            if (key === "date") return "clock";
+            if (key === "application") return "phone";
+        }
+        if (channel === "story" && usesRecommendedTextLayout(key)) {
+            if (key === "date") return "clock";
+            if (key === "place") return "pin";
+            if (key === "application") return "phone";
+        }
+
+        return textIcons[key];
     };
     const resolveKakaoTitleDescriptionArea = (key: MovableTextKey) =>
         channel === "kakao" &&
@@ -2036,8 +2485,112 @@ export default function EventPromotePage() {
             : selectedElement === "line"
                 ? true
                 : visibleFields[selectedElement];
+    const createInitialChannelSnapshot = (
+        targetChannel: ChannelKey,
+    ): DiyHistorySnapshot => ({
+        textValues: {
+            title: DEFAULT_TITLE,
+            organizer: DEFAULT_ORGANIZER,
+            date: DEFAULT_DATE,
+            place: DEFAULT_PLACE,
+            description:
+                targetChannel === "story"
+                    ? STORY_RECOMMENDED_DESCRIPTION
+                    : targetChannel === "blog" || targetChannel === "youtube"
+                      ? LANDSCAPE_RECOMMENDED_DESCRIPTION
+                      : targetChannel === "share"
+                        ? KAKAO_RECOMMENDED_DESCRIPTION
+                        : targetChannel === "a4"
+                          ? A4_RECOMMENDED_DESCRIPTION
+                    : defaultDescriptionByChannel[targetChannel],
+            application:
+                targetChannel === "story"
+                    ? STORY_RECOMMENDED_APPLICATION
+                    : targetChannel === "a4"
+                      ? A4_RECOMMENDED_APPLICATION
+                    : DEFAULT_APPLICATION,
+        },
+        editedTextFields: [],
+        scene: "otherLotus",
+        imageFitOverride: null,
+        imageSrc: "/images/promote/promote-other-lotus-novice.webp",
+        textFormats: Object.fromEntries(
+            (Object.keys(initialTextFormats) as TextKey[]).map((key) => [
+                key,
+                { ...initialTextFormats[key] },
+            ]),
+        ) as Record<TextKey, TextFormat>,
+        richTextRuns: Object.fromEntries(
+            (Object.keys(initialRichTextRuns) as RichTextKey[]).map((key) => [
+                key,
+                (key === "description" && targetChannel === "story"
+                    ? STORY_RECOMMENDED_DESCRIPTION_RUNS
+                    : key === "description" && targetChannel === "kakao"
+                      ? KAKAO_RECOMMENDED_DESCRIPTION_RUNS
+                      : key === "description" && targetChannel === "instagram"
+                        ? INSTAGRAM_RECOMMENDED_DESCRIPTION_RUNS
+                    : key === "description" &&
+                        (targetChannel === "blog" || targetChannel === "youtube")
+                      ? LANDSCAPE_RECOMMENDED_DESCRIPTION_RUNS
+                      : key === "description" && targetChannel === "share"
+                        ? KAKAO_RECOMMENDED_DESCRIPTION_RUNS
+                        : key === "description" && targetChannel === "a4"
+                          ? A4_RECOMMENDED_DESCRIPTION_RUNS
+                      : initialRichTextRuns[key]
+                ).map((run) => ({ ...run })),
+            ]),
+        ) as Record<RichTextKey, RichTextRun[]>,
+        textPositions: Object.fromEntries(
+            (Object.keys(initialTextPositions) as MovableTextKey[]).map((key) => [
+                key,
+                { ...initialTextPositions[key] },
+            ]),
+        ) as Record<MovableTextKey, TextPosition>,
+        textIcons: {
+            title: "none",
+            organizer: "none",
+            date: "none",
+            place: "none",
+            description: "none",
+            application: "none",
+        },
+        dividerStyle: {
+            color: "#171B22",
+            width: 2,
+            visible: true,
+            variant: "solid",
+        },
+        dividerPosition: { x: 0, y: 0 },
+        customLines: [],
+        copyDrafts: {},
+    });
     const changeChannel = (nextChannel: ChannelKey) => {
-        const nextLayout = resolveChannelLayout(nextChannel, imageComposition);
+        if (nextChannel === channel) return;
+
+        finishHistoryGroups();
+        channelDraftsRef.current[channel] = {
+            snapshot: captureHistorySnapshot(),
+            historyPast: [...historyPastRef.current],
+            historyFuture: [...historyFutureRef.current],
+        };
+
+        const nextDraft =
+            channelDraftsRef.current[nextChannel] ?? {
+                snapshot: createInitialChannelSnapshot(nextChannel),
+                historyPast: [],
+                historyFuture: [],
+            };
+        channelDraftsRef.current[nextChannel] = nextDraft;
+        historyPastRef.current = [...nextDraft.historyPast];
+        historyFutureRef.current = [...nextDraft.historyFuture];
+        currentHistorySnapshotRef.current = nextDraft.snapshot;
+        applyHistorySnapshot(nextDraft.snapshot);
+
+        const nextImageComposition =
+            nextDraft.snapshot.scene === "custom"
+                ? "center"
+                : scenesByKey[nextDraft.snapshot.scene].composition;
+        const nextLayout = resolveChannelLayout(nextChannel, nextImageComposition);
         const nextVisibleFields = nextLayout.visibleFields;
 
         if (!nextVisibleFields[selectedText]) {
@@ -2061,7 +2614,13 @@ export default function EventPromotePage() {
             setActiveContentText("title");
         }
 
+        setSelectedLineId(null);
+        setSelectedPreviewText(null);
+        setIsDividerPreviewSelected(false);
+        setLineDraftVariant(null);
+        setDrawingLine(null);
         setChannel(nextChannel);
+        syncHistoryAvailability();
     };
     const mobilePreviewStyle = {
         containerType: "size",
@@ -2639,6 +3198,15 @@ export default function EventPromotePage() {
         event.currentTarget.setPointerCapture(event.pointerId);
     };
 
+    const markTextEdited = (key: TextKey) => {
+        setEditedTextFields((current) => {
+            if (current.has(key)) return current;
+            const next = new Set(current);
+            next.add(key);
+            return next;
+        });
+    };
+
     const moveTextInteraction = (
         event: ReactPointerEvent<HTMLButtonElement>,
         key: MovableTextKey,
@@ -2652,7 +3220,9 @@ export default function EventPromotePage() {
             return;
         }
 
-        const safeArea = textSafeAreaRef.current?.getBoundingClientRect();
+        const safeArea = (
+            key === "application" ? footerTextSafeAreaRef : textSafeAreaRef
+        ).current?.getBoundingClientRect();
         if (!safeArea || safeArea.width <= 0 || safeArea.height <= 0) return;
 
         event.preventDefault();
@@ -2685,6 +3255,7 @@ export default function EventPromotePage() {
             ...current,
             [key]: nextPosition,
         }));
+        markTextEdited(key);
     };
 
     const finishTextInteraction = (
@@ -2727,6 +3298,7 @@ export default function EventPromotePage() {
         key: TextKey,
         nextValue: string,
         recordChange = true,
+        markAsEdited = true,
     ) => {
         const previousValue = selectedTextValue[key];
         if (previousValue === nextValue) return;
@@ -2784,6 +3356,7 @@ export default function EventPromotePage() {
                 .filter((run) => run.end > run.start),
         }));
         setters[key](nextValue);
+        if (markAsEdited) markTextEdited(key);
     };
 
     const insertPictogram = (key: TextKey, symbol: string) => {
@@ -2825,6 +3398,7 @@ export default function EventPromotePage() {
         historyGroup?: string,
     ) => {
         recordStyleHistory(historyGroup);
+        markTextEdited(selectedText);
         setTextFormats((current) => ({
             ...current,
             [selectedText]: { ...current[selectedText], ...patch },
@@ -2862,23 +3436,33 @@ export default function EventPromotePage() {
             const existing = current[selectedText].find(
                 (run) => run.start === start && run.end === end,
             );
+            const containing = current[selectedText].find(
+                (run) => run.start <= start && run.end >= end,
+            );
+            const source = existing ?? containing;
             const nextRun: RichTextRun = {
                 start,
                 end,
-                color: existing?.color ?? textFormats[selectedText].color,
+                color: source?.color ?? textFormats[selectedText].color,
                 fontWeight:
-                    existing?.fontWeight ?? textFormats[selectedText].fontWeight,
-                scale: existing?.scale ?? 100,
-                shadowKey: existing?.shadowKey,
+                    source?.fontWeight ?? textFormats[selectedText].fontWeight,
+                scale: source?.scale ?? 100,
+                shadowKey: source?.shadowKey,
                 ...patch,
             };
+            const preservedRuns = current[selectedText].flatMap((run) => {
+                if (run.end <= start || run.start >= end) return [run];
+
+                const fragments: RichTextRun[] = [];
+                if (run.start < start) fragments.push({ ...run, end: start });
+                if (run.end > end) fragments.push({ ...run, start: end });
+                return fragments;
+            });
 
             return {
                 ...current,
                 [selectedText]: [
-                    ...current[selectedText].filter(
-                        (run) => run.end <= start || run.start >= end,
-                    ),
+                    ...preservedRuns,
                     nextRun,
                 ].sort((a, b) => a.start - b.start),
             };
@@ -2890,6 +3474,7 @@ export default function EventPromotePage() {
         historyGroup?: string,
     ) => {
         recordStyleHistory(historyGroup);
+        markTextEdited(selectedText);
         if (isRichTextKey(selectedText) && textSelection) {
             applyPartialStyle(patch);
             return;
@@ -2913,13 +3498,11 @@ export default function EventPromotePage() {
 
         if (!file) return;
 
-        if (imageObjectUrl.current) {
-            URL.revokeObjectURL(imageObjectUrl.current);
-        }
-
-        imageObjectUrl.current = URL.createObjectURL(file);
-
-        setImageSrc(imageObjectUrl.current);
+        finishHistoryGroups();
+        recordHistory();
+        const objectUrl = URL.createObjectURL(file);
+        imageObjectUrlsRef.current.add(objectUrl);
+        setImageSrc(objectUrl);
         setImageFitOverride(null);
     };
 
@@ -3092,7 +3675,10 @@ export default function EventPromotePage() {
             const value = textFormats[key];
             return {
                 ...value,
-                size: Math.round(baseSize * (value.scale / 100)),
+                size:
+                    channel === "kakao" || channel === "instagram"
+                        ? baseSize * (value.scale / 100)
+                        : Math.round(baseSize * (value.scale / 100)),
                 family: fontOptions[value.fontKey].canvas,
                 shadow: resolvedCanvasShadow(value.shadowKey, exportShadowScale),
                 shadowScale: exportShadowScale,
@@ -3110,16 +3696,12 @@ export default function EventPromotePage() {
         const descriptionFormat = format("description", descriptionBaseSize);
         const applicationFormat = format("application", baseFontSizes.application);
         const iconOffset = (key: TextKey, size: number) =>
-            textIcons[key] === "none" ? 0 : size * 1.35;
+            resolvedTextIcon(key) === "none" ? 0 : size * 1.35;
         const contactLineY = selected.height - contactInset;
         const posterLayout = selected.posterLayout;
-        const textSafeTop = posterLayout
-            ? posterLayout.textArea.top * selected.height
-            : top - organizerBaseSize;
         const textSafeBottom = posterLayout
             ? posterLayout.textArea.bottom * selected.height
             : contactLineY;
-        const textSafeHeight = textSafeBottom - textSafeTop;
 
         const resolveCanvasTextMaxWidth = (
             key: PosterLayoutTextKey,
@@ -3127,14 +3709,20 @@ export default function EventPromotePage() {
             horizontalArea = { start: 0, width: 1 },
         ) => {
             const placement = resolvePosterTextPlacement(key);
-            return placement
-                ? Math.max(
-                      1,
-                      (placement.safeArea.right - placement.renderLeft) *
-                          selected.width -
-                          pictogramWidth,
-                  )
-                : contentWidth * horizontalArea.width - pictogramWidth;
+            if (placement) {
+                return Math.max(
+                    1,
+                    (placement.safeArea.right - placement.renderLeft) *
+                        selected.width -
+                        pictogramWidth,
+                );
+            }
+
+            const availableWidth = contentWidth * horizontalArea.width;
+            const userOffset = usesRecommendedTextLayout(key)
+                ? 0
+                : clamp(textPositions[key].x, 0, 1) * availableWidth;
+            return Math.max(1, availableWidth - userOffset - pictogramWidth);
         };
 
         const resolveCanvasBaselineY = (
@@ -3150,56 +3738,33 @@ export default function EventPromotePage() {
 
         const resolveCanvasTextPosition = (
             key: MovableTextKey,
-            lines: ReturnType<typeof layoutRichText>,
-            formatValue: ResolvedTextFormat,
+            _lines: ReturnType<typeof layoutRichText>,
+            _formatValue: ResolvedTextFormat,
             baseBaselineY: number,
-            lineHeight: number,
+            _lineHeight: number,
             horizontalArea = { start: 0, width: 1 },
         ) => {
             const placement =
                 key === "application"
                     ? null
                     : resolvePosterTextPlacement(key as PosterLayoutTextKey);
-            const metrics = richTextMetrics(lines, lineHeight);
-            const pictogramWidth = iconOffset(key, formatValue.size);
-            const blockWidth = pictogramWidth + metrics.width;
-            const blockTop = baseBaselineY - Math.max(metrics.firstLineSize, formatValue.size);
-            const safeLeft = placement
-                ? placement.safeArea.left * selected.width
-                : side + horizontalArea.start * contentWidth;
-            const safeRight = placement
-                ? placement.safeArea.right * selected.width
-                : safeLeft + horizontalArea.width * contentWidth;
-            const safeTop = placement
-                ? placement.safeArea.top * selected.height
-                : textSafeTop;
-            const safeBottom = placement
-                ? placement.safeArea.bottom * selected.height
-                : textSafeBottom;
-            const originX = placement
-                ? placement.renderLeft * selected.width
-                : safeLeft;
-            const horizontalWidth = safeRight - safeLeft;
-            const verticalHeight = safeBottom - safeTop;
-            const rawDeltaX = placement
-                ? 0
-                : textPositions[key].x * horizontalWidth;
-            const rawDeltaY = placement ? 0 : textPositions[key].y * verticalHeight;
-            const minDeltaX = safeLeft - originX;
-            const maxDeltaX = safeRight - originX - blockWidth;
-            const minDeltaY = safeTop - blockTop;
-            const maxDeltaY = safeBottom - (blockTop + metrics.height);
+            if (placement) {
+                return {
+                    x: placement.renderLeft * selected.width,
+                    baselineY: baseBaselineY,
+                };
+            }
 
             return {
-                x: originX +
-                    (minDeltaX <= maxDeltaX
-                        ? clamp(rawDeltaX, minDeltaX, maxDeltaX)
-                        : minDeltaX),
+                x:
+                    side +
+                    horizontalArea.start * contentWidth +
+                    textPositions[key].x * horizontalArea.width * contentWidth,
                 baselineY:
                     baseBaselineY +
-                    (minDeltaY <= maxDeltaY
-                        ? clamp(rawDeltaY, minDeltaY, maxDeltaY)
-                        : minDeltaY),
+                    textPositions[key].y *
+                        (TEXT_SAFE_AREA.bottom - TEXT_SAFE_AREA.top) *
+                        selected.height,
             };
         };
 
@@ -3233,7 +3798,7 @@ export default function EventPromotePage() {
         if (selected.visibleFields.organizer) {
             drawCanvasPictogram(
                 context,
-                textIcons.organizer,
+                resolvedTextIcon("organizer"),
                 organizerPosition.x,
                 organizerPosition.baselineY - organizerFormat.size * 0.35,
                 organizerFormat.size * 0.9,
@@ -3252,7 +3817,7 @@ export default function EventPromotePage() {
         const titleHorizontalArea = resolveKakaoTitleDescriptionArea("title");
         const titleLines = layoutRichText(
             context,
-            title,
+            renderedTitle,
             titleFormat,
             resolveRenderedRichTextRuns("title"),
             resolveCanvasTextMaxWidth("title", titleOffset, titleHorizontalArea),
@@ -3267,7 +3832,10 @@ export default function EventPromotePage() {
             top + Math.round(titleBaseSize * 1.42),
         );
         const titleLineHeight = Math.round(
-            titleFormat.size * (posterLayout?.lineHeightRatios?.title ?? 1.18),
+            titleFormat.size *
+                (channel === "kakao" || channel === "instagram"
+                    ? 1.1
+                    : (posterLayout?.lineHeightRatios?.title ?? 1.18)),
         );
         const titlePosition = resolveCanvasTextPosition(
             "title",
@@ -3280,7 +3848,7 @@ export default function EventPromotePage() {
         if (selected.visibleFields.title) {
             drawCanvasPictogram(
                 context,
-                textIcons.title,
+                resolvedTextIcon("title"),
                 titlePosition.x,
                 titlePosition.baselineY - titleFormat.size * 0.35,
                 titleFormat.size,
@@ -3290,10 +3858,14 @@ export default function EventPromotePage() {
                 context,
                 titleLines,
                 titlePosition.x + titleOffset,
-            titlePosition.baselineY,
-            titleLineHeight,
-            channel === "youtube" ? titleFormat.size * 0.68 * 0.06 : 0,
-        );
+                titlePosition.baselineY,
+                titleLineHeight,
+                channel === "kakao" && usesRecommendedTextLayout("title")
+                    ? KAKAO_RECOMMENDED_NOTE_BASELINE_SHIFT
+                    : channel === "youtube"
+                      ? titleFormat.size * 0.68 * 0.06
+                      : 0,
+            );
         }
 
         const initialTitleFormat: ResolvedTextFormat = {
@@ -3309,13 +3881,24 @@ export default function EventPromotePage() {
         };
         const initialTitleLines = layoutRichText(
             context,
-            DEFAULT_TITLE,
+            channel === "kakao"
+                ? KAKAO_RECOMMENDED_TITLE
+                : channel === "instagram"
+                  ? INSTAGRAM_RECOMMENDED_TITLE
+                  : channel === "story"
+                    ? STORY_RECOMMENDED_TITLE
+                : DEFAULT_TITLE,
             initialTitleFormat,
-            INITIAL_TITLE_RUNS,
+            channel === "story"
+                ? STORY_RECOMMENDED_TITLE_RUNS
+                : INITIAL_TITLE_RUNS,
             contentWidth,
             titleMaxLines,
         );
-        const initialTitleLineHeight = Math.round(initialTitleFormat.size * 1.18);
+        const initialTitleLineHeight = Math.round(
+            initialTitleFormat.size *
+                (channel === "kakao" || channel === "instagram" ? 1.1 : 1.18),
+        );
         const initialTitleBlockHeight = richTextMetrics(
             initialTitleLines,
             initialTitleLineHeight,
@@ -3326,7 +3909,12 @@ export default function EventPromotePage() {
             dateFormat.size,
             titleStartY +
                 Math.max(0, initialTitleBlockHeight - initialTitleLineHeight) +
-                Math.round(dateBaseSize * 1.9),
+                Math.round(
+                    dateBaseSize *
+                        (channel === "kakao" && usesRecommendedTextLayout("date")
+                            ? KAKAO_RECOMMENDED_DATE_GAP_FACTOR
+                            : 1.9),
+                ),
         );
 
         context.font = `${dateFormat.fontWeight} ${dateFormat.size}px ${dateFormat.family}`;
@@ -3352,7 +3940,7 @@ export default function EventPromotePage() {
         if (selected.visibleFields.date) {
             drawCanvasPictogram(
                 context,
-                textIcons.date,
+                resolvedTextIcon("date"),
                 datePosition.x,
                 datePosition.baselineY - dateFormat.size * 0.35,
                 dateFormat.size * 0.9,
@@ -3394,7 +3982,7 @@ export default function EventPromotePage() {
         if (selected.visibleFields.place) {
             drawCanvasPictogram(
                 context,
-                textIcons.place,
+                resolvedTextIcon("place"),
                 placePosition.x,
                 placePosition.baselineY - placeFormat.size * 0.35,
                 placeFormat.size * 0.9,
@@ -3419,46 +4007,85 @@ export default function EventPromotePage() {
         );
         const descriptionLines = layoutRichText(
             context,
-            renderedDescription,
+            description,
             descriptionFormat,
-            richTextRuns.description,
+            resolveRenderedRichTextRuns("description"),
             resolveCanvasTextMaxWidth(
                 "description",
                 descriptionOffset,
                 descriptionHorizontalArea,
             ),
-            selected.descriptionMode === "compact"
-                ? (posterLayout?.descriptionMaxLines ?? 2)
-                : Number.POSITIVE_INFINITY,
+            Number.POSITIVE_INFINITY,
         );
         const descriptionLineHeight = Math.round(
             descriptionFormat.size *
-                (posterLayout?.lineHeightRatios?.description ?? 1.45),
+                (channel === "instagram" &&
+                usesRecommendedDescriptionLayout
+                    ? INSTAGRAM_RECOMMENDED_DESCRIPTION_LINE_HEIGHT
+                    : channel === "story"
+                      ? STORY_RECOMMENDED_DESCRIPTION_LINE_HEIGHT
+                    : channel === "kakao"
+                      ? KAKAO_RECOMMENDED_DESCRIPTION_LINE_HEIGHT
+                      : (posterLayout?.lineHeightRatios?.description ?? 1.45)),
         );
         const descriptionPosition = resolveCanvasTextPosition(
             "description",
-            descriptionLines,
+            channel !== "kakao" && usesRecommendedDescriptionLayout
+                ? descriptionLines
+                : descriptionLines.slice(0, 1),
             descriptionFormat,
             descriptionY,
             descriptionLineHeight,
             descriptionHorizontalArea,
         );
+        const descriptionPlacement =
+            resolvePosterTextPlacement("description");
+        const descriptionSafeBottom =
+            selected.defaultDividerVisible
+                ? (DIVIDER_BASE_Y + dividerPosition.y) * selected.height
+                : descriptionPlacement
+                  ? descriptionPlacement.safeArea.bottom * selected.height
+                  : textSafeBottom;
+        const descriptionBlockTop =
+            descriptionPosition.baselineY -
+            Math.max(
+                ...(descriptionLines[0] ?? []).map(
+                    (glyph) => glyph.style.size,
+                ),
+                descriptionFormat.size,
+        );
         if (selected.visibleFields.description) {
-            drawCanvasPictogram(
-                context,
-                textIcons.description,
-                descriptionPosition.x,
-                descriptionPosition.baselineY - descriptionFormat.size * 0.35,
-                descriptionFormat.size * 0.9,
-                descriptionFormat.color,
-            );
-            drawRichText(
-                context,
-                descriptionLines,
-                descriptionPosition.x + descriptionOffset,
-                descriptionPosition.baselineY,
-                descriptionLineHeight,
-            );
+            if (
+                descriptionLines.length > 0 &&
+                descriptionBlockTop < descriptionSafeBottom
+            ) {
+                context.save();
+                context.beginPath();
+                context.rect(
+                    0,
+                    Math.max(0, descriptionBlockTop),
+                    selected.width,
+                    Math.max(0, descriptionSafeBottom - descriptionBlockTop),
+                );
+                context.clip();
+                drawCanvasPictogram(
+                    context,
+                    resolvedTextIcon("description"),
+                    descriptionPosition.x,
+                    descriptionPosition.baselineY -
+                        descriptionFormat.size * 0.35,
+                    descriptionFormat.size * 0.9,
+                    descriptionFormat.color,
+                );
+                drawRichText(
+                    context,
+                    descriptionLines,
+                    descriptionPosition.x + descriptionOffset,
+                    descriptionPosition.baselineY,
+                    descriptionLineHeight,
+                );
+                context.restore();
+            }
         }
 
         if (selected.defaultDividerVisible && dividerStyle.visible) {
@@ -3471,13 +4098,14 @@ export default function EventPromotePage() {
                     : [],
             );
             context.beginPath();
+            const dividerBaseY = DIVIDER_BASE_Y * selected.height;
             context.moveTo(
                 side + dividerPosition.x * selected.width,
-                contactLineY + dividerPosition.y * selected.height,
+                dividerBaseY + dividerPosition.y * selected.height,
             );
             context.lineTo(
                 selected.width - side + dividerPosition.x * selected.width,
-                contactLineY + dividerPosition.y * selected.height,
+                dividerBaseY + dividerPosition.y * selected.height,
             );
             context.stroke();
             context.restore();
@@ -3503,52 +4131,38 @@ export default function EventPromotePage() {
         const applicationY = contactLineY + applicationBaselineOffset;
         const applicationLineHeight = applicationFormat.size * 1.28;
         const applicationOffset = iconOffset("application", applicationFormat.size);
+        const footerSafeWidth =
+            (FOOTER_TEXT_SAFE_AREA.right - FOOTER_TEXT_SAFE_AREA.left) *
+            selected.width;
+        const footerSafeHeight =
+            (FOOTER_TEXT_SAFE_AREA.bottom - FOOTER_TEXT_SAFE_AREA.top) *
+            selected.height;
         const applicationLines = layoutRichText(
             context,
             application,
             applicationFormat,
             richTextRuns.application,
-            contentWidth - applicationOffset,
+            Math.max(
+                1,
+                footerSafeWidth *
+                    (usesRecommendedTextLayout("application")
+                        ? 1
+                        : clamp(1 - textPositions.application.x, 0.01, 1)) -
+                    applicationOffset,
+            ),
         );
-        const applicationMetrics = richTextMetrics(
-            applicationLines,
-            applicationLineHeight,
-        );
-        const applicationBlockWidth = applicationOffset + applicationMetrics.width;
-        const applicationBlockTop = applicationY - Math.max(
-            applicationMetrics.firstLineSize,
-            applicationFormat.size,
-        );
-        const footerSafeBottom = selected.height * FOOTER_TEXT_SAFE_AREA.bottom;
-        const footerSafeHeight = Math.max(footerSafeBottom - contactLineY, 1);
-        const applicationMaxDeltaX = contentWidth - applicationBlockWidth;
-        const applicationMinDeltaY = contactLineY - applicationBlockTop;
-        const applicationMaxDeltaY =
-            footerSafeBottom - (applicationBlockTop + applicationMetrics.height);
         const applicationPosition = {
             x:
-                side +
-                (applicationMaxDeltaX >= 0
-                    ? clamp(
-                        textPositions.application.x * contentWidth,
-                        0,
-                        applicationMaxDeltaX,
-                    )
-                    : 0),
+                FOOTER_TEXT_SAFE_AREA.left * selected.width +
+                textPositions.application.x * footerSafeWidth,
             baselineY:
                 applicationY +
-                (applicationMinDeltaY <= applicationMaxDeltaY
-                    ? clamp(
-                        textPositions.application.y * footerSafeHeight,
-                        applicationMinDeltaY,
-                        applicationMaxDeltaY,
-                    )
-                    : applicationMinDeltaY),
+                textPositions.application.y * footerSafeHeight,
         };
         if (selected.visibleFields.application) {
             drawCanvasPictogram(
                 context,
-                textIcons.application,
+                resolvedTextIcon("application"),
                 applicationPosition.x,
                 applicationPosition.baselineY - applicationFormat.size * 0.35,
                 applicationFormat.size * 0.9,
@@ -3594,9 +4208,17 @@ export default function EventPromotePage() {
     const textStyle = (key: TextKey, size: number) => {
         const value = textFormats[key];
         const lineHeight =
-            key === "application"
-                ? undefined
-                : channelLayout.posterLayout?.lineHeightRatios?.[key];
+            channel === "instagram" &&
+            key === "description" &&
+            usesRecommendedTextLayout("description")
+                ? INSTAGRAM_RECOMMENDED_DESCRIPTION_LINE_HEIGHT
+                : channel === "story" && key === "description"
+                  ? STORY_RECOMMENDED_DESCRIPTION_LINE_HEIGHT
+                : channel === "kakao" && key === "description"
+                  ? KAKAO_RECOMMENDED_DESCRIPTION_LINE_HEIGHT
+                  : key === "application"
+                    ? undefined
+                    : channelLayout.posterLayout?.lineHeightRatios?.[key];
         return {
             color: value.color,
             fontFamily: fontOptions[value.fontKey].css,
@@ -3609,7 +4231,13 @@ export default function EventPromotePage() {
 
     const initialTextStyle = (key: MovableTextKey, size: number) => {
         const lineHeight =
-            key === "application"
+            channel === "instagram" && key === "description"
+                ? INSTAGRAM_RECOMMENDED_DESCRIPTION_LINE_HEIGHT
+                : channel === "story" && key === "description"
+                  ? STORY_RECOMMENDED_DESCRIPTION_LINE_HEIGHT
+                : channel === "kakao" && key === "description"
+                  ? KAKAO_RECOMMENDED_DESCRIPTION_LINE_HEIGHT
+                : key === "application"
                 ? undefined
                 : channelLayout.posterLayout?.lineHeightRatios?.[key];
         return {
@@ -3621,6 +4249,43 @@ export default function EventPromotePage() {
         };
     };
 
+    const previewTextBaseSize = (key: TextKey, fallback: number) => {
+        if (channel === "instagram") {
+            if (key === "organizer") {
+                return INSTAGRAM_RECOMMENDED_PREVIEW_FONT_SIZES.organizer;
+            }
+            if (key === "date") {
+                return INSTAGRAM_RECOMMENDED_PREVIEW_FONT_SIZES.date;
+            }
+            if (key === "place") {
+                return INSTAGRAM_RECOMMENDED_PREVIEW_FONT_SIZES.place;
+            }
+            if (key === "description") {
+                return INSTAGRAM_RECOMMENDED_PREVIEW_FONT_SIZES.description;
+            }
+            if (key === "application") {
+                return INSTAGRAM_RECOMMENDED_PREVIEW_FONT_SIZES.application;
+            }
+
+            return fallback;
+        }
+        if (channel !== "kakao") return fallback;
+
+        if (key === "organizer") {
+            return KAKAO_RECOMMENDED_PREVIEW_FONT_SIZES.organizer;
+        }
+        if (key === "date") return KAKAO_RECOMMENDED_PREVIEW_FONT_SIZES.date;
+        if (key === "place") return KAKAO_RECOMMENDED_PREVIEW_FONT_SIZES.place;
+        if (key === "description") {
+            return KAKAO_RECOMMENDED_PREVIEW_FONT_SIZES.description;
+        }
+        if (key === "application") {
+            return KAKAO_RECOMMENDED_PREVIEW_FONT_SIZES.application;
+        }
+
+        return fallback;
+    };
+
     const textPositionStyle = (key: MovableTextKey): CSSProperties => {
         if (channelLayout.posterLayout && key !== "application") return {};
 
@@ -3630,6 +4295,29 @@ export default function EventPromotePage() {
                 key === "application"
                     ? `translate(${textPositions[key].x * (FOOTER_TEXT_SAFE_AREA.right - FOOTER_TEXT_SAFE_AREA.left) * 100}cqw, ${textPositions[key].y * (FOOTER_TEXT_SAFE_AREA.bottom - FOOTER_TEXT_SAFE_AREA.top) * 100}cqh)`
                     : `translate(${textPositions[key].x * kakaoArea.width * 100}cqw, ${textPositions[key].y * 100}cqh)`,
+            ...(channel === "kakao" && key === "application"
+                ? { bottom: KAKAO_RECOMMENDED_APPLICATION_BOTTOM }
+                : {}),
+        };
+    };
+
+    const userTextAvailableWidthStyle = (
+        key: MovableTextKey,
+    ): CSSProperties | undefined => {
+        if (usesRecommendedTextLayout(key)) return undefined;
+        if (channelLayout.posterLayout && key !== "application") return undefined;
+
+        const remainingRatio = clamp(1 - textPositions[key].x, 0.01, 1);
+        if (key === "application") {
+            return {
+                width: `${(FOOTER_TEXT_SAFE_AREA.right - FOOTER_TEXT_SAFE_AREA.left) * remainingRatio * 100}%`,
+                maxWidth: `${(FOOTER_TEXT_SAFE_AREA.right - FOOTER_TEXT_SAFE_AREA.left) * remainingRatio * 100}%`,
+            };
+        }
+
+        return {
+            width: `${remainingRatio * 100}%`,
+            maxWidth: `${remainingRatio * 100}%`,
         };
     };
 
@@ -3650,7 +4338,13 @@ export default function EventPromotePage() {
         key: PosterLayoutTextKey,
     ): CSSProperties | undefined => {
         const posterLayout = channelLayout.posterLayout;
-        if (!posterLayout) return undefined;
+        if (!posterLayout) {
+            return channel === "kakao" &&
+                key === "date" &&
+                usesRecommendedTextLayout("date")
+                ? { marginTop: KAKAO_RECOMMENDED_DATE_MARGIN_TOP }
+                : undefined;
+        }
 
         const placement = resolvePosterTextPlacement(key);
         if (!placement) return undefined;
@@ -3678,6 +4372,76 @@ export default function EventPromotePage() {
                 overflow: "hidden",
             }
             : undefined;
+    const usesRecommendedDescriptionLayout =
+        usesRecommendedTextLayout("description");
+
+    useLayoutEffect(() => {
+        const measure = () => {
+            const safeArea = textSafeAreaRef.current?.getBoundingClientRect();
+            const previewFrame = previewFrameRef.current?.getBoundingClientRect();
+            const block = textBlockRefs.current.description;
+            if (!safeArea || !block) return;
+
+            const blockBounds = block.getBoundingClientRect();
+            const computed = window.getComputedStyle(block);
+            const fontSize = Number.parseFloat(computed.fontSize) || 0;
+            const computedLineHeight = Number.parseFloat(computed.lineHeight);
+            const baseLineHeight = Number.isFinite(computedLineHeight)
+                ? computedLineHeight
+                : fontSize * 1.2;
+            const largestRunScale = Math.max(
+                1,
+                ...resolveRenderedRichTextRuns("description").map(
+                    (run) => run.scale / 100,
+                ),
+            );
+            const actualLineHeight = Math.max(
+                baseLineHeight,
+                fontSize * largestRunScale * 1.28,
+            );
+            const descriptionPlacement =
+                resolvePosterTextPlacement("description");
+            const logicalSafeBottom = channelLayout.defaultDividerVisible
+                ? DIVIDER_BASE_Y + dividerPosition.y
+                : (descriptionPlacement?.safeArea.bottom ?? TEXT_SAFE_AREA.bottom);
+            const safeBottom = previewFrame
+                ? previewFrame.top + logicalSafeBottom * previewFrame.height
+                : safeArea.bottom;
+            const availableHeight = Math.max(0, safeBottom - blockBounds.top);
+            const maxLines = Math.max(
+                0,
+                Math.floor((availableHeight + 0.01) / actualLineHeight),
+            );
+            const nextViewport = {
+                maxHeight: availableHeight,
+                maxLines,
+            };
+            setDescriptionUserViewport((current) =>
+                current &&
+                Math.abs(current.maxHeight - nextViewport.maxHeight) < 0.1 &&
+                current.maxLines === nextViewport.maxLines
+                    ? current
+                    : nextViewport,
+            );
+        };
+
+        measure();
+        const observer = new ResizeObserver(measure);
+        if (previewFrameRef.current) observer.observe(previewFrameRef.current);
+        if (textSafeAreaRef.current) observer.observe(textSafeAreaRef.current);
+        window.addEventListener("resize", measure);
+        return () => {
+            observer.disconnect();
+            window.removeEventListener("resize", measure);
+        };
+    }, [
+        channel,
+        description,
+        richTextRuns.description,
+        textFormats.description,
+        textPositions.description,
+        dividerPosition.y,
+    ]);
 
     const renderTextCharacters = (key: TextKey, text: string, size: number) => {
         const renderedRuns = isRichTextKey(key)
@@ -3695,6 +4459,12 @@ export default function EventPromotePage() {
 
         return text.split("").map((char, index) => {
             const run = richRunAt(renderedRuns, index);
+            const isRecommendedKakaoNote =
+                channel === "kakao" &&
+                key === "title" &&
+                index === 0 &&
+                char === "♫" &&
+                usesRecommendedTextLayout("title");
             const isRecommendedYoutubeNote =
                 channel === "youtube" &&
                 key === "title" &&
@@ -3729,7 +4499,20 @@ export default function EventPromotePage() {
                 );
             }
 
-            if (!run) return <span key={`${key}-${index}`}>{char}</span>;
+            if (!run) {
+                return (
+                    <span
+                        key={`${key}-${index}`}
+                        style={
+                            isRecommendedKakaoNote
+                                ? { position: "relative", top: "-2px" }
+                                : undefined
+                        }
+                    >
+                        {char}
+                    </span>
+                );
+            }
 
             const isDefaultMusicEmphasis =
                 key === "title" && text.slice(run.start, run.end) === "음악회";
@@ -3825,8 +4608,43 @@ export default function EventPromotePage() {
     return (
         <main className="min-h-screen bg-[#F7F8FA] text-[#171B22]">
             <style>{`
+                .canonical-scale-preview .preview-organizer-placeholder,
+                .channel-preset-preview .preview-organizer-placeholder { --mobile-preview-base-size: var(--mobile-preview-organizer-size); font-size: var(--mobile-preview-base-size) !important; }
+                .canonical-scale-preview .preview-organizer-text,
+                .channel-preset-preview .preview-organizer-text { --mobile-preview-base-size: var(--mobile-preview-organizer-text-size); font-size: var(--mobile-preview-base-size) !important; }
+                .canonical-scale-preview .preview-title-placeholder,
+                .channel-preset-preview .preview-title-placeholder { --mobile-preview-base-size: var(--mobile-preview-title-size); font-size: var(--mobile-preview-base-size) !important; }
+                .canonical-scale-preview .preview-title-text,
+                .channel-preset-preview .preview-title-text { --mobile-preview-base-size: var(--mobile-preview-title-text-size); font-size: var(--mobile-preview-base-size) !important; }
+                .canonical-scale-preview .preview-date-placeholder,
+                .channel-preset-preview .preview-date-placeholder { --mobile-preview-base-size: var(--mobile-preview-date-size); font-size: var(--mobile-preview-base-size) !important; }
+                .canonical-scale-preview .preview-date-text,
+                .channel-preset-preview .preview-date-text { --mobile-preview-base-size: var(--mobile-preview-date-text-size); font-size: var(--mobile-preview-base-size) !important; }
+                .canonical-scale-preview .preview-place-placeholder,
+                .channel-preset-preview .preview-place-placeholder { --mobile-preview-base-size: var(--mobile-preview-place-size); font-size: var(--mobile-preview-base-size) !important; }
+                .canonical-scale-preview .preview-place-text,
+                .channel-preset-preview .preview-place-text { --mobile-preview-base-size: var(--mobile-preview-place-text-size); font-size: var(--mobile-preview-base-size) !important; }
+                .canonical-scale-preview .preview-description-placeholder,
+                .channel-preset-preview .preview-description-placeholder { --mobile-preview-base-size: var(--mobile-preview-description-size); font-size: var(--mobile-preview-base-size) !important; }
+                .canonical-scale-preview .preview-description-text,
+                .channel-preset-preview .preview-description-text { --mobile-preview-base-size: var(--mobile-preview-description-text-size); font-size: var(--mobile-preview-base-size) !important; }
+                .canonical-scale-preview .preview-application-text,
+                .channel-preset-preview .preview-application-text { --mobile-preview-base-size: var(--mobile-preview-application-text-size); font-size: var(--mobile-preview-base-size) !important; }
+                .canonical-scale-preview .preview-rich-run,
+                .channel-preset-preview .preview-rich-run { font-size: var(--mobile-run-size) !important; }
+                .canonical-scale-preview .mobile-music-emphasis,
+                .channel-preset-preview .mobile-music-emphasis { font-size: var(--proportional-mobile-music-size) !important; }
+                .canonical-scale-preview .preview-title-row { margin-top: 1.453488cqw !important; }
+                .canonical-scale-preview .preview-date-row { margin-top: 3.875969cqw !important; }
+                .canonical-scale-preview .preview-place-row { margin-top: 0.968992cqw !important; }
+                .canonical-scale-preview .preview-description-row { margin-top: 1.937984cqw !important; }
+                .story-preview .preview-title-row { margin-top: 2.153317cqw !important; }
+                .story-preview .preview-date-row { margin-top: 5.167959cqw !important; }
+                .story-preview .preview-place-row { margin-top: 1.291990cqw !important; }
+                .story-preview .preview-description-row { margin-top: 3.229974cqw !important; }
                 @media (max-width: 639px) {
                     .mobile-title { font-size: 24px !important; }
+                    .kakao-preview { left: 50%; width: calc(100% + 32px) !important; max-width: calc(100vw - 24px) !important; transform: translateX(-50%); }
                     .mobile-music-emphasis { font-size: var(--mobile-music-size) !important; }
                     .proportional-mobile-preview .preview-organizer-placeholder { --mobile-preview-base-size: var(--mobile-preview-organizer-size); font-size: var(--mobile-preview-base-size) !important; }
                     .proportional-mobile-preview .preview-organizer-text { --mobile-preview-base-size: var(--mobile-preview-organizer-text-size); font-size: var(--mobile-preview-base-size) !important; }
@@ -3843,9 +4661,48 @@ export default function EventPromotePage() {
                     .proportional-mobile-preview .mobile-music-emphasis { font-size: var(--proportional-mobile-music-size) !important; }
                     .proportional-mobile-preview .preview-title-row { margin-top: 1.25cqw !important; }
                     .proportional-mobile-preview .preview-date-row { margin-top: 3.333333cqw !important; }
+                    .kakao-preview .preview-date-row { margin-top: 4.583333cqw !important; }
                     .proportional-mobile-preview .preview-place-row { margin-top: 0.833333cqw !important; }
                     .proportional-mobile-preview .preview-description-row { margin-top: 1.666667cqw !important; }
                 }
+                .instagram-preview.proportional-mobile-preview .preview-organizer-placeholder { font-size: var(--mobile-preview-organizer-size) !important; }
+                .instagram-preview.proportional-mobile-preview .preview-organizer-text { font-size: var(--mobile-preview-organizer-text-size) !important; }
+                .instagram-preview.proportional-mobile-preview .preview-title-placeholder { font-size: var(--mobile-preview-title-size) !important; }
+                .instagram-preview.proportional-mobile-preview .preview-title-text { font-size: var(--mobile-preview-title-text-size) !important; }
+                .instagram-preview.proportional-mobile-preview .preview-date-placeholder { font-size: var(--mobile-preview-date-size) !important; }
+                .instagram-preview.proportional-mobile-preview .preview-date-text { font-size: var(--mobile-preview-date-text-size) !important; }
+                .instagram-preview.proportional-mobile-preview .preview-place-placeholder { font-size: var(--mobile-preview-place-size) !important; }
+                .instagram-preview.proportional-mobile-preview .preview-place-text { font-size: var(--mobile-preview-place-text-size) !important; }
+                .instagram-preview.proportional-mobile-preview .preview-description-placeholder { font-size: var(--mobile-preview-description-size) !important; }
+                .instagram-preview.proportional-mobile-preview .preview-description-text { font-size: var(--mobile-preview-description-text-size) !important; }
+                .instagram-preview.proportional-mobile-preview .preview-application-text { font-size: var(--mobile-preview-application-text-size) !important; }
+                .instagram-preview.proportional-mobile-preview .preview-rich-run { font-size: var(--mobile-run-size) !important; }
+                .instagram-preview.proportional-mobile-preview .mobile-music-emphasis { font-size: var(--proportional-mobile-music-size) !important; }
+                .instagram-preview.proportional-mobile-preview .preview-title-row { margin-top: 1.453488cqw !important; }
+                .instagram-preview.proportional-mobile-preview .preview-date-row { margin-top: 3.875969cqw !important; }
+                .instagram-preview.proportional-mobile-preview .preview-place-row { margin-top: 0.968992cqw !important; }
+                .instagram-preview.proportional-mobile-preview .preview-description-row { margin-top: 1.937984cqw !important; }
+                .canonical-scale-preview .preview-organizer-placeholder { font-size: var(--mobile-preview-organizer-size) !important; }
+                .canonical-scale-preview .preview-organizer-text { font-size: var(--mobile-preview-organizer-text-size) !important; }
+                .canonical-scale-preview .preview-title-placeholder { font-size: var(--mobile-preview-title-size) !important; }
+                .canonical-scale-preview .preview-title-text { font-size: var(--mobile-preview-title-text-size) !important; }
+                .canonical-scale-preview .preview-date-placeholder { font-size: var(--mobile-preview-date-size) !important; }
+                .canonical-scale-preview .preview-date-text { font-size: var(--mobile-preview-date-text-size) !important; }
+                .canonical-scale-preview .preview-place-placeholder { font-size: var(--mobile-preview-place-size) !important; }
+                .canonical-scale-preview .preview-place-text { font-size: var(--mobile-preview-place-text-size) !important; }
+                .canonical-scale-preview .preview-description-placeholder { font-size: var(--mobile-preview-description-size) !important; }
+                .canonical-scale-preview .preview-description-text { font-size: var(--mobile-preview-description-text-size) !important; }
+                .canonical-scale-preview .preview-application-text { font-size: var(--mobile-preview-application-text-size) !important; }
+                .canonical-scale-preview .preview-rich-run { font-size: var(--mobile-run-size) !important; }
+                .canonical-scale-preview .mobile-music-emphasis { font-size: var(--proportional-mobile-music-size) !important; }
+                .canonical-scale-preview .preview-title-row { margin-top: 1.453488cqw !important; }
+                .canonical-scale-preview .preview-date-row { margin-top: 3.875969cqw !important; }
+                .canonical-scale-preview .preview-place-row { margin-top: 0.968992cqw !important; }
+                .canonical-scale-preview .preview-description-row { margin-top: 1.937984cqw !important; }
+                .story-preview .preview-title-row { margin-top: 2.153317cqw !important; }
+                .story-preview .preview-date-row { margin-top: 5.167959cqw !important; }
+                .story-preview .preview-place-row { margin-top: 1.291990cqw !important; }
+                .story-preview .preview-description-row { margin-top: 3.229974cqw !important; }
                 .channel-preset-preview .preview-organizer-placeholder { --mobile-preview-base-size: var(--mobile-preview-organizer-size); font-size: var(--mobile-preview-base-size) !important; }
                 .channel-preset-preview .preview-organizer-text { --mobile-preview-base-size: var(--mobile-preview-organizer-text-size); font-size: var(--mobile-preview-base-size) !important; }
                 .channel-preset-preview .preview-title-placeholder { --mobile-preview-base-size: var(--mobile-preview-title-size); font-size: var(--mobile-preview-base-size) !important; }
@@ -3856,6 +4713,7 @@ export default function EventPromotePage() {
                 .channel-preset-preview .preview-place-text { --mobile-preview-base-size: var(--mobile-preview-place-text-size); font-size: var(--mobile-preview-base-size) !important; }
                 .channel-preset-preview .preview-description-placeholder { --mobile-preview-base-size: var(--mobile-preview-description-size); font-size: var(--mobile-preview-base-size) !important; }
                 .channel-preset-preview .preview-description-text { --mobile-preview-base-size: var(--mobile-preview-description-text-size); font-size: var(--mobile-preview-base-size) !important; }
+                .channel-preset-preview .preview-application-text { --mobile-preview-base-size: var(--mobile-preview-application-text-size); font-size: var(--mobile-preview-base-size) !important; }
                 .channel-preset-preview .preview-rich-run { font-size: var(--mobile-run-size) !important; }
                 .channel-preset-preview .mobile-music-emphasis { font-size: var(--proportional-mobile-music-size) !important; }
             `}</style>
@@ -3921,7 +4779,7 @@ export default function EventPromotePage() {
                                 onPointerMove={handlePreviewPointerMove}
                                 onPointerUp={handlePreviewPointerUp}
                                 onPointerCancel={handlePreviewPointerCancel}
-                                className={`relative mx-auto w-full max-w-[480px] overflow-hidden rounded-[24px] bg-[#E8ECEF] shadow-[0_16px_38px_rgba(25,31,40,0.14)] ${channelLayout.preview.aspectClass} ${channelLayout.preview.mobileScaleMode === "proportional" ? "proportional-mobile-preview" : ""} ${channelLayout.posterLayout ? "channel-preset-preview" : ""} ${lineDraftVariant ? "cursor-crosshair" : ""}`}
+                                className={`relative mx-auto w-full max-w-[480px] overflow-hidden rounded-[24px] bg-[#E8ECEF] shadow-[0_16px_38px_rgba(25,31,40,0.14)] ${channelLayout.preview.aspectClass} ${channel === "instagram" ? "instagram-preview" : ""} ${channel === "kakao" ? "kakao-preview" : ""} ${channel === "story" ? "story-preview" : ""} ${channel === "story" || channel === "share" || channel === "a4" ? "canonical-scale-preview" : ""} ${channelLayout.preview.mobileScaleMode === "proportional" ? "proportional-mobile-preview" : ""} ${channelLayout.posterLayout ? "channel-preset-preview" : ""} ${lineDraftVariant ? "cursor-crosshair" : ""}`}
                                 style={mobilePreviewStyle}
                             >
                                 {shouldRenderContainedImage ? (
@@ -4083,7 +4941,10 @@ export default function EventPromotePage() {
                                         <span
                                             aria-hidden="true"
                                             className="preview-organizer-placeholder invisible inline-flex items-center"
-                                            style={initialTextStyle("organizer", 15)}
+                                            style={initialTextStyle(
+                                                "organizer",
+                                                previewTextBaseSize("organizer", 15),
+                                            )}
                                         >
                                             {DEFAULT_ORGANIZER}
                                         </span>
@@ -4095,7 +4956,10 @@ export default function EventPromotePage() {
                                                 "organizer",
                                                 "pointer-events-auto absolute left-0 top-0 block max-w-full text-left",
                                             )}
-                                            style={textPositionStyle("organizer")}
+                                            style={{
+                                                ...textPositionStyle("organizer"),
+                                                ...userTextAvailableWidthStyle("organizer"),
+                                            }}
                                             aria-label="사찰 기관명 편집"
                                         >
                                             <span
@@ -4103,10 +4967,13 @@ export default function EventPromotePage() {
                                                     textBlockRefs.current.organizer = node;
                                                 }}
                                                 className="preview-organizer-text flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words"
-                                                style={textStyle("organizer", 15)}
+                                                style={textStyle(
+                                                    "organizer",
+                                                    previewTextBaseSize("organizer", 15),
+                                                )}
                                             >
                                                 <PictogramIcon
-                                                    icon={textIcons.organizer}
+                                                    icon={resolvedTextIcon("organizer")}
                                                     className="mt-[0.08em] h-[1em] w-[1em] shrink-0"
                                                 />
                                                 <span className="min-w-0 whitespace-pre-wrap break-words">
@@ -4122,13 +4989,20 @@ export default function EventPromotePage() {
                                         <span
                                             aria-hidden="true"
                                             className="mobile-title preview-title-placeholder invisible flex max-w-full leading-[1.1] tracking-[-0.05em]"
-                                            style={initialTextStyle(
-                                                "title",
-                                                channelLayout.preview.titleSize,
-                                            )}
+                                            style={{
+                                                ...initialTextStyle(
+                                                    "title",
+                                                    channelLayout.preview.titleSize,
+                                                ),
+                                                ...previewKakaoTextAreaStyle("title"),
+                                            }}
                                         >
                                             <span className="min-w-0 whitespace-pre-wrap break-words">
-                                                ♫ 연꽃 피는 산사{" "}
+                                                ♫ 연꽃 피는 산사
+                                                {channel === "kakao" ||
+                                                channel === "instagram"
+                                                    ? "\n"
+                                                    : " "}
                                                 <span
                                                     className="mobile-music-emphasis"
                                                     style={
@@ -4156,6 +5030,7 @@ export default function EventPromotePage() {
                                             style={{
                                                 ...previewKakaoTextAreaStyle("title"),
                                                 ...textPositionStyle("title"),
+                                                ...userTextAvailableWidthStyle("title"),
                                             }}
                                             aria-label="행사명 편집"
                                         >
@@ -4170,7 +5045,7 @@ export default function EventPromotePage() {
                                                 )}
                                             >
                                                 <PictogramIcon
-                                                    icon={textIcons.title}
+                                                    icon={resolvedTextIcon("title")}
                                                     className="mt-[0.08em] h-[1em] w-[1em] shrink-0"
                                                 />
                                                 <span
@@ -4184,7 +5059,7 @@ export default function EventPromotePage() {
                                                 >
                                                     {renderTextCharacters(
                                                         "title",
-                                                        title,
+                                                        renderedTitle,
                                                         channelLayout.preview.titleSize,
                                                     )}
                                                 </span>
@@ -4198,7 +5073,10 @@ export default function EventPromotePage() {
                                         <span
                                             aria-hidden="true"
                                             className="preview-date-placeholder invisible inline-flex items-center"
-                                            style={initialTextStyle("date", 15)}
+                                            style={initialTextStyle(
+                                                "date",
+                                                previewTextBaseSize("date", 15),
+                                            )}
                                         >
                                             {DEFAULT_DATE}
                                         </span>
@@ -4210,7 +5088,10 @@ export default function EventPromotePage() {
                                                 "date",
                                                 "pointer-events-auto absolute left-0 top-0 block max-w-full text-left",
                                             )}
-                                            style={textPositionStyle("date")}
+                                            style={{
+                                                ...textPositionStyle("date"),
+                                                ...userTextAvailableWidthStyle("date"),
+                                            }}
                                             aria-label="일시 편집"
                                         >
                                             <span
@@ -4218,10 +5099,13 @@ export default function EventPromotePage() {
                                                     textBlockRefs.current.date = node;
                                                 }}
                                                 className="preview-date-text flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words"
-                                                style={textStyle("date", 15)}
+                                                style={textStyle(
+                                                    "date",
+                                                    previewTextBaseSize("date", 15),
+                                                )}
                                             >
                                                 <PictogramIcon
-                                                    icon={textIcons.date}
+                                                    icon={resolvedTextIcon("date")}
                                                     className="mt-[0.08em] h-[1em] w-[1em] shrink-0"
                                                 />
                                                 <span className="min-w-0 whitespace-pre-wrap break-words">
@@ -4237,7 +5121,10 @@ export default function EventPromotePage() {
                                         <span
                                             aria-hidden="true"
                                             className="preview-place-placeholder invisible inline-flex items-center gap-[0.35em]"
-                                            style={initialTextStyle("place", 14)}
+                                            style={initialTextStyle(
+                                                "place",
+                                                previewTextBaseSize("place", 14),
+                                            )}
                                         >
                                             <span className="inline-flex w-[1.05em] items-center justify-center align-[-0.12em]">
                                                 <PictogramIcon icon="pin" />
@@ -4252,7 +5139,10 @@ export default function EventPromotePage() {
                                                 "place",
                                                 "pointer-events-auto absolute left-0 top-0 block max-w-full text-left",
                                             )}
-                                            style={textPositionStyle("place")}
+                                            style={{
+                                                ...textPositionStyle("place"),
+                                                ...userTextAvailableWidthStyle("place"),
+                                            }}
                                             aria-label="장소 편집"
                                         >
                                             <span
@@ -4260,10 +5150,13 @@ export default function EventPromotePage() {
                                                     textBlockRefs.current.place = node;
                                                 }}
                                                 className="preview-place-text flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words"
-                                                style={textStyle("place", 14)}
+                                                style={textStyle(
+                                                    "place",
+                                                    previewTextBaseSize("place", 14),
+                                                )}
                                             >
                                                 <PictogramIcon
-                                                    icon={textIcons.place}
+                                                    icon={resolvedTextIcon("place")}
                                                     className="mt-[0.08em] h-[1em] w-[1em] shrink-0"
                                                 />
                                                 <span className="min-w-0 whitespace-pre-wrap break-words">
@@ -4273,17 +5166,55 @@ export default function EventPromotePage() {
                                         </button>
                                     </div>
                                     <div
-                                        className="preview-description-row relative mt-2"
+                                        className={`preview-description-row relative mt-2 ${channel === "instagram" && usesRecommendedDescriptionLayout ? "instagram-recommended-description-row" : ""}`}
                                         style={previewRowStyle("description")}
                                     >
                                         <span
                                             aria-hidden="true"
-                                            className={`preview-description-placeholder invisible flex max-w-full whitespace-pre-wrap break-words leading-[1.55] ${channelLayout.descriptionMode === "compact" && !channelLayout.posterLayout ? "max-h-[3.1em] overflow-hidden" : ""}`}
-                                            style={initialTextStyle("description", 14)}
+                                            className={`preview-description-placeholder invisible flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words leading-[1.55] ${channel === "instagram" && usesRecommendedDescriptionLayout ? "instagram-recommended-description-text" : ""}`}
+                                            style={{
+                                                ...(usesRecommendedDescriptionLayout
+                                                    ? initialTextStyle(
+                                                          "description",
+                                                          previewTextBaseSize(
+                                                              "description",
+                                                              14,
+                                                          ),
+                                                      )
+                                                    : textStyle(
+                                                          "description",
+                                                          previewTextBaseSize(
+                                                              "description",
+                                                              14,
+                                                          ),
+                                                      )),
+                                                ...userTextAvailableWidthStyle(
+                                                    "description",
+                                                ),
+                                                ...(descriptionUserViewport
+                                                    ? {
+                                                          maxHeight:
+                                                              descriptionUserViewport.maxHeight,
+                                                          overflow: "hidden",
+                                                      }
+                                                    : {}),
+                                            }}
                                         >
-                                            {channel === "youtube"
-                                                ? YOUTUBE_DEFAULT_DESCRIPTION
-                                                : DEFAULT_DESCRIPTION}
+                                            <PictogramIcon
+                                                icon={resolvedTextIcon("description")}
+                                                className="mt-[0.2em] h-[1em] w-[1em] shrink-0"
+                                            />
+                                            <span
+                                                className={`min-w-0 whitespace-pre-wrap break-words ${channel === "instagram" && usesRecommendedDescriptionLayout ? "instagram-recommended-description-copy" : ""}`}
+                                            >
+                                                {usesRecommendedDescriptionLayout
+                                                    ? defaultDescriptionByChannel[channel]
+                                                    : renderTextCharacters(
+                                                          "description",
+                                                          description,
+                                                          14,
+                                                      )}
+                                            </span>
                                         </span>
                                         <button
                                             type="button"
@@ -4296,6 +5227,7 @@ export default function EventPromotePage() {
                                             style={{
                                                 ...previewKakaoTextAreaStyle("description"),
                                                 ...textPositionStyle("description"),
+                                                ...userTextAvailableWidthStyle("description"),
                                             }}
                                             aria-label="행사 내용 편집"
                                         >
@@ -4303,23 +5235,28 @@ export default function EventPromotePage() {
                                                 ref={(node) => {
                                                     textBlockRefs.current.description = node;
                                                 }}
-                                                className={`preview-description-text flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words leading-[1.55] ${channelLayout.descriptionMode === "compact" && !channelLayout.posterLayout ? "max-h-[3.1em] overflow-hidden" : ""}`}
-                                                style={textStyle("description", 14)}
+                                                className={`preview-description-text flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words leading-[1.55] ${channel === "instagram" && usesRecommendedDescriptionLayout ? "instagram-recommended-description-text" : ""}`}
+                                                style={{
+                                                    ...textStyle("description", 14),
+                                                    ...(descriptionUserViewport
+                                                        ? {
+                                                              maxHeight:
+                                                                  descriptionUserViewport.maxHeight,
+                                                              overflow: "hidden",
+                                                          }
+                                                        : {}),
+                                                }}
                                             >
                                                 <PictogramIcon
-                                                    icon={textIcons.description}
+                                                    icon={resolvedTextIcon("description")}
                                                     className="mt-[0.2em] h-[1em] w-[1em] shrink-0"
                                                 />
                                                 <span
-                                                    className="min-w-0 whitespace-pre-wrap break-words"
-                                                    style={previewLineClampStyle(
-                                                        channelLayout.posterLayout
-                                                            ?.descriptionMaxLines,
-                                                    )}
+                                                    className={`min-w-0 whitespace-pre-wrap break-words ${channel === "instagram" && usesRecommendedDescriptionLayout ? "instagram-recommended-description-copy" : ""}`}
                                                 >
                                                     {renderTextCharacters(
                                                         "description",
-                                                        renderedDescription,
+                                                        description,
                                                         14,
                                                     )}
                                                 </span>
@@ -4358,7 +5295,7 @@ export default function EventPromotePage() {
                                             <span
                                                 className="absolute inset-x-0 top-1/2 block -translate-y-1/2"
                                                 style={{
-                                                    borderTop: `${Math.max(1, dividerStyle.width / 2)}px ${dividerStyle.variant === "dashed" ? "dashed" : "solid"} ${dividerStyle.color}`,
+                                                    borderTop: `${(dividerStyle.width / 1080) * 100}cqw ${dividerStyle.variant === "dashed" ? "dashed" : "solid"} ${dividerStyle.color}`,
                                                 }}
                                             />
                                         )}
@@ -4373,7 +5310,10 @@ export default function EventPromotePage() {
                                         "application",
                                         "absolute left-[7%] bottom-[5%] max-w-[86%] text-left",
                                     )}
-                                    style={textPositionStyle("application")}
+                                    style={{
+                                        ...textPositionStyle("application"),
+                                        ...userTextAvailableWidthStyle("application"),
+                                    }}
                                     aria-label="신청 문의 편집"
                                 >
                                     <span
@@ -4381,10 +5321,13 @@ export default function EventPromotePage() {
                                             textBlockRefs.current.application = node;
                                         }}
                                         className="preview-application-text flex max-w-full items-start gap-[0.35em] whitespace-pre-wrap break-words"
-                                        style={textStyle("application", 14)}
+                                        style={textStyle(
+                                            "application",
+                                            previewTextBaseSize("application", 14),
+                                        )}
                                     >
                                         <PictogramIcon
-                                            icon={textIcons.application}
+                                            icon={resolvedTextIcon("application")}
                                             className="mt-[0.08em] h-[1em] w-[1em] shrink-0"
                                         />
                                         <span className="min-w-0 whitespace-pre-wrap break-words">
@@ -4423,8 +5366,7 @@ export default function EventPromotePage() {
 
                             {editorTab === "content" && (
                                 <div className="pt-6">
-                                    <h2 className="text-lg font-semibold">행사 내용</h2>
-                                    <div className="mt-4 grid gap-x-4 gap-y-4 sm:grid-cols-2">
+                                    <div className="grid gap-x-4 gap-y-4 sm:grid-cols-2">
                                         <div
                                             hidden={!visibleFields.title}
                                             className="text-sm font-medium sm:col-span-2"
@@ -4566,7 +5508,8 @@ export default function EventPromotePage() {
                                                     className={`${fieldClass} min-h-[96px] resize-y leading-6`}
                                                 />
                                             </div>
-                                            {channelLayout.descriptionMode === "compact" && (
+                                            {channelLayout.descriptionMode === "compact" &&
+                                                channel !== "kakao" && (
                                                 <p className="mt-1 text-xs font-normal leading-5 text-[#8B95A1]">
                                                     게시 이미지에는 최대 2줄 정도로 표시돼요.
                                                 </p>
@@ -4691,11 +5634,7 @@ export default function EventPromotePage() {
 
                             {editorTab === "image" && (
                                 <div className="pt-6">
-                                    <h2 className="text-lg font-semibold">이미지 선택</h2>
-                                    <p className="mt-1 text-sm text-[#8B95A1]">
-                                        대표 또는 기타 배경 중 하나를 선택해 주세요.
-                                    </p>
-                                    <div className="mt-4 inline-flex rounded-xl bg-[#F7F8FA] p-1">
+                                    <div className="inline-flex rounded-xl bg-[#F7F8FA] p-1">
                                         {imageCategories.map((category) => {
                                             const isSelected = imageCategory === category.key;
 
@@ -4721,6 +5660,8 @@ export default function EventPromotePage() {
                                                 key={item.key}
                                                 type="button"
                                                 onClick={() => {
+                                                    finishHistoryGroups();
+                                                    recordHistory();
                                                     setScene(item.key);
                                                     setImageSrc(item.image);
                                                 }}
@@ -4871,9 +5812,11 @@ export default function EventPromotePage() {
                                                     <button
                                                         key={item.key}
                                                         type="button"
-                                                        onClick={() =>
-                                                            setImageFitOverride(item.key)
-                                                        }
+                                                        onClick={() => {
+                                                            finishHistoryGroups();
+                                                            recordHistory();
+                                                            setImageFitOverride(item.key);
+                                                        }}
                                                         aria-pressed={
                                                             effectiveImageFit === item.key
                                                         }
@@ -5185,11 +6128,7 @@ export default function EventPromotePage() {
 
                             {editorTab === "copy" && (
                                 <div className="pt-6">
-                                    <h2 className="text-lg font-semibold">홍보 문구</h2>
-                                    <p className="mt-1 text-sm text-[#8B95A1]">
-                                        자동으로 만든 문구에 내용을 자유롭게 덧붙이거나 고쳐보세요.
-                                    </p>
-                                    <div className="mt-5 overflow-x-auto pb-1">
+                                    <div className="overflow-x-auto pb-1">
                                         <div className="inline-flex min-w-max rounded-xl bg-[#F7F8FA] p-1">
                                             {(Object.keys(copyLabels) as CopyKey[]).map((key) => {
                                                 const isSelected = copyChannel === key;
