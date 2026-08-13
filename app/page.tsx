@@ -957,6 +957,7 @@ export default function Home() {
                   }
                   .scroll-hero-item { --scroll-progress: 0; cursor: pointer; }
                   .scroll-hero-master-image, .scroll-hero-canvas-paper, .scroll-hero-bottom-rod-image { position: absolute; left: 50%; height: 560px; width: 563.37px; max-width: none; object-fit: fill; transform: translateX(-50%); }
+                  .scroll-hero-top-rod, .scroll-hero-canvas, .scroll-hero-bottom-rod { pointer-events: none; }
                   .scroll-hero-top-rod { z-index: 4; top: 2.13px; left: 50%; height: 69.4px; width: 563.37px; transform: translateX(-50%); }
                   .scroll-hero-top-rod .scroll-hero-master-image { top: 0; }
                   .scroll-hero-canvas { z-index: 2; top: 71.53px; left: 50%; height: calc(var(--scroll-progress) * 423.4px); width: 563.37px; transform: translateX(-50%); clip-path: inset(0); contain: paint; }
@@ -968,6 +969,17 @@ export default function Home() {
                   .scroll-hero-slot-third .scroll-hero-bottom-rod { transform: translate(-50%, -2px); }
                   .scroll-hero-bottom-rod-image { top: -493px; }
                   .scroll-hero-label { opacity: 0; }
+                  .scroll-hero-slot { z-index: 10; transform-origin: 50% 8%; }
+                  .scroll-hero-slot-side { transform: translateY(-6px) scale(.96); }
+                  .scroll-hero-slot-center { z-index: 20; transform: translateY(10px); }
+                  @media (min-width: 1280px) {
+                    .scroll-hero-slot-first { transform: translate(42px, -6px) scale(.96); }
+                    .scroll-hero-slot-third { transform: translate(-42px, -8px) scale(.96); }
+                  }
+                  @media (min-width: 1440px) {
+                    .scroll-hero-slot-first { transform: translate(70px, -6px) scale(.96); }
+                    .scroll-hero-slot-third { transform: translate(-70px, -8px) scale(.96); }
+                  }
                   .scroll-hero-unfolding { animation: scroll-hero-unfold-progress 1560ms linear 120ms both; }
                   .scroll-hero-rewinding { animation: scroll-hero-rewind-progress 1950ms linear both; }
                   .scroll-hero-settled .scroll-hero-label { opacity: 1; }
@@ -989,7 +1001,10 @@ export default function Home() {
                     return (
                       <div
                         key={`${scrollCycleIndex}-${activeScrollSet}-${index}-${item.href}`}
-                        className={`relative h-full${index === 2 ? " scroll-hero-slot-third -translate-y-[2px]" : ""}`}
+                        className={`scroll-hero-slot relative h-full ${index === 1
+                          ? "scroll-hero-slot-center"
+                          : `scroll-hero-slot-side ${index === 0 ? "scroll-hero-slot-first" : "scroll-hero-slot-third"}`
+                          }`}
                       >
                         <ScrollHeroItem
                           item={{ ...item, position: slot.position, line: slot.line }}
