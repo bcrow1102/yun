@@ -990,8 +990,16 @@ export default function MobileHome() {
                 </Link>
 
                 <p className="mt-2 text-[13px] font-normal leading-5 text-[#667085]">
-                    불교 생활에 필요한 정보를 쉽고 가깝게 연결하는 공간입니다.
+                    <span className="block">연은 개인이 만들고 운영하며,</span>
+                    <span className="block">불교 생활에 필요한 정보를 쉽고 가깝게 연결합니다.</span>
                 </p>
+
+                <Link
+                    href="/support"
+                    className="mt-1 inline-block text-[13px] font-medium text-[#2563EB] transition-colors hover:text-[#1D4ED8] hover:underline hover:underline-offset-2"
+                >
+                    {"후원하기 "}
+                </Link>
 
                 <div className="mt-7">
                     <h2 className="text-[13px] font-medium text-[#252A31]">

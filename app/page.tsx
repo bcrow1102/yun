@@ -1463,27 +1463,32 @@ export default function Home() {
 
         <footer className="border-t border-[#D9DAD4] bg-[#FAF9F6]">
           <div className="mx-auto max-w-[1400px] px-10 py-10 xl:px-14">
-            <div className="grid grid-cols-[0.9fr_0.9fr_1.2fr] items-start gap-12">
-              <div>
-                <Link
-                  href="/"
-                  className="inline-flex items-center gap-2.5"
-                  aria-label="연 홈"
-                >
-                  <LotusIcon className="h-8 w-8" />
-                  <span className="text-[23px] font-semibold tracking-[-0.05em]">
-                    연
-                  </span>
-                </Link>
-                <p className="mt-2.5 text-sm font-normal leading-6 text-[#667085]">
-                  <span className="block whitespace-nowrap">
-                    불교 생활에 필요한 정보를 쉽고 가깝게 연결하는
-                  </span>
-                  <span className="block">공간입니다.</span>
+            <div className="grid grid-cols-[0.9fr_0.9fr_1.2fr] items-start gap-x-12">
+              <Link
+                href="/"
+                className="col-start-1 row-start-1 inline-flex items-center gap-2.5"
+                aria-label="연 홈"
+              >
+                <LotusIcon className="h-8 w-8" />
+                <span className="text-[23px] font-semibold tracking-[-0.05em]">
+                  연
+                </span>
+              </Link>
+
+              <div className="col-start-1 row-start-2 mt-2.5">
+                <p className="text-sm font-normal leading-6 text-[#667085]">
+                  <span className="block">연은 개인이 만들고 운영하며,</span>
+                  <span className="block">불교 생활에 필요한 정보를 쉽고 가깝게 연결합니다.</span>
                 </p>
+                <Link
+                  href="/support"
+                  className="mt-1 inline-block text-xs font-medium leading-5 text-[#2563EB] transition-colors hover:text-[#1D4ED8] hover:underline hover:underline-offset-2"
+                >
+                  후원하기
+                </Link>
               </div>
 
-              <div>
+              <div className="col-start-2 row-start-2 mt-2.5">
                 <h2 className="text-sm font-semibold">등록 안내</h2>
                 <div className="mt-3 grid grid-cols-2 gap-x-5 gap-y-2 text-sm font-normal text-[#667085]">
                   <Link href="/jobs/new" className="hover:text-[#191F28]">
@@ -1507,7 +1512,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div>
+              <div className="col-start-3 row-start-2 mt-2.5">
                 <div className="flex items-center gap-3">
                   <h2 className="shrink-0 text-sm font-semibold">문의하기</h2>
                   <a
@@ -1561,7 +1566,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="mt-6 flex items-center justify-between border-t border-[#E7E9EC] pt-4 text-xs font-normal text-[#8B95A1]">
+            <div className="mt-5 flex items-center justify-between border-t border-[#E7E9EC] pt-4 text-xs font-normal text-[#8B95A1]">
               <p>© 2026 연. All rights reserved.</p>
               <p>불교 정보와 사람을 잇는 공간</p>
             </div>
