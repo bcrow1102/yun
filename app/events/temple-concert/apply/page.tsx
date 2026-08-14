@@ -1,4 +1,9 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import {
+    getEventById,
+    TEMPLE_CONCERT_EVENT_ID,
+} from "../../data";
 
 const inputStyle =
     "mt-2 w-full rounded-xl border border-[#E3E6EB] bg-white px-4 py-3 text-[15px] text-[#20242C] outline-none transition placeholder:text-[#A0A6B0] focus:border-[#D8BE00] focus:ring-2 focus:ring-[#FEE500]/20";
@@ -34,6 +39,12 @@ function LotusIcon() {
 }
 
 export default function TempleConcertApplyPage() {
+    const event = getEventById(TEMPLE_CONCERT_EVENT_ID);
+
+    if (!event) {
+        notFound();
+    }
+
     return (
         <main className="min-h-screen bg-[#F7F8FA] text-[#171B22]">
             <header className="border-b border-[#ECEEF1] bg-white">
@@ -46,7 +57,7 @@ export default function TempleConcertApplyPage() {
                     </Link>
 
                     <Link
-                        href="/events/temple-concert"
+                        href={event.specialDetailHref ?? event.detailHref}
                         className="rounded-xl border border-[#E3E8EF] px-4 py-2.5 text-sm font-medium text-[#4E5968]"
                     >
                         행사 상세로
@@ -57,7 +68,7 @@ export default function TempleConcertApplyPage() {
             <section className="mx-auto max-w-3xl px-4 py-10 md:px-8 md:py-14">
                 <div className="mb-8">
                     <p className="text-sm font-medium text-[#766900]">
-                        산사 음악회 참가 신청
+                        {event.shortTitle} 참가 신청
                     </p>
                     <h1 className="mt-2 text-[30px] font-semibold tracking-[-0.04em] md:text-[38px]">
                         별빛 아래 산사의 음악을 만나보세요
@@ -71,24 +82,26 @@ export default function TempleConcertApplyPage() {
                 <section className="mb-6 rounded-[22px] border border-[#F0E4A3] bg-[#FFF9DC] p-5 md:p-6">
                     <p className="text-sm font-medium text-[#766900]">신청 행사</p>
                     <h2 className="mt-2 text-xl font-semibold">
-                        별빛 아래 만나는 산사의 음악
+                        {event.title}
                     </h2>
                     <dl className="mt-4 grid gap-3 text-sm text-[#5E574C] sm:grid-cols-2">
                         <div>
                             <dt className="text-xs text-[#8B7F5C]">일시</dt>
-                            <dd className="mt-1">2026년 8월 22일 17:30</dd>
+                            <dd className="mt-1">
+                                {event.date} {event.time}
+                            </dd>
                         </div>
                         <div>
                             <dt className="text-xs text-[#8B7F5C]">장소</dt>
-                            <dd className="mt-1">연화사 산사마당</dd>
+                            <dd className="mt-1">{event.location}</dd>
                         </div>
                         <div>
                             <dt className="text-xs text-[#8B7F5C]">대상</dt>
-                            <dd className="mt-1">누구나 참여 가능</dd>
+                            <dd className="mt-1">{event.target}</dd>
                         </div>
                         <div>
                             <dt className="text-xs text-[#8B7F5C]">참가비</dt>
-                            <dd className="mt-1">무료 · 사전 신청</dd>
+                            <dd className="mt-1">{event.price} · 사전 신청</dd>
                         </div>
                     </dl>
                 </section>
@@ -159,10 +172,12 @@ export default function TempleConcertApplyPage() {
                                 <select
                                     name="participationDate"
                                     required
-                                    defaultValue="2026-08-22"
+                                    defaultValue={event.applicationDateValue}
                                     className={inputStyle}
                                 >
-                                    <option value="2026-08-22">2026년 8월 22일 토요일</option>
+                                    <option value={event.applicationDateValue}>
+                                        {event.applicationDateLabel}
+                                    </option>
                                 </select>
                             </label>
 
@@ -210,7 +225,7 @@ export default function TempleConcertApplyPage() {
 
                         <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
                             <Link
-                                href="/events/temple-concert"
+                                href={event.specialDetailHref ?? event.detailHref}
                                 className="inline-flex items-center justify-center rounded-xl border border-[#E3E6EB] px-5 py-3.5 text-sm font-medium text-[#4E5968]"
                             >
                                 취소

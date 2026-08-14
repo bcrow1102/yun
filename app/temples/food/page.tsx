@@ -1,73 +1,8 @@
 import Link from "next/link";
-
-const foodPrograms = [
-    {
-        id: 1,
-        title: "사찰음식 기본 체험",
-        place: "서울 사찰음식문화체험관",
-        location: "서울 종로구",
-        type: "체험",
-        schedule: "매주 토요일",
-        price: "30,000원",
-        icon: "🥣",
-        background: "bg-[#F6F1EA]",
-    },
-    {
-        id: 2,
-        title: "계절 나물과 사찰 밥상",
-        place: "봉녕사",
-        location: "경기 수원",
-        type: "교육",
-        schedule: "월 2회",
-        price: "50,000원",
-        icon: "🌿",
-        background: "bg-[#EEF5E9]",
-    },
-    {
-        id: 3,
-        title: "발우공양 체험",
-        place: "통도사",
-        location: "경남 양산",
-        type: "체험",
-        schedule: "주말 운영",
-        price: "20,000원",
-        icon: "🍚",
-        background: "bg-[#FFF8D9]",
-    },
-    {
-        id: 4,
-        title: "사찰 장 담그기",
-        place: "전통사찰문화원",
-        location: "전북 완주",
-        type: "교육",
-        schedule: "계절 프로그램",
-        price: "60,000원",
-        icon: "🏺",
-        background: "bg-[#F3EDE6]",
-    },
-    {
-        id: 5,
-        title: "연잎밥 만들기",
-        place: "연화사",
-        location: "충남 공주",
-        type: "가족 체험",
-        schedule: "매월 둘째 주",
-        price: "35,000원",
-        icon: "🪷",
-        background: "bg-[#F9EFF2]",
-    },
-    {
-        id: 6,
-        title: "외국인을 위한 사찰음식",
-        place: "한국사찰음식문화관",
-        location: "서울",
-        type: "영문 체험",
-        schedule: "예약 운영",
-        price: "문의",
-        icon: "🥢",
-        background: "bg-[#EAF3FF]",
-    },
-];
+import {
+    getTempleFoodDisplayInfo,
+    templeFoodPrograms,
+} from "./data";
 
 function SearchIcon() {
     return (
@@ -193,58 +128,63 @@ export default function TempleFoodPage() {
                         </div>
 
                         <span className="text-sm text-[#8B95A1]">
-                            예시 {foodPrograms.length}개
+                            예시 {templeFoodPrograms.length}개
                         </span>
                     </div>
 
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                        {foodPrograms.map((program) => (
-                            <Link
-                                key={program.id}
-                                href={`/temples/food/${program.id}`}
-                                className="group overflow-hidden rounded-[22px] border border-[#E3E8EF] bg-white text-left transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(25,31,40,0.08)]"
-                            >
-                                <span
-                                    className={`${program.background} flex h-44 items-center justify-center text-6xl`}
+                        {templeFoodPrograms.map((program) => {
+                            const { place, location } =
+                                getTempleFoodDisplayInfo(program);
+
+                            return (
+                                <Link
+                                    key={program.id}
+                                    href={`/temples/food/${program.id}`}
+                                    className="group overflow-hidden rounded-[22px] border border-[#E3E8EF] bg-white text-left transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(25,31,40,0.08)]"
                                 >
-                                    {program.icon}
-                                </span>
-
-                                <span className="block p-5">
-                                    <span className="inline-flex rounded-full bg-[#F1EBE3] px-3 py-1.5 text-xs font-bold text-[#786B5A]">
-                                        {program.type}
+                                    <span
+                                        className={`${program.background} flex h-44 items-center justify-center text-6xl`}
+                                    >
+                                        {program.icon}
                                     </span>
 
-                                    <strong className="mt-4 block text-[20px] font-bold">
-                                        {program.title}
-                                    </strong>
+                                    <span className="block p-5">
+                                        <span className="inline-flex rounded-full bg-[#F1EBE3] px-3 py-1.5 text-xs font-bold text-[#786B5A]">
+                                            {program.type}
+                                        </span>
 
-                                    <span className="mt-2 block text-sm font-semibold text-[#667085]">
-                                        {program.place}
-                                    </span>
+                                        <strong className="mt-4 block text-[20px] font-bold">
+                                            {program.title}
+                                        </strong>
 
-                                    <span className="mt-1 block text-sm text-[#8B95A1]">
-                                        {program.location}
-                                    </span>
+                                        <span className="mt-2 block text-sm font-semibold text-[#667085]">
+                                            {place}
+                                        </span>
 
-                                    <span className="mt-5 flex items-end justify-between border-t border-[#EEF0F2] pt-4">
-                                        <span>
-                                            <span className="block text-xs text-[#8B95A1]">
-                                                {program.schedule}
+                                        <span className="mt-1 block text-sm text-[#8B95A1]">
+                                            {location}
+                                        </span>
+
+                                        <span className="mt-5 flex items-end justify-between border-t border-[#EEF0F2] pt-4">
+                                            <span>
+                                                <span className="block text-xs text-[#8B95A1]">
+                                                    {program.schedule}
+                                                </span>
+
+                                                <strong className="mt-1 block">
+                                                    {program.price}
+                                                </strong>
                                             </span>
 
-                                            <strong className="mt-1 block">
-                                                {program.price}
-                                            </strong>
-                                        </span>
-
-                                        <span className="text-sm font-bold text-[#786B5A]">
-                                            보기 →
+                                            <span className="text-sm font-bold text-[#786B5A]">
+                                                보기 →
+                                            </span>
                                         </span>
                                     </span>
-                                </span>
-                            </Link>
-                        ))}
+                                </Link>
+                            );
+                        })}
                     </div>
 
                     <div className="mt-8 rounded-[22px] bg-[#F6F1EA] px-5 py-6 md:flex md:items-center md:justify-between md:px-7">

@@ -1,11 +1,11 @@
 import Link from "next/link";
-
-const program = [
-    { time: "17:30", title: "입장 및 산사 둘러보기" },
-    { time: "18:00", title: "스님의 환영 이야기" },
-    { time: "18:20", title: "가야금·대금·첼로가 함께하는 음악회" },
-    { time: "19:20", title: "차담과 자유로운 이야기" },
-];
+import { notFound } from "next/navigation";
+import {
+    getEventById,
+    getHostTempleForEvent,
+    getVenueTempleForEvent,
+    TEMPLE_CONCERT_EVENT_ID,
+} from "../data";
 
 function LotusIcon() {
     return (
@@ -36,6 +36,17 @@ function LotusIcon() {
 }
 
 export default function TempleConcertPage() {
+    const event = getEventById(TEMPLE_CONCERT_EVENT_ID);
+
+    if (!event) {
+        notFound();
+    }
+
+    const hostTemple = getHostTempleForEvent(event);
+    const venueTemple = getVenueTempleForEvent(event);
+    const distinctVenueTemple =
+        venueTemple?.slug === hostTemple?.slug ? undefined : venueTemple;
+
     return (
         <div className="min-h-screen bg-white text-[#252A31]">
             <header className="sticky top-0 z-30 border-b border-[#EEF0F2] bg-white/95 backdrop-blur">
@@ -59,7 +70,7 @@ export default function TempleConcertPage() {
             <main>
                 <section className="relative overflow-hidden bg-[#F4E9D5]">
                     <img
-                        src="/images/hero/temple-concert.webp"
+                        src={event.image}
                         alt="해 질 무렵 산사에서 열리는 음악회"
                         className="absolute inset-0 h-full w-full object-cover object-center"
                     />
@@ -69,15 +80,27 @@ export default function TempleConcertPage() {
                         <div className="max-w-[620px]">
                             <span className="inline-flex rounded-full bg-white/80 px-3 py-1.5 text-xs font-medium text-[#6D6200] backdrop-blur">
                                 예시 행사 · 산사 문화행사
+                                {hostTemple && (
+                                    <>
+                                        {" · "}
+                                        <Link
+                                            href={`/temples/guide/${hostTemple.slug}`}
+                                            className="underline decoration-[#A99C55] underline-offset-2"
+                                        >
+                                            {event.organizer}
+                                        </Link>
+                                    </>
+                                )}
                             </span>
                             <h1 className="mt-5 text-[38px] font-semibold leading-[1.15] tracking-[-0.05em] md:text-[58px]">
-                                별빛 아래 만나는
-                                <br />
-                                산사의 음악
+                                {event.titleLines.map((line) => (
+                                    <span key={line} className="block">
+                                        {line}
+                                    </span>
+                                ))}
                             </h1>
                             <p className="mt-5 max-w-[520px] text-[15px] leading-7 text-[#5E574C] md:text-base">
-                                저녁 노을이 내려앉은 산사에서 가야금과 대금, 첼로의 선율을
-                                만나보세요. 음악과 차담이 함께하는 편안한 문화행사입니다.
+                                {event.description}
                             </p>
                         </div>
                     </div>
@@ -88,18 +111,12 @@ export default function TempleConcertPage() {
                         <section>
                             <p className="text-sm font-medium text-[#766900]">행사 소개</p>
                             <h2 className="mt-2 text-[27px] font-semibold tracking-[-0.035em]">
-                                고요한 산사에서 만나는 특별한 저녁
+                                {event.detailHeading}
                             </h2>
                             <div className="mt-5 space-y-4 text-[15px] leading-8 text-[#4E5968]">
-                                <p>
-                                    분주한 일상에서 잠시 벗어나 산사의 자연과 음악을 함께
-                                    느껴보는 시간입니다. 전통악기와 서양악기의 조화로운 선율이
-                                    해 질 무렵의 산사에 잔잔하게 울려 퍼집니다.
-                                </p>
-                                <p>
-                                    공연이 끝난 뒤에는 따뜻한 차와 함께 연주자와 참가자가
-                                    자유롭게 이야기를 나누는 차담 시간이 이어집니다.
-                                </p>
+                                {event.detailParagraphs.map((paragraph) => (
+                                    <p key={paragraph}>{paragraph}</p>
+                                ))}
                             </div>
                         </section>
 
@@ -109,10 +126,10 @@ export default function TempleConcertPage() {
                                 행사 일정
                             </h2>
                             <div className="mt-5 overflow-hidden rounded-[22px] border border-[#E3E8EF]">
-                                {program.map((item, index) => (
+                                {event.program.map((item, index) => (
                                     <div
                                         key={item.time}
-                                        className={`flex gap-5 px-5 py-4 md:px-6 ${index !== program.length - 1
+                                        className={`flex gap-5 px-5 py-4 md:px-6 ${index !== event.program.length - 1
                                             ? "border-b border-[#EEF0F2]"
                                             : ""
                                             }`}
@@ -129,9 +146,9 @@ export default function TempleConcertPage() {
                         <section className="mt-11 rounded-[24px] bg-[#FFF9DC] p-6">
                             <p className="text-sm font-medium text-[#766900]">참여 전 안내</p>
                             <ul className="mt-4 space-y-2 text-sm leading-6 text-[#5E574C]">
-                                <li>· 산사는 저녁에 기온이 내려갈 수 있으니 얇은 겉옷을 준비해주세요.</li>
-                                <li>· 공연 중에는 휴대전화의 소리를 꺼주세요.</li>
-                                <li>· 사찰 내에서는 음주와 흡연이 불가능합니다.</li>
+                                {event.notices.map((notice) => (
+                                    <li key={notice}>· {notice}</li>
+                                ))}
                             </ul>
                         </section>
                     </div>
@@ -142,24 +159,41 @@ export default function TempleConcertPage() {
                             <dl className="mt-5 space-y-4">
                                 <div>
                                     <dt className="text-xs text-[#8B95A1]">일시</dt>
-                                    <dd className="mt-1 text-sm font-medium">2026년 8월 22일 17:30</dd>
+                                    <dd className="mt-1 text-sm font-medium">
+                                        {event.date} {event.time}
+                                    </dd>
                                 </div>
                                 <div>
                                     <dt className="text-xs text-[#8B95A1]">장소</dt>
-                                    <dd className="mt-1 text-sm font-medium">연화사 산사마당</dd>
+                                    <dd className="mt-1 text-sm font-medium">
+                                        {distinctVenueTemple ? (
+                                            <Link
+                                                href={`/temples/guide/${distinctVenueTemple.slug}`}
+                                                className="underline decoration-[#B7C1B2] underline-offset-2"
+                                            >
+                                                {event.location}
+                                            </Link>
+                                        ) : (
+                                            event.location
+                                        )}
+                                    </dd>
                                 </div>
                                 <div>
                                     <dt className="text-xs text-[#8B95A1]">대상</dt>
-                                    <dd className="mt-1 text-sm font-medium">누구나 참여 가능</dd>
+                                    <dd className="mt-1 text-sm font-medium">
+                                        {event.target}
+                                    </dd>
                                 </div>
                                 <div>
                                     <dt className="text-xs text-[#8B95A1]">참가비</dt>
-                                    <dd className="mt-1 text-sm font-medium">무료 · 사전 신청</dd>
+                                    <dd className="mt-1 text-sm font-medium">
+                                        {event.price} · 사전 신청
+                                    </dd>
                                 </div>
                             </dl>
 
                             <Link
-                                href="/events/temple-concert/apply"
+                                href={event.specialApplyHref ?? event.applyHref}
                                 className="mt-6 flex w-full items-center justify-center rounded-xl bg-[#FEE500] px-4 py-3.5 text-sm font-medium text-[#171B22] transition hover:bg-[#F5DC00]"
                             >
                                 참가 신청하기

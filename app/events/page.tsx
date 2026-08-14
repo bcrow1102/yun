@@ -1,35 +1,5 @@
 import Link from "next/link";
-
-const upcomingEvents = [
-    {
-        category: "문화행사",
-        title: "산사 음악회",
-        place: "연화사",
-        date: "2026. 08. 22",
-        description: "고요한 산사에서 음악과 이야기가 함께하는 초저녁 문화행사",
-        href: "/events/1",
-        image: "/images/hero/temple-concert.webp",
-        ready: true,
-    },
-    {
-        category: "체험",
-        title: "연꽃등 만들기",
-        place: "마음사",
-        date: "준비 중",
-        description: "온 가족이 함께 만드는 전통 연꽃등 체험",
-        image: "",
-        ready: false,
-    },
-    {
-        category: "교육",
-        title: "초심자를 위한 불교문화 강좌",
-        place: "보현사",
-        date: "준비 중",
-        description: "생활 속에서 쉽게 만나는 불교문화 이야기",
-        image: "",
-        ready: false,
-    },
-];
+import { events } from "./data";
 
 export default function EventsPage() {
     return (
@@ -66,11 +36,11 @@ export default function EventsPage() {
                     </div>
 
                     <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-                        {upcomingEvents.map((event) =>
+                        {events.map((event) =>
                             event.ready ? (
                                 <Link
-                                    key={event.title}
-                                    href={event.href!}
+                                    key={event.id}
+                                    href={event.detailHref}
                                     className="group overflow-hidden rounded-[24px] border border-[#E3E8EF] bg-white transition hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(25,31,40,0.09)]"
                                 >
                                     <span className="block h-52 overflow-hidden">
@@ -88,12 +58,12 @@ export default function EventsPage() {
                                             </span>
 
                                             <span className="text-sm text-[#667085]">
-                                                {event.date}
+                                                {event.listDate}
                                             </span>
                                         </span>
 
                                         <strong className="mt-4 block text-[21px] font-semibold">
-                                            {event.title}
+                                            {event.shortTitle}
                                         </strong>
 
                                         <span className="mt-1 block text-sm text-[#8B95A1]">
@@ -101,7 +71,7 @@ export default function EventsPage() {
                                         </span>
 
                                         <span className="mt-4 block text-sm leading-6 text-[#667085]">
-                                            {event.description}
+                                            {event.summary}
                                         </span>
 
                                         <span className="mt-5 block border-t border-[#EEF0F2] pt-4 text-sm font-medium text-[#252A31]">
@@ -111,7 +81,7 @@ export default function EventsPage() {
                                 </Link>
                             ) : (
                                 <article
-                                    key={event.title}
+                                    key={event.shortTitle}
                                     className="overflow-hidden rounded-[24px] border border-[#E8EAED] bg-[#FAFAFA]"
                                 >
                                     <div className="flex h-52 items-center justify-center bg-[#F3F4F6] text-5xl opacity-60">
@@ -125,12 +95,12 @@ export default function EventsPage() {
                                             </span>
 
                                             <span className="text-sm text-[#A0A7B0]">
-                                                {event.date}
+                                                {event.listDate}
                                             </span>
                                         </div>
 
                                         <h3 className="mt-4 text-[20px] font-medium text-[#4E5968]">
-                                            {event.title}
+                                            {event.shortTitle}
                                         </h3>
 
                                         <p className="mt-1 text-sm text-[#8B95A1]">
@@ -138,7 +108,7 @@ export default function EventsPage() {
                                         </p>
 
                                         <p className="mt-4 text-sm leading-6 text-[#8B95A1]">
-                                            {event.description}
+                                            {event.summary}
                                         </p>
                                     </div>
                                 </article>

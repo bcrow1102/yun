@@ -1,88 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
-const programs = {
-    "1": {
-        name: "월정사 숲속 힐링",
-        temple: "월정사",
-        location: "강원 평창",
-        type: "휴식형",
-        duration: "1박 2일",
-        price: "50,000원",
-        rating: "4.8",
-        icon: "🌲",
-        background: "bg-[#EEF5E9]",
-        description:
-            "고요한 숲과 맑은 공기 속에서 바쁜 일상을 잠시 내려놓고 편안하게 쉬어가는 템플스테이입니다.",
-    },
-    "2": {
-        name: "해인사 명상 수련",
-        temple: "해인사",
-        location: "경남 합천",
-        type: "체험형",
-        duration: "2박 3일",
-        price: "80,000원",
-        rating: "4.9",
-        icon: "🧘",
-        background: "bg-[#FFF8D9]",
-        description:
-            "명상과 사찰 생활을 체험하며 몸과 마음을 차분하게 돌아보는 프로그램입니다.",
-    },
-    "3": {
-        name: "통도사 하루 체험",
-        temple: "통도사",
-        location: "경남 양산",
-        type: "당일형",
-        duration: "당일",
-        price: "30,000원",
-        rating: "4.7",
-        icon: "🕯️",
-        background: "bg-[#F7F0E8]",
-        description:
-            "짧은 하루 동안 사찰의 고요한 일상과 불교문화를 편안하게 경험할 수 있습니다.",
-    },
-    "4": {
-        name: "전등사 마음 쉬기",
-        temple: "전등사",
-        location: "인천 강화",
-        type: "휴식형",
-        duration: "1박 2일",
-        price: "60,000원",
-        rating: "4.8",
-        icon: "🍃",
-        background: "bg-[#EAF3F5]",
-        description:
-            "자연 속 산사에서 천천히 걷고 쉬며 마음의 여유를 되찾는 시간입니다.",
-    },
-    "5": {
-        name: "봉선사 연꽃 명상",
-        temple: "봉선사",
-        location: "경기 남양주",
-        type: "체험형",
-        duration: "1박 2일",
-        price: "55,000원",
-        rating: "4.6",
-        icon: "🪷",
-        background: "bg-[#F9EFF2]",
-        description:
-            "연꽃처럼 맑고 편안한 마음을 만나기 위한 명상과 사찰문화 체험 프로그램입니다.",
-    },
-    "6": {
-        name: "낙산사 바다 명상",
-        temple: "낙산사",
-        location: "강원 양양",
-        type: "휴식형",
-        duration: "1박 2일",
-        price: "70,000원",
-        rating: "4.9",
-        icon: "🌊",
-        background: "bg-[#EAF3FF]",
-        description:
-            "바다를 바라보며 명상하고 산사의 고요함 속에서 편안하게 쉬어가는 프로그램입니다.",
-    },
-};
-
-type ProgramId = keyof typeof programs;
+import {
+    getTempleStayById,
+    getTempleStayDisplayInfo,
+} from "../data";
 
 export default async function TempleStayDetailPage({
     params,
@@ -90,11 +11,14 @@ export default async function TempleStayDetailPage({
     params: Promise<{ id: string }>;
 }) {
     const { id } = await params;
-    const program = programs[id as ProgramId];
+    const program = getTempleStayById(id);
 
     if (!program) {
         notFound();
     }
+
+    const { canonicalTemple, templeName, location } =
+        getTempleStayDisplayInfo(program);
 
     return (
         <div className="min-h-screen bg-white text-[#252A31]">
@@ -109,17 +33,39 @@ export default async function TempleStayDetailPage({
                                 ← 템플스테이 목록
                             </Link>
 
-                            <span className="mt-5 inline-flex rounded-full bg-white px-3 py-1.5 text-xs font-medium text-[#6D6200]">
-                                {program.type}
-                            </span>
-
-                            <h1 className="mt-5 text-[36px] font-semibold tracking-[-0.05em] md:text-[52px]">
+                            <h1 className="mt-6 text-[36px] font-semibold tracking-[-0.05em] md:text-[52px]">
                                 {program.name}
                             </h1>
 
-                            <p className="mt-3 text-base text-[#667085]">
-                                {program.temple} · {program.location}
-                            </p>
+                            <div className="mt-2 flex min-h-11 flex-wrap items-center gap-x-2 gap-y-1 text-base text-[#667085]">
+                                {canonicalTemple ? (
+                                    <Link
+                                        href={`/temples/guide/${canonicalTemple.slug}`}
+                                        className="group inline-flex min-h-11 items-center whitespace-nowrap font-medium text-[#4E5968] transition-colors duration-200 hover:text-[#252A31] focus-visible:text-[#252A31]"
+                                    >
+                                        <span className="relative inline-flex items-center gap-1 pb-1 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-[#D4D93A] after:transition-transform after:duration-200 group-hover:after:scale-x-100 group-focus-visible:after:scale-x-100">
+                                            {templeName}
+                                            <span
+                                                aria-hidden="true"
+                                                className="transition-transform duration-200 group-hover:translate-x-0.5"
+                                            >
+                                                →
+                                            </span>
+                                        </span>
+                                    </Link>
+                                ) : (
+                                    <span className="whitespace-nowrap">
+                                        {templeName}
+                                    </span>
+                                )}
+
+                                <span className="whitespace-nowrap">
+                                    · {location}
+                                </span>
+                                <span className="whitespace-nowrap">
+                                    · {program.type}
+                                </span>
+                            </div>
 
                             <p className="mt-5 max-w-2xl text-[15px] leading-7 text-[#4E5968]">
                                 {program.description}
@@ -204,14 +150,31 @@ export default async function TempleStayDetailPage({
                                 <div>
                                     <dt className="text-xs text-[#8B95A1]">운영 사찰</dt>
                                     <dd className="mt-1 text-sm font-medium">
-                                        {program.temple}
+                                        {canonicalTemple ? (
+                                            <Link
+                                                href={`/temples/guide/${canonicalTemple.slug}`}
+                                                className="group inline-flex min-h-8 items-center text-[#252A31] transition-colors duration-200 hover:text-[#61705B] focus-visible:text-[#61705B]"
+                                            >
+                                                <span className="relative inline-flex items-center gap-1 pb-1 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-[#D4D93A] after:transition-transform after:duration-200 group-hover:after:scale-x-100 group-focus-visible:after:scale-x-100">
+                                                    {templeName}
+                                                    <span
+                                                        aria-hidden="true"
+                                                        className="transition-transform duration-200 group-hover:translate-x-0.5"
+                                                    >
+                                                        →
+                                                    </span>
+                                                </span>
+                                            </Link>
+                                        ) : (
+                                            templeName
+                                        )}
                                     </dd>
                                 </div>
 
                                 <div>
                                     <dt className="text-xs text-[#8B95A1]">지역</dt>
                                     <dd className="mt-1 text-sm font-medium">
-                                        {program.location}
+                                        {location}
                                     </dd>
                                 </div>
 

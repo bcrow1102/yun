@@ -160,18 +160,14 @@ export type Temple = {
     imageSource?: string;
 
     /**
-     * 연 사이트 관련 서비스
-     */
-    hasTempleStay: boolean;
-    hasTempleFood: boolean;
-
-    /**
      * 운영 상태
      */
     representative: boolean;
     published: boolean;
     updatedAt?: string;
 };
+
+export type TempleSlug = Temple["slug"];
 
 export const temples: Temple[] = [
     {
@@ -199,8 +195,6 @@ export const temples: Temple[] = [
             "대한불교조계종",
             "조계종",
         ],
-        hasTempleStay: false,
-        hasTempleFood: false,
         representative: true,
         published: true,
     },
@@ -234,8 +228,6 @@ export const temples: Temple[] = [
             "대한불교조계종",
             "조계종",
         ],
-        hasTempleStay: true,
-        hasTempleFood: false,
         representative: true,
         published: true,
     },
@@ -268,8 +260,6 @@ export const temples: Temple[] = [
             "대한불교조계종",
             "조계종",
         ],
-        hasTempleStay: false,
-        hasTempleFood: false,
         representative: true,
         published: true,
     },
@@ -301,8 +291,6 @@ export const temples: Temple[] = [
             "대한불교조계종",
             "조계종",
         ],
-        hasTempleStay: true,
-        hasTempleFood: false,
         representative: true,
         published: true,
     },
@@ -334,8 +322,6 @@ export const temples: Temple[] = [
             "대한불교조계종",
             "조계종",
         ],
-        hasTempleStay: true,
-        hasTempleFood: false,
         representative: true,
         published: true,
     },
@@ -365,8 +351,6 @@ export const temples: Temple[] = [
             "대한불교조계종",
             "조계종",
         ],
-        hasTempleStay: true,
-        hasTempleFood: false,
         representative: true,
         published: true,
     },
@@ -422,7 +406,7 @@ export function getTempleSearchText(temple: Temple) {
 /**
  * slug를 이용해 공개 상태의 사찰을 찾는다.
  */
-export function getTempleBySlug(slug: string) {
+export function getTempleBySlug(slug: TempleSlug) {
     return temples.find(
         (temple) => temple.slug === slug && temple.published,
     );

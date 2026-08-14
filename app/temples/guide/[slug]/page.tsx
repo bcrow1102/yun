@@ -5,6 +5,9 @@ import {
     getTempleBySlug,
     temples,
 } from "../temples";
+import { getTempleStaysByTempleSlug } from "../../stay/data";
+import { getEventsByTempleSlug } from "../../../events/data";
+import { getTempleFoodsByTempleSlug } from "../../food/data";
 
 type TempleDetailPageProps = {
     params: Promise<{
@@ -260,6 +263,10 @@ export default async function TempleDetailPage({
         notFound();
     }
 
+    const templeStays = getTempleStaysByTempleSlug(temple.slug);
+    const relatedEvents = getEventsByTempleSlug(temple.slug);
+    const templeFoods = getTempleFoodsByTempleSlug(temple.slug);
+
     const hasTransportInformation =
         temple.transport?.nearestStation ||
         temple.transport?.walking ||
@@ -313,23 +320,7 @@ export default async function TempleDetailPage({
                                 사찰 안내
                             </Link>
 
-                            <div className="mt-5 flex flex-wrap gap-2">
-                                <span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-[#61705B]">
-                                    {temple.sido}
-                                </span>
-
-                                <span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-[#61705B]">
-                                    {temple.area}
-                                </span>
-
-                                {temple.order && (
-                                    <span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-[#61705B]">
-                                        {temple.order}
-                                    </span>
-                                )}
-                            </div>
-
-                            <h1 className="mt-4 text-[38px] font-bold tracking-[-0.045em] md:text-[56px]">
+                            <h1 className="mt-6 text-[38px] font-bold tracking-[-0.045em] md:text-[56px]">
                                 {temple.name}
                             </h1>
 
@@ -339,7 +330,20 @@ export default async function TempleDetailPage({
                                 </p>
                             )}
 
-                            <p className="mt-5 max-w-2xl text-[16px] leading-8 text-[#56615B] md:text-[18px]">
+                            <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-[#61705B]">
+                                <span>
+                                    {temple.sido} {temple.sigungu}
+                                </span>
+
+                                {temple.order && (
+                                    <>
+                                        <span aria-hidden="true">·</span>
+                                        <span>{temple.order}</span>
+                                    </>
+                                )}
+                            </div>
+
+                            <p className="mt-4 max-w-2xl text-[16px] leading-8 text-[#56615B] md:text-[18px]">
                                 {temple.summary}
                             </p>
                         </div>
@@ -373,11 +377,7 @@ export default async function TempleDetailPage({
                     <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
                         <div className="space-y-6">
                             <section className="rounded-[24px] border border-[#E3E8EF] bg-white p-5 md:p-7">
-                                <span className="text-sm font-semibold text-[#7A8B74]">
-                                    사찰 소개
-                                </span>
-
-                                <h2 className="mt-2 text-[24px] font-bold tracking-[-0.035em]">
+                                <h2 className="text-[24px] font-semibold tracking-[-0.035em]">
                                     {temple.name} 안내
                                 </h2>
 
@@ -386,16 +386,107 @@ export default async function TempleDetailPage({
                                         temple.summary}
                                 </p>
 
-                                <div className="mt-5 flex flex-wrap gap-2">
-                                    {temple.tags.map((tag) => (
-                                        <span
-                                            key={tag}
-                                            className="rounded-full bg-[#F3F7F1] px-3 py-1.5 text-xs font-semibold text-[#61705B]"
-                                        >
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
+                                {temple.tags.length > 0 && (
+                                    <p className="mt-5 text-[13px] leading-6 text-[#77817A]">
+                                        {temple.tags.join(" · ")}
+                                    </p>
+                                )}
+
+                                {templeStays.length > 0 && (
+                                    <div className="mt-7 border-t border-[#EEF0F2] pt-6">
+                                        <p className="text-sm font-medium text-[#7A8B74]">
+                                            이 사찰의 템플스테이
+                                        </p>
+
+                                        <div className="mt-3 divide-y divide-[#EEF0F2]">
+                                            {templeStays.map((program) => (
+                                                <Link
+                                                    key={program.id}
+                                                    href={`/temples/stay/${program.id}`}
+                                                    className="group block min-h-11 py-2 first:pt-0 last:pb-0"
+                                                >
+                                                    <span className="inline-flex items-center gap-1 text-[15px] font-medium text-[#252A31] transition-colors group-hover:text-[#61705B]">
+                                                        {program.name}
+                                                        <span
+                                                            aria-hidden="true"
+                                                            className="transition-transform group-hover:translate-x-0.5"
+                                                        >
+                                                            →
+                                                        </span>
+                                                    </span>
+
+                                                    <span className="mt-1 block text-sm text-[#8B95A1]">
+                                                        {program.type} · {program.duration}
+                                                    </span>
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {relatedEvents.length > 0 && (
+                                    <div className="mt-7 border-t border-[#EEF0F2] pt-6">
+                                        <p className="text-sm font-medium text-[#7A8B74]">
+                                            이 사찰의 행사·교육
+                                        </p>
+
+                                        <div className="mt-3 divide-y divide-[#EEF0F2]">
+                                            {relatedEvents.map((event) => (
+                                                <Link
+                                                    key={event.id}
+                                                    href={event.detailHref}
+                                                    className="group block min-h-11 py-2 first:pt-0 last:pb-0"
+                                                >
+                                                    <span className="inline-flex items-center gap-1 text-[15px] font-medium text-[#252A31] transition-colors group-hover:text-[#61705B]">
+                                                        {event.shortTitle}
+                                                        <span
+                                                            aria-hidden="true"
+                                                            className="transition-transform group-hover:translate-x-0.5"
+                                                        >
+                                                            →
+                                                        </span>
+                                                    </span>
+
+                                                    <span className="mt-1 block text-sm text-[#8B95A1]">
+                                                        {event.listDate} · {event.place}
+                                                    </span>
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {templeFoods.length > 0 && (
+                                    <div className="mt-7 border-t border-[#EEF0F2] pt-6">
+                                        <p className="text-sm font-medium text-[#7A8B74]">
+                                            이 사찰의 사찰음식 프로그램
+                                        </p>
+
+                                        <div className="mt-3 divide-y divide-[#EEF0F2]">
+                                            {templeFoods.map((program) => (
+                                                <Link
+                                                    key={program.id}
+                                                    href={`/temples/food/${program.id}`}
+                                                    className="group block min-h-11 py-2 first:pt-0 last:pb-0"
+                                                >
+                                                    <span className="inline-flex items-center gap-1 text-[15px] font-medium text-[#252A31] transition-colors group-hover:text-[#61705B]">
+                                                        {program.title}
+                                                        <span
+                                                            aria-hidden="true"
+                                                            className="transition-transform group-hover:translate-x-0.5"
+                                                        >
+                                                            →
+                                                        </span>
+                                                    </span>
+
+                                                    <span className="mt-1 block text-sm text-[#8B95A1]">
+                                                        {program.type} · {program.schedule}
+                                                    </span>
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </section>
 
                             <section className="rounded-[24px] border border-[#E3E8EF] bg-white p-5 md:p-7">
@@ -404,7 +495,7 @@ export default async function TempleDetailPage({
                                         <BusIcon />
                                     </span>
 
-                                    <h2 className="text-[22px] font-bold tracking-[-0.03em]">
+                                    <h2 className="text-[22px] font-semibold tracking-[-0.03em]">
                                         대중교통
                                     </h2>
                                 </div>
@@ -453,10 +544,10 @@ export default async function TempleDetailPage({
                                         />
                                     </dl>
                                 ) : (
-                                    <div className="mt-5 rounded-[18px] bg-[#F7F8FA] px-4 py-5">
-                                        <strong className="text-sm">
+                                    <div className="mt-5">
+                                        <p className="text-sm font-medium text-[#252A31]">
                                             교통정보 확인 중
-                                        </strong>
+                                        </p>
 
                                         <p className="mt-2 text-sm leading-6 text-[#667085]">
                                             버스·지하철·도보 이동 정보를
@@ -479,7 +570,7 @@ export default async function TempleDetailPage({
                                         <CarIcon />
                                     </span>
 
-                                    <h2 className="text-[22px] font-bold tracking-[-0.03em]">
+                                    <h2 className="text-[22px] font-semibold tracking-[-0.03em]">
                                         주차 안내
                                     </h2>
                                 </div>
@@ -522,10 +613,10 @@ export default async function TempleDetailPage({
                                         />
                                     </dl>
                                 ) : (
-                                    <div className="mt-5 rounded-[18px] bg-[#F7F8FA] px-4 py-5">
-                                        <strong className="text-sm">
+                                    <div className="mt-5">
+                                        <p className="text-sm font-medium text-[#252A31]">
                                             주차정보 확인 중
-                                        </strong>
+                                        </p>
 
                                         <p className="mt-2 text-sm leading-6 text-[#667085]">
                                             주차 가능 여부와 이용 방법을
@@ -545,7 +636,7 @@ export default async function TempleDetailPage({
 
                         <aside className="space-y-5">
                             <section className="rounded-[24px] border border-[#E3E8EF] bg-white p-5">
-                                <h2 className="text-lg font-bold">
+                                <h2 className="text-lg font-semibold">
                                     방문 정보
                                 </h2>
 
@@ -598,13 +689,13 @@ export default async function TempleDetailPage({
                                 </div>
                             </section>
 
-                            <section className="rounded-[24px] bg-[#FDFDC7] p-5">
-                                <div className="flex items-center gap-2 text-[#6D6200]">
+                            <section className="rounded-[24px] bg-[#FFF9DC] p-5">
+                                <div className="flex items-center gap-2 text-[#5E574C]">
                                     <LocationIcon />
                                     <strong>정보를 확인해 주세요</strong>
                                 </div>
 
-                                <p className="mt-3 text-sm leading-6 text-[#6D6200]">
+                                <p className="mt-3 text-sm leading-6 text-[#5E574C]">
                                     운영시간과 교통편은 행사·계절·현지
                                     사정에 따라 달라질 수 있습니다. 방문
                                     전 사찰에 확인하는 것이 좋습니다.
@@ -612,7 +703,7 @@ export default async function TempleDetailPage({
                             </section>
 
                             <section className="rounded-[24px] border border-[#E3E8EF] bg-white p-5">
-                                <h2 className="text-lg font-bold">
+                                <h2 className="text-lg font-semibold">
                                     정보 참여
                                 </h2>
 
@@ -626,7 +717,7 @@ export default async function TempleDetailPage({
                                         href={`/temples/guide/correction?temple=${encodeURIComponent(
                                             temple.name,
                                         )}`}
-                                        className="rounded-xl bg-[#F4F54A] px-4 py-3.5 text-center text-sm font-medium text-[#191F28]"
+                                        className="rounded-xl border border-[#E8E2B8] bg-[#FFF9DC] px-4 py-3.5 text-center text-sm font-medium text-[#4F4A36]"
                                     >
                                         정보 수정 제안
                                     </Link>

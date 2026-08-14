@@ -1,31 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
-const events = {
-    "1": {
-        category: "문화행사",
-        title: "별빛 아래 만나는 산사의 음악",
-        shortTitle: "산사 음악회",
-        organizer: "연화사",
-        location: "연화사 산사마당",
-        date: "2026년 8월 22일",
-        time: "17:30",
-        target: "누구나 참여 가능",
-        price: "무료",
-        image: "/images/hero/temple-concert.webp",
-        description:
-            "저녁 노을이 내려앉은 산사에서 가야금과 대금, 첼로의 선율을 만나보세요. 음악과 차담이 함께하는 편안한 문화행사입니다.",
-    },
-};
-
-type EventId = keyof typeof events;
-
-const eventProgram = [
-    { time: "17:30", title: "입장 및 산사 둘러보기" },
-    { time: "18:00", title: "스님의 환영 이야기" },
-    { time: "18:20", title: "가야금·대금·첼로가 함께하는 음악회" },
-    { time: "19:20", title: "차담과 자유로운 이야기" },
-];
+import {
+    getEventById,
+    getHostTempleForEvent,
+    getVenueTempleForEvent,
+} from "../data";
 
 export default async function EventDetailPage({
     params,
@@ -33,11 +12,16 @@ export default async function EventDetailPage({
     params: Promise<{ id: string }>;
 }) {
     const { id } = await params;
-    const event = events[id as EventId];
+    const event = getEventById(id);
 
     if (!event) {
         notFound();
     }
+
+    const hostTemple = getHostTempleForEvent(event);
+    const venueTemple = getVenueTempleForEvent(event);
+    const distinctVenueTemple =
+        venueTemple?.slug === hostTemple?.slug ? undefined : venueTemple;
 
     return (
         <div className="min-h-screen bg-white text-[#252A31]">
@@ -55,7 +39,16 @@ export default async function EventDetailPage({
                     <div className="relative mx-auto flex min-h-[440px] max-w-6xl items-center px-5 py-14 md:min-h-[520px] md:px-8">
                         <div className="max-w-[620px]">
                             <span className="inline-flex rounded-full border border-white/30 bg-black/25 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm">
-                                {event.category} · {event.organizer}
+                                {event.category} · {hostTemple ? (
+                                    <Link
+                                        href={`/temples/guide/${hostTemple.slug}`}
+                                        className="ml-1 underline decoration-white/60 underline-offset-2"
+                                    >
+                                        {event.organizer}
+                                    </Link>
+                                ) : (
+                                    event.organizer
+                                )}
                             </span>
 
                             <h1 className="mt-5 break-keep text-[38px] font-semibold leading-[1.15] tracking-[-0.05em] text-white drop-shadow-lg md:text-[58px]">
@@ -75,20 +68,13 @@ export default async function EventDetailPage({
                             <p className="text-sm font-medium text-[#766900]">행사 소개</p>
 
                             <h2 className="mt-2 text-[27px] font-semibold tracking-[-0.035em]">
-                                고요한 산사에서 만나는 특별한 저녁
+                                {event.detailHeading}
                             </h2>
 
                             <div className="mt-5 space-y-4 text-[15px] leading-8 text-[#4E5968]">
-                                <p>
-                                    분주한 일상에서 잠시 벗어나 산사의 자연과 음악을 함께
-                                    느껴보는 시간입니다. 전통악기와 서양악기의 조화로운 선율이
-                                    해 질 무렵의 산사에 잔잔하게 울려 퍼집니다.
-                                </p>
-
-                                <p>
-                                    공연이 끝난 뒤에는 따뜻한 차와 함께 연주자와 참가자가
-                                    자유롭게 이야기를 나누는 차담 시간이 이어집니다.
-                                </p>
+                                {event.detailParagraphs.map((paragraph) => (
+                                    <p key={paragraph}>{paragraph}</p>
+                                ))}
                             </div>
                         </section>
 
@@ -100,10 +86,10 @@ export default async function EventDetailPage({
                             </h2>
 
                             <div className="mt-5 overflow-hidden rounded-[22px] border border-[#E3E8EF]">
-                                {eventProgram.map((item, index) => (
+                                {event.program.map((item, index) => (
                                     <div
                                         key={item.time}
-                                        className={`flex gap-5 px-5 py-4 md:px-6 ${index !== eventProgram.length - 1
+                                        className={`flex gap-5 px-5 py-4 md:px-6 ${index !== event.program.length - 1
                                             ? "border-b border-[#EEF0F2]"
                                             : ""
                                             }`}
@@ -126,12 +112,9 @@ export default async function EventDetailPage({
                             </p>
 
                             <ul className="mt-4 space-y-2 text-sm leading-6 text-[#5E574C]">
-                                <li>
-                                    · 산사는 저녁에 기온이 내려갈 수 있으니 얇은 겉옷을
-                                    준비해주세요.
-                                </li>
-                                <li>· 공연 중에는 휴대전화의 소리를 꺼주세요.</li>
-                                <li>· 사찰 내에서는 음주와 흡연이 불가능합니다.</li>
+                                {event.notices.map((notice) => (
+                                    <li key={notice}>· {notice}</li>
+                                ))}
                             </ul>
                         </section>
                     </div>
@@ -151,7 +134,16 @@ export default async function EventDetailPage({
                                 <div>
                                     <dt className="text-xs text-[#8B95A1]">장소</dt>
                                     <dd className="mt-1 text-sm font-medium">
-                                        {event.location}
+                                        {distinctVenueTemple ? (
+                                            <Link
+                                                href={`/temples/guide/${distinctVenueTemple.slug}`}
+                                                className="underline decoration-[#B7C1B2] underline-offset-2"
+                                            >
+                                                {event.location}
+                                            </Link>
+                                        ) : (
+                                            event.location
+                                        )}
                                     </dd>
                                 </div>
 
@@ -169,7 +161,7 @@ export default async function EventDetailPage({
                             </dl>
 
                             <Link
-                                href={`/events/${id}/apply`}
+                                href={event.applyHref}
                                 className="mt-6 flex w-full items-center justify-center rounded-xl bg-[#FEE500] px-4 py-3.5 text-sm font-medium text-[#171B22] transition hover:bg-[#F5DC00]"
                             >
                                 참가 신청하기

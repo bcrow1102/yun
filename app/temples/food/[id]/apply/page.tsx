@@ -1,52 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
-const foodPrograms = {
-    "1": {
-        title: "사찰음식 기본 체험",
-        place: "서울 사찰음식문화체험관",
-        location: "서울 종로구",
-        schedule: "매주 토요일",
-        price: "30,000원",
-    },
-    "2": {
-        title: "계절 나물과 사찰 밥상",
-        place: "봉녕사",
-        location: "경기 수원",
-        schedule: "월 2회",
-        price: "50,000원",
-    },
-    "3": {
-        title: "발우공양 체험",
-        place: "통도사",
-        location: "경남 양산",
-        schedule: "주말 운영",
-        price: "20,000원",
-    },
-    "4": {
-        title: "사찰 장 담그기",
-        place: "전통사찰문화원",
-        location: "전북 완주",
-        schedule: "계절 프로그램",
-        price: "60,000원",
-    },
-    "5": {
-        title: "연잎밥 만들기",
-        place: "연화사",
-        location: "충남 공주",
-        schedule: "매월 둘째 주",
-        price: "35,000원",
-    },
-    "6": {
-        title: "외국인을 위한 사찰음식",
-        place: "한국사찰음식문화관",
-        location: "서울",
-        schedule: "예약 운영",
-        price: "문의",
-    },
-};
-
-type FoodProgramId = keyof typeof foodPrograms;
+import {
+    getTempleFoodById,
+    getTempleFoodDisplayInfo,
+} from "../../data";
 
 const inputStyle =
     "mt-2 w-full rounded-xl border border-[#E3E6EB] bg-white px-4 py-3 text-[15px] text-[#20242C] outline-none transition placeholder:text-[#A0A6B0] focus:border-[#9B8B77] focus:ring-2 focus:ring-[#E8DDD1]";
@@ -87,11 +44,13 @@ export default async function TempleFoodApplyPage({
     params: Promise<{ id: string }>;
 }) {
     const { id } = await params;
-    const program = foodPrograms[id as FoodProgramId];
+    const program = getTempleFoodById(id);
 
     if (!program) {
         notFound();
     }
+
+    const { place, location } = getTempleFoodDisplayInfo(program);
 
     return (
         <main className="min-h-screen bg-[#F7F8FA] text-[#171B22]">
@@ -137,12 +96,12 @@ export default async function TempleFoodApplyPage({
                     <dl className="mt-4 grid gap-3 text-sm text-[#655C52] sm:grid-cols-2">
                         <div>
                             <dt className="text-xs text-[#8B7F73]">운영 장소</dt>
-                            <dd className="mt-1">{program.place}</dd>
+                            <dd className="mt-1">{place}</dd>
                         </div>
 
                         <div>
                             <dt className="text-xs text-[#8B7F73]">지역</dt>
-                            <dd className="mt-1">{program.location}</dd>
+                            <dd className="mt-1">{location}</dd>
                         </div>
 
                         <div>

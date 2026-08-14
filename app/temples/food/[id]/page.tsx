@@ -1,82 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
-const foodPrograms = {
-    "1": {
-        title: "사찰음식 기본 체험",
-        place: "서울 사찰음식문화체험관",
-        location: "서울 종로구",
-        type: "체험",
-        schedule: "매주 토요일",
-        price: "30,000원",
-        icon: "🥣",
-        background: "bg-[#F6F1EA]",
-        description:
-            "자연의 재료를 소중히 다루며 사찰음식의 기본 정신과 조리 방법을 배우는 체험 프로그램입니다.",
-    },
-    "2": {
-        title: "계절 나물과 사찰 밥상",
-        place: "봉녕사",
-        location: "경기 수원",
-        type: "교육",
-        schedule: "월 2회",
-        price: "50,000원",
-        icon: "🌿",
-        background: "bg-[#EEF5E9]",
-        description:
-            "제철 나물과 자연 재료를 활용해 건강하고 정갈한 사찰 밥상을 만드는 방법을 배웁니다.",
-    },
-    "3": {
-        title: "발우공양 체험",
-        place: "통도사",
-        location: "경남 양산",
-        type: "체험",
-        schedule: "주말 운영",
-        price: "20,000원",
-        icon: "🍚",
-        background: "bg-[#FFF8D9]",
-        description:
-            "음식을 소중히 여기고 필요한 만큼만 덜어 먹는 발우공양의 의미와 예절을 체험합니다.",
-    },
-    "4": {
-        title: "사찰 장 담그기",
-        place: "전통사찰문화원",
-        location: "전북 완주",
-        type: "교육",
-        schedule: "계절 프로그램",
-        price: "60,000원",
-        icon: "🏺",
-        background: "bg-[#F3EDE6]",
-        description:
-            "전통 방식으로 장을 담그며 발효 음식에 담긴 사찰의 지혜와 기다림의 의미를 배웁니다.",
-    },
-    "5": {
-        title: "연잎밥 만들기",
-        place: "연화사",
-        location: "충남 공주",
-        type: "가족 체험",
-        schedule: "매월 둘째 주",
-        price: "35,000원",
-        icon: "🪷",
-        background: "bg-[#F9EFF2]",
-        description:
-            "가족이 함께 건강한 재료를 준비하고 향긋한 연잎에 밥을 싸서 만드는 체험 프로그램입니다.",
-    },
-    "6": {
-        title: "외국인을 위한 사찰음식",
-        place: "한국사찰음식문화관",
-        location: "서울",
-        type: "영문 체험",
-        schedule: "예약 운영",
-        price: "문의",
-        icon: "🥢",
-        background: "bg-[#EAF3FF]",
-        description:
-            "외국인 참가자가 영어 안내와 함께 한국 사찰음식의 문화와 조리법을 경험하는 프로그램입니다.",
-    },
-};
-
-type FoodProgramId = keyof typeof foodPrograms;
+import {
+    getTempleFoodById,
+    getTempleFoodDisplayInfo,
+} from "../data";
 
 export default async function TempleFoodDetailPage({
     params,
@@ -84,11 +11,14 @@ export default async function TempleFoodDetailPage({
     params: Promise<{ id: string }>;
 }) {
     const { id } = await params;
-    const program = foodPrograms[id as FoodProgramId];
+    const program = getTempleFoodById(id);
 
     if (!program) {
         notFound();
     }
+
+    const { canonicalTemple, place, location } =
+        getTempleFoodDisplayInfo(program);
 
     return (
         <div className="min-h-screen bg-white text-[#252A31]">
@@ -106,7 +36,17 @@ export default async function TempleFoodDetailPage({
                             </h1>
 
                             <p className="mt-3 text-base text-[#667085]">
-                                {program.place} · {program.location}
+                                {canonicalTemple ? (
+                                    <Link
+                                        href={`/temples/guide/${canonicalTemple.slug}`}
+                                        className="underline decoration-[#B7A995] underline-offset-2"
+                                    >
+                                        {place}
+                                    </Link>
+                                ) : (
+                                    place
+                                )}{" "}
+                                · {location}
                             </p>
 
                             <p className="mt-5 max-w-2xl text-[15px] leading-7 text-[#4E5968]">
@@ -191,13 +131,24 @@ export default async function TempleFoodDetailPage({
                             <dl className="mt-5 space-y-4">
                                 <div>
                                     <dt className="text-xs text-[#8B95A1]">운영 장소</dt>
-                                    <dd className="mt-1 text-sm font-medium">{program.place}</dd>
+                                    <dd className="mt-1 text-sm font-medium">
+                                        {canonicalTemple ? (
+                                            <Link
+                                                href={`/temples/guide/${canonicalTemple.slug}`}
+                                                className="underline decoration-[#B7A995] underline-offset-2"
+                                            >
+                                                {place}
+                                            </Link>
+                                        ) : (
+                                            place
+                                        )}
+                                    </dd>
                                 </div>
 
                                 <div>
                                     <dt className="text-xs text-[#8B95A1]">지역</dt>
                                     <dd className="mt-1 text-sm font-medium">
-                                        {program.location}
+                                        {location}
                                     </dd>
                                 </div>
 

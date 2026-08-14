@@ -1,19 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
-const events = {
-    "1": {
-        title: "별빛 아래 만나는 산사의 음악",
-        organizer: "연화사",
-        date: "2026년 8월 22일",
-        time: "17:30",
-        location: "연화사 산사마당",
-        target: "누구나 참여 가능",
-        price: "무료",
-    },
-};
-
-type EventId = keyof typeof events;
+import { getEventById } from "../../data";
 
 const inputStyle =
     "mt-2 w-full rounded-xl border border-[#E3E6EB] bg-white px-4 py-3 text-[15px] text-[#20242C] outline-none transition placeholder:text-[#A0A6B0] focus:border-[#D8BE00] focus:ring-2 focus:ring-[#FEE500]/20";
@@ -54,7 +41,7 @@ export default async function EventApplyPage({
     params: Promise<{ id: string }>;
 }) {
     const { id } = await params;
-    const event = events[id as EventId];
+    const event = getEventById(id);
 
     if (!event) {
         notFound();
