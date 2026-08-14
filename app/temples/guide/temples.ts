@@ -195,9 +195,22 @@ export const temples: Temple[] = [
         location: {
             sido: "서울",
             sigungu: "종로구",
-            address: "서울 종로구",
+            address: "서울특별시 종로구 우정국로 55",
+            latitude: 37.5738701204,
+            longitude: 126.9818371759,
         },
         area: "수도권",
+        publicTransit: {
+            accessPoint: {
+                type: "subway",
+                name: "종각역 2번 출구",
+            },
+            lastMile: {
+                mode: "walk",
+            },
+            note: "종각역 2번 출구에서 약 400m. 안국역 6번 출구에서도 접근 가능.",
+            updatedAt: "2026-08-14",
+        },
         summary: "서울 도심에서 만나는 한국 불교의 대표적인 사찰",
         description:
             "서울 도심에서 한국불교 문화와 다양한 법회 및 행사를 접할 수 있는 사찰입니다.",
@@ -225,9 +238,23 @@ export const temples: Temple[] = [
         location: {
             sido: "경남",
             sigungu: "합천군",
-            address: "경남 합천군",
+            address: "경상남도 합천군 가야면 해인사길 122",
+            latitude: 35.8005687584,
+            longitude: 128.0971196597,
         },
         area: "영남",
+        publicTransit: {
+            accessPoint: {
+                type: "bus",
+                name: "해인사 성보박물관 정류장",
+            },
+            lastMile: {
+                mode: "walk",
+                minutes: 20,
+            },
+            note: "해인사버스터미널에서 택시로 이동하는 대안 경로도 있음.",
+            updatedAt: "2026-08-14",
+        },
         summary: "가야산의 자연과 팔만대장경을 품고 있는 사찰",
         description:
             "가야산의 자연 속에서 한국불교의 오랜 역사와 문화유산을 함께 만날 수 있는 사찰입니다.",
@@ -260,9 +287,23 @@ export const temples: Temple[] = [
         location: {
             sido: "경북",
             sigungu: "경주시",
-            address: "경북 경주시",
+            address: "경상북도 경주시 불국로 385",
+            latitude: 35.7892734269,
+            longitude: 129.3318475148,
         },
         area: "영남",
+        publicTransit: {
+            accessPoint: {
+                type: "bus",
+                name: "불국사 정류장",
+            },
+            lastMile: {
+                mode: "walk",
+                minutes: 5,
+            },
+            note: "경주시 공식 관광안내 기준 불국사 정류장에서 도보 약 3~5분.",
+            updatedAt: "2026-08-14",
+        },
         summary: "신라의 역사와 불교문화를 함께 만날 수 있는 사찰",
         description:
             "신라 불교문화의 역사와 전통을 살펴볼 수 있는 경주의 대표적인 사찰입니다.",
@@ -294,9 +335,23 @@ export const temples: Temple[] = [
         location: {
             sido: "경남",
             sigungu: "양산시",
-            address: "경남 양산시",
+            address: "경상남도 양산시 하북면 통도사로 108",
+            latitude: 35.4886883698,
+            longitude: 129.0646293478,
         },
         area: "영남",
+        publicTransit: {
+            accessPoint: {
+                type: "terminal",
+                name: "신평터미널",
+            },
+            lastMile: {
+                mode: "walk",
+                minutes: 30,
+            },
+            note: "신평터미널에서 택시 이용 가능. KTX 울산(통도사)역에서는 13번 버스로 신평터미널 접근 가능.",
+            updatedAt: "2026-08-14",
+        },
         summary: "고요한 숲길과 깊은 수행의 전통이 이어지는 사찰",
         description:
             "고요한 숲길과 한국불교의 수행 전통을 함께 느낄 수 있는 양산의 대표적인 사찰입니다.",
@@ -327,9 +382,23 @@ export const temples: Temple[] = [
         location: {
             sido: "강원",
             sigungu: "평창군",
-            address: "강원 평창군",
+            address: "강원특별자치도 평창군 진부면 오대산로 374-8",
+            latitude: 37.731891,
+            longitude: 128.592569,
         },
         area: "강원",
+        publicTransit: {
+            accessPoint: {
+                type: "bus",
+                name: "월정사 정류장",
+            },
+            lastMile: {
+                mode: "walk",
+                minutes: 5,
+            },
+            note: "월정사 정류장에서 사찰까지 약 150m.",
+            updatedAt: "2026-08-14",
+        },
         summary: "전나무 숲길과 함께 걷기 좋은 오대산 사찰",
         description:
             "오대산의 자연과 전나무 숲길을 걸으며 잠시 쉬어가기 좋은 사찰입니다.",
@@ -360,9 +429,22 @@ export const temples: Temple[] = [
         location: {
             sido: "서울",
             sigungu: "강남구",
-            address: "서울 강남구",
+            address: "서울특별시 강남구 봉은사로 531",
+            latitude: 37.5141034337,
+            longitude: 127.0581013679,
         },
         area: "수도권",
+        publicTransit: {
+            accessPoint: {
+                type: "subway",
+                name: "봉은사역 1번 출구",
+            },
+            lastMile: {
+                mode: "walk",
+            },
+            note: "봉은사역 1번 출구에서 약 100m.",
+            updatedAt: "2026-08-14",
+        },
         summary: "도심 속에서 잠시 쉬어갈 수 있는 편안한 사찰",
         description:
             "서울 강남 도심에서 불교문화와 휴식을 함께 접할 수 있는 사찰입니다.",
