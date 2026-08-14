@@ -113,8 +113,8 @@ function getParentRoute(pathname: string): ParentRoute {
 
     if (pathname === "/resources/masters") {
         return {
-            href: "/resources",
-            label: "불교자료",
+            href: "/",
+            label: "홈",
         };
     }
 
@@ -197,8 +197,8 @@ function getParentRoute(pathname: string): ParentRoute {
 
     if (pathname === "/stories") {
         return {
-            href: "/resources",
-            label: "불교자료",
+            href: "/",
+            label: "홈",
         };
     }
 
