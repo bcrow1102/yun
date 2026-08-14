@@ -287,9 +287,14 @@ function TempleImage() {
 let hasShownMobileIntro = false;
 
 export default function MobileHome() {
+    const [shouldRevealFirstHero] = useState(() => !hasShownMobileIntro);
     const [activeSlide, setActiveSlide] = useState(0);
-    const [showIntro, setShowIntro] = useState(() => !hasShownMobileIntro);
+    const [livingMenuPage, setLivingMenuPage] = useState<0 | 1>(0);
+    const [showIntro, setShowIntro] = useState(shouldRevealFirstHero);
     const [introLeaving, setIntroLeaving] = useState(false);
+    const [firstHeroRevealed, setFirstHeroRevealed] = useState(
+        () => !shouldRevealFirstHero,
+    );
     const introStartedHere = useRef(false);
     const pointerStartX = useRef<number | null>(null);
     const didDrag = useRef(false);
@@ -310,6 +315,16 @@ export default function MobileHome() {
             window.clearTimeout(hideTimer);
         };
     }, [showIntro]);
+
+    useEffect(() => {
+        if (!shouldRevealFirstHero || showIntro || firstHeroRevealed) return;
+
+        const revealFrame = window.requestAnimationFrame(() => {
+            setFirstHeroRevealed(true);
+        });
+
+        return () => window.cancelAnimationFrame(revealFrame);
+    }, [firstHeroRevealed, shouldRevealFirstHero, showIntro]);
 
     useEffect(() => {
         const timer = window.setTimeout(() => {
@@ -358,6 +373,21 @@ export default function MobileHome() {
 
     return (
         <div className="min-h-screen bg-white pb-24 text-[#252A31] md:hidden">
+            <style>{`
+                @media (prefers-reduced-motion: reduce) {
+                    .mobile-first-hero-reveal {
+                        clip-path: inset(0 0 0 0) !important;
+                        transition: none !important;
+                    }
+
+                    .mobile-first-hero-copy {
+                        opacity: 1 !important;
+                        transform: none !important;
+                        transition: none !important;
+                    }
+                }
+            `}</style>
+
             {showIntro && (
                 <div
                     className={`fixed inset-0 z-[100] flex bg-[#F4F54A] px-7 transition-opacity duration-500 ${introLeaving ? "pointer-events-none opacity-0" : "opacity-100"}`}
@@ -486,14 +516,25 @@ export default function MobileHome() {
                     onPointerCancel={handlePointerCancel}
                 >
                     <div
-                        className="flex transition-transform duration-700 ease-in-out"
+                        className="flex transition-transform duration-[1150ms] ease-[cubic-bezier(0.42,0,0.58,1)]"
                         style={{ transform: `translateX(-${activeSlide * 100}%)` }}
                     >
-                        {heroSlides.map((slide) => (
+                        {heroSlides.map((slide, index) => (
                             <Link
                                 key={slide.title}
                                 href={slide.href}
-                                className={`${slide.background} ${slide.textColor} relative block min-h-[154px] w-full shrink-0 px-5 pb-9 pt-5`}
+                                className={`${slide.background} ${slide.textColor} relative block min-h-[154px] w-full shrink-0 px-5 pb-9 pt-5 transition-opacity duration-[1150ms] ease-[cubic-bezier(0.42,0,0.58,1)] ${index === activeSlide ? "opacity-100" : "opacity-[0.96]"} ${index === 0 && shouldRevealFirstHero ? "mobile-first-hero-reveal" : ""}`}
+                                style={
+                                    index === 0 && shouldRevealFirstHero
+                                        ? {
+                                              clipPath: firstHeroRevealed
+                                                  ? "inset(0 0 0 0)"
+                                                  : "inset(0 0 100% 0)",
+                                              transition:
+                                                  "clip-path 760ms cubic-bezier(0.22, 1, 0.36, 1), opacity 1150ms cubic-bezier(0.42, 0, 0.58, 1)",
+                                          }
+                                        : undefined
+                                }
                                 onClick={(event) => {
                                     if (didDrag.current) event.preventDefault();
                                 }}
@@ -516,7 +557,21 @@ export default function MobileHome() {
                                     </>
                                 )}
 
-                                <span className="relative block max-w-[68%]">
+                                <span
+                                    className={`relative block max-w-[68%] ${index === 0 && shouldRevealFirstHero ? "mobile-first-hero-copy" : ""}`}
+                                    style={
+                                        index === 0 && shouldRevealFirstHero
+                                            ? {
+                                                  opacity: firstHeroRevealed ? 1 : 0,
+                                                  transform: firstHeroRevealed
+                                                      ? "translateY(0)"
+                                                      : "translateY(12px)",
+                                                  transition:
+                                                      "opacity 460ms ease 140ms, transform 540ms cubic-bezier(0.22, 1, 0.36, 1) 140ms",
+                                              }
+                                            : undefined
+                                    }
+                                >
                                     <span className="block text-[13px] font-medium opacity-70">
                                         {slide.eyebrow}
                                     </span>
@@ -546,38 +601,118 @@ export default function MobileHome() {
                 </section>
 
                 <section className="-mx-4 bg-white px-5 pb-10" aria-labelledby="mobile-living-title">
-                    <h2 id="mobile-living-title" className="text-[17px] font-medium tracking-[-0.03em] text-[#252A31]">
-                        한국불교 생활 찾기
-                    </h2>
-                    <div className="mt-4 grid grid-cols-4 gap-2">
-                        {[
-                            { title: "템플스테이", href: "/temples/stay", image: "/images/menu/temple-stay-icon.webp", size: "88%", position: "center" },
-                            { title: "사찰음식", href: "/temples/food", image: "/images/menu/temple-food-icon.webp", size: "88%", position: "center" },
-                            { title: "행사교육", href: "/events", image: "/images/menu/event-education.webp", size: "82%", position: "center" },
-                            { title: "사찰 안내", href: "/temples/guide", image: "/images/menu/temple-guide-icon.webp", size: "88%", position: "center" },
-                        ].map((item) => (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                className="min-w-0 overflow-hidden rounded-[18px] border border-[#E7E9EC] bg-[#FFFBE0] text-center shadow-[0_2px_8px_rgba(25,31,40,0.035)] transition-[transform,box-shadow,border-color] duration-150 active:scale-[0.98] active:border-[#DCDD36] active:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B9BA28] focus-visible:ring-offset-2"
+                    <div className="flex items-center justify-between gap-3">
+                        <h2 id="mobile-living-title" className="text-[17px] font-medium tracking-[-0.03em] text-[#252A31]">
+                            한국불교 생활 찾기
+                        </h2>
+                        <button
+                            type="button"
+                            onClick={() => setLivingMenuPage((current) => (current === 0 ? 1 : 0))}
+                            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-[#68705F] transition-colors duration-150 active:bg-[#F1F3EC] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A3A86B] focus-visible:ring-offset-2"
+                            aria-label={
+                                livingMenuPage === 0
+                                    ? "다음 생활 메뉴 보기"
+                                    : "이전 생활 메뉴 보기"
+                            }
+                        >
+                            <span
+                                className={`inline-flex transition-transform duration-200 ${livingMenuPage === 0 ? "" : "rotate-180"}`}
                             >
-                                <span className="block h-2 bg-[#F4F54A]" />
-                                <span className="flex h-[82px] items-center justify-center px-1.5 pt-2">
-                                    <span
-                                        aria-hidden="true"
-                                        className="h-full w-full bg-transparent bg-no-repeat"
-                                        style={{
-                                            backgroundImage: `url(${item.image})`,
-                                            backgroundPosition: item.position,
-                                            backgroundSize: item.size,
-                                        }}
-                                    />
-                                </span>
-                                <strong className="block truncate whitespace-nowrap px-1 pb-3 pt-1 text-[12px] font-semibold text-[#252A31]">
-                                    {item.title}
-                                </strong>
-                            </Link>
-                        ))}
+                                <ChevronIcon />
+                            </span>
+                        </button>
+                    </div>
+                    <div className="mt-4">
+                        <div className="overflow-hidden">
+                            <div
+                                className="flex transition-transform duration-[420ms] ease-in-out"
+                                style={{
+                                    transform: `translateX(-${livingMenuPage * 100}%)`,
+                                }}
+                            >
+                                <div className="grid w-full shrink-0 grid-cols-4 gap-2">
+                                    {[
+                                        { title: "템플스테이", href: "/temples/stay", image: "/images/menu/temple-stay-icon.webp", size: "88%", position: "center" },
+                                        { title: "사찰음식", href: "/temples/food", image: "/images/menu/temple-food-icon.webp", size: "88%", position: "center" },
+                                        { title: "행사교육", href: "/events", image: "/images/menu/event-education.webp", size: "82%", position: "center" },
+                                        { title: "사찰 안내", href: "/temples/guide", image: "/images/menu/temple-guide-icon.webp", size: "88%", position: "center" },
+                                    ].map((item) => (
+                                        <Link
+                                            key={item.href}
+                                            href={item.href}
+                                            className="min-w-0 overflow-hidden rounded-[18px] border border-[#E7E9EC] bg-[#FFFBE0] text-center shadow-[0_2px_8px_rgba(25,31,40,0.035)] transition-[transform,box-shadow,border-color] duration-150 active:scale-[0.98] active:border-[#DCDD36] active:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B9BA28] focus-visible:ring-offset-2"
+                                        >
+                                            <span className="block h-2 bg-[#F4F54A]" />
+                                            <span className="flex h-[82px] items-center justify-center px-1.5 pt-2">
+                                                <span
+                                                    aria-hidden="true"
+                                                    className="h-full w-full bg-transparent bg-no-repeat"
+                                                    style={{
+                                                        backgroundImage: `url(${item.image})`,
+                                                        backgroundPosition: item.position,
+                                                        backgroundSize: item.size,
+                                                    }}
+                                                />
+                                            </span>
+                                            <strong className="block truncate whitespace-nowrap px-1 pb-3 pt-1 text-[12px] font-semibold text-[#252A31]">
+                                                {item.title}
+                                            </strong>
+                                        </Link>
+                                    ))}
+                                </div>
+
+                                <div className="grid w-full shrink-0 grid-cols-4 gap-2">
+                                    {[
+                                        {
+                                            title: "홍보물 DIY",
+                                            href: "/events/promote",
+                                            image: "/images/menu/promote-diy-icon.svg",
+                                            imageClass: "h-[60px] w-[60px] object-contain",
+                                        },
+                                        {
+                                            title: "사찰 서식",
+                                            href: "/downloads",
+                                            image: "/images/menu/temple-forms-icon.svg",
+                                            imageClass: "h-[60px] w-[60px] object-contain",
+                                        },
+                                        {
+                                            title: "한국의 고승",
+                                            href: "/resources/masters",
+                                            image: "/images/menu/korean-masters-icon.svg",
+                                            imageClass: "h-[60px] w-[60px] object-contain",
+                                        },
+                                        {
+                                            title: "부처님 이야기",
+                                            href: "/stories",
+                                            image: null,
+                                            imageClass: "",
+                                        },
+                                    ].map((item) => (
+                                        <Link
+                                            key={item.title}
+                                            href={item.href}
+                                            className="min-w-0 overflow-hidden rounded-[18px] border border-[#E7E9EC] bg-[#FFFBE0] text-center shadow-[0_2px_8px_rgba(25,31,40,0.035)]"
+                                        >
+                                            <span className="block h-2 bg-[#7E8977]" />
+                                            <span className="flex h-[82px] items-center justify-center px-1.5 pt-2 text-[#786B5A]">
+                                                {item.image ? (
+                                                    <img
+                                                        src={item.image}
+                                                        alt=""
+                                                        className={item.imageClass}
+                                                    />
+                                                ) : (
+                                                    <OpenBookIcon />
+                                                )}
+                                            </span>
+                                            <strong className="block whitespace-nowrap px-1 pb-3 pt-1 text-[11px] font-semibold tracking-[-0.03em] text-[#252A31]">
+                                                {item.title}
+                                            </strong>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -624,13 +759,14 @@ export default function MobileHome() {
                             href="/resources/masters"
                             className="grid h-[116px] grid-cols-[64px_minmax(0,1fr)_36px] items-center gap-3 rounded-[18px] border border-[#E3E1D9] bg-[#FFFDF8] px-4 py-3 shadow-[0_3px_10px_rgba(45,48,40,0.055)]"
                         >
-                            <span
+                            <img
                                 aria-hidden="true"
-                                className="h-16 w-16 bg-contain bg-center bg-no-repeat"
-                                style={{ backgroundImage: "url('/images/showcase/yeon-deep-reading-books.webp')" }}
+                                src="/images/menu/korean-masters-icon.svg"
+                                alt=""
+                                className="h-16 w-16 object-contain"
                             />
                             <span className="min-w-0">
-                                <span className="block text-[11px] font-medium tracking-[0.02em] text-[#7E8977]">한국불교의 사람들</span>
+                                <span className="block text-[11px] font-medium tracking-[0.02em] text-[#9A6256]">한국불교의 사람들</span>
                                 <span className="mt-1 block text-[19px] font-medium tracking-[-0.04em] text-[#252A31]">한국의 고승</span>
                                 <span className="mt-1 block break-keep text-xs font-normal leading-5 text-[#667067]">한국불교의 큰스님과 가르침을 알아보세요.</span>
                             </span>
@@ -647,7 +783,7 @@ export default function MobileHome() {
                                 <OpenBookIcon />
                             </span>
                             <span className="min-w-0">
-                                <span className="block text-[11px] font-medium tracking-[0.02em] text-[#7E8977]">마음을 쉬어가는 이야기</span>
+                                <span className="block text-[11px] font-medium tracking-[0.02em] text-[#9A6256]">마음을 쉬어가는 이야기</span>
                                 <span className="mt-1 block text-[19px] font-medium tracking-[-0.04em] text-[#252A31]">부처님 이야기</span>
                                 <span className="mt-1 block break-keep text-xs font-normal leading-5 text-[#667067]">잠시 쉬어가며 마음을 돌아보는 이야기입니다.</span>
                             </span>
@@ -664,7 +800,7 @@ export default function MobileHome() {
                                 <ArchiveDocumentIcon />
                             </span>
                             <span className="min-w-0">
-                                <span className="block text-[11px] font-medium tracking-[0.02em] text-[#7E8977]">깊이 알아보는 한국불교</span>
+                                <span className="block text-[11px] font-medium tracking-[0.02em] text-[#9A6256]">깊이 알아보는 한국불교</span>
                                 <span className="mt-1 block text-[19px] font-medium tracking-[-0.04em] text-[#252A31]">불교자료</span>
                                 <span className="mt-1 block break-keep text-xs font-normal leading-5 text-[#667067]">불교와 사찰 생활에 필요한 자료를 모았습니다.</span>
                             </span>
