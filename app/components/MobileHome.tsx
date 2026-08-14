@@ -385,6 +385,129 @@ export default function MobileHome() {
                         transform: none !important;
                         transition: none !important;
                     }
+
+                    .mobile-intro-title-letter,
+                    .mobile-intro-card {
+                        animation: none !important;
+                        opacity: 1 !important;
+                        transform: none !important;
+                    }
+
+                    .mobile-intro-title-final {
+                        animation: none !important;
+                        opacity: 1 !important;
+                    }
+
+                    .mobile-intro-title-motion {
+                        display: none !important;
+                    }
+                }
+
+                @keyframes mobile-intro-title-spread {
+                    from {
+                        opacity: 0;
+                        transform: translateX(var(--intro-title-shift)) scale(0.985);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateX(0) scale(1);
+                    }
+                }
+
+                @keyframes mobile-intro-card-reveal {
+                    from {
+                        opacity: 0;
+                        transform: translateY(8px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+
+                @keyframes mobile-intro-title-finalize {
+                    from {
+                        opacity: 0;
+                    }
+                    to {
+                        opacity: 1;
+                    }
+                }
+
+                @keyframes mobile-intro-title-motion-finish {
+                    from {
+                        opacity: 1;
+                    }
+                    to {
+                        opacity: 0;
+                    }
+                }
+
+                .mobile-intro-title-final {
+                    animation: mobile-intro-title-finalize 1ms linear 1180ms both;
+                }
+
+                .mobile-intro-title-motion {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    white-space: nowrap;
+                    animation: mobile-intro-title-motion-finish 1ms linear 1180ms forwards;
+                }
+
+                .mobile-intro-title-diy {
+                    color: #4B4F0B;
+                }
+
+                .mobile-intro-title-letter {
+                    display: inline-block;
+                    animation: mobile-intro-title-spread 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
+                }
+
+                .mobile-intro-title-letter:nth-child(1) {
+                    --intro-title-shift: 1.65em;
+                    animation-delay: 180ms;
+                }
+
+                .mobile-intro-title-letter:nth-child(2) {
+                    --intro-title-shift: 0.78em;
+                    animation-delay: 320ms;
+                }
+
+                .mobile-intro-title-letter:nth-child(3) {
+                    --intro-title-shift: 0.2em;
+                    animation-delay: 380ms;
+                }
+
+                .mobile-intro-title-letter:nth-child(4) {
+                    --intro-title-shift: -0.24em;
+                    animation-delay: 420ms;
+                }
+
+                .mobile-intro-title-letter:nth-child(5) {
+                    --intro-title-shift: -0.72em;
+                    animation-delay: 360ms;
+                }
+
+                .mobile-intro-title-letter:nth-child(6) {
+                    --intro-title-shift: -1.55em;
+                    animation-delay: 200ms;
+                }
+
+                .mobile-intro-card {
+                    animation: mobile-intro-card-reveal 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+                }
+
+                .mobile-intro-card:nth-child(1) {
+                    animation-delay: 1150ms;
+                }
+
+                .mobile-intro-card:nth-child(2) {
+                    animation-delay: 1500ms;
+                }
+
+                .mobile-intro-card:nth-child(3) {
+                    animation-delay: 1850ms;
                 }
             `}</style>
 
@@ -408,8 +531,24 @@ export default function MobileHome() {
                         <p className="mt-10 text-[15px] font-medium tracking-[-0.02em] text-[#555700]">
                             템플스테이 · 사찰음식
                         </p>
-                        <p className="mt-2 text-[48px] font-semibold leading-[0.98] tracking-[-0.07em]">
-                            홍보물 DIY
+                        <p
+                            className="relative mt-2 text-[48px] font-semibold leading-[0.98] tracking-[-0.07em]"
+                            aria-label="홍보물 DIY"
+                        >
+                            <span className="mobile-intro-title-final" aria-hidden="true">
+                                홍보물 <span className="mobile-intro-title-diy">DIY</span>
+                            </span>
+                            <span
+                                className="mobile-intro-title-motion"
+                                aria-hidden="true"
+                            >
+                                <span className="mobile-intro-title-letter">홍</span>
+                                <span className="mobile-intro-title-letter">보</span>
+                                <span className="mobile-intro-title-letter">물</span>{" "}
+                                <span className="mobile-intro-title-letter mobile-intro-title-diy">D</span>
+                                <span className="mobile-intro-title-letter mobile-intro-title-diy">I</span>
+                                <span className="mobile-intro-title-letter mobile-intro-title-diy">Y</span>
+                            </span>
                         </p>
                         <p className="mt-3 text-sm font-medium text-[#555700]">
                             머물고, 체험하고, 직접 만드는 한국불교 생활
@@ -439,7 +578,10 @@ export default function MobileHome() {
                                     aspect: "aspect-[5/7]",
                                 },
                             ].map((item) => (
-                                <div key={item.label} className={item.offset}>
+                                <div
+                                    key={item.label}
+                                    className={`${item.offset} mobile-intro-card`}
+                                >
                                     <div
                                         className={`${item.aspect} overflow-hidden rounded-[22px] bg-white/60`}
                                     >
@@ -1125,9 +1267,11 @@ export default function MobileHome() {
                     <span className="text-lg font-semibold tracking-[-0.04em]">연</span>
                 </Link>
 
-                <p className="mt-2 text-[13px] font-normal leading-5 text-[#667085]">
-                    <span className="block">연은 개인이 만들고 운영하며,</span>
-                    <span className="block">불교 생활에 필요한 정보를 쉽고 가깝게 연결합니다.</span>
+                <p className="mt-2 text-[14px] font-semibold leading-5 text-[#35433A]">
+                    불교 정보와 사람을 잇는 공간
+                </p>
+                <p className="mt-1 text-[13px] font-normal leading-5 text-[#667085]">
+                    연은 한국불교 생활을 더 쉽고 가깝게 만듭니다.
                 </p>
 
                 <Link
@@ -1193,10 +1337,6 @@ export default function MobileHome() {
                     </div>
                 </div>
 
-                <div className="mt-6 border-t border-[#E7E9EC] pt-4 text-[11px] font-normal text-[#8B95A1]">
-                    <p>© 2026 연. All rights reserved.</p>
-                    <p className="mt-1">불교 정보와 사람을 잇는 공간</p>
-                </div>
             </footer>
         </div>
     );
