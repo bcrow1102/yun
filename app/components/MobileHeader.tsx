@@ -248,7 +248,7 @@ export default function MobileHeader() {
     const parent = getParentRoute(pathname);
 
     return (
-        <header className="sticky top-0 z-50 border-b border-[#ECEEEB] bg-white/95 backdrop-blur md:hidden">
+        <header className="mobile-site-header sticky top-0 z-50 border-b border-[#ECEEEB] bg-white/95 backdrop-blur md:hidden">
             <div className="flex h-14 items-center justify-between gap-3 px-4">
                 <Link
                     href={parent.href}

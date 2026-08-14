@@ -609,7 +609,7 @@ export default function Home() {
     <>
       <MobileHome />
 
-      <div className="hidden min-h-screen bg-white text-[#191F28] md:block">
+      <div className="desktop-home-shell hidden min-h-screen bg-white text-[#191F28] md:block">
         <SiteHeader
           onSearchClick={() => {
             setActiveHeroSlide(0);
@@ -1583,7 +1583,7 @@ export default function Home() {
         )}
       </div>
 
-      <div className="md:hidden">
+      <div className="mobile-home-shell md:hidden">
         <BottomNav />
       </div>
     </>

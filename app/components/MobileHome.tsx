@@ -372,7 +372,7 @@ export default function MobileHome() {
     };
 
     return (
-        <div className="min-h-screen bg-white pb-24 text-[#252A31] md:hidden">
+        <div className="mobile-home-shell min-h-screen bg-white pb-24 text-[#252A31] md:hidden">
             <style>{`
                 @media (prefers-reduced-motion: reduce) {
                     .mobile-first-hero-reveal {
@@ -513,12 +513,12 @@ export default function MobileHome() {
 
             {showIntro && (
                 <div
-                    className={`fixed inset-0 z-[100] flex bg-[#F4F54A] px-7 transition-opacity duration-500 ${introLeaving ? "pointer-events-none opacity-0" : "opacity-100"}`}
+                    className={`mobile-intro-overlay fixed inset-0 z-[100] flex bg-[#F4F54A] px-7 transition-opacity duration-500 ${introLeaving ? "pointer-events-none opacity-0" : "opacity-100"}`}
                     role="status"
                     aria-live="polite"
                     aria-label="연 주요 서비스 안내"
                 >
-                    <div className="my-auto w-full text-[#191F28]">
+                    <div className="mobile-intro-content my-auto w-full text-[#191F28]">
                         <div className="flex items-center gap-2.5">
                             <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/85">
                                 <LotusIcon />
@@ -528,7 +528,7 @@ export default function MobileHome() {
                             </span>
                         </div>
 
-                        <p className="mt-10 text-[15px] font-medium tracking-[-0.02em] text-[#555700]">
+                        <p className="mobile-intro-eyebrow mt-10 text-[15px] font-medium tracking-[-0.02em] text-[#555700]">
                             템플스테이 · 사찰음식
                         </p>
                         <p
@@ -554,7 +554,7 @@ export default function MobileHome() {
                             머물고, 체험하고, 직접 만드는 한국불교 생활
                         </p>
 
-                        <div className="mt-9 grid grid-cols-3 gap-2.5">
+                        <div className="mobile-intro-cards mt-9 grid grid-cols-3 gap-2.5">
                             {[
                                 {
                                     label: "템플스테이",
@@ -599,15 +599,15 @@ export default function MobileHome() {
                             ))}
                         </div>
 
-                        <p className="mt-8 text-center text-xs font-medium text-[#666800]">
+                        <p className="mobile-intro-platform mt-8 text-center text-xs font-medium text-[#666800]">
                             한국불교 생활 플랫폼 연
                         </p>
                     </div>
                 </div>
             )}
 
-            <header className="sticky top-0 z-30 bg-[#F4F54A]/95 backdrop-blur">
-                <div className="flex h-16 items-center justify-between px-5">
+            <header className="mobile-home-header sticky top-0 z-30 bg-[#F4F54A]/95 backdrop-blur">
+                <div className="mobile-home-header-inner flex h-16 items-center justify-between px-5">
                     <Link
                         href="/"
                         onClick={(event) => {
@@ -648,9 +648,9 @@ export default function MobileHome() {
                 </div>
             </header>
 
-            <main className="px-4 pb-8">
+            <main className="mobile-home-main px-4 pb-8">
                 <section
-                    className="-mx-4 mb-8 cursor-grab touch-pan-y select-none overflow-hidden active:cursor-grabbing"
+                    className="mobile-home-hero -mx-4 mb-8 cursor-grab touch-pan-y select-none overflow-hidden active:cursor-grabbing"
                     aria-label="주요 소식"
                     onPointerDown={handlePointerDown}
                     onPointerMove={handlePointerMove}
@@ -665,7 +665,7 @@ export default function MobileHome() {
                             <Link
                                 key={slide.title}
                                 href={slide.href}
-                                className={`${slide.background} ${slide.textColor} relative block min-h-[154px] w-full shrink-0 px-5 pb-9 pt-5 transition-opacity duration-[1150ms] ease-[cubic-bezier(0.42,0,0.58,1)] ${index === activeSlide ? "opacity-100" : "opacity-[0.96]"} ${index === 0 && shouldRevealFirstHero ? "mobile-first-hero-reveal" : ""}`}
+                                className={`${slide.background} ${slide.textColor} mobile-home-hero-slide relative block min-h-[154px] w-full shrink-0 px-5 pb-9 pt-5 transition-opacity duration-[1150ms] ease-[cubic-bezier(0.42,0,0.58,1)] ${index === activeSlide ? "opacity-100" : "opacity-[0.96]"} ${index === 0 && shouldRevealFirstHero ? "mobile-first-hero-reveal" : ""}`}
                                 style={
                                     index === 0 && shouldRevealFirstHero
                                         ? {
@@ -742,7 +742,7 @@ export default function MobileHome() {
                     </div>
                 </section>
 
-                <section className="-mx-4 bg-white px-5 pb-10" aria-labelledby="mobile-living-title">
+                <section className="mobile-home-living -mx-4 bg-white px-5 pb-10" aria-labelledby="mobile-living-title">
                     <div className="flex items-center justify-between gap-3">
                         <h2 id="mobile-living-title" className="text-[17px] font-medium tracking-[-0.03em] text-[#252A31]">
                             한국불교 생활 찾기
@@ -785,10 +785,10 @@ export default function MobileHome() {
                                             className="min-w-0 overflow-hidden rounded-[18px] border border-[#E7E9EC] bg-[#FFFBE0] text-center shadow-[0_2px_8px_rgba(25,31,40,0.035)] transition-[transform,box-shadow,border-color] duration-150 active:scale-[0.98] active:border-[#DCDD36] active:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B9BA28] focus-visible:ring-offset-2"
                                         >
                                             <span className="block h-2 bg-[#F4F54A]" />
-                                            <span className="flex h-[82px] items-center justify-center px-1.5 pt-2">
+                                            <span className="mobile-home-living-card-media flex h-[82px] items-center justify-center px-1.5 pt-2">
                                                 <span
                                                     aria-hidden="true"
-                                                    className="h-full w-full bg-transparent bg-no-repeat"
+                                                    className="mobile-home-living-card-art h-full w-full bg-transparent bg-no-repeat"
                                                     style={{
                                                         backgroundImage: `url(${item.image})`,
                                                         backgroundPosition: item.position,
@@ -836,7 +836,7 @@ export default function MobileHome() {
                                             className="min-w-0 overflow-hidden rounded-[18px] border border-[#E7E9EC] bg-[#FFFBE0] text-center shadow-[0_2px_8px_rgba(25,31,40,0.035)]"
                                         >
                                             <span className="block h-2 bg-[#7E8977]" />
-                                            <span className="flex h-[82px] items-center justify-center px-1.5 pt-2 text-[#786B5A]">
+                                            <span className="mobile-home-living-card-media flex h-[82px] items-center justify-center px-1.5 pt-2 text-[#786B5A]">
                                                 {item.image ? (
                                                     <img
                                                         src={item.image}
@@ -858,40 +858,42 @@ export default function MobileHome() {
                     </div>
                 </section>
 
-                <section className="-mx-4 mt-2 bg-[#FAF8F2] px-5 pb-10 pt-8" aria-labelledby="mobile-quick-actions-title">
+                <section className="mobile-home-quick -mx-4 mt-2 bg-[#FAF8F2] px-5 pb-10 pt-8" aria-labelledby="mobile-quick-actions-title">
                     <h2 id="mobile-quick-actions-title" className="text-[17px] font-medium tracking-[-0.03em] text-[#252A31]">
                         지금 바로 활용하기
                     </h2>
 
-                    <Link
-                        href="/events/promote"
-                        className="relative mt-4 flex min-h-24 items-center justify-between overflow-hidden rounded-[18px] bg-[#FFFEFA] py-4 pl-5 pr-4 shadow-[0_1px_2px_rgba(37,42,49,0.035)]"
-                    >
-                        <span aria-hidden="true" className="absolute inset-y-4 left-0 w-1 rounded-r-full bg-[#F4F54A]" />
-                        <span className="min-w-0 pr-4">
-                            <span className="block text-[11px] font-medium tracking-[0.02em] text-[#777900]">내 손으로 쉽고 빠르게</span>
-                            <span className="mt-1 block text-[17px] font-medium tracking-[-0.04em] text-[#252A31]">홍보물 DIY</span>
-                            <span className="mt-1 block break-keep text-[11px] font-normal leading-5 text-[#667067]">행사 홍보물을 직접 만들어보세요.</span>
-                        </span>
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F4F54A] text-[#4D4E00]">
-                            <ChevronIcon />
-                        </span>
-                    </Link>
+                    <div className="mobile-home-quick-grid">
+                        <Link
+                            href="/events/promote"
+                            className="relative mt-4 flex min-h-24 items-center justify-between overflow-hidden rounded-[18px] bg-[#FFFEFA] py-4 pl-5 pr-4 shadow-[0_1px_2px_rgba(37,42,49,0.035)]"
+                        >
+                            <span aria-hidden="true" className="absolute inset-y-4 left-0 w-1 rounded-r-full bg-[#F4F54A]" />
+                            <span className="min-w-0 pr-4">
+                                <span className="block text-[11px] font-medium tracking-[0.02em] text-[#777900]">내 손으로 쉽고 빠르게</span>
+                                <span className="mt-1 block text-[17px] font-medium tracking-[-0.04em] text-[#252A31]">홍보물 DIY</span>
+                                <span className="mt-1 block break-keep text-[11px] font-normal leading-5 text-[#667067]">행사 홍보물을 직접 만들어보세요.</span>
+                            </span>
+                            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F4F54A] text-[#4D4E00]">
+                                <ChevronIcon />
+                            </span>
+                        </Link>
 
-                    <Link href="/resources" className="relative mt-3 flex min-h-24 items-center justify-between overflow-hidden rounded-[18px] bg-[#FFFEFA] py-4 pl-5 pr-4 shadow-[0_1px_2px_rgba(37,42,49,0.035)]">
-                        <span aria-hidden="true" className="absolute inset-y-4 left-0 w-1 rounded-r-full bg-[#F4F54A]" />
-                        <span className="min-w-0 pr-4">
-                            <span className="block text-[11px] font-medium tracking-[0.02em] text-[#777900]">실무에 바로 쓰는 자료</span>
-                            <span className="mt-1 block whitespace-nowrap text-[17px] font-medium tracking-[-0.04em] text-[#252A31]">사찰 실무서식 / 자료실</span>
-                            <span className="mt-1 block break-keep text-[11px] font-normal leading-5 text-[#667067]">사찰 운영에 필요한 자료를 찾아보세요.</span>
-                        </span>
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F4F54A] text-[#4D4E00]">
-                            <ChevronIcon />
-                        </span>
-                    </Link>
+                        <Link href="/resources" className="relative mt-3 flex min-h-24 items-center justify-between overflow-hidden rounded-[18px] bg-[#FFFEFA] py-4 pl-5 pr-4 shadow-[0_1px_2px_rgba(37,42,49,0.035)]">
+                            <span aria-hidden="true" className="absolute inset-y-4 left-0 w-1 rounded-r-full bg-[#F4F54A]" />
+                            <span className="min-w-0 pr-4">
+                                <span className="block text-[11px] font-medium tracking-[0.02em] text-[#777900]">실무에 바로 쓰는 자료</span>
+                                <span className="mt-1 block whitespace-nowrap text-[17px] font-medium tracking-[-0.04em] text-[#252A31]">사찰 실무서식 / 자료실</span>
+                                <span className="mt-1 block break-keep text-[11px] font-normal leading-5 text-[#667067]">사찰 운영에 필요한 자료를 찾아보세요.</span>
+                            </span>
+                            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F4F54A] text-[#4D4E00]">
+                                <ChevronIcon />
+                            </span>
+                        </Link>
+                    </div>
                 </section>
 
-                <section className="-mx-4 bg-sage-50 px-5 pb-14 pt-12" aria-labelledby="mobile-learn-title">
+                <section className="mobile-home-learn -mx-4 bg-sage-50 px-5 pb-14 pt-12" aria-labelledby="mobile-learn-title">
                     <h2 id="mobile-learn-title" className="text-[22px] font-medium tracking-[-0.04em] text-[#252A31]">
                         읽고 알아가기
                     </h2>
@@ -953,7 +955,7 @@ export default function MobileHome() {
                     </div>
                 </section>
 
-                <section className="-mx-4 bg-white px-5 py-12" aria-labelledby="mobile-latest-title">
+                <section className="mobile-home-latest -mx-4 bg-white px-5 py-12" aria-labelledby="mobile-latest-title">
                     <h2 id="mobile-latest-title" className="text-[18px] font-medium tracking-[-0.03em] text-[#252A31]">
                         새로 올라온 것
                     </h2>
@@ -1257,7 +1259,7 @@ export default function MobileHome() {
                 </section>
             </main>
 
-            <footer className="border-t border-[#D9DAD4] bg-white px-5 pb-6 pt-7">
+            <footer className="mobile-home-footer border-t border-[#D9DAD4] bg-white px-5 pb-6 pt-7">
                 <Link
                     href="/"
                     className="inline-flex items-center gap-2"

@@ -14,7 +14,7 @@ export default function GlobalHeader() {
         <>
             <MobileHeader />
 
-            <div className="hidden md:block">
+            <div className="desktop-site-header hidden md:block">
                 <SiteHeader variant="internal" />
             </div>
         </>

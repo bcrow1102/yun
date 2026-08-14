@@ -138,3 +138,132 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: #9299a1;
 }
+
+/*
+ * 휴대폰 가로모드는 폭이 768px을 넘어도 데스크톱 shell로 전환하지 않는다.
+ * 짧은 화면, 터치 포인터, hover 부재를 함께 확인해 태블릿과 PC를 보호한다.
+ */
+@media (min-width: 768px) and (max-height: 500px) and (orientation: landscape) and (hover: none) and (pointer: coarse) {
+  body {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  .mobile-home-shell,
+  .mobile-site-header {
+    display: block !important;
+  }
+
+  .desktop-home-shell,
+  .desktop-site-header {
+    display: none !important;
+  }
+
+  .mobile-home-header-inner,
+  .mobile-site-header > div,
+  .mobile-home-main,
+  .mobile-home-footer {
+    width: 100%;
+    max-width: 760px;
+    margin-inline: auto;
+  }
+
+  .mobile-home-header-inner {
+    height: 56px;
+  }
+
+  .mobile-home-living {
+    padding-bottom: 1.75rem;
+  }
+
+  .mobile-home-quick {
+    padding-top: 1.5rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .mobile-home-quick-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .mobile-home-quick-grid > a {
+    margin-top: 0 !important;
+  }
+
+  .mobile-home-learn {
+    padding-top: 2rem;
+    padding-bottom: 2.25rem;
+  }
+
+  .mobile-home-latest {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .mobile-intro-content {
+    max-width: 760px;
+    margin-inline: auto;
+  }
+
+  .mobile-intro-eyebrow {
+    margin-top: 0.875rem;
+  }
+
+  .mobile-intro-cards {
+    max-width: 520px;
+    margin-top: 0.875rem;
+    margin-inline: auto;
+    gap: 0.75rem;
+  }
+
+  .mobile-intro-card {
+    margin-top: 0 !important;
+  }
+
+  .mobile-intro-card > div {
+    height: 104px;
+    aspect-ratio: auto !important;
+    border-radius: 18px;
+  }
+
+  .mobile-intro-platform {
+    margin-top: 0.75rem;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) and (hover: none) and (pointer: coarse) {
+  .mobile-home-shell {
+    padding-bottom: 0;
+  }
+
+  .mobile-home-hero {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-bottom: 1.25rem;
+  }
+
+  .mobile-home-hero-slide {
+    height: clamp(230px, 60svh, 270px);
+    min-height: 0;
+    aspect-ratio: auto;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+  .mobile-home-living-card-media {
+    height: auto;
+    aspect-ratio: 5 / 4;
+  }
+
+  .mobile-home-living-card-art {
+    background-size: contain !important;
+  }
+
+  .bottom-nav-safe {
+    position: static;
+    inset: auto;
+  }
+}
