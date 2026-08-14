@@ -29,37 +29,61 @@ export type TempleArea =
     | "영남"
     | "제주";
 
-export type TempleTransport = {
+export type TempleLocationV1 = {
     /**
-     * 가장 가까운 지하철역·기차역·버스터미널
+     * 읍·면·동을 별도 필드로 나누지 않고 상세 주소에 포함한다.
      */
-    nearestStation?: string;
+    address: string;
+    sido: Sido;
+    sigungu: string;
+    latitude?: number;
+    longitude?: number;
+};
+
+export type TemplePublicTransitV1 = {
+    /**
+     * 물리적으로 가장 가까운 곳이 아니라 일반 방문자가 대표적으로
+     * 이용하는 주요 대중교통 접근 지점이다.
+     */
+    accessPoint?: {
+        type: "subway" | "train" | "bus" | "terminal";
+        name?: string;
+    };
 
     /**
-     * 이용 가능한 버스와 하차 정류장
+     * 대표 접근 지점에서 사찰까지의 마지막 이동 구간이다.
+     * 복수 경로와 다단계 이동은 현재 note로 설명한다.
      */
-    bus?: string[];
+    lastMile?: {
+        mode: "walk" | "localBus" | "shuttle" | "taxi" | "none";
+        minutes?: number;
+    };
 
     /**
-     * 역 또는 정류장에서 사찰까지의 도보 안내
+     * 대안 접근 경로와 환승 등 구조화하지 않은 참고사항
      */
-    walking?: string;
+    note?: string;
 
     /**
-     * 사찰 셔틀버스 운행 정보
-     */
-    shuttle?: string;
-
-    /**
-     * 환승·막차·행사일 교통 등 참고사항
-     */
-    notes?: string;
-
-    /**
-     * 교통정보 최종 확인일
-     * 예: 2026.08
+     * 교통 사실 최종 확인일
+     * 형식: YYYY-MM-DD
      */
     updatedAt?: string;
+};
+
+export type TempleWalkingAccessV1 = {
+    stairs?: "none" | "some" | "many" | "unknown";
+    slope?: "flat" | "gentle" | "steep" | "unknown";
+
+    /**
+     * 일반 방문자가 주로 사용하는 대표 진입 지점에서
+     * 주요 관람·참배 영역까지의 편도 도보시간이다.
+     * 여러 입구가 있으면 대표적인 일반 방문 동선을 기준으로 하고,
+     * 여러 전각이 넓게 흩어진 예외는 note로 설명한다.
+     */
+    walkingMinutes?: number;
+
+    note?: string;
 };
 
 export type TempleParking = {
@@ -106,12 +130,11 @@ export type Temple = {
     hanja?: string;
 
     /**
-     * 지역 정보
+     * 객관적인 위치 정보. area는 넓은 권역 탐색용이며 거리 판단에는
+     * location.latitude/longitude를 사용한다.
      */
-    sido: Sido;
+    location: TempleLocationV1;
     area: TempleArea;
-    sigungu: string;
-    address: string;
 
     /**
      * 카드와 상세 페이지 소개
@@ -141,16 +164,11 @@ export type Temple = {
     admissionFee?: string;
 
     /**
-     * 교통과 주차
+     * 사찰까지의 접근, 사찰 안에서의 이동, 주차
      */
-    transport?: TempleTransport;
+    publicTransit?: TemplePublicTransitV1;
+    walkingAccess?: TempleWalkingAccessV1;
     parking?: TempleParking;
-
-    /**
-     * 지도 연결용 좌표
-     */
-    latitude?: number;
-    longitude?: number;
 
     /**
      * 이미지 정보
@@ -174,10 +192,12 @@ export const temples: Temple[] = [
         slug: "jogyesa",
         name: "조계사",
         hanja: "曹溪寺",
-        sido: "서울",
+        location: {
+            sido: "서울",
+            sigungu: "종로구",
+            address: "서울 종로구",
+        },
         area: "수도권",
-        sigungu: "종로구",
-        address: "서울 종로구",
         summary: "서울 도심에서 만나는 한국 불교의 대표적인 사찰",
         description:
             "서울 도심에서 한국불교 문화와 다양한 법회 및 행사를 접할 수 있는 사찰입니다.",
@@ -202,10 +222,12 @@ export const temples: Temple[] = [
         slug: "haeinsa",
         name: "해인사",
         hanja: "海印寺",
-        sido: "경남",
+        location: {
+            sido: "경남",
+            sigungu: "합천군",
+            address: "경남 합천군",
+        },
         area: "영남",
-        sigungu: "합천군",
-        address: "경남 합천군",
         summary: "가야산의 자연과 팔만대장경을 품고 있는 사찰",
         description:
             "가야산의 자연 속에서 한국불교의 오랜 역사와 문화유산을 함께 만날 수 있는 사찰입니다.",
@@ -235,10 +257,12 @@ export const temples: Temple[] = [
         slug: "bulguksa",
         name: "불국사",
         hanja: "佛國寺",
-        sido: "경북",
+        location: {
+            sido: "경북",
+            sigungu: "경주시",
+            address: "경북 경주시",
+        },
         area: "영남",
-        sigungu: "경주시",
-        address: "경북 경주시",
         summary: "신라의 역사와 불교문화를 함께 만날 수 있는 사찰",
         description:
             "신라 불교문화의 역사와 전통을 살펴볼 수 있는 경주의 대표적인 사찰입니다.",
@@ -267,10 +291,12 @@ export const temples: Temple[] = [
         slug: "tongdosa",
         name: "통도사",
         hanja: "通度寺",
-        sido: "경남",
+        location: {
+            sido: "경남",
+            sigungu: "양산시",
+            address: "경남 양산시",
+        },
         area: "영남",
-        sigungu: "양산시",
-        address: "경남 양산시",
         summary: "고요한 숲길과 깊은 수행의 전통이 이어지는 사찰",
         description:
             "고요한 숲길과 한국불교의 수행 전통을 함께 느낄 수 있는 양산의 대표적인 사찰입니다.",
@@ -298,10 +324,12 @@ export const temples: Temple[] = [
         slug: "woljeongsa",
         name: "월정사",
         hanja: "月精寺",
-        sido: "강원",
+        location: {
+            sido: "강원",
+            sigungu: "평창군",
+            address: "강원 평창군",
+        },
         area: "강원",
-        sigungu: "평창군",
-        address: "강원 평창군",
         summary: "전나무 숲길과 함께 걷기 좋은 오대산 사찰",
         description:
             "오대산의 자연과 전나무 숲길을 걸으며 잠시 쉬어가기 좋은 사찰입니다.",
@@ -329,10 +357,12 @@ export const temples: Temple[] = [
         slug: "bongeunsa",
         name: "봉은사",
         hanja: "奉恩寺",
-        sido: "서울",
+        location: {
+            sido: "서울",
+            sigungu: "강남구",
+            address: "서울 강남구",
+        },
         area: "수도권",
-        sigungu: "강남구",
-        address: "서울 강남구",
         summary: "도심 속에서 잠시 쉬어갈 수 있는 편안한 사찰",
         description:
             "서울 강남 도심에서 불교문화와 휴식을 함께 접할 수 있는 사찰입니다.",
@@ -371,10 +401,10 @@ export function getTempleSearchText(temple: Temple) {
         [
             temple.name,
             temple.hanja,
-            temple.sido,
+            temple.location.sido,
             temple.area,
-            temple.sigungu,
-            temple.address,
+            temple.location.sigungu,
+            temple.location.address,
             temple.summary,
             temple.description,
             temple.order,
@@ -382,11 +412,8 @@ export function getTempleSearchText(temple: Temple) {
             temple.founder,
             temple.openingHours,
             temple.admissionFee,
-            temple.transport?.nearestStation,
-            temple.transport?.walking,
-            temple.transport?.shuttle,
-            temple.transport?.notes,
-            ...(temple.transport?.bus ?? []),
+            temple.publicTransit?.accessPoint?.name,
+            temple.publicTransit?.note,
             temple.parking?.available === true
                 ? "주차 가능"
                 : temple.parking?.available === false

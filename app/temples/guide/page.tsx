@@ -189,7 +189,7 @@ export default function TempleGuidePage() {
 
             const matchesRegion =
                 selectedRegion === "전체" ||
-                temple.sido === selectedRegion;
+                temple.location.sido === selectedRegion;
 
             const matchesSearch =
                 normalizedQuery.length === 0 ||
@@ -494,8 +494,8 @@ export default function TempleGuidePage() {
                                                 </strong>
 
                                                 <span className="mt-1 block text-sm text-[#8B95A1]">
-                                                    {temple.sido}{" "}
-                                                    {temple.sigungu}
+                                                    {temple.location.sido}{" "}
+                                                    {temple.location.sigungu}
                                                 </span>
                                             </span>
 

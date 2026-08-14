@@ -113,9 +113,9 @@ export function getTempleForFood(program: TempleFoodProgram) {
 }
 
 function getTempleDisplayLocation(temple: Temple) {
-    const shortSigungu = temple.sigungu.replace(/(시|군|구)$/, "");
+    const shortSigungu = temple.location.sigungu.replace(/(시|군|구)$/, "");
 
-    return `${temple.sido} ${shortSigungu}`;
+    return `${temple.location.sido} ${shortSigungu}`;
 }
 
 export function getTempleFoodDisplayInfo(program: TempleFoodProgram) {

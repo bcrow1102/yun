@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import {
     getTempleBySlug,
     temples,
+    type TemplePublicTransitV1,
 } from "../temples";
 import { getTempleStaysByTempleSlug } from "../../stay/data";
 import { getEventsByTempleSlug } from "../../../events/data";
@@ -245,6 +246,47 @@ function InformationRow({
     );
 }
 
+function getAccessPointLabel(
+    accessPoint: TemplePublicTransitV1["accessPoint"],
+) {
+    if (!accessPoint) {
+        return undefined;
+    }
+
+    const typeLabels = {
+        subway: "지하철역",
+        train: "기차역",
+        bus: "버스 정류장",
+        terminal: "터미널",
+    } as const;
+    const typeLabel = typeLabels[accessPoint.type];
+
+    return accessPoint.name
+        ? `${typeLabel} · ${accessPoint.name}`
+        : typeLabel;
+}
+
+function getLastMileLabel(
+    lastMile: TemplePublicTransitV1["lastMile"],
+) {
+    if (!lastMile) {
+        return undefined;
+    }
+
+    const modeLabels = {
+        walk: "도보",
+        localBus: "지역버스",
+        shuttle: "셔틀버스",
+        taxi: "택시",
+        none: "추가 이동 없음",
+    } as const;
+    const modeLabel = modeLabels[lastMile.mode];
+
+    return lastMile.minutes === undefined
+        ? modeLabel
+        : `${modeLabel} 약 ${lastMile.minutes}분`;
+}
+
 export function generateStaticParams() {
     return temples
         .filter((temple) => temple.published)
@@ -268,11 +310,9 @@ export default async function TempleDetailPage({
     const templeFoods = getTempleFoodsByTempleSlug(temple.slug);
 
     const hasTransportInformation =
-        temple.transport?.nearestStation ||
-        temple.transport?.walking ||
-        temple.transport?.shuttle ||
-        temple.transport?.notes ||
-        temple.transport?.bus?.length;
+        temple.publicTransit?.accessPoint ||
+        temple.publicTransit?.lastMile ||
+        temple.publicTransit?.note;
 
     const hasParkingInformation =
         temple.parking?.available !== undefined ||
@@ -332,7 +372,8 @@ export default async function TempleDetailPage({
 
                             <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-[#61705B]">
                                 <span>
-                                    {temple.sido} {temple.sigungu}
+                                    {temple.location.sido}{" "}
+                                    {temple.location.sigungu}
                                 </span>
 
                                 {temple.order && (
@@ -503,44 +544,24 @@ export default async function TempleDetailPage({
                                 {hasTransportInformation ? (
                                     <dl className="mt-4">
                                         <InformationRow
-                                            label="가까운 역"
-                                            value={
-                                                temple.transport
-                                                    ?.nearestStation
-                                            }
+                                            label="주요 접근 지점"
+                                            value={getAccessPointLabel(
+                                                temple.publicTransit
+                                                    ?.accessPoint,
+                                            )}
                                         />
 
                                         <InformationRow
-                                            label="도보 이동"
-                                            value={
-                                                temple.transport
-                                                    ?.walking
-                                            }
-                                        />
-
-                                        <InformationRow
-                                            label="버스"
-                                            value={
-                                                temple.transport?.bus?.join(
-                                                    "\n",
-                                                )
-                                            }
-                                        />
-
-                                        <InformationRow
-                                            label="셔틀버스"
-                                            value={
-                                                temple.transport
-                                                    ?.shuttle
-                                            }
+                                            label="마지막 이동"
+                                            value={getLastMileLabel(
+                                                temple.publicTransit
+                                                    ?.lastMile,
+                                            )}
                                         />
 
                                         <InformationRow
                                             label="참고사항"
-                                            value={
-                                                temple.transport
-                                                    ?.notes
-                                            }
+                                            value={temple.publicTransit?.note}
                                         />
                                     </dl>
                                 ) : (
@@ -556,10 +577,10 @@ export default async function TempleDetailPage({
                                     </div>
                                 )}
 
-                                {temple.transport?.updatedAt && (
+                                {temple.publicTransit?.updatedAt && (
                                     <p className="mt-4 text-xs text-[#8B95A1]">
                                         교통정보 최종 확인:{" "}
-                                        {temple.transport.updatedAt}
+                                        {temple.publicTransit.updatedAt}
                                     </p>
                                 )}
                             </section>
@@ -643,7 +664,7 @@ export default async function TempleDetailPage({
                                 <dl className="mt-3">
                                     <InformationRow
                                         label="주소"
-                                        value={temple.address}
+                                        value={temple.location.address}
                                     />
 
                                     <InformationRow
