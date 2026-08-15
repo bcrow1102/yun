@@ -13,10 +13,167 @@ import {
     normalizeTempleSearchText,
     SIDO_LIST,
     temples,
+    type Temple,
 } from "./temples";
+import { getTempleStaysByTempleSlug } from "../stay/data";
+import { getTempleFoodsByTempleSlug } from "../food/data";
+import { getEventsByTempleSlug } from "../../events/data";
 
 const FEATURED_TEMPLE_COUNT = 6;
 const TEXT_LIST_BATCH_SIZE = 12;
+
+const TEMPLE_TRAIT_PRIORITY = [
+    "외국인 방문",
+    "대중교통",
+    "아이와 함께",
+    "접근 편의",
+    "도심 사찰",
+    "문화유산",
+    "산사",
+    "숲길",
+    "휴식",
+    "역사",
+    "전통사찰",
+] as const;
+
+const TEMPLE_TRAIT_GROUPS: Record<string, string> = {
+    "외국인 방문": "visit",
+    대중교통: "visit",
+    "아이와 함께": "visit",
+    "접근 편의": "visit",
+    "도심 사찰": "setting",
+    산사: "setting",
+    숲길: "setting",
+    문화유산: "experience",
+    휴식: "experience",
+    역사: "experience",
+    전통사찰: "experience",
+};
+
+const TEMPLE_TRAIT_QUERY_TERMS: Record<string, readonly string[]> = {
+    "외국인 방문": ["외국인", "영어"],
+    대중교통: ["대중교통", "차 없이", "차없이", "버스", "지하철", "전철"],
+    "아이와 함께": ["아이", "어린이", "가족"],
+    "접근 편의": ["접근 편의", "접근", "무장애"],
+    "도심 사찰": ["도심 사찰", "도심", "도시"],
+    문화유산: ["문화유산", "유산"],
+    산사: ["산사", "산속"],
+    숲길: ["숲길", "숲", "산책"],
+    휴식: ["휴식", "쉬기", "힐링"],
+    역사: ["역사"],
+    전통사찰: ["전통사찰"],
+};
+
+type TempleConnection = {
+    label: string;
+    href: string;
+};
+
+function getTraitPriority(trait: string) {
+    const priority = TEMPLE_TRAIT_PRIORITY.indexOf(
+        trait as (typeof TEMPLE_TRAIT_PRIORITY)[number],
+    );
+
+    return priority === -1 ? TEMPLE_TRAIT_PRIORITY.length : priority;
+}
+
+function isTraitRelevantToQuery(trait: string, query: string) {
+    if (!query) {
+        return false;
+    }
+
+    const normalizedQuery = normalizeTempleSearchText(query);
+    const terms = TEMPLE_TRAIT_QUERY_TERMS[trait] ?? [trait];
+
+    return terms.some((term) =>
+        normalizedQuery.includes(normalizeTempleSearchText(term)),
+    );
+}
+
+function selectVisibleTempleTraits(
+    traits: readonly string[],
+    query: string,
+) {
+    const rankedTraits = [...traits].sort(
+        (left, right) =>
+            getTraitPriority(left) - getTraitPriority(right) ||
+            left.localeCompare(right, "ko-KR"),
+    );
+    const selected: string[] = [];
+
+    for (const trait of rankedTraits) {
+        if (isTraitRelevantToQuery(trait, query)) {
+            selected.push(trait);
+        }
+
+        if (selected.length === 2) {
+            return selected;
+        }
+    }
+
+    const selectedGroups = new Set(
+        selected.map((trait) => TEMPLE_TRAIT_GROUPS[trait] ?? "other"),
+    );
+
+    for (const trait of rankedTraits) {
+        if (selected.includes(trait)) {
+            continue;
+        }
+
+        const group = TEMPLE_TRAIT_GROUPS[trait] ?? "other";
+
+        if (!selectedGroups.has(group)) {
+            selected.push(trait);
+            selectedGroups.add(group);
+        }
+
+        if (selected.length === 2) {
+            return selected;
+        }
+    }
+
+    for (const trait of rankedTraits) {
+        if (!selected.includes(trait)) {
+            selected.push(trait);
+        }
+
+        if (selected.length === 2) {
+            break;
+        }
+    }
+
+    return selected;
+}
+
+function getTempleConnections(temple: Temple): TempleConnection[] {
+    const templeStay = getTempleStaysByTempleSlug(temple.slug)[0];
+    const templeFood = getTempleFoodsByTempleSlug(temple.slug)[0];
+    const event = getEventsByTempleSlug(temple.slug)[0];
+    const connections: TempleConnection[] = [];
+
+    if (templeStay) {
+        connections.push({
+            label: "템플스테이",
+            href: `/temples/stay/${templeStay.id}`,
+        });
+    }
+
+    if (templeFood) {
+        connections.push({
+            label: "사찰음식",
+            href: `/temples/food/${templeFood.id}`,
+        });
+    }
+
+    if (event) {
+        connections.push({
+            label: "행사",
+            href: event.detailHref,
+        });
+    }
+
+    return connections;
+}
 
 function SearchIcon() {
     return (
@@ -182,6 +339,7 @@ export default function TempleGuidePage() {
         useState(0);
 
     const resultsSectionRef = useRef<HTMLElement>(null);
+    const browseControlsRef = useRef<HTMLDivElement>(null);
 
     const filteredTemples = useMemo(() => {
         const normalizedQuery =
@@ -235,6 +393,31 @@ export default function TempleGuidePage() {
         setSearchTerm("");
         setRegionPanelOpen(false);
         setTextListVisibleCount(0);
+    }
+
+    function scrollToBrowseControls() {
+        window.setTimeout(() => {
+            browseControlsRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            });
+        }, 0);
+    }
+
+    function collapseTextListBatch() {
+        setTextListVisibleCount((count) =>
+            Math.max(
+                TEXT_LIST_BATCH_SIZE,
+                Math.floor((count - 1) / TEXT_LIST_BATCH_SIZE) *
+                    TEXT_LIST_BATCH_SIZE,
+            ),
+        );
+        scrollToBrowseControls();
+    }
+
+    function collapseEntireTextList() {
+        setTextListVisibleCount(0);
+        scrollToBrowseControls();
     }
 
     const hasActiveFilter =
@@ -480,72 +663,131 @@ export default function TempleGuidePage() {
                     {filteredTemples.length > 0 ? (
                         <>
                             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                                {featuredTemples.map((temple) => (
-                                    <Link
-                                        key={temple.slug}
-                                        href={`/temples/guide/${temple.slug}`}
-                                        className="group overflow-hidden rounded-[22px] border border-[#E3E8EF] bg-white text-left transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(25,31,40,0.08)]"
-                                    >
-                                        <span className="flex h-40 items-center justify-center bg-[#F3F7F1]">
-                                            {temple.image ? (
-                                                <img
-                                                    src={temple.image}
-                                                    alt={
-                                                        temple.imageAlt ??
-                                                        `${temple.name} 전경`
-                                                    }
-                                                    className="h-full w-full object-cover"
-                                                />
-                                            ) : (
-                                                <TempleIllustration />
+                                {featuredTemples.map((temple) => {
+                                    const visibleTraits =
+                                        selectVisibleTempleTraits(
+                                            temple.tags,
+                                            searchTerm,
+                                        );
+                                    const connections =
+                                        getTempleConnections(temple);
+
+                                    return (
+                                        <article
+                                            key={temple.slug}
+                                            className="group flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#E3E8EF] bg-white text-left transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(25,31,40,0.08)]"
+                                        >
+                                            <Link
+                                                href={`/temples/guide/${temple.slug}`}
+                                                className="flex min-w-0 flex-1 flex-col"
+                                            >
+                                                <span className="flex h-40 items-center justify-center bg-[#F3F7F1]">
+                                                    {temple.image ? (
+                                                        <img
+                                                            src={temple.image}
+                                                            alt={
+                                                                temple.imageAlt ??
+                                                                `${temple.name} 전경`
+                                                            }
+                                                            className="h-full w-full object-cover"
+                                                        />
+                                                    ) : (
+                                                        <TempleIllustration />
+                                                    )}
+                                                </span>
+
+                                                <span className="flex min-w-0 flex-1 flex-col p-5">
+                                                    <span className="flex items-start justify-between gap-3">
+                                                        <span className="min-w-0">
+                                                            <strong className="block text-[20px] font-bold">
+                                                                {temple.name}
+                                                            </strong>
+
+                                                            <span className="mt-1 block text-sm text-[#8B95A1]">
+                                                                {
+                                                                    temple
+                                                                        .location
+                                                                        .sido
+                                                                }{" "}
+                                                                {
+                                                                    temple
+                                                                        .location
+                                                                        .sigungu
+                                                                }
+                                                            </span>
+                                                        </span>
+
+                                                        <span className="mt-1 shrink-0 text-[#7A8B74] transition group-hover:translate-x-1">
+                                                            <ChevronIcon />
+                                                        </span>
+                                                    </span>
+
+                                                    <span className="mt-4 block text-sm leading-6 text-[#667085]">
+                                                        {temple.summary}
+                                                    </span>
+
+                                                    {visibleTraits.length > 0 && (
+                                                        <span className="mt-4 flex flex-wrap gap-2">
+                                                            {visibleTraits.map(
+                                                                (trait) => (
+                                                                    <span
+                                                                        key={
+                                                                            trait
+                                                                        }
+                                                                        className="rounded-full bg-[#F3F7F1] px-3 py-1.5 text-xs font-semibold text-[#61705B]"
+                                                                    >
+                                                                        {trait}
+                                                                    </span>
+                                                                ),
+                                                            )}
+                                                        </span>
+                                                    )}
+                                                </span>
+                                            </Link>
+
+                                            {connections.length > 0 && (
+                                                <nav
+                                                    aria-label={`${temple.name} 연결 정보`}
+                                                    className="mx-5 flex min-h-12 flex-wrap items-center gap-x-4 gap-y-1 border-t border-[#EEF0F2] py-1"
+                                                >
+                                                    {connections.map(
+                                                        (connection) => (
+                                                            <Link
+                                                                key={
+                                                                    connection.label
+                                                                }
+                                                                href={
+                                                                    connection.href
+                                                                }
+                                                                className="relative inline-flex min-h-11 items-center text-xs font-medium text-[#667085] transition-colors after:absolute after:bottom-1.5 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-[#F4F54A] after:transition-transform hover:text-[#252A31] hover:after:scale-x-100 focus-visible:text-[#252A31] focus-visible:outline-none focus-visible:after:scale-x-100 active:after:scale-x-100"
+                                                            >
+                                                                {
+                                                                    connection.label
+                                                                }
+                                                            </Link>
+                                                        ),
+                                                    )}
+                                                </nav>
                                             )}
-                                        </span>
-
-                                        <span className="block p-5">
-                                            <span className="flex items-start justify-between gap-3">
-                                                <span>
-                                                    <strong className="block text-[20px] font-bold">
-                                                        {temple.name}
-                                                    </strong>
-
-                                                    <span className="mt-1 block text-sm text-[#8B95A1]">
-                                                        {temple.location.sido}{" "}
-                                                        {temple.location.sigungu}
-                                                    </span>
-                                                </span>
-
-                                                <span className="mt-1 text-[#7A8B74] transition group-hover:translate-x-1">
-                                                    <ChevronIcon />
-                                                </span>
-                                            </span>
-
-                                            <span className="mt-4 block text-sm leading-6 text-[#667085]">
-                                                {temple.summary}
-                                            </span>
-
-                                            <span className="mt-4 flex flex-wrap gap-2">
-                                                {temple.tags.map((tag) => (
-                                                    <span
-                                                        key={tag}
-                                                        className="rounded-full bg-[#F3F7F1] px-3 py-1.5 text-xs font-semibold text-[#61705B]"
-                                                    >
-                                                        {tag}
-                                                    </span>
-                                                ))}
-                                            </span>
-                                        </span>
-                                    </Link>
-                                ))}
+                                        </article>
+                                    );
+                                })}
                             </div>
 
                             {textListVisibleCount === 0 &&
                                 remainingTemples.length > 0 && (
-                                    <div className="mt-6 flex justify-center">
+                                    <div
+                                        ref={browseControlsRef}
+                                        className="mt-6 flex justify-center"
+                                    >
                                         <button
                                             type="button"
                                             onClick={() =>
                                                 setTextListVisibleCount(
-                                                    TEXT_LIST_BATCH_SIZE,
+                                                    Math.min(
+                                                        TEXT_LIST_BATCH_SIZE,
+                                                        remainingTemples.length,
+                                                    ),
                                                 )
                                             }
                                             className="min-h-11 px-3 py-2 text-sm font-medium text-[#667085] underline decoration-[#C5CBD2] underline-offset-4 transition hover:text-[#252A31]"
@@ -581,23 +823,48 @@ export default function TempleGuidePage() {
                                         ))}
                                     </div>
 
-                                    {hasMoreTextTemples && (
-                                        <div className="mt-4 flex justify-center">
+                                    <div
+                                        ref={browseControlsRef}
+                                        className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1"
+                                    >
+                                        {hasMoreTextTemples && (
                                             <button
                                                 type="button"
                                                 onClick={() =>
                                                     setTextListVisibleCount(
                                                         (count) =>
-                                                            count +
-                                                            TEXT_LIST_BATCH_SIZE,
+                                                            Math.min(
+                                                                count +
+                                                                    TEXT_LIST_BATCH_SIZE,
+                                                                remainingTemples.length,
+                                                            ),
                                                     )
                                                 }
                                                 className="min-h-11 px-3 py-2 text-sm font-medium text-[#667085] underline decoration-[#C5CBD2] underline-offset-4 transition hover:text-[#252A31]"
                                             >
                                                 더 보기
                                             </button>
-                                        </div>
-                                    )}
+                                        )}
+
+                                        {visibleTextTemples.length >
+                                            TEXT_LIST_BATCH_SIZE && (
+                                            <button
+                                                type="button"
+                                                onClick={collapseTextListBatch}
+                                                className="min-h-11 px-3 py-2 text-sm font-medium text-[#667085] underline decoration-[#C5CBD2] underline-offset-4 transition hover:text-[#252A31]"
+                                            >
+                                                12개 접기
+                                            </button>
+                                        )}
+
+                                        <button
+                                            type="button"
+                                            onClick={collapseEntireTextList}
+                                            className="min-h-11 px-3 py-2 text-sm font-medium text-[#667085] underline decoration-[#C5CBD2] underline-offset-4 transition hover:text-[#252A31]"
+                                        >
+                                            전체 접기
+                                        </button>
+                                    </div>
                                 </div>
                             )}
                         </>
