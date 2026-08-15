@@ -15,7 +15,8 @@ import {
     temples,
 } from "./temples";
 
-const INITIAL_VISIBLE_COUNT = 30;
+const FEATURED_TEMPLE_COUNT = 6;
+const TEXT_LIST_BATCH_SIZE = 12;
 
 function SearchIcon() {
     return (
@@ -177,9 +178,8 @@ export default function TempleGuidePage() {
     const [regionPanelOpen, setRegionPanelOpen] = useState(false);
     const [searchInput, setSearchInput] = useState("");
     const [searchTerm, setSearchTerm] = useState("");
-    const [visibleCount, setVisibleCount] = useState(
-        INITIAL_VISIBLE_COUNT,
-    );
+    const [textListVisibleCount, setTextListVisibleCount] =
+        useState(0);
 
     const resultsSectionRef = useRef<HTMLElement>(null);
 
@@ -218,14 +218,14 @@ export default function TempleGuidePage() {
     function handleSearch(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         setSearchTerm(searchInput.trim());
-        setVisibleCount(INITIAL_VISIBLE_COUNT);
+        setTextListVisibleCount(0);
         moveToResults();
     }
 
     function handleRegionChange(region: string) {
         setSelectedRegion(region);
         setRegionPanelOpen(false);
-        setVisibleCount(INITIAL_VISIBLE_COUNT);
+        setTextListVisibleCount(0);
         moveToResults();
     }
 
@@ -234,7 +234,7 @@ export default function TempleGuidePage() {
         setSearchInput("");
         setSearchTerm("");
         setRegionPanelOpen(false);
-        setVisibleCount(INITIAL_VISIBLE_COUNT);
+        setTextListVisibleCount(0);
     }
 
     const hasActiveFilter =
@@ -256,6 +256,20 @@ export default function TempleGuidePage() {
         return "사찰 둘러보기";
     }, [searchTerm, selectedRegion]);
 
+    const featuredTemples = filteredTemples.slice(
+        0,
+        FEATURED_TEMPLE_COUNT,
+    );
+    const remainingTemples = filteredTemples.slice(
+        FEATURED_TEMPLE_COUNT,
+    );
+    const visibleTextTemples = remainingTemples.slice(
+        0,
+        textListVisibleCount,
+    );
+    const hasMoreTextTemples =
+        visibleTextTemples.length < remainingTemples.length;
+
     return (
         <div className="min-h-screen bg-white text-[#252A31]">
 
@@ -264,11 +278,7 @@ export default function TempleGuidePage() {
             <main>
                 <section className="bg-[#F3F7F1]">
                     <div className="mx-auto max-w-6xl px-5 py-11 md:px-8 md:py-16">
-                        <span className="text-sm font-bold text-[#61705B]">
-                            사찰 안내
-                        </span>
-
-                        <h1 className="mt-3 text-[34px] font-bold tracking-[-0.045em] md:text-[48px]">
+                        <h1 className="text-[34px] font-bold tracking-[-0.045em] md:text-[48px]">
                             가까운 사찰을 찾아보세요
                         </h1>
 
@@ -430,11 +440,7 @@ export default function TempleGuidePage() {
                 >
                     <div className="mb-5 flex items-end justify-between gap-4">
                         <div>
-                            <span className="text-xs font-bold text-[#7A8B74]">
-                                등록된 사찰
-                            </span>
-
-                            <h2 className="mt-1 text-[24px] font-bold tracking-[-0.035em] md:text-[28px]">
+                            <h2 className="text-[24px] font-bold tracking-[-0.035em] md:text-[28px]">
                                 {resultTitle}
                             </h2>
                         </div>
@@ -474,84 +480,124 @@ export default function TempleGuidePage() {
                     {filteredTemples.length > 0 ? (
                         <>
                             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                                {filteredTemples
-                                    .slice(0, visibleCount)
-                                    .map((temple) => (
+                                {featuredTemples.map((temple) => (
                                     <Link
-                                    key={temple.slug}
-                                    href={`/temples/guide/${temple.slug}`}
-                                    className="group overflow-hidden rounded-[22px] border border-[#E3E8EF] bg-white text-left transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(25,31,40,0.08)]"
-                                >
-                                    <span className="flex h-40 items-center justify-center bg-[#F3F7F1]">
-                                        {temple.image ? (
-                                            <img
-                                                src={temple.image}
-                                                alt={
-                                                    temple.imageAlt ??
-                                                    `${temple.name} 전경`
-                                                }
-                                                className="h-full w-full object-cover"
-                                            />
-                                        ) : (
-                                            <TempleIllustration />
-                                        )}
-                                    </span>
+                                        key={temple.slug}
+                                        href={`/temples/guide/${temple.slug}`}
+                                        className="group overflow-hidden rounded-[22px] border border-[#E3E8EF] bg-white text-left transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(25,31,40,0.08)]"
+                                    >
+                                        <span className="flex h-40 items-center justify-center bg-[#F3F7F1]">
+                                            {temple.image ? (
+                                                <img
+                                                    src={temple.image}
+                                                    alt={
+                                                        temple.imageAlt ??
+                                                        `${temple.name} 전경`
+                                                    }
+                                                    className="h-full w-full object-cover"
+                                                />
+                                            ) : (
+                                                <TempleIllustration />
+                                            )}
+                                        </span>
 
-                                    <span className="block p-5">
-                                        <span className="flex items-start justify-between gap-3">
-                                            <span>
-                                                <strong className="block text-[20px] font-bold">
-                                                    {temple.name}
-                                                </strong>
+                                        <span className="block p-5">
+                                            <span className="flex items-start justify-between gap-3">
+                                                <span>
+                                                    <strong className="block text-[20px] font-bold">
+                                                        {temple.name}
+                                                    </strong>
 
-                                                <span className="mt-1 block text-sm text-[#8B95A1]">
-                                                    {temple.location.sido}{" "}
-                                                    {temple.location.sigungu}
+                                                    <span className="mt-1 block text-sm text-[#8B95A1]">
+                                                        {temple.location.sido}{" "}
+                                                        {temple.location.sigungu}
+                                                    </span>
+                                                </span>
+
+                                                <span className="mt-1 text-[#7A8B74] transition group-hover:translate-x-1">
+                                                    <ChevronIcon />
                                                 </span>
                                             </span>
 
-                                            <span className="mt-1 text-[#7A8B74] transition group-hover:translate-x-1">
-                                                <ChevronIcon />
+                                            <span className="mt-4 block text-sm leading-6 text-[#667085]">
+                                                {temple.summary}
                                             </span>
-                                        </span>
 
-                                        <span className="mt-4 block text-sm leading-6 text-[#667085]">
-                                            {temple.summary}
-                                        </span>
-
-                                        <span className="mt-4 flex flex-wrap gap-2">
-                                            {temple.tags.map(
-                                                (tag) => (
+                                            <span className="mt-4 flex flex-wrap gap-2">
+                                                {temple.tags.map((tag) => (
                                                     <span
                                                         key={tag}
                                                         className="rounded-full bg-[#F3F7F1] px-3 py-1.5 text-xs font-semibold text-[#61705B]"
                                                     >
                                                         {tag}
                                                     </span>
-                                                ),
-                                            )}
+                                                ))}
+                                            </span>
                                         </span>
-                                    </span>
                                     </Link>
-                                    ))}
+                                ))}
                             </div>
-                            {visibleCount < filteredTemples.length && (
-                                <div className="mt-6 flex justify-center">
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            setVisibleCount((count) =>
-                                                Math.min(
-                                                    count +
-                                                        INITIAL_VISIBLE_COUNT,
-                                                    filteredTemples.length,
-                                                ),
-                                            )
-                                        }
-                                        className="min-h-11 rounded-xl border border-[#DDE1E6] bg-white px-6 py-3 text-sm font-semibold text-[#252A31] transition hover:border-[#B8BEC6]"
-                                    >
-                                        사찰 더 보기
-                                    </button>
+
+                            {textListVisibleCount === 0 &&
+                                remainingTemples.length > 0 && (
+                                    <div className="mt-6 flex justify-center">
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                setTextListVisibleCount(
+                                                    TEXT_LIST_BATCH_SIZE,
+                                                )
+                                            }
+                                            className="min-h-11 px-3 py-2 text-sm font-medium text-[#667085] underline decoration-[#C5CBD2] underline-offset-4 transition hover:text-[#252A31]"
+                                        >
+                                            사찰 더보기
+                                        </button>
+                                    </div>
+                                )}
+
+                            {visibleTextTemples.length > 0 && (
+                                <div className="mt-7">
+                                    <div className="grid grid-cols-1 gap-x-6 border-t border-[#E1E4E8] md:grid-cols-2 lg:grid-cols-3">
+                                        {visibleTextTemples.map((temple) => (
+                                            <Link
+                                                key={temple.slug}
+                                                href={`/temples/guide/${temple.slug}`}
+                                                className="group flex min-h-14 min-w-0 items-center justify-between gap-3 border-b border-[#E1E4E8] py-3 transition-colors hover:border-[#B8BEC7]"
+                                            >
+                                                <span className="min-w-0">
+                                                    <strong className="block truncate text-sm font-medium text-[#343B45] transition-colors group-hover:text-[#171B22]">
+                                                        {temple.name}
+                                                    </strong>
+                                                    <span className="mt-0.5 block truncate text-xs text-[#8B95A1]">
+                                                        {temple.location.sido}{" "}
+                                                        {temple.location.sigungu}
+                                                    </span>
+                                                </span>
+
+                                                <span className="shrink-0 text-[#A0A7B0] transition-transform group-hover:translate-x-0.5 group-hover:text-[#667085]">
+                                                    <ChevronIcon />
+                                                </span>
+                                            </Link>
+                                        ))}
+                                    </div>
+
+                                    {hasMoreTextTemples && (
+                                        <div className="mt-4 flex justify-center">
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    setTextListVisibleCount(
+                                                        (count) =>
+                                                            count +
+                                                            TEXT_LIST_BATCH_SIZE,
+                                                    )
+                                                }
+                                                className="min-h-11 px-3 py-2 text-sm font-medium text-[#667085] underline decoration-[#C5CBD2] underline-offset-4 transition hover:text-[#252A31]"
+                                            >
+                                                더 보기
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </>
