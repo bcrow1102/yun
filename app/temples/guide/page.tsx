@@ -15,6 +15,8 @@ import {
     temples,
 } from "./temples";
 
+const INITIAL_VISIBLE_COUNT = 30;
+
 function SearchIcon() {
     return (
         <svg
@@ -175,6 +177,9 @@ export default function TempleGuidePage() {
     const [regionPanelOpen, setRegionPanelOpen] = useState(false);
     const [searchInput, setSearchInput] = useState("");
     const [searchTerm, setSearchTerm] = useState("");
+    const [visibleCount, setVisibleCount] = useState(
+        INITIAL_VISIBLE_COUNT,
+    );
 
     const resultsSectionRef = useRef<HTMLElement>(null);
 
@@ -213,12 +218,14 @@ export default function TempleGuidePage() {
     function handleSearch(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         setSearchTerm(searchInput.trim());
+        setVisibleCount(INITIAL_VISIBLE_COUNT);
         moveToResults();
     }
 
     function handleRegionChange(region: string) {
         setSelectedRegion(region);
         setRegionPanelOpen(false);
+        setVisibleCount(INITIAL_VISIBLE_COUNT);
         moveToResults();
     }
 
@@ -227,6 +234,7 @@ export default function TempleGuidePage() {
         setSearchInput("");
         setSearchTerm("");
         setRegionPanelOpen(false);
+        setVisibleCount(INITIAL_VISIBLE_COUNT);
     }
 
     const hasActiveFilter =
@@ -464,9 +472,12 @@ export default function TempleGuidePage() {
                     )}
 
                     {filteredTemples.length > 0 ? (
-                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                            {filteredTemples.map((temple) => (
-                                <Link
+                        <>
+                            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                                {filteredTemples
+                                    .slice(0, visibleCount)
+                                    .map((temple) => (
+                                    <Link
                                     key={temple.slug}
                                     href={`/temples/guide/${temple.slug}`}
                                     className="group overflow-hidden rounded-[22px] border border-[#E3E8EF] bg-white text-left transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(25,31,40,0.08)]"
@@ -521,9 +532,29 @@ export default function TempleGuidePage() {
                                             )}
                                         </span>
                                     </span>
-                                </Link>
-                            ))}
-                        </div>
+                                    </Link>
+                                    ))}
+                            </div>
+                            {visibleCount < filteredTemples.length && (
+                                <div className="mt-6 flex justify-center">
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            setVisibleCount((count) =>
+                                                Math.min(
+                                                    count +
+                                                        INITIAL_VISIBLE_COUNT,
+                                                    filteredTemples.length,
+                                                ),
+                                            )
+                                        }
+                                        className="min-h-11 rounded-xl border border-[#DDE1E6] bg-white px-6 py-3 text-sm font-semibold text-[#252A31] transition hover:border-[#B8BEC6]"
+                                    >
+                                        사찰 더 보기
+                                    </button>
+                                </div>
+                            )}
+                        </>
                     ) : (
                         <div className="rounded-[22px] border border-[#E3E8EF] bg-[#F8F9FA] px-5 py-12 text-center">
                             <strong className="block text-lg">

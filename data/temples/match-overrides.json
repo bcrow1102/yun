@@ -1,0 +1,119 @@
+{
+  "4": {
+    "localDataSourceId": "localdata:3080000:CDFD1006",
+    "reason": "staging에서 공식 주소와 지번/좌표를 교차 검증한 삼성암 match 유지"
+  },
+  "29": {
+    "localDataSourceId": "localdata:3190000:CDFD1002",
+    "aliases": ["호국지장사"],
+    "reason": "동일 현충로 210 주소의 공식명/LOCALDATA 명칭 차이"
+  },
+  "33": {
+    "localDataSourceId": "localdata:3210000:CDFD1001",
+    "aliases": ["백제불교초전법륜성지우면산대성사", "대성사"],
+    "reason": "동일 주소이며 MCST 명칭에만 구 명칭 안내가 포함됨"
+  },
+  "94": {
+    "localDataSourceId": "localdata:3290000:CDFD1001",
+    "reason": "MCST 부산진구 축약 표기와 동일한 범천동 1534-1 광명사"
+  },
+  "138": {
+    "localDataSourceId": "localdata:6300000:6300000-001",
+    "aliases": ["복전선원"],
+    "reason": "MCST가 복전암으로 명칭을 갱신하며 구 복전선원을 병기함"
+  },
+  "168": {
+    "localDataSourceId": "localdata:6410000:3940000-207",
+    "aliases": ["아미타사", "덕암사"],
+    "reason": "동일 대서문길 145-63 주소이며 MCST가 구 명칭을 병기함"
+  },
+  "230": {
+    "localDataSourceId": "localdata:4050000:CDFD1004",
+    "reason": "동일 어진로 842 및 어비리 807-9 주소의 동도사"
+  },
+  "254": {
+    "localDataSourceId": "localdata:6410000:3910000-105",
+    "reason": "MCST 덕목리 주소와 일치하는 심복사 레코드"
+  },
+  "281": {
+    "localDataSourceId": "localdata:6530000:6530000-001",
+    "aliases": ["대한불교조계종 감로사"],
+    "reason": "동일 영진안길 72 주소이며 LOCALDATA에 종단명이 접두됨"
+  },
+  "288": {
+    "localDataSourceId": "localdata:4351000:CDFD1002",
+    "reason": "MCST 파일이리와 LOCALDATA 화일리의 행정지명 표기 차이, 산323 일치"
+  },
+  "306": {
+    "localDataSourceId": "localdata:6530000:4301000-002",
+    "reason": "MCST 상로리 72-1과 LOCALDATA 상노리 72번지 1호 표기 차이"
+  },
+  "397": {
+    "localDataSourceId": "localdata:6430000:4480000-002",
+    "aliases": ["대한불교천태종 총본산 구인사"],
+    "reason": "같은 구인사이며 LOCALDATA 명칭에 종단/총본산 설명이 접두됨"
+  },
+  "603": {
+    "localDataSourceId": "localdata:6130000:5845000-006",
+    "aliases": ["봉래사(제75호)"],
+    "reason": "동일 봉래면 신금리 산66 주소이며 LOCALDATA에 지정번호가 붙음"
+  },
+  "623": {
+    "localDataSourceId": "localdata:6130000:5795000-009",
+    "aliases": ["태평사(제88호)"],
+    "reason": "동일 노안면 영평리 주소이며 LOCALDATA에 지정번호가 붙음"
+  },
+  "636": {
+    "localDataSourceId": "localdata:5880000:CDFD1004",
+    "aliases": ["무안 법천사"],
+    "reason": "동일 무안군 몽탄면의 법천사이며 LOCALDATA에 지역명이 접두됨"
+  },
+  "637": {
+    "localDataSourceId": "localdata:5880000:CDFD1001",
+    "aliases": ["무안 약사사"],
+    "reason": "동일 무안읍 약사사이며 LOCALDATA에 지역명이 접두됨"
+  },
+  "639": {
+    "localDataSourceId": "localdata:5880000:CDFD1003",
+    "aliases": ["무안 원갑사"],
+    "reason": "동일 무안군 해제면 원갑사이며 LOCALDATA에 지역명이 접두됨"
+  },
+  "695": {
+    "localDataSourceId": "localdata:6470000:5130000-010",
+    "aliases": ["경산포교당"],
+    "reason": "동일 장산로26길 20 주소이며 MCST가 구 명칭을 병기함"
+  },
+  "710": {
+    "localDataSourceId": "localdata:6470000:5050000-005",
+    "aliases": ["백률사"],
+    "reason": "MCST 백율사와 LOCALDATA 백률사는 동일 주소의 표기 차이"
+  },
+  "718": {
+    "localDataSourceId": "localdata:5050000:CDFD1011",
+    "reason": "경주 동명 천룡사 중 MCST 내남면 대각회 사찰과 일치"
+  },
+  "719": {
+    "localDataSourceId": "localdata:6470000:5050000-013",
+    "reason": "경주 동명 천룡사 중 백운대길 101-388 조계종 사찰과 일치"
+  },
+  "730": {
+    "localDataSourceId": "localdata:6470000:5080000-005",
+    "aliases": ["죽장사"],
+    "reason": "동일 죽장2길 90 주소이며 MCST가 구 명칭을 병기함"
+  },
+  "738": {
+    "localDataSourceId": "localdata:5141000:CDFD1007",
+    "aliases": ["석굴암", "제2석굴암"],
+    "reason": "동일 남산4길 24 주소이며 MCST가 구 명칭을 병기함"
+  },
+  "781": {
+    "localDataSourceId": "localdata:5070000:CDFD1012",
+    "aliases": ["일출암"],
+    "reason": "동일 일출길 207 주소이며 MCST 괄호 병기 전 명칭 보존"
+  },
+  "812": {
+    "localDataSourceId": "localdata:6470000:5100000-002",
+    "aliases": ["부귀사", "부귀암"],
+    "reason": "동일 칠밭골길 446 주소이며 MCST가 구 명칭을 병기함"
+  }
+}

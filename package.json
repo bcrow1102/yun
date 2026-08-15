@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "temples:sources": "node scripts/temple-seed/extract-sources.mjs",
+    "temples:seed": "node scripts/temple-seed/generate.mjs",
+    "temples:seed:check": "node scripts/temple-seed/generate.mjs --check",
+    "temples:validate": "node scripts/temple-seed/validate.mjs"
   },
   "dependencies": {
     "next": "16.2.12",
@@ -18,8 +22,11 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "csv-parse": "^7.0.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.12",
+    "pdf-parse": "^2.4.5",
+    "proj4": "^2.21.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

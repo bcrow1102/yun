@@ -1,0 +1,866 @@
+{
+  "report": {
+    "officialTargetCount": 991,
+    "canonicalCount": 991,
+    "existingCanonicalMergeCount": 6,
+    "newCanonicalCount": 985,
+    "matchedWithCoordinatesCount": 874,
+    "matchedWithoutCoordinatesCount": 51,
+    "officialUnmatchedCount": 66,
+    "coordinatesPresentCount": 874,
+    "coordinatesMissingCount": 117,
+    "localDataLinkedCount": 925,
+    "aliasCount": 21,
+    "duplicateCount": 0,
+    "validationFailureCount": 0,
+    "statusTotal": 991
+  },
+  "ambiguousMatches": [
+    {
+      "recordNo": 283,
+      "name": "계조암",
+      "sido": "강원",
+      "sigungu": "속초시",
+      "reason": "동점에 가까운 LOCALDATA 후보가 여러 개임",
+      "candidates": [
+        {
+          "sourceId": "localdata:4231000:CDFD1002",
+          "name": "계조암",
+          "address": "강원특별자치도 속초시 설악동 산 40",
+          "score": 33
+        },
+        {
+          "sourceId": "localdata:6530000:4231000-002",
+          "name": "계조암",
+          "address": "강원특별자치도 속초시 설악산로 1140-115 (설악동)",
+          "score": 33
+        }
+      ]
+    },
+    {
+      "recordNo": 299,
+      "name": "보문사",
+      "sido": "강원",
+      "sigungu": "원주시",
+      "reason": "동점에 가까운 LOCALDATA 후보가 여러 개임",
+      "candidates": [
+        {
+          "sourceId": "localdata:4191000:CDFD1007",
+          "name": "보문사",
+          "address": "강원특별자치도 원주시 행구동 산 105",
+          "score": 33
+        },
+        {
+          "sourceId": "localdata:6530000:4191000-001",
+          "name": "보문사",
+          "address": "강원특별자치도 원주시 행구동 산105번지",
+          "score": 33
+        }
+      ]
+    },
+    {
+      "recordNo": 458,
+      "name": "은석사",
+      "sido": "충남",
+      "sigungu": "천안시",
+      "reason": "동점에 가까운 LOCALDATA 후보가 여러 개임",
+      "candidates": [
+        {
+          "sourceId": "localdata:4490000:CDFD1003",
+          "name": "은석사",
+          "address": "충청남도 천안시 동남구 북면 은지리 산 1-4",
+          "score": 74
+        },
+        {
+          "sourceId": "localdata:6440000:4490000-002",
+          "name": "은석사",
+          "address": "충청남도 천안시 동남구 북면 박문수길 174-1",
+          "score": 66
+        }
+      ]
+    },
+    {
+      "recordNo": 465,
+      "name": "태을암",
+      "sido": "충남",
+      "sigungu": "태안군",
+      "reason": "동점에 가까운 LOCALDATA 후보가 여러 개임",
+      "candidates": [
+        {
+          "sourceId": "localdata:4620000:CDFD1002",
+          "name": "태을암",
+          "address": "충청남도 태안군 태안읍 동문리 산 42",
+          "score": 66
+        },
+        {
+          "sourceId": "localdata:6440000:4620000-001",
+          "name": "태을암",
+          "address": "충청남도 태안군 태안읍 원이로 78-132",
+          "score": 66
+        }
+      ]
+    },
+    {
+      "recordNo": 715,
+      "name": "석굴암",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "reason": "동점에 가까운 LOCALDATA 후보가 여러 개임",
+      "candidates": [
+        {
+          "sourceId": "localdata:5050000:CDFD1002",
+          "name": "석굴암",
+          "address": "경상북도 경주시 진현동 999",
+          "score": 33
+        },
+        {
+          "sourceId": "localdata:6470000:5050000-002",
+          "name": "석굴암",
+          "address": "경상북도 경주시 물미길 22-6 (진현동)",
+          "score": 33
+        }
+      ]
+    }
+  ],
+  "unmatchedSuggestions": [
+    {
+      "recordNo": 2,
+      "name": "불국사",
+      "sido": "서울",
+      "sigungu": "강남구",
+      "address": "서울특별시 강남구 광평로 10길 30-71",
+      "candidates": []
+    },
+    {
+      "recordNo": 3,
+      "name": "화계사",
+      "sido": "서울",
+      "sigungu": "강북구",
+      "address": "서울특별시 강북구 화계사길 117",
+      "candidates": [
+        {
+          "sourceId": "localdata:3080000:CDFD1002",
+          "name": "화계사",
+          "address": "서울특별시 강북구 수유동 487 화계사",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 5,
+      "name": "도선사",
+      "sido": "서울",
+      "sigungu": "강북구",
+      "address": "서울특별시 강북구 삼양로 173길 504",
+      "candidates": [
+        {
+          "sourceId": "localdata:3080000:CDFD1001",
+          "name": "도선사",
+          "address": "서울특별시 강북구 도선사길 278, 도선사 (우이동)",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 10,
+      "name": "약사사",
+      "sido": "서울",
+      "sigungu": "강서구",
+      "address": "서울특별시 강서구 금낭화로17길 261",
+      "candidates": [
+        {
+          "sourceId": "localdata:3150000:CDFD1001",
+          "name": "약사사",
+          "address": "서울특별시 강서구 개화동 332-2",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 11,
+      "name": "미타사",
+      "sido": "서울",
+      "sigungu": "강서구",
+      "address": "서울특별시 강서구 개화동로13길 56-33",
+      "candidates": [
+        {
+          "sourceId": "localdata:3150000:CDFD1002",
+          "name": "미타사",
+          "address": "서울특별시 강서구 개화동 산 81-13",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 12,
+      "name": "법성사",
+      "sido": "서울",
+      "sigungu": "강서구",
+      "address": "서울특별시 강서구 등촌로39가길 103",
+      "candidates": [
+        {
+          "sourceId": "localdata:3150000:CDFD1003",
+          "name": "법성사",
+          "address": "서울특별시 강서구 등촌동 산 23-4",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 14,
+      "name": "약수사",
+      "sido": "서울",
+      "sigungu": "관악구",
+      "address": "서울특별시 관악구 약수암1길 28 (삼성동)",
+      "candidates": [
+        {
+          "sourceId": "localdata:3200000:CDFD1002",
+          "name": "약수사",
+          "address": "서울특별시 관악구 신림동 318",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 16,
+      "name": "성주암",
+      "sido": "서울",
+      "sigungu": "관악구",
+      "address": "서울특별시 관악구 신림로15-250 (신림동)",
+      "candidates": []
+    },
+    {
+      "recordNo": 18,
+      "name": "호압사",
+      "sido": "서울",
+      "sigungu": "금천구",
+      "address": "서울특별시 금천구 호암로 278 (시흥동)",
+      "candidates": []
+    },
+    {
+      "recordNo": 21,
+      "name": "학도암",
+      "sido": "서울",
+      "sigungu": "노원구",
+      "address": "서울특별시 노원구 중계본동 산102",
+      "candidates": [
+        {
+          "sourceId": "localdata:3100000:CDFD1001",
+          "name": "학도암",
+          "address": "서울특별시 노원구 중계동 산 3",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 22,
+      "name": "도안사",
+      "sido": "서울",
+      "sigungu": "노원구",
+      "address": "서울특별시 노원구 덕릉로 145길 99",
+      "candidates": []
+    },
+    {
+      "recordNo": 23,
+      "name": "원통사",
+      "sido": "서울",
+      "sigungu": "도봉구",
+      "address": "서울특별시 도봉구 도봉로169길 520",
+      "candidates": [
+        {
+          "sourceId": "localdata:3090000:CDFD1004",
+          "name": "원통사",
+          "address": "서울특별시 도봉구 도봉동 546",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 24,
+      "name": "천축사",
+      "sido": "서울",
+      "sigungu": "도봉구",
+      "address": "서울특별시 도봉구 도봉산길 92-2",
+      "candidates": [
+        {
+          "sourceId": "localdata:3090000:CDFD1003",
+          "name": "천축사",
+          "address": "서울특별시 도봉구 도봉동 549",
+          "score": 0
+        },
+        {
+          "sourceId": "localdata:3090000:CDFD1002",
+          "name": "천축사",
+          "address": "서울특별시 도봉구 도봉동 549",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 25,
+      "name": "만월암",
+      "sido": "서울",
+      "sigungu": "도봉구",
+      "address": "서울특별시 도봉구 도봉산길 92-4",
+      "candidates": [
+        {
+          "sourceId": "localdata:3090000:CDFD1001",
+          "name": "만월암",
+          "address": "서울특별시 도봉구 도봉동 산 29-1",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 31,
+      "name": "달마사",
+      "sido": "서울",
+      "sigungu": "동작구",
+      "address": "서울특별시 동작구 서달로 50-26",
+      "candidates": [
+        {
+          "sourceId": "localdata:3190000:CDFD1003",
+          "name": "달마사",
+          "address": "서울특별시 동작구 흑석동 산 61-34",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 44,
+      "name": "수국사",
+      "sido": "서울",
+      "sigungu": "은평구",
+      "address": "서울특별시 은평구 서오릉로23길 8-5",
+      "candidates": [
+        {
+          "sourceId": "localdata:3110000:CDFD1003",
+          "name": "수국사",
+          "address": "서울특별시 은평구 갈현동 314",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 46,
+      "name": "삼천사",
+      "sido": "서울",
+      "sigungu": "은평구",
+      "address": "서울특별시 은평구 연서로 54길 127",
+      "candidates": [
+        {
+          "sourceId": "localdata:3110000:CDFD1001",
+          "name": "삼천사",
+          "address": "서울특별시 은평구 진관길 36  (진관동)",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 47,
+      "name": "용암사",
+      "sido": "서울",
+      "sigungu": "은평구",
+      "address": "서울특별시 은평구 대서문길 126",
+      "candidates": []
+    },
+    {
+      "recordNo": 55,
+      "name": "청룡사",
+      "sido": "서울",
+      "sigungu": "종로구",
+      "address": "서울특별시 종로구 동망산길 65(숭인동)",
+      "candidates": []
+    },
+    {
+      "recordNo": 61,
+      "name": "봉원사",
+      "sido": "서울",
+      "sigungu": "서대문구",
+      "address": "서울특별시 서대문구 봉원동 산1번지",
+      "candidates": []
+    },
+    {
+      "recordNo": 81,
+      "name": "금정선원",
+      "sido": "부산",
+      "sigungu": "동래구",
+      "address": "부산광역시 동래구 온천1동 282",
+      "candidates": [
+        {
+          "sourceId": "localdata:3300000:CDFD1002",
+          "name": "금정선원",
+          "address": "부산광역시 동래구 우장춘로 157-59 (온천동, 금정사)",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 84,
+      "name": "약수암",
+      "sido": "부산",
+      "sigungu": "사상구",
+      "address": "부산광역시 사상구 덕포2동 산21-1",
+      "candidates": [
+        {
+          "sourceId": "localdata:3390000:CDFD1001",
+          "name": "약수암",
+          "address": "부산광역시 사상구 백양대로804번길 42-57  (덕포동)",
+          "score": 0
+        },
+        {
+          "sourceId": "localdata:6260000:6260000-012",
+          "name": "약수암",
+          "address": "부산광역시 사상구 덕포동",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 85,
+      "name": "운수사",
+      "sido": "부산",
+      "sigungu": "사상구",
+      "address": "부산광역시 사상구 모라3동 산5",
+      "candidates": [
+        {
+          "sourceId": "localdata:3390000:CDFD1003",
+          "name": "운수사",
+          "address": "부산광역시 사상구 모라로219번길 173 (모라동)",
+          "score": 0
+        },
+        {
+          "sourceId": "localdata:6260000:6260000-018",
+          "name": "운수사",
+          "address": "부산광역시 사상구 모라로219번길 173 (모라동)",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 91,
+      "name": "혜원정사",
+      "sido": "부산",
+      "sigungu": "연제구",
+      "address": "부산광역시 연제구 연산4동 113-1",
+      "candidates": [
+        {
+          "sourceId": "localdata:3370000:CDFD1004",
+          "name": "혜원정사",
+          "address": "부산광역시 연제구 고분로68번길 47 (연산동)",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 98,
+      "name": "관음정사",
+      "sido": "부산",
+      "sigungu": "해운대구",
+      "address": "부산광역시 해운대구 반여3동 산 131-5",
+      "candidates": []
+    },
+    {
+      "recordNo": 127,
+      "name": "용궁사",
+      "sido": "인천",
+      "sigungu": "중구",
+      "address": "인천광역시 중구 운남로 199-1",
+      "candidates": []
+    },
+    {
+      "recordNo": 139,
+      "name": "중암사",
+      "sido": "대전",
+      "sigungu": "중구",
+      "address": "대전광역시 중구 정생로 403",
+      "candidates": []
+    },
+    {
+      "recordNo": 152,
+      "name": "용화사",
+      "sido": "울산",
+      "sigungu": "울주군",
+      "address": "울산광역시 울주군 상북면 천전길 54",
+      "candidates": []
+    },
+    {
+      "recordNo": 159,
+      "name": "영평사",
+      "sido": "세종",
+      "sigungu": "장기면",
+      "address": "세종특별자치시 장기면 산학리 441",
+      "candidates": []
+    },
+    {
+      "recordNo": 180,
+      "name": "수도사",
+      "sido": "경기",
+      "sigungu": "광주시",
+      "address": "경기도 광주시 도척면 방도길 66번길 148-77",
+      "candidates": []
+    },
+    {
+      "recordNo": 232,
+      "name": "법륜사",
+      "sido": "경기",
+      "sigungu": "용인시",
+      "address": "경기도 용인시 처인구 원삼면 농촌파크로 126 (고당리 243-2)",
+      "candidates": []
+    },
+    {
+      "recordNo": 259,
+      "name": "자인사",
+      "sido": "경기",
+      "sigungu": "포천시",
+      "address": "경기 포천시 영북면 산정호수로 808",
+      "candidates": []
+    },
+    {
+      "recordNo": 284,
+      "name": "보광사",
+      "sido": "강원",
+      "sigungu": "속초시",
+      "address": "강원도 속초시 동명동 579-2",
+      "candidates": []
+    },
+    {
+      "recordNo": 292,
+      "name": "금몽암",
+      "sido": "강원",
+      "sigungu": "영월군",
+      "address": "강원도 영월군 영월읍 영흥리 1117",
+      "candidates": [
+        {
+          "sourceId": "localdata:4271000:CDFD1002",
+          "name": "보덕사",
+          "address": "강원특별자치도 영월군 영월읍 보덕사길 34",
+          "score": 66
+        },
+        {
+          "sourceId": "localdata:6530000:4271000-001",
+          "name": "보덕사",
+          "address": "강원특별자치도 영월군 영월읍 보덕사길 34",
+          "score": 66
+        }
+      ]
+    },
+    {
+      "recordNo": 326,
+      "name": "운용사",
+      "sido": "충북",
+      "sigungu": "청주시",
+      "address": "충청북도 청주시 상당구 미원면 운용리 274",
+      "candidates": []
+    },
+    {
+      "recordNo": 433,
+      "name": "미암사",
+      "sido": "충남",
+      "sigungu": "부여군",
+      "address": "충청남도 부여군 내산면 성충로 미암길 128",
+      "candidates": []
+    },
+    {
+      "recordNo": 443,
+      "name": "간월암",
+      "sido": "충남",
+      "sigungu": "서산시",
+      "address": "충청남도 서산시 부석면 간월도1길 119-29",
+      "candidates": []
+    },
+    {
+      "recordNo": 545,
+      "name": "단암사",
+      "sido": "전북",
+      "sigungu": "완주군",
+      "address": "전라북도 완주군 소양면 죽절리 688",
+      "candidates": []
+    },
+    {
+      "recordNo": 602,
+      "name": "수도암",
+      "sido": "전남",
+      "sigungu": "고흥군",
+      "address": "전라남도 고흥군 두원면 운곡길 204",
+      "candidates": []
+    },
+    {
+      "recordNo": 604,
+      "name": "능가사",
+      "sido": "전남",
+      "sigungu": "고흥군",
+      "address": "전라남도 고흥군 점암면 팔봉길 21",
+      "candidates": []
+    },
+    {
+      "recordNo": 605,
+      "name": "금탑사",
+      "sido": "전남",
+      "sigungu": "고흥군",
+      "address": "전라남도 고흥군 포두면 금탑로 842",
+      "candidates": []
+    },
+    {
+      "recordNo": 612,
+      "name": "천태암",
+      "sido": "전남",
+      "sigungu": "곡성군",
+      "address": "전라남도 곡성군 목사동면 대신로 381-336",
+      "candidates": []
+    },
+    {
+      "recordNo": 615,
+      "name": "성불사",
+      "sido": "전남",
+      "sigungu": "광양시",
+      "address": "전라남도 광양시 봉강면 성불로 1150-183",
+      "candidates": []
+    },
+    {
+      "recordNo": 620,
+      "name": "봉명암",
+      "sido": "전남",
+      "sigungu": "구례군",
+      "address": "전라남도 구례군 구례읍 학교길 51",
+      "candidates": []
+    },
+    {
+      "recordNo": 635,
+      "name": "달성사",
+      "sido": "전남",
+      "sigungu": "목포시",
+      "address": "전라남도 목포시 유달로 173",
+      "candidates": [
+        {
+          "sourceId": "localdata:5780000:CDFD1002",
+          "name": "달성사",
+          "address": "전남광주통합특별시 목포시 죽교동 317",
+          "score": 0
+        },
+        {
+          "sourceId": "localdata:5780000:CDFD1001",
+          "name": "달성사",
+          "address": "전남광주통합특별시 목포시 죽교동 317",
+          "score": 0
+        },
+        {
+          "sourceId": "localdata:6130000:5780000-001",
+          "name": "달성사",
+          "address": "전남광주통합특별시 목포시 죽교동 317",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 638,
+      "name": "도덕사",
+      "sido": "전남",
+      "sigungu": "무안군",
+      "address": "전라남도 무안군 무안읍 성암리 135-14",
+      "candidates": [
+        {
+          "sourceId": "localdata:6130000:5880000-004",
+          "name": "도덕사(제86호)",
+          "address": "전남광주통합특별시 무안군 무안읍 성암리 산 164-7번지",
+          "score": 66
+        }
+      ]
+    },
+    {
+      "recordNo": 640,
+      "name": "목우암",
+      "sido": "전남",
+      "sigungu": "무안군",
+      "address": "전라남도 무안군 몽탄면 달산리 956",
+      "candidates": [
+        {
+          "sourceId": "localdata:5880000:CDFD1004",
+          "name": "무안 법천사",
+          "address": "전남광주통합특별시 무안군 몽탄면 법천길 529",
+          "score": 66
+        },
+        {
+          "sourceId": "localdata:6130000:5880000-001",
+          "name": "법천사[목우암](제42호)",
+          "address": "전남광주통합특별시 무안군 몽탄면 달산리",
+          "score": 66
+        }
+      ]
+    },
+    {
+      "recordNo": 642,
+      "name": "송광사포교당",
+      "sido": "전남",
+      "sigungu": "보성군",
+      "address": "전라남도 보성군 벌교읍 벌교리 208",
+      "candidates": [
+        {
+          "sourceId": "localdata:5850000:CDFD1002",
+          "name": "송광사벌교포교당부용사",
+          "address": "전남광주통합특별시 보성군 벌교읍 벌교리 206",
+          "score": 66
+        },
+        {
+          "sourceId": "localdata:6130000:5850000-002",
+          "name": "송광사포교당(제70호)",
+          "address": "전남광주통합특별시 보성군 벌교읍 태백산맥길 93-10, 1동 1층 1호 (송광사포교당)",
+          "score": 66
+        }
+      ]
+    },
+    {
+      "recordNo": 652,
+      "name": "금산사",
+      "sido": "전남",
+      "sigungu": "신안군",
+      "address": "전라남도 신안군 압해읍 가룡길 130",
+      "candidates": []
+    },
+    {
+      "recordNo": 653,
+      "name": "서산사",
+      "sido": "전남",
+      "sigungu": "신안군",
+      "address": "전라남도 신안군 비금면 서산길 260",
+      "candidates": []
+    },
+    {
+      "recordNo": 654,
+      "name": "일심사",
+      "sido": "전남",
+      "sigungu": "신안군",
+      "address": "전라남도 신안군 지도읍 읍내길 67-13",
+      "candidates": []
+    },
+    {
+      "recordNo": 675,
+      "name": "성도사",
+      "sido": "전남",
+      "sigungu": "해남군",
+      "address": "전라남도 해남군 북평면 백도로 543 산 49-6",
+      "candidates": [
+        {
+          "sourceId": "localdata:6130000:5870000-009",
+          "name": "성도사(제84호)",
+          "address": "전남광주통합특별시 해남군 북평면 백도로 543-134",
+          "score": 66
+        }
+      ]
+    },
+    {
+      "recordNo": 691,
+      "name": "백련사",
+      "sido": "전남",
+      "sigungu": "구례군",
+      "address": "전라남도 구례군 용방면 죽정리 825",
+      "candidates": [
+        {
+          "sourceId": "localdata:5840000:CDFD1005",
+          "name": "죽림정사",
+          "address": "전남광주통합특별시 구례군 용방면 죽정길 170",
+          "score": 66
+        },
+        {
+          "sourceId": "localdata:6130000:5840000-005",
+          "name": "죽림정사(제93호)",
+          "address": "전남광주통합특별시 구례군 용방면 죽정리 841",
+          "score": 66
+        },
+        {
+          "sourceId": "localdata:5840000:CDFD1006",
+          "name": "백련사",
+          "address": "전남광주통합특별시 구례군 구례읍 사동길 129-8 (백련사)",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 692,
+      "name": "법흥사",
+      "sido": "전남",
+      "sigungu": "영암군",
+      "address": "전라남도 영암군 금정면 연지길 121",
+      "candidates": []
+    },
+    {
+      "recordNo": 720,
+      "name": "중생사",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 윗내리길 29-12",
+      "candidates": []
+    },
+    {
+      "recordNo": 721,
+      "name": "흥륜사",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 국당3길 5",
+      "candidates": []
+    },
+    {
+      "recordNo": 746,
+      "name": "구화사",
+      "sido": "경북",
+      "sigungu": "김천시",
+      "address": "경상북도 김천시 구화산길 329",
+      "candidates": [
+        {
+          "sourceId": "localdata:6470000:6470000-007",
+          "name": "구화사",
+          "address": "경상북도 김천시 교동 2",
+          "score": 0
+        }
+      ]
+    },
+    {
+      "recordNo": 806,
+      "name": "영성사",
+      "sido": "경북",
+      "sigungu": "영양군",
+      "address": "경상북도 영양군 영양읍 현리 460-1",
+      "candidates": []
+    },
+    {
+      "recordNo": 838,
+      "name": "관음사",
+      "sido": "경북",
+      "sigungu": "의성군",
+      "address": "경상북도 의성군 의성읍 중리안길 16",
+      "candidates": []
+    },
+    {
+      "recordNo": 868,
+      "name": "무학사",
+      "sido": "경북",
+      "sigungu": "포항시",
+      "address": "경상북도 포항시 북구 죽장면 면봉산길 430",
+      "candidates": [
+        {
+          "sourceId": "localdata:5020000:CDFD1012",
+          "name": "무학사",
+          "address": "경상북도 포항시 북구 기계면 새마을발상지길 212",
+          "score": 8
+        },
+        {
+          "sourceId": "localdata:6470000:5020000-006",
+          "name": "무학사",
+          "address": "경상북도 포항시 북구 기계면 새마을발상지길 212",
+          "score": 8
+        }
+      ]
+    },
+    {
+      "recordNo": 874,
+      "name": "감산사",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 외동읍 앞등길 117-20",
+      "candidates": []
+    }
+  ],
+  "duplicateCanonicalKeys": [],
+  "duplicateSourceLinks": [],
+  "failures": []
+}

@@ -1,45 +1,6 @@
 import Link from "next/link";
 
-type SearchItem = {
-    category: string;
-    title: string;
-    description: string;
-    href: string;
-    keywords: string;
-    external?: boolean;
-};
-
-const searchItems: SearchItem[] = [
-    { category: "구인", title: "조계사 사무행정 담당자 모집", description: "서울 종로구 · 정규직", href: "/jobs/1", keywords: "조계사 서울 종로 사무 행정 채용 구인 정규직" },
-    { category: "구인", title: "해인사 문화해설 자원봉사자", description: "경남 합천 · 봉사", href: "/jobs/2", keywords: "해인사 경남 합천 문화 해설 봉사 구인" },
-    { category: "구인", title: "불국사 템플스테이 코디네이터", description: "경북 경주 · 계약직", href: "/jobs/3", keywords: "불국사 경주 템플스테이 코디네이터 채용 구인" },
-
-    { category: "사찰 안내", title: "조계사", description: "서울 도심에서 만나는 한국 불교의 대표적인 사찰", href: "/temples/guide", keywords: "조계사 서울 종로 도심 사찰 대중교통" },
-    { category: "사찰 안내", title: "해인사", description: "가야산과 팔만대장경을 품은 전통사찰", href: "/temples/guide", keywords: "해인사 경남 합천 가야산 팔만대장경 문화유산 산사" },
-    { category: "사찰 안내", title: "불국사", description: "신라 역사와 불교문화를 함께 만나는 사찰", href: "/temples/guide", keywords: "불국사 경북 경주 신라 문화유산 관광" },
-    { category: "사찰 안내", title: "통도사", description: "고요한 숲길과 수행의 전통이 이어지는 사찰", href: "/temples/guide", keywords: "통도사 경남 양산 산사 숲길 수행" },
-    { category: "사찰 안내", title: "월정사", description: "전나무 숲길과 함께 걷기 좋은 오대산 사찰", href: "/temples/guide", keywords: "월정사 강원 평창 오대산 전나무 숲길" },
-    { category: "사찰 안내", title: "봉은사", description: "도심 속에서 잠시 쉬어갈 수 있는 사찰", href: "/temples/guide", keywords: "봉은사 서울 강남 도심 외국인 방문" },
-
-    { category: "템플스테이", title: "월정사 숲속 힐링", description: "강원 평창 · 1박 2일 휴식형", href: "/temples/stay/1", keywords: "월정사 강원 평창 숲 힐링 휴식 템플스테이" },
-    { category: "템플스테이", title: "해인사 명상 수련", description: "경남 합천 · 2박 3일 체험형", href: "/temples/stay/2", keywords: "해인사 경남 합천 명상 수련 체험 템플스테이" },
-    { category: "템플스테이", title: "낙산사 바다 명상", description: "강원 양양 · 1박 2일 휴식형", href: "/temples/stay", keywords: "낙산사 강원 양양 바다 명상 휴식 템플스테이" },
-
-    { category: "사찰음식", title: "사찰음식 기본 체험", description: "서울 사찰음식문화체험관", href: "/temples/food/1", keywords: "서울 사찰음식 요리 체험 기본" },
-    { category: "사찰음식", title: "계절 나물과 사찰 밥상", description: "봉녕사 · 경기 수원", href: "/temples/food/2", keywords: "봉녕사 경기 수원 계절 나물 밥상 사찰음식 교육" },
-    { category: "사찰음식", title: "발우공양 체험", description: "통도사 · 경남 양산", href: "/temples/food/3", keywords: "통도사 경남 양산 발우공양 체험 사찰음식" },
-
-    { category: "행사·교육", title: "산사 음악회", description: "연화사 · 2026년 8월 22일", href: "/events/1", keywords: "산사 음악회 연화사 행사 문화 공연 연등" },
-    { category: "행사·교육", title: "행사·교육 전체보기", description: "문화행사, 체험과 교육 일정을 찾아보세요.", href: "/events", keywords: "행사 교육 강좌 체험 음악회 일정" },
-
-    { category: "부처님 이야기", title: "화를 내는 사람에게 돌려준 선물", description: "분노를 받아들이지 않고 마음을 지키는 이야기", href: "/stories/1", keywords: "부처님 이야기 분노 화 마음 선물" },
-    { category: "부처님 이야기", title: "겨자씨를 구하러 다닌 어머니", description: "상실과 삶과 죽음에 관한 이야기", href: "/stories/2", keywords: "부처님 이야기 겨자씨 어머니 죽음 상실 슬픔" },
-    { category: "부처님 이야기", title: "가난한 여인의 등불", description: "작은 나눔과 정성에 관한 이야기", href: "/stories/3", keywords: "부처님 이야기 가난 여인 등불 나눔 정성 자비" },
-
-    { category: "불교자료", title: "불교기록문화유산 아카이브", description: "통합대장경과 한국불교전서를 검색하는 동국대학교 공식 자료", href: "https://kabc.dongguk.edu/", keywords: "경전 대장경 한국불교전서 동국대학교 원문 학술", external: true },
-    { category: "불교자료", title: "한국구비문학대계", description: "전국에서 채록한 설화·민요·무가 자료", href: "https://kdp.aks.ac.kr/inde/gubi", keywords: "민간 전승 설화 구비문학 민요 무가 불교설화", external: true },
-    { category: "불교자료", title: "RISS 학술연구정보서비스", description: "불교학 관련 논문과 학위자료 검색", href: "https://www.riss.kr/", keywords: "논문 학술 연구 학위 불교학 RISS", external: true },
-];
+import { searchYeon, type SearchItem } from "./data";
 
 function LotusIcon() {
     return (
@@ -59,14 +20,7 @@ export default async function SearchPage({
 }) {
     const params = await searchParams;
     const query = (params.q ?? "").trim();
-    const normalizedQuery = query.toLocaleLowerCase("ko-KR");
-    const results = query
-        ? searchItems.filter((item) =>
-            `${item.category} ${item.title} ${item.description} ${item.keywords}`
-                .toLocaleLowerCase("ko-KR")
-                .includes(normalizedQuery)
-        )
-        : [];
+    const results = searchYeon(query);
 
     const groupedResults = results.reduce<Record<string, SearchItem[]>>((groups, item) => {
         (groups[item.category] ??= []).push(item);

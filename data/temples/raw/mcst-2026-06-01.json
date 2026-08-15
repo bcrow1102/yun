@@ -1,0 +1,7941 @@
+{
+  "source": {
+    "title": "전통사찰 현황(991개소, 2026.6.1.기준)",
+    "authority": "문화체육관광부",
+    "asOf": "2026-06-01",
+    "publishedAt": "2026-06-15",
+    "url": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+    "originalFileSha256": "ea7aeb75c44c00e97c02f30accaaeb8e5fc197642c5606c5a588669b0330ce5b",
+    "recordCount": 991
+  },
+  "records": [
+    {
+      "recordNo": 1,
+      "name": "봉은사",
+      "sido": "서울",
+      "sigungu": "강남구",
+      "address": "서울특별시 강남구 봉은사로 531",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 2,
+      "name": "불국사",
+      "sido": "서울",
+      "sigungu": "강남구",
+      "address": "서울특별시 강남구 광평로 10길 30-71",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 3,
+      "name": "화계사",
+      "sido": "서울",
+      "sigungu": "강북구",
+      "address": "서울특별시 강북구 화계사길 117",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 4,
+      "name": "삼성암",
+      "sido": "서울",
+      "sigungu": "강북구",
+      "address": "서울특별시 강북구 인수봉로 23길 235",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 5,
+      "name": "도선사",
+      "sido": "서울",
+      "sigungu": "강북구",
+      "address": "서울특별시 강북구 삼양로 173길 504",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 6,
+      "name": "보광사",
+      "sido": "서울",
+      "sigungu": "강북구",
+      "address": "서울특별시 강북구 삼양로 145길 177",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 7,
+      "name": "용덕사",
+      "sido": "서울",
+      "sigungu": "강북구",
+      "address": "서울특별시 강북구 삼양로 179길 209-81",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 8,
+      "name": "신검사",
+      "sido": "서울",
+      "sigungu": "강북구",
+      "address": "서울특별시 강북구 삼양로 179길 209-44",
+      "denomination": "대한불교법화선종"
+    },
+    {
+      "recordNo": 9,
+      "name": "본원정사",
+      "sido": "서울",
+      "sigungu": "강북구",
+      "address": "서울특별시 강북구 삼각산로 1",
+      "denomination": "대각회"
+    },
+    {
+      "recordNo": 10,
+      "name": "약사사",
+      "sido": "서울",
+      "sigungu": "강서구",
+      "address": "서울특별시 강서구 금낭화로17길 261",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 11,
+      "name": "미타사",
+      "sido": "서울",
+      "sigungu": "강서구",
+      "address": "서울특별시 강서구 개화동로13길 56-33",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 12,
+      "name": "법성사",
+      "sido": "서울",
+      "sigungu": "강서구",
+      "address": "서울특별시 강서구 등촌로39가길 103",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 13,
+      "name": "관음사",
+      "sido": "서울",
+      "sigungu": "관악구",
+      "address": "서울특별시 관악구 승방1길 109-80 (남현동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 14,
+      "name": "약수사",
+      "sido": "서울",
+      "sigungu": "관악구",
+      "address": "서울특별시 관악구 약수암1길 28 (삼성동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 15,
+      "name": "자운암",
+      "sido": "서울",
+      "sigungu": "관악구",
+      "address": "서울특별시 관악구 신림동 194-1 (대학동)",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 16,
+      "name": "성주암",
+      "sido": "서울",
+      "sigungu": "관악구",
+      "address": "서울특별시 관악구 신림로15-250 (신림동)",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 17,
+      "name": "영화사",
+      "sido": "서울",
+      "sigungu": "광진구",
+      "address": "서울특별시 광진구 아차산로 107(구의동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 18,
+      "name": "호압사",
+      "sido": "서울",
+      "sigungu": "금천구",
+      "address": "서울특별시 금천구 호암로 278 (시흥동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 19,
+      "name": "학림사",
+      "sido": "서울",
+      "sigungu": "노원구",
+      "address": "서울특별시 노원구 상계동 산152",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 20,
+      "name": "용굴암",
+      "sido": "서울",
+      "sigungu": "노원구",
+      "address": "서울특별시 노원구 상계동 산154-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 21,
+      "name": "학도암",
+      "sido": "서울",
+      "sigungu": "노원구",
+      "address": "서울특별시 노원구 중계본동 산102",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 22,
+      "name": "도안사",
+      "sido": "서울",
+      "sigungu": "노원구",
+      "address": "서울특별시 노원구 덕릉로 145길 99",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 23,
+      "name": "원통사",
+      "sido": "서울",
+      "sigungu": "도봉구",
+      "address": "서울특별시 도봉구 도봉로169길 520",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 24,
+      "name": "천축사",
+      "sido": "서울",
+      "sigungu": "도봉구",
+      "address": "서울특별시 도봉구 도봉산길 92-2",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 25,
+      "name": "만월암",
+      "sido": "서울",
+      "sigungu": "도봉구",
+      "address": "서울특별시 도봉구 도봉산길 92-4",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 26,
+      "name": "광륜사",
+      "sido": "서울",
+      "sigungu": "도봉구",
+      "address": "서울특별시 도봉구 도봉산길 86-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 27,
+      "name": "청량사",
+      "sido": "서울",
+      "sigungu": "동대문구",
+      "address": "서울특별시 동대문구 청량리1동 61",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 28,
+      "name": "연화사",
+      "sido": "서울",
+      "sigungu": "동대문구",
+      "address": "서울특별시 동대문구 회기동 109-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 29,
+      "name": "지장사",
+      "sido": "서울",
+      "sigungu": "동작구",
+      "address": "서울특별시 동작구 현충로 210 국립현충원 내",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 30,
+      "name": "사자암",
+      "sido": "서울",
+      "sigungu": "동작구",
+      "address": "서울특별시 동작구 국사봉1길 235-14",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 31,
+      "name": "달마사",
+      "sido": "서울",
+      "sigungu": "동작구",
+      "address": "서울특별시 동작구 서달로 50-26",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 32,
+      "name": "옥천암",
+      "sido": "서울",
+      "sigungu": "서대문구",
+      "address": "서울특별시 서대문구 홍은동 8",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 33,
+      "name": "백제불교초전법륜성지우면산대성사 (구 대성사)",
+      "sido": "서울",
+      "sigungu": "서초구",
+      "address": "서울특별시 서초구 남부순환로328길 49",
+      "denomination": "대한불교조계종대각회"
+    },
+    {
+      "recordNo": 34,
+      "name": "미타사",
+      "sido": "서울",
+      "sigungu": "성동구",
+      "address": "서울특별시 성동구 옥수동 395",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 35,
+      "name": "흥천사",
+      "sido": "서울",
+      "sigungu": "성북구",
+      "address": "서울특별시 성북구 돈암동 595",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 36,
+      "name": "적조사",
+      "sido": "서울",
+      "sigungu": "성북구",
+      "address": "서울특별시 성북구 돈암동 593",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 37,
+      "name": "미타사",
+      "sido": "서울",
+      "sigungu": "성북구",
+      "address": "서울특별시 성북구 보문동3가 51",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 38,
+      "name": "보문사",
+      "sido": "서울",
+      "sigungu": "성북구",
+      "address": "서울특별시 성북구 보문동3가 168",
+      "denomination": "보문종"
+    },
+    {
+      "recordNo": 39,
+      "name": "정법사",
+      "sido": "서울",
+      "sigungu": "성북구",
+      "address": "서울특별시 성북구 성북동 330",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 40,
+      "name": "개운사",
+      "sido": "서울",
+      "sigungu": "성북구",
+      "address": "서울특별시 성북구 안암동5가 산4-11",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 41,
+      "name": "봉국사",
+      "sido": "서울",
+      "sigungu": "성북구",
+      "address": "서울특별시 성북구 정릉동 637",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 42,
+      "name": "경국사",
+      "sido": "서울",
+      "sigungu": "성북구",
+      "address": "서울특별시 성북구 정릉동 753",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 43,
+      "name": "내원사",
+      "sido": "서울",
+      "sigungu": "성북구",
+      "address": "서울특별시 성북구 정릉동 산1-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 44,
+      "name": "수국사",
+      "sido": "서울",
+      "sigungu": "은평구",
+      "address": "서울특별시 은평구 서오릉로23길 8-5",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 45,
+      "name": "진관사",
+      "sido": "서울",
+      "sigungu": "은평구",
+      "address": "서울특별시 은평구 진관길 73",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 46,
+      "name": "삼천사",
+      "sido": "서울",
+      "sigungu": "은평구",
+      "address": "서울특별시 은평구 연서로 54길 127",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 47,
+      "name": "용암사",
+      "sido": "서울",
+      "sigungu": "은평구",
+      "address": "서울특별시 은평구 대서문길 126",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 48,
+      "name": "심택사",
+      "sido": "서울",
+      "sigungu": "은평구",
+      "address": "서울특별시 은평구 은평로 20 나길 5-23",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 49,
+      "name": "조계사",
+      "sido": "서울",
+      "sigungu": "종로구",
+      "address": "서울특별시 종로구 우정국로 55(견지동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 50,
+      "name": "금선사",
+      "sido": "서울",
+      "sigungu": "종로구",
+      "address": "서울특별시 종로구 비봉 137(구기동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 51,
+      "name": "승가사",
+      "sido": "서울",
+      "sigungu": "종로구",
+      "address": "서울특별시 종로구 비봉4길 213(구기동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 52,
+      "name": "문수사",
+      "sido": "서울",
+      "sigungu": "종로구",
+      "address": "서울특별시 종로구 비봉2길 304(구기동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 53,
+      "name": "인왕사",
+      "sido": "서울",
+      "sigungu": "종로구",
+      "address": "서울특별시 종로구 통일로 18가길 17(무악동)",
+      "denomination": "인왕종"
+    },
+    {
+      "recordNo": 54,
+      "name": "대각사",
+      "sido": "서울",
+      "sigungu": "종로구",
+      "address": "서울특별시 종로구 율곡로10길 87(봉익동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 55,
+      "name": "청룡사",
+      "sido": "서울",
+      "sigungu": "종로구",
+      "address": "서울특별시 종로구 동망산길 65(숭인동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 56,
+      "name": "묘각사",
+      "sido": "서울",
+      "sigungu": "종로구",
+      "address": "서울특별시 종로구 종로63가길 31(숭인동)",
+      "denomination": "관음종"
+    },
+    {
+      "recordNo": 57,
+      "name": "감로암",
+      "sido": "서울",
+      "sigungu": "종로구",
+      "address": "서울특별시 종로구 율곡로 23길 16(충신동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 58,
+      "name": "일선사",
+      "sido": "서울",
+      "sigungu": "종로구",
+      "address": "서울특별시 종로구 평창6길 79-141(평창동)",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 59,
+      "name": "소림사",
+      "sido": "서울",
+      "sigungu": "종로구",
+      "address": "서울특별시 종로구 세검정로 241-3(홍지동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 60,
+      "name": "안양암",
+      "sido": "서울",
+      "sigungu": "종로구",
+      "address": "서울특별시 종로구 창신5길 61(창신1동)",
+      "denomination": "한국불교정안종"
+    },
+    {
+      "recordNo": 61,
+      "name": "봉원사",
+      "sido": "서울",
+      "sigungu": "서대문구",
+      "address": "서울특별시 서대문구 봉원동 산1번지",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 62,
+      "name": "청량사",
+      "sido": "부산",
+      "sigungu": "강서구",
+      "address": "부산광역시 강서구 명지동 445",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 63,
+      "name": "국청사",
+      "sido": "부산",
+      "sigungu": "금정구",
+      "address": "부산광역시 금정구 금성동 397",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 64,
+      "name": "정수암",
+      "sido": "부산",
+      "sigungu": "금정구",
+      "address": "부산광역시 금정구 북문로 160",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 65,
+      "name": "미륵사",
+      "sido": "부산",
+      "sigungu": "금정구",
+      "address": "부산광역시 금정구 북문로 126",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 66,
+      "name": "범어사",
+      "sido": "부산",
+      "sigungu": "금정구",
+      "address": "부산광역시 금정구 청룡동 546",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 67,
+      "name": "안적사",
+      "sido": "부산",
+      "sigungu": "기장군",
+      "address": "부산광역시 기장군 기장읍 내리 692",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 68,
+      "name": "월명사",
+      "sido": "부산",
+      "sigungu": "기장군",
+      "address": "부산광역시 기장군 일광면 횡계리 산28-1",
+      "denomination": "승가종"
+    },
+    {
+      "recordNo": 69,
+      "name": "묘관음사",
+      "sido": "부산",
+      "sigungu": "기장군",
+      "address": "부산광역시 기장군 장안읍 임랑리 산1",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 70,
+      "name": "척판암",
+      "sido": "부산",
+      "sigungu": "기장군",
+      "address": "부산광역시 기장군 장안읍 장안리 606-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 71,
+      "name": "장안사",
+      "sido": "부산",
+      "sigungu": "기장군",
+      "address": "부산광역시 기장군 장안읍 장안리 598",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 72,
+      "name": "고불사",
+      "sido": "부산",
+      "sigungu": "기장군",
+      "address": "부산광역시 기장군 철마면 고촌리 319",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 73,
+      "name": "해광사",
+      "sido": "부산",
+      "sigungu": "기장군",
+      "address": "부산광역시 기장군 기장읍 연화리 473-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 74,
+      "name": "옥정사",
+      "sido": "부산",
+      "sigungu": "기장군",
+      "address": "부산광역시 기장군 일광면 원리 705-11",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 75,
+      "name": "해동용궁사",
+      "sido": "부산",
+      "sigungu": "기장군",
+      "address": "부산광역시 기장군 기장읍 시랑리 416-3",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 76,
+      "name": "불곡암",
+      "sido": "부산",
+      "sigungu": "남구",
+      "address": "부산광역시 남구 대연4동 949-14",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 77,
+      "name": "성암사",
+      "sido": "부산",
+      "sigungu": "남구",
+      "address": "부산광역시 남구 문현1동 산74-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 78,
+      "name": "묘심사",
+      "sido": "부산",
+      "sigungu": "동구",
+      "address": "부산광역시 동구 수정동 1174-8",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 79,
+      "name": "연등사",
+      "sido": "부산",
+      "sigungu": "동구",
+      "address": "부산광역시 동구 좌천동 839-3",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 80,
+      "name": "금수사",
+      "sido": "부산",
+      "sigungu": "동구",
+      "address": "부산광역시 동구 초량동 843",
+      "denomination": "원효종"
+    },
+    {
+      "recordNo": 81,
+      "name": "금정선원",
+      "sido": "부산",
+      "sigungu": "동래구",
+      "address": "부산광역시 동래구 온천1동 282",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 82,
+      "name": "법륜사",
+      "sido": "부산",
+      "sigungu": "동래구",
+      "address": "부산광역시 동래구 칠산동 239-2",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 83,
+      "name": "선광사",
+      "sido": "부산",
+      "sigungu": "사상구",
+      "address": "부산광역시 사상구 덕포2동 21-2",
+      "denomination": "법화종"
+    },
+    {
+      "recordNo": 84,
+      "name": "약수암",
+      "sido": "부산",
+      "sigungu": "사상구",
+      "address": "부산광역시 사상구 덕포2동 산21-1",
+      "denomination": "법화종"
+    },
+    {
+      "recordNo": 85,
+      "name": "운수사",
+      "sido": "부산",
+      "sigungu": "사상구",
+      "address": "부산광역시 사상구 모라3동 산5",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 86,
+      "name": "내원정사",
+      "sido": "부산",
+      "sigungu": "서구",
+      "address": "부산광역시 서구 서대신동 3가 산3-5",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 87,
+      "name": "영주암",
+      "sido": "부산",
+      "sigungu": "수영구",
+      "address": "부산광역시 수영구 망미1동 950",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 88,
+      "name": "옥련선원",
+      "sido": "부산",
+      "sigungu": "수영구",
+      "address": "부산광역시 수영구 민락동 372-2",
+      "denomination": "옥련선원"
+    },
+    {
+      "recordNo": 89,
+      "name": "금용암",
+      "sido": "부산",
+      "sigungu": "연제구",
+      "address": "부산광역시 연제구 거재2동 1396-2",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 90,
+      "name": "감천사",
+      "sido": "부산",
+      "sigungu": "연제구",
+      "address": "부산광역시 연제구 연산4동 1112",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 91,
+      "name": "혜원정사",
+      "sido": "부산",
+      "sigungu": "연제구",
+      "address": "부산광역시 연제구 연산4동 113-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 92,
+      "name": "마하사",
+      "sido": "부산",
+      "sigungu": "연제구",
+      "address": "부산광역시 연제구 연산7동 2039",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 93,
+      "name": "복천사",
+      "sido": "부산",
+      "sigungu": "염도구",
+      "address": "부산광역시 영도구 신선동 3가 산 6-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 94,
+      "name": "광명사",
+      "sido": "부산",
+      "sigungu": "진구",
+      "address": "부산광역시 진구 범천2동 1534-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 95,
+      "name": "선암사",
+      "sido": "부산",
+      "sigungu": "진구",
+      "address": "부산광역시 진구 부암3동 628",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 96,
+      "name": "삼광사",
+      "sido": "부산",
+      "sigungu": "진구",
+      "address": "부산광역시 진구 초읍천로 43번길 77",
+      "denomination": "천태종"
+    },
+    {
+      "recordNo": 97,
+      "name": "해운정사",
+      "sido": "부산",
+      "sigungu": "해운대구",
+      "address": "부산광역시 해운대구 우동2로 40-6",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 98,
+      "name": "관음정사",
+      "sido": "부산",
+      "sigungu": "해운대구",
+      "address": "부산광역시 해운대구 반여3동 산 131-5",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 99,
+      "name": "안일사",
+      "sido": "대구",
+      "sigungu": "남구",
+      "address": "대구광역시 남구 앞산순환로 440(대명동 1480-1번지)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 100,
+      "name": "법장사",
+      "sido": "대구",
+      "sigungu": "남구",
+      "address": "대구광역시 남구 고산3길 96-4(봉덕동 산148번지)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 101,
+      "name": "은적사",
+      "sido": "대구",
+      "sigungu": "남구",
+      "address": "대구광역시 남구 앞산순환로 574-120(봉덕동 1572번지)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 102,
+      "name": "임휴사",
+      "sido": "대구",
+      "sigungu": "달서구",
+      "address": "대구시 달서구 상인동 1321",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 103,
+      "name": "운흥사",
+      "sido": "대구",
+      "sigungu": "달성군",
+      "address": "대구광역시 달성군 가창면 헐티로 1068 (오리 151)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 104,
+      "name": "남지장사",
+      "sido": "대구",
+      "sigungu": "달성군",
+      "address": "대구광역시 달성군 가창면 남지장사길 95 (우록리 872)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 105,
+      "name": "용연사",
+      "sido": "대구",
+      "sigungu": "달성군",
+      "address": "대구광역시 달성군 옥포면 용연사길 260 (반송리 882)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 106,
+      "name": "유가사",
+      "sido": "대구",
+      "sigungu": "달성군",
+      "address": "대구광역시 달성군 유가면 유가사길 161 (양리 144)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 107,
+      "name": "소재사",
+      "sido": "대구",
+      "sigungu": "달성군",
+      "address": "대구광역시 달성군 유가면 휴양림길 228 (용리 4)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 108,
+      "name": "현풍포교당",
+      "sido": "대구",
+      "sigungu": "달성군",
+      "address": "대구광역시 달성군 현풍면 현풍동로27길 54-6 (부리 382)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 109,
+      "name": "용문사",
+      "sido": "대구",
+      "sigungu": "달성군",
+      "address": "대구광역시 달성군 화원읍 화원휴양림길 132 (본리리 1137-1)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 110,
+      "name": "화장사",
+      "sido": "대구",
+      "sigungu": "달성군",
+      "address": "대구광역시 달성군 화원읍 비슬로 522길 41 (천내리 516-1)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 111,
+      "name": "관암사",
+      "sido": "대구",
+      "sigungu": "동구",
+      "address": "대구광역시 동구 능성동 613-35",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 112,
+      "name": "관음사",
+      "sido": "대구",
+      "sigungu": "동구",
+      "address": "대구광역시 동구 도동 672",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 113,
+      "name": "동화사",
+      "sido": "대구",
+      "sigungu": "동구",
+      "address": "대구광역시 동구 도학동 35",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 114,
+      "name": "북지장사",
+      "sido": "대구",
+      "sigungu": "동구",
+      "address": "대구광역시 동구 도학동 620",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 115,
+      "name": "부인사",
+      "sido": "대구",
+      "sigungu": "동구",
+      "address": "대구광역시 동구 신무동 356-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 116,
+      "name": "파계사",
+      "sido": "대구",
+      "sigungu": "동구",
+      "address": "대구광역시 동구 중대동 7",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 117,
+      "name": "정법사",
+      "sido": "대구",
+      "sigungu": "동구",
+      "address": "대구광역시 동구 동북로 397",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 118,
+      "name": "서봉사",
+      "sido": "대구",
+      "sigungu": "남구",
+      "address": "대구광역시 남구 명덕로 54길 34",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 119,
+      "name": "성주사",
+      "sido": "대구",
+      "sigungu": "달성군",
+      "address": "대구광역시 달성군 다사읍 서재로 200",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 120,
+      "name": "청련사",
+      "sido": "인천",
+      "sigungu": "강화군",
+      "address": "인천광역시 강화군 강화읍 고비고개로 188번길 112",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 121,
+      "name": "청수암",
+      "sido": "인천",
+      "sigungu": "강화군",
+      "address": "인천광역시 강화군 강화읍 청하동길 36번길 62",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 122,
+      "name": "전등사",
+      "sido": "인천",
+      "sigungu": "강화군",
+      "address": "인천광역시 강화군 길상면 전등사로 37-41",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 123,
+      "name": "적석사",
+      "sido": "인천",
+      "sigungu": "강화군",
+      "address": "인천광역시 강화군 내가면 연촌길 181",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 124,
+      "name": "보문사",
+      "sido": "인천",
+      "sigungu": "강화군",
+      "address": "인천광역시 강화군 삼산남로 823번길 44",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 125,
+      "name": "백련사",
+      "sido": "인천",
+      "sigungu": "강화군",
+      "address": "인천광역시 강화군 하점면 고려산로 61번길 270",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 126,
+      "name": "정수사",
+      "sido": "인천",
+      "sigungu": "강화군",
+      "address": "인천광역시 강화군 화도면 해안남로 1258번길 142",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 127,
+      "name": "용궁사",
+      "sido": "인천",
+      "sigungu": "중구",
+      "address": "인천광역시 중구 운남로 199-1",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 128,
+      "name": "흥륜사",
+      "sido": "인천",
+      "sigungu": "연수구",
+      "address": "인천 연수구 청량로70번길 40-17",
+      "denomination": "관음종"
+    },
+    {
+      "recordNo": 129,
+      "name": "원각사",
+      "sido": "광주",
+      "sigungu": "동구",
+      "address": "광주광역시 동구 중앙로 197(금남로4가)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 130,
+      "name": "약사사",
+      "sido": "광주",
+      "sigungu": "동구",
+      "address": "광주광역시 동구 증심사길160번길 89(운림동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 131,
+      "name": "증심사",
+      "sido": "광주",
+      "sigungu": "동구",
+      "address": "광주광역시 동구 증심사길 117(운림동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 132,
+      "name": "원효사",
+      "sido": "광주",
+      "sigungu": "북구",
+      "address": "광주광역시 북구 무등로 1514-35(금곡동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 133,
+      "name": "신광사",
+      "sido": "광주",
+      "sigungu": "북구",
+      "address": "광주광역시 북구 삼정로66번길 42-10(두암동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 134,
+      "name": "문빈정사",
+      "sido": "광주",
+      "sigungu": "동구",
+      "address": "광주광역시 동구 증심사길 81(운림동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 135,
+      "name": "고산사",
+      "sido": "대전",
+      "sigungu": "동구",
+      "address": "대전광역시 동구 대전로 316번길 205",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 136,
+      "name": "심광사",
+      "sido": "대전",
+      "sigungu": "동구",
+      "address": "대전광역시 동구 대전로 592-20",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 137,
+      "name": "내원사",
+      "sido": "대전",
+      "sigungu": "서구",
+      "address": "대전광역시 서구 배재로197번길 200",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 138,
+      "name": "복전암(구 복전선원)",
+      "sido": "대전",
+      "sigungu": "중구",
+      "address": "대전광역시 중구 부사로 70",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 139,
+      "name": "중암사",
+      "sido": "대전",
+      "sigungu": "중구",
+      "address": "대전광역시 중구 정생로 403",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 140,
+      "name": "비래사",
+      "sido": "대전",
+      "sigungu": "대덕구",
+      "address": "대전광역시 대덕구 비래골길 47-74",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 141,
+      "name": "동축사",
+      "sido": "울산",
+      "sigungu": "동구",
+      "address": "울산광역시 동구 옥류로 93(동부동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 142,
+      "name": "월봉사",
+      "sido": "울산",
+      "sigungu": "동구",
+      "address": "울산광역시 동구 봉수로 55(화정동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 143,
+      "name": "신흥사",
+      "sido": "울산",
+      "sigungu": "북구",
+      "address": "울산광역시 북구 대안4길 280(대안동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 144,
+      "name": "옥천암",
+      "sido": "울산",
+      "sigungu": "북구",
+      "address": "울산광역시 북구 무룡로 225(연암동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 145,
+      "name": "도솔암",
+      "sido": "울산",
+      "sigungu": "북구",
+      "address": "울산광역시 북구 화봉15길 77(화봉동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 146,
+      "name": "석남사",
+      "sido": "울산",
+      "sigungu": "울주군",
+      "address": "울산광역시 울주군 상북면 석남로 557",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 147,
+      "name": "내원암",
+      "sido": "울산",
+      "sigungu": "울주군",
+      "address": "울산광역시 울주군 온양읍 대운상대길 382",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 148,
+      "name": "문수사",
+      "sido": "울산",
+      "sigungu": "울주군",
+      "address": "울산광역시 울주군 청량면 문수산길 514",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 149,
+      "name": "해남사",
+      "sido": "울산",
+      "sigungu": "중구",
+      "address": "울산광역시 중구 기상대길 13(북정동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 150,
+      "name": "백양사",
+      "sido": "울산",
+      "sigungu": "중구",
+      "address": "울산광역시 중구 백양로 67(성안동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 151,
+      "name": "관음사",
+      "sido": "울산",
+      "sigungu": "중구",
+      "address": "울산광역시 중구 신기16길 62(태화동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 152,
+      "name": "용화사",
+      "sido": "울산",
+      "sigungu": "울주군",
+      "address": "울산광역시 울주군 상북면 천전길 54",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 153,
+      "name": "비암사",
+      "sido": "세종",
+      "sigungu": "전의면",
+      "address": "세종특별자치시 전의면 다방리 4",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 154,
+      "name": "연화사",
+      "sido": "세종",
+      "sigungu": "서면",
+      "address": "세종특별자치시 서면 월하리 1047",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 155,
+      "name": "관음암",
+      "sido": "세종",
+      "sigungu": "조치원읍",
+      "address": "세종특별자치시 조치원읍 번암리 산2-4",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 156,
+      "name": "청안사",
+      "sido": "세종",
+      "sigungu": "전의면",
+      "address": "세종특별자치시 전의면 양곡리 산33-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 157,
+      "name": "신광사",
+      "sido": "세종",
+      "sigungu": "조치원읍",
+      "address": "세종특별자치시 조치원읍 신안리 139",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 158,
+      "name": "황룡사",
+      "sido": "세종",
+      "sigungu": "동면",
+      "address": "세종특별자치시 동면 명학리 산31-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 159,
+      "name": "영평사",
+      "sido": "세종",
+      "sigungu": "장기면",
+      "address": "세종특별자치시 장기면 산학리 441",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 160,
+      "name": "학림사",
+      "sido": "세종",
+      "sigungu": "서면",
+      "address": "세종특별자치시 서면 신대리 268-1",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 161,
+      "name": "대원사",
+      "sido": "경기",
+      "sigungu": "가평군",
+      "address": "경기도 가평군 북면 백둔로 21-123 (제령리 산192)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 162,
+      "name": "현등사",
+      "sido": "경기",
+      "sigungu": "가평군",
+      "address": "경기도 가평군 조종면 현등사길 34 (운악리 산163)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 163,
+      "name": "국녕사",
+      "sido": "경기",
+      "sigungu": "고양시",
+      "address": "경기도 고양시 덕양구 대서문길 268 (북한동 416-8)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 164,
+      "name": "노적사",
+      "sido": "경기",
+      "sigungu": "고양시",
+      "address": "경기도 고양시 덕양구 대서문길 311-35 (북한동 331)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 165,
+      "name": "무량사",
+      "sido": "경기",
+      "sigungu": "고양시",
+      "address": "경기도 고양시 덕양구 대서문길 184 (북한동 465)",
+      "denomination": "법화종"
+    },
+    {
+      "recordNo": 166,
+      "name": "봉성암",
+      "sido": "경기",
+      "sigungu": "고양시",
+      "address": "경기도 고양시 덕양구 대서문길 433 (북한동 18)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 167,
+      "name": "상운사",
+      "sido": "경기",
+      "sigungu": "고양시",
+      "address": "경기도 고양시 덕양구 대서문길 197-22 (북한동 370)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 168,
+      "name": "아미타사(구 덕암사)",
+      "sido": "경기",
+      "sigungu": "고양시",
+      "address": "경기도 고양시 덕양구 대서문길 145-63 (북한동 515-1)",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 169,
+      "name": "중흥사",
+      "sido": "경기",
+      "sigungu": "고양시",
+      "address": "경기도 고양시 덕양구 대서문길 393 (북한동 259)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 170,
+      "name": "태고사",
+      "sido": "경기",
+      "sigungu": "고양시",
+      "address": "경기도 고양시 덕양구 대서문길 406 (북한동 15)",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 171,
+      "name": "흥국사",
+      "sido": "경기",
+      "sigungu": "고양시",
+      "address": "경기도 고양시 덕양구 흥국사길 82 (지축동 203)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 172,
+      "name": "보광사",
+      "sido": "경기",
+      "sigungu": "과천시",
+      "address": "경기도 과천시 교육원로 41 (갈현동 산126-21)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 173,
+      "name": "연주암",
+      "sido": "경기",
+      "sigungu": "과천시",
+      "address": "경기도 과천시 자하동길 63 (중앙동 85-1)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 174,
+      "name": "개원사",
+      "sido": "경기",
+      "sigungu": "광주시",
+      "address": "경기도 광주시 남한산성면 남한산성로 731-73 (산성리 198-5)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 175,
+      "name": "극락사",
+      "sido": "경기",
+      "sigungu": "광주시",
+      "address": "경기도 광주시 오포읍 양촌길 268-1 (양벌리 825)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 176,
+      "name": "망월사",
+      "sido": "경기",
+      "sigungu": "광주시",
+      "address": "경기도 광주시 남한산성면 남한산성로 680 (산성리 14)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 177,
+      "name": "명성암",
+      "sido": "경기",
+      "sigungu": "광주시",
+      "address": "경기도 광주시 남종면 산수로 1876-34 (귀여리 551)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 178,
+      "name": "백련암",
+      "sido": "경기",
+      "sigungu": "광주시",
+      "address": "경기도 광주시 도척면 도척로 982-118 (추곡리 산25-1)",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 179,
+      "name": "장경사",
+      "sido": "경기",
+      "sigungu": "광주시",
+      "address": "경기도 광주시 남한산성면 남한산성로 676 (산성리 22-1)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 180,
+      "name": "수도사",
+      "sido": "경기",
+      "sigungu": "광주시",
+      "address": "경기도 광주시 도척면 방도길 66번길 148-77",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 181,
+      "name": "광은사",
+      "sido": "경기",
+      "sigungu": "김포시",
+      "address": "경기도 김포시 대곶면 약암로 872-80 (약암리 629-1)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 182,
+      "name": "금정사",
+      "sido": "경기",
+      "sigungu": "김포시",
+      "address": "경기도 김포시 승가로 73 (풍무동 662-1)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 183,
+      "name": "문수사",
+      "sido": "경기",
+      "sigungu": "김포시",
+      "address": "경기도 김포시 월곶면 문수산로 102-33 (성동리 232)",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 184,
+      "name": "수리사",
+      "sido": "경기",
+      "sigungu": "김포시",
+      "address": "경기도 군포시 속달로 347-181 (속달동 329)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 185,
+      "name": "용화사",
+      "sido": "경기",
+      "sigungu": "김포시",
+      "address": "경기도 김포시 금포로 1487-5 (운양동 831)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 186,
+      "name": "견성암",
+      "sido": "경기",
+      "sigungu": "남양주시",
+      "address": "경기도 남양주시 진건읍 진건오남로 390번길 284 (송능리 3)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 187,
+      "name": "내원암",
+      "sido": "경기",
+      "sigungu": "남양주시",
+      "address": "경기도 남양주시 별내면 순화궁로 909번길 104 (청학리 578)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 188,
+      "name": "묘적사",
+      "sido": "경기",
+      "sigungu": "남양주시",
+      "address": "경기도 남양주시 와부읍 수례로 661번길 174 (월문리 222)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 189,
+      "name": "보광사",
+      "sido": "경기",
+      "sigungu": "남양주시",
+      "address": "경기도 남양주시 화도읍 가곡로 198 (가곡리 419)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 190,
+      "name": "봉선사",
+      "sido": "경기",
+      "sigungu": "남양주시",
+      "address": "경기도 남양주시 진접읍 봉선사길 32 (부평리 255)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 191,
+      "name": "봉영사",
+      "sido": "경기",
+      "sigungu": "남양주시",
+      "address": "경기도 남양주시 진접읍 내각2로 84-77 (내각리 148)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 192,
+      "name": "불암사",
+      "sido": "경기",
+      "sigungu": "남양주시",
+      "address": "경기도 남양주시 불암산로 190 (별내동 797)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 193,
+      "name": "석천암",
+      "sido": "경기",
+      "sigungu": "남양주시",
+      "address": "경기도 남양주시 불암산로 175 (별내동 산97)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 194,
+      "name": "수종사",
+      "sido": "경기",
+      "sigungu": "남양주시",
+      "address": "경기도 남양주시 조안면 북한강로433번길 186 (송촌리 1060)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 195,
+      "name": "천보사",
+      "sido": "경기",
+      "sigungu": "남양주시",
+      "address": "경기도 남양주시 불암산로97번길 32-200 (별내동 797-1 )",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 196,
+      "name": "흥국사",
+      "sido": "경기",
+      "sigungu": "남양주시",
+      "address": "경기도 남양주시 별내면 덕릉로1071번길 58 (별내동 2331)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 197,
+      "name": "자재암",
+      "sido": "경기",
+      "sigungu": "동두천시",
+      "address": "경기도 동두천시 평화로2910번길 406-65 (상봉암동 1)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 198,
+      "name": "망경암",
+      "sido": "경기",
+      "sigungu": "성남시",
+      "address": "경기도 성남시 수정구 태평로55번길 72 (복정동 553-1)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 199,
+      "name": "봉국사",
+      "sido": "경기",
+      "sigungu": "성남시",
+      "address": "경기도 성남시 수정구 태평로 79 (태평동 216-2호)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 200,
+      "name": "약사사",
+      "sido": "경기",
+      "sigungu": "성남시",
+      "address": "경기도 성남시 중원구 산성대로625번길 22 (은행동 산 7-2)",
+      "denomination": "여래종"
+    },
+    {
+      "recordNo": 201,
+      "name": "봉녕사",
+      "sido": "경기",
+      "sigungu": "수원시",
+      "address": "경기도 수원시 팔달구 창룡대로 236-54 (우만동 248)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 202,
+      "name": "수원사",
+      "sido": "경기",
+      "sigungu": "수원시",
+      "address": "경기도 수원시 팔달구 수원천로 300 (남수동 92-1)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 203,
+      "name": "청련암",
+      "sido": "경기",
+      "sigungu": "수원시",
+      "address": "경기도 수원시 장안구 수일로 335 (조원동 474-1)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 204,
+      "name": "팔달사",
+      "sido": "경기",
+      "sigungu": "수원시",
+      "address": "경기도 수원시 팔달구 행궁로 68 (팔달로3가 116)",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 205,
+      "name": "쌍계사",
+      "sido": "경기",
+      "sigungu": "안산시",
+      "address": "경기도 안산시 단원구 대부황금로 1171 (대부북동 1058)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 206,
+      "name": "화림선원",
+      "sido": "경기",
+      "sigungu": "안산시",
+      "address": "경기도 안산시 상록구 도매시장로 140 (일동 726)",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 207,
+      "name": "석남사",
+      "sido": "경기",
+      "sigungu": "안성시",
+      "address": "경기도 안성시 금광면 상촌새말길 3-120 (상중리 508번지)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 208,
+      "name": "용화사",
+      "sido": "경기",
+      "sigungu": "안성시",
+      "address": "경기도 안성시 미양면 법전길 260-31 (법전리 181)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 209,
+      "name": "운수암",
+      "sido": "경기",
+      "sigungu": "안성시",
+      "address": "경기도 안성시 양성면 성하길 80-63 (방신리 85)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 210,
+      "name": "청룡사",
+      "sido": "경기",
+      "sigungu": "안성시",
+      "address": "경기도 안성시 서운면 청룡길 140 (청용리 28)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 211,
+      "name": "청원사",
+      "sido": "경기",
+      "sigungu": "안성시",
+      "address": "경기도 안성시 원곡면 통심길 16-102 (성은리 397)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 212,
+      "name": "칠장사",
+      "sido": "경기",
+      "sigungu": "안성시",
+      "address": "경기도 안성시 죽산면 칠장로 399-18 (칠장리 764)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 213,
+      "name": "망해암",
+      "sido": "경기",
+      "sigungu": "안양시",
+      "address": "경기도 안양시 동안구 임곡로 245 (비산동 산19)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 214,
+      "name": "삼막사",
+      "sido": "경기",
+      "sigungu": "안양시",
+      "address": "경기도 안양시 만안구 삼막로 478 (석수동 241-54)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 215,
+      "name": "안양사",
+      "sido": "경기",
+      "sigungu": "안양시",
+      "address": "경기도 안양시 만안구 예술공원로131번길 103 (석수동 산28)",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 216,
+      "name": "염불사",
+      "sido": "경기",
+      "sigungu": "안양시",
+      "address": "경기도 안양시 만안구 예술공원로245번길 150 (석수동 산17)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 217,
+      "name": "백화암",
+      "sido": "경기",
+      "sigungu": "양주시",
+      "address": "경기도 양주시 부흥로 1325-194 (유양동 산40)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 218,
+      "name": "석굴암",
+      "sido": "경기",
+      "sigungu": "양주시",
+      "address": "경기도 양주시 장흥면 석굴암길 519 (교현리 1)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 219,
+      "name": "회암사",
+      "sido": "경기",
+      "sigungu": "양주시",
+      "address": "경기도 양주시 회암사길 281 (회암동 산4)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 220,
+      "name": "대성사",
+      "sido": "경기",
+      "sigungu": "양평군",
+      "address": "경기도 양평군 지평면 역말4길 58 (송현리 산 91)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 221,
+      "name": "사나사",
+      "sido": "경기",
+      "sigungu": "양평군",
+      "address": "경기도 양평군 옥천면 사나사길 329 (용천리 302)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 222,
+      "name": "상원사",
+      "sido": "경기",
+      "sigungu": "양평군",
+      "address": "경기도 양평군 용문면 상원사길 292 (연수리 220-5)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 223,
+      "name": "용문사",
+      "sido": "경기",
+      "sigungu": "양평군",
+      "address": "경기도 양평군 용문면 용문산로 782 (신점리 625)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 224,
+      "name": "대법사",
+      "sido": "경기",
+      "sigungu": "여주시",
+      "address": "경기도 여주시 가남읍 안금3길 3-43 (안금리 99-1 )",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 225,
+      "name": "대성사",
+      "sido": "경기",
+      "sigungu": "여주시",
+      "address": "경기도 여주시 금사면 발림길 89-47 (외평리 453번지)",
+      "denomination": "법상종"
+    },
+    {
+      "recordNo": 226,
+      "name": "신륵사",
+      "sido": "경기",
+      "sigungu": "여주시",
+      "address": "경기도 여주시 신륵사길 73 (천송동 282)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 227,
+      "name": "흥왕사",
+      "sido": "경기",
+      "sigungu": "여주시",
+      "address": "경기도 여주시 북내면 당전로 345-4 (중암리 438)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 228,
+      "name": "원심원사",
+      "sido": "경기",
+      "sigungu": "연천군",
+      "address": "경기도 연천군 신서면 동내로 970번길 32-268 (내산리 354)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 229,
+      "name": "보적사",
+      "sido": "경기",
+      "sigungu": "오산시",
+      "address": "경기도 오산시 독산성로269번길 144 (지곶동 150)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 230,
+      "name": "동도사",
+      "sido": "경기",
+      "sigungu": "용인시",
+      "address": "경기도 용인시 처인구 이동면 어진로 842 (어비리 807-9)",
+      "denomination": "불이종"
+    },
+    {
+      "recordNo": 231,
+      "name": "백련사",
+      "sido": "경기",
+      "sigungu": "용인시",
+      "address": "경기도 용인시 처인구 포곡읍 에버랜드로456번길 290 (가실리 산14-2)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 232,
+      "name": "법륜사",
+      "sido": "경기",
+      "sigungu": "용인시",
+      "address": "경기도 용인시 처인구 원삼면 농촌파크로 126 (고당리 243-2)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 233,
+      "name": "용덕사",
+      "sido": "경기",
+      "sigungu": "용인시",
+      "address": "경기도 용인시 처인구 이동면 이원로 471-41 (묵리 478-2)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 234,
+      "name": "백운사",
+      "sido": "경기",
+      "sigungu": "의왕시",
+      "address": "경기도 의왕시 왕곡로 323 (왕곡동 산3 )",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 235,
+      "name": "청계사",
+      "sido": "경기",
+      "sigungu": "의왕시",
+      "address": "경기도 의왕시 청계로 475 (청계동 11)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 236,
+      "name": "망월사",
+      "sido": "경기",
+      "sigungu": "의정부시",
+      "address": "경기도 의정부시 망월로28번길 211-500 (호원동 413)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 237,
+      "name": "미륵암",
+      "sido": "경기",
+      "sigungu": "의정부시",
+      "address": "경기도 의정부시 고산로65번길 94 (고산동 647)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 238,
+      "name": "석림사",
+      "sido": "경기",
+      "sigungu": "의정부시",
+      "address": "경기도 의정부시 동일로122번길 177 (장암동 산147)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 239,
+      "name": "성불사",
+      "sido": "경기",
+      "sigungu": "의정부시",
+      "address": "경기도 의정부시 호국로 1114번길 142(가능동 산81-219)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 240,
+      "name": "원효사",
+      "sido": "경기",
+      "sigungu": "의정부시",
+      "address": "경기도 의정부시 망월로28번길 356 (호원동 229-149)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 241,
+      "name": "회룡사",
+      "sido": "경기",
+      "sigungu": "의정부시",
+      "address": "경기도 의정부시 전좌로155번길 262 (호원동 411, 산89-1)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 242,
+      "name": "신흥사",
+      "sido": "경기",
+      "sigungu": "이천시",
+      "address": "경기도 이천시 장호원읍 경충대로519번길 246-314 (선읍리 930-2)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 243,
+      "name": "연화정사",
+      "sido": "경기",
+      "sigungu": "이천시",
+      "address": "경기도 이천시 설성면 설성로570번길 50-319 (자석리 산 51)",
+      "denomination": "해동종"
+    },
+    {
+      "recordNo": 244,
+      "name": "영원사",
+      "sido": "경기",
+      "sigungu": "이천시",
+      "address": "경기도 이천시 백사면 원적로869번길 309-52 (송말리 436)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 245,
+      "name": "영월암",
+      "sido": "경기",
+      "sigungu": "이천시",
+      "address": "경기도 이천시 경충대로2709번길 388 (관고동438)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 246,
+      "name": "검단사",
+      "sido": "경기",
+      "sigungu": "파주시",
+      "address": "경기도 파주시 탄현면 필승로 292-33 (성동리 689)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 247,
+      "name": "보광사",
+      "sido": "경기",
+      "sigungu": "파주시",
+      "address": "경기도 파주시 광탄면 보광로474번길 87 (영장리 13)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 248,
+      "name": "용상사",
+      "sido": "경기",
+      "sigungu": "파주시",
+      "address": "경기도 파주시 월롱면 용상골길 403 (덕은리 268-1)",
+      "denomination": "일승종"
+    },
+    {
+      "recordNo": 249,
+      "name": "용암사",
+      "sido": "경기",
+      "sigungu": "파주시",
+      "address": "경기도 파주시 광탄면 혜음로 742-28 (용미리 651-3)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 250,
+      "name": "만기사",
+      "sido": "경기",
+      "sigungu": "평택시",
+      "address": "경기도 평택시 진위면 진위로 181-82 (동천리 548)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 251,
+      "name": "보국사",
+      "sido": "경기",
+      "sigungu": "평택시",
+      "address": "경기도 평택시 서탄면 장등안길 38 (장등리 621)",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 252,
+      "name": "서천사",
+      "sido": "경기",
+      "sigungu": "평택시",
+      "address": "경기도 평택시 고덕면 방축4길 22-49 (방축리 103-1)",
+      "denomination": "해동종"
+    },
+    {
+      "recordNo": 253,
+      "name": "수도사",
+      "sido": "경기",
+      "sigungu": "평택시",
+      "address": "경기도 평택시 포승읍 호암길 58 (원정리 85-3)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 254,
+      "name": "심복사",
+      "sido": "경기",
+      "sigungu": "평택시",
+      "address": "경기도 평택시 현덕면 심복사길 22 (덕목리 115)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 255,
+      "name": "약사사",
+      "sido": "경기",
+      "sigungu": "평택시",
+      "address": "경기도 평택시 안중읍 용성3길 120-10 (용성리 378)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 256,
+      "name": "자비사",
+      "sido": "경기",
+      "sigungu": "평택시",
+      "address": "경기도 평택시 팽성읍 동서촌로 137 (객사리 75)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 257,
+      "name": "왕산사",
+      "sido": "경기",
+      "sigungu": "포천시",
+      "address": "경기 포천시 호병골길 193 (신읍동 699)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 258,
+      "name": "흥룡사",
+      "sido": "경기",
+      "sigungu": "포천시",
+      "address": "경기 포천시 이동면 포화로 236-73 (도평리 38)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 259,
+      "name": "자인사",
+      "sido": "경기",
+      "sigungu": "포천시",
+      "address": "경기 포천시 영북면 산정호수로 808",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 260,
+      "name": "만의사",
+      "sido": "경기",
+      "sigungu": "화성시",
+      "address": "경기도 화성시 동탄면 풀무골로 219 (중리 140)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 261,
+      "name": "봉림사",
+      "sido": "경기",
+      "sigungu": "화성시",
+      "address": "경기도 화성시 남양읍 주석로80번길 139 (북양리 642)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 262,
+      "name": "신흥사",
+      "sido": "경기",
+      "sigungu": "화성시",
+      "address": "경기도 화성시 서신면 신흥사길 17-34 (상안리 72-15)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 263,
+      "name": "용주사",
+      "sido": "경기",
+      "sigungu": "화성시",
+      "address": "경기도 화성시 용주로 136 (송산동 188)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 264,
+      "name": "석왕사",
+      "sido": "경기",
+      "sigungu": "부천시",
+      "address": "경기도 부천시 원미구 소사로 367 (원미동 산29-30)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 265,
+      "name": "선법사",
+      "sido": "경기",
+      "sigungu": "하남시",
+      "address": "경기도 하남시 서하남로588번길 125 (교산동 55-1)",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 266,
+      "name": "낙가사",
+      "sido": "강원",
+      "sigungu": "강릉시",
+      "address": "강원도 강릉시 강동면 정동진리 산17",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 267,
+      "name": "법왕사",
+      "sido": "강원",
+      "sigungu": "강릉시",
+      "address": "강원도 강릉시 구정면 어단리 산366",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 268,
+      "name": "관음사",
+      "sido": "강원",
+      "sigungu": "강릉시",
+      "address": "강원도 강릉시 금학동 29",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 269,
+      "name": "용연사",
+      "sido": "강원",
+      "sigungu": "강릉시",
+      "address": "강원도 강릉시 사천면 사기막리 821",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 270,
+      "name": "보현사",
+      "sido": "강원",
+      "sigungu": "강릉시",
+      "address": "강원도 강릉시 성산면 보광리 산544",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 271,
+      "name": "청학사",
+      "sido": "강원",
+      "sigungu": "강릉시",
+      "address": "강원도 강릉시 구정면 구정리 29",
+      "denomination": "지암불교문화재단"
+    },
+    {
+      "recordNo": 272,
+      "name": "극락암",
+      "sido": "강원",
+      "sigungu": "고성군",
+      "address": "강원도 고성군 간성읍 교동리 280",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 273,
+      "name": "건봉사",
+      "sido": "강원",
+      "sigungu": "고성군",
+      "address": "강원도 고성군 거진읍 냉천리 36",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 274,
+      "name": "화암사",
+      "sido": "강원",
+      "sigungu": "고성군",
+      "address": "강원도 고성군 토성면 신평리 476",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 275,
+      "name": "삼화사",
+      "sido": "강원",
+      "sigungu": "동해시",
+      "address": "강원도 동해시 삼화동 산172",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 276,
+      "name": "감추사",
+      "sido": "강원",
+      "sigungu": "동해시",
+      "address": "강원도 동해시 용정동 502-2",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 277,
+      "name": "영은사",
+      "sido": "강원",
+      "sigungu": "삼척시",
+      "address": "강원도 삼척시 근덕면 궁촌리 924",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 278,
+      "name": "신흥사",
+      "sido": "강원",
+      "sigungu": "삼척시",
+      "address": "강원도 삼척시 근덕면 동막리 1332",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 279,
+      "name": "천은사",
+      "sido": "강원",
+      "sigungu": "삼척시",
+      "address": "강원도 삼척시 미로면 내미로리 785",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 280,
+      "name": "삼장사",
+      "sido": "강원",
+      "sigungu": "삼척시",
+      "address": "강원도 삼척시 성내동 8-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 281,
+      "name": "감로사",
+      "sido": "강원",
+      "sigungu": "삼척시",
+      "address": "강원도 삼척시 영진안길 72",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 282,
+      "name": "신흥사",
+      "sido": "강원",
+      "sigungu": "속초시",
+      "address": "강원도 속초시 설악동 170",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 283,
+      "name": "계조암",
+      "sido": "강원",
+      "sigungu": "속초시",
+      "address": "강원도 속초시 설악동 216",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 284,
+      "name": "보광사",
+      "sido": "강원",
+      "sigungu": "속초시",
+      "address": "강원도 속초시 동명동 579-2",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 285,
+      "name": "진전사",
+      "sido": "강원",
+      "sigungu": "양양군",
+      "address": "강원도 양양군 강현면 둔전리 124-5",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 286,
+      "name": "낙산사",
+      "sido": "강원",
+      "sigungu": "양양군",
+      "address": "강원도 양양군 강현면 전진리 55",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 287,
+      "name": "홍련암",
+      "sido": "강원",
+      "sigungu": "양양군",
+      "address": "강원도 양양군 강현면 전진리 산5-2",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 288,
+      "name": "영혈사",
+      "sido": "강원",
+      "sigungu": "양양군",
+      "address": "강원도 양양군 양양읍 파일이리 산323",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 289,
+      "name": "명주사",
+      "sido": "강원",
+      "sigungu": "양양군",
+      "address": "강원도 양양군 현북면 어성전리 488",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 290,
+      "name": "법흥사",
+      "sido": "강원",
+      "sigungu": "영월군",
+      "address": "강원도 영월군 무릉도원면 법흥리 산 5-3",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 291,
+      "name": "보덕사",
+      "sido": "강원",
+      "sigungu": "영월군",
+      "address": "강원도 영월군 영월읍 영흥리 1110",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 292,
+      "name": "금몽암",
+      "sido": "강원",
+      "sigungu": "영월군",
+      "address": "강원도 영월군 영월읍 영흥리 1117",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 293,
+      "name": "구룡사",
+      "sido": "강원",
+      "sigungu": "원주시",
+      "address": "강원도 원주시 소초면 학곡2리 1029",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 294,
+      "name": "입석사",
+      "sido": "강원",
+      "sigungu": "원주시",
+      "address": "강원도 원주시 소초면 흥양3리 산1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 295,
+      "name": "상원사",
+      "sido": "강원",
+      "sigungu": "원주시",
+      "address": "강원도 원주시 신림면 성남2리 1060",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 296,
+      "name": "영천사",
+      "sido": "강원",
+      "sigungu": "원주시",
+      "address": "강원도 원주시 태장1동 122-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 297,
+      "name": "영원사",
+      "sido": "강원",
+      "sigungu": "원주시",
+      "address": "강원도 원주시 판부면 금대리 1388",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 298,
+      "name": "국형사",
+      "sido": "강원",
+      "sigungu": "원주시",
+      "address": "강원도 원주시 행구동 98",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 299,
+      "name": "보문사",
+      "sido": "강원",
+      "sigungu": "원주시",
+      "address": "강원도 원주시 행구동 90-2",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 300,
+      "name": "백담사",
+      "sido": "강원",
+      "sigungu": "인제군",
+      "address": "강원도 인제군 북면 용대2리 690",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 301,
+      "name": "오세암",
+      "sido": "강원",
+      "sigungu": "인제군",
+      "address": "강원도 인제군 북면 용대리 산75",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 302,
+      "name": "봉정암",
+      "sido": "강원",
+      "sigungu": "인제군",
+      "address": "강원도 인제군 북면 용대리 산76",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 303,
+      "name": "백련정사",
+      "sido": "강원",
+      "sigungu": "인제군",
+      "address": "강원도 인제군 인제읍 상동3리 383",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 304,
+      "name": "정암사",
+      "sido": "강원",
+      "sigungu": "정선군",
+      "address": "강원도 정선군 고한읍 고한리 산213",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 305,
+      "name": "도피안사",
+      "sido": "강원",
+      "sigungu": "철원군",
+      "address": "강원도 철원군 동송읍 관우리 450",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 306,
+      "name": "심원사",
+      "sido": "강원",
+      "sigungu": "철원군",
+      "address": "강원도 철원군 동송읍 상로리 72-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 307,
+      "name": "청평사",
+      "sido": "강원",
+      "sigungu": "춘천시",
+      "address": "강원도 춘천시 북산면 청평리 674",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 308,
+      "name": "상원사",
+      "sido": "강원",
+      "sigungu": "춘천시",
+      "address": "강원도 춘천시 서면 덕두원리 54-3",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 309,
+      "name": "극락사",
+      "sido": "강원",
+      "sigungu": "평창군",
+      "address": "강원도 평창군 평창읍 중리 219-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 310,
+      "name": "월정사",
+      "sido": "강원",
+      "sigungu": "평창군",
+      "address": "강원도 평창군 진부면 동산리 63-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 311,
+      "name": "수타사",
+      "sido": "강원",
+      "sigungu": "홍천군",
+      "address": "강원도 홍천군 동면 덕치리 산9",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 312,
+      "name": "쌍계사",
+      "sido": "강원",
+      "sigungu": "홍천군",
+      "address": "강원도 홍천군 내촌면 서곡리 19",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 313,
+      "name": "봉복사",
+      "sido": "강원",
+      "sigungu": "횡성군",
+      "address": "강원도 횡성군 청일면 신대리 138",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 314,
+      "name": "보광사",
+      "sido": "강원",
+      "sigungu": "횡성군",
+      "address": "강원도 횡성군 횡성읍 남산리 72-5",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 315,
+      "name": "용화사",
+      "sido": "충북",
+      "sigungu": "청주시",
+      "address": "충청북도 청주시 서원구 사직동 216-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 316,
+      "name": "보살사",
+      "sido": "충북",
+      "sigungu": "청주시",
+      "address": "충청북도 청주시 상당구 용암동 7",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 317,
+      "name": "복천암",
+      "sido": "충북",
+      "sigungu": "청주시",
+      "address": "충청북도 청주시 상당구 수동 5-2",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 318,
+      "name": "연화사",
+      "sido": "충북",
+      "sigungu": "청주시",
+      "address": "충청북도 청주시 흥덕구 비하동 395-29",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 319,
+      "name": "청룡사",
+      "sido": "충북",
+      "sigungu": "청주시",
+      "address": "충청북도 청주시 흥덕구 수의동 507",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 320,
+      "name": "화림사",
+      "sido": "충북",
+      "sigungu": "청주시",
+      "address": "충청북도 청주시 상당구 가덕면 병암리 산20-1",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 321,
+      "name": "백족사",
+      "sido": "충북",
+      "sigungu": "청주시",
+      "address": "충청북도 청주시 상당구 가덕면 한계리 1",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 322,
+      "name": "안심사",
+      "sido": "충북",
+      "sigungu": "청주시",
+      "address": "충청북도 청주시 서원구 남이면 사동리 271",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 323,
+      "name": "동화사",
+      "sido": "충북",
+      "sigungu": "청주시",
+      "address": "충청북도 청주시 서원구 남이면 문동리 150",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 324,
+      "name": "월리사",
+      "sido": "충북",
+      "sigungu": "청주시",
+      "address": "충청북도 청주시 상당구 문의면 염티소전로 55-100",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 325,
+      "name": "현암사",
+      "sido": "충북",
+      "sigungu": "청주시",
+      "address": "충청북도 청주시 서원구 현도면 하석리 39-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 326,
+      "name": "운용사",
+      "sido": "충북",
+      "sigungu": "청주시",
+      "address": "충청북도 청주시 상당구 미원면 운용리 274",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 327,
+      "name": "단호사",
+      "sido": "충북",
+      "sigungu": "충주시",
+      "address": "충청북도 충주시 단월동 455",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 328,
+      "name": "정심사",
+      "sido": "충북",
+      "sigungu": "충주시",
+      "address": "충청북도 충주시 단월동 2-14",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 329,
+      "name": "대원사",
+      "sido": "충북",
+      "sigungu": "충주시",
+      "address": "충청북도 충주시 지현동 269",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 330,
+      "name": "창룡사",
+      "sido": "충북",
+      "sigungu": "충주시",
+      "address": "충청북도 충주시 고든곤길 63-89",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 331,
+      "name": "봉학사",
+      "sido": "충북",
+      "sigungu": "충주시",
+      "address": "충청북도 충주시 중앙탑면 장천리 산73",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 332,
+      "name": "청룡사",
+      "sido": "충북",
+      "sigungu": "충주시",
+      "address": "충청북도 충주시 소태면 오량리 561-1",
+      "denomination": "법화종"
+    },
+    {
+      "recordNo": 333,
+      "name": "백운암",
+      "sido": "충북",
+      "sigungu": "충주시",
+      "address": "충청북도 충주시 엄정면 괴동리 223-2",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 334,
+      "name": "신흥사",
+      "sido": "충북",
+      "sigungu": "충주시",
+      "address": "충청북도 충주시 엄정면 신만리 산3-6",
+      "denomination": "법화종"
+    },
+    {
+      "recordNo": 335,
+      "name": "석종사",
+      "sido": "충북",
+      "sigungu": "충주시",
+      "address": "충청북도 충주시 직동 148-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 336,
+      "name": "미륵세계사",
+      "sido": "충북",
+      "sigungu": "충주시",
+      "address": "충청북도 충주시 수안보면 미륵리사지길 150",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 337,
+      "name": "복천사",
+      "sido": "충북",
+      "sigungu": "제천시",
+      "address": "충청북도 제천시 교동 140-25",
+      "denomination": "대한불교육주회"
+    },
+    {
+      "recordNo": 338,
+      "name": "원각사",
+      "sido": "충북",
+      "sigungu": "제천시",
+      "address": "충청북도 제천시 남천동 967",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 339,
+      "name": "장락사",
+      "sido": "충북",
+      "sigungu": "제천시",
+      "address": "충청북도 제천시 장락동 64",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 340,
+      "name": "무암사",
+      "sido": "충북",
+      "sigungu": "제천시",
+      "address": "충청북도 제천시 금성면 청풍호로39길 285",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 341,
+      "name": "고산사",
+      "sido": "충북",
+      "sigungu": "제천시",
+      "address": "충청북도 제천시 덕산면 월악로9길 113",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 342,
+      "name": "신륵사",
+      "sido": "충북",
+      "sigungu": "제천시",
+      "address": "충청북도 제천시 덕산면 월악리 803-5",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 343,
+      "name": "백련사",
+      "sido": "충북",
+      "sigungu": "제천시",
+      "address": "충청북도 제천시 봉양읍 명암리 325",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 344,
+      "name": "월명사",
+      "sido": "충북",
+      "sigungu": "제천시",
+      "address": "충청북도 제천시 송학면 시곡리 719-2",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 345,
+      "name": "강천사",
+      "sido": "충북",
+      "sigungu": "제천시",
+      "address": "충청북도 제천시 송학면 시곡리 산79-6",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 346,
+      "name": "정방사",
+      "sido": "충북",
+      "sigungu": "제천시",
+      "address": "충청북도 제천시 수산면 능강리 161-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 347,
+      "name": "덕주사",
+      "sido": "충북",
+      "sigungu": "제천시",
+      "address": "충청북도 제천시 한수면 송계리 3",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 348,
+      "name": "한산사",
+      "sido": "충북",
+      "sigungu": "제천시",
+      "address": "충청북도 제천시 남천동 1020",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 349,
+      "name": "경은사",
+      "sido": "충북",
+      "sigungu": "제천시",
+      "address": "충청북도 제천시 백운면 금봉로 276",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 350,
+      "name": "옥천사",
+      "sido": "충북",
+      "sigungu": "제천시",
+      "address": "충청북도 제천시 수산면 월악로 3739-30",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 351,
+      "name": "법주사",
+      "sido": "충북",
+      "sigungu": "보은군",
+      "address": "충청북도 보은군 속리산면 사내리 209",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 352,
+      "name": "수정암",
+      "sido": "충북",
+      "sigungu": "보은군",
+      "address": "충청북도 보은군 속리산면 사내리 209",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 353,
+      "name": "상환암",
+      "sido": "충북",
+      "sigungu": "보은군",
+      "address": "충청북도 보은군 속리산면 사내리 산1-21",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 354,
+      "name": "복천암",
+      "sido": "충북",
+      "sigungu": "보은군",
+      "address": "충청북도 보은군 속리산면 사내리 산1-19",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 355,
+      "name": "동암",
+      "sido": "충북",
+      "sigungu": "보은군",
+      "address": "충청북도 보은군 속리산면 사내리 산1-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 356,
+      "name": "중사자암",
+      "sido": "충북",
+      "sigungu": "보은군",
+      "address": "충청북도 보은군 속리산면 사내리 산1-16",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 357,
+      "name": "상고암",
+      "sido": "충북",
+      "sigungu": "보은군",
+      "address": "충청북도 보은군 속리산면 사내리 산1-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 358,
+      "name": "탈골암",
+      "sido": "충북",
+      "sigungu": "보은군",
+      "address": "충청북도 보은군 속리산면 사내리 산1-12",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 359,
+      "name": "여적암",
+      "sido": "충북",
+      "sigungu": "보은군",
+      "address": "충청북도 보은군 속리산면 사내리 산1-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 360,
+      "name": "관음암",
+      "sido": "충북",
+      "sigungu": "보은군",
+      "address": "충청북도 보은군 속리산면 법주사로 658-191",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 361,
+      "name": "구절사",
+      "sido": "충북",
+      "sigungu": "옥천군",
+      "address": "충청북도 옥천군 군서면 상중리 산31-4",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 362,
+      "name": "가산사",
+      "sido": "충북",
+      "sigungu": "옥천군",
+      "address": "충청북도 옥천군 안내면 답양리 543",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 363,
+      "name": "대성사",
+      "sido": "충북",
+      "sigungu": "옥천군",
+      "address": "충청북도 옥천군 옥천읍 교동리 297-6",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 364,
+      "name": "송림사",
+      "sido": "충북",
+      "sigungu": "옥천군",
+      "address": "충청북도 옥천군 옥천읍 문정리 408-4",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 365,
+      "name": "용암사",
+      "sido": "충북",
+      "sigungu": "옥천군",
+      "address": "충청북도 옥천군 옥천읍 삼청리 산51-4",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 366,
+      "name": "대성사",
+      "sido": "충북",
+      "sigungu": "옥천군",
+      "address": "충청북도 옥천군 이원면 강청리 98-4",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 367,
+      "name": "문수암",
+      "sido": "충북",
+      "sigungu": "옥천군",
+      "address": "충청북도 옥천군 청성면 도장리 127-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 368,
+      "name": "영암사",
+      "sido": "충북",
+      "sigungu": "영동군",
+      "address": "충청북도 영동군 심천면 심천리 238",
+      "denomination": "선교종"
+    },
+    {
+      "recordNo": 369,
+      "name": "영국사",
+      "sido": "충북",
+      "sigungu": "영동군",
+      "address": "충청북도 영동군 양산면 영국동길 225-35",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 370,
+      "name": "금성사",
+      "sido": "충북",
+      "sigungu": "영동군",
+      "address": "충청북도 영동군 영동읍 부용리 436-2",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 371,
+      "name": "중화사",
+      "sido": "충북",
+      "sigungu": "영동군",
+      "address": "충청북도 영동군 영동읍 화신로 529",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 372,
+      "name": "지장사",
+      "sido": "충북",
+      "sigungu": "영동군",
+      "address": "충청북도 영동군 황간면 난곡리 524-4",
+      "denomination": "선교종"
+    },
+    {
+      "recordNo": 373,
+      "name": "영천사",
+      "sido": "충북",
+      "sigungu": "영동군",
+      "address": "충청북도 영동군 황간면 신흥리 132-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 374,
+      "name": "반야사",
+      "sido": "충북",
+      "sigungu": "영동군",
+      "address": "충청북도 영동군 황간면 우매리 151-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 375,
+      "name": "영축선원",
+      "sido": "충북",
+      "sigungu": "영동군",
+      "address": "충청북도 영동군 매곡면 강진리 704-5",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 376,
+      "name": "미륵사",
+      "sido": "충북",
+      "sigungu": "증평군",
+      "address": "충청북도 증평군 증평읍 송산리 산1-5",
+      "denomination": "조계혜능종"
+    },
+    {
+      "recordNo": 377,
+      "name": "보타사",
+      "sido": "충북",
+      "sigungu": "증평군",
+      "address": "충청북도 증평군 증평읍 연탄리 산63-64",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 378,
+      "name": "광덕사",
+      "sido": "충북",
+      "sigungu": "증평군",
+      "address": "충청북도 증평군 도안면 광덕리 산21-2",
+      "denomination": "법화종"
+    },
+    {
+      "recordNo": 379,
+      "name": "성림사",
+      "sido": "충북",
+      "sigungu": "진천군",
+      "address": "충청북도 진천군 덕산면 산수리 39",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 380,
+      "name": "용화사",
+      "sido": "충북",
+      "sigungu": "진천군",
+      "address": "충청북도 진천군 진천읍 신정리 584-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 381,
+      "name": "대흥사",
+      "sido": "충북",
+      "sigungu": "진천군",
+      "address": "충청북도 진천군 진천읍 원덕리 산33-8",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 382,
+      "name": "문수암",
+      "sido": "충북",
+      "sigungu": "진천군",
+      "address": "충청북도 진천군 진천읍 지암리 267-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 383,
+      "name": "영수사",
+      "sido": "충북",
+      "sigungu": "진천군",
+      "address": "충청북도 진천군 초평면 영구리 542",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 384,
+      "name": "개심사",
+      "sido": "충북",
+      "sigungu": "괴산군",
+      "address": "충청북도 괴산군 괴산읍 동부리 428-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 385,
+      "name": "보광사",
+      "sido": "충북",
+      "sigungu": "괴산군",
+      "address": "충청북도 괴산군 사리면 사담리 산2-30",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 386,
+      "name": "백운사",
+      "sido": "충북",
+      "sigungu": "괴산군",
+      "address": "충청북도 괴산군 사리면 소매리 산20",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 387,
+      "name": "채운암",
+      "sido": "충북",
+      "sigungu": "괴산군",
+      "address": "충청북도 괴산군 청천면 화양리 412",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 388,
+      "name": "공림사",
+      "sido": "충북",
+      "sigungu": "괴산군",
+      "address": "충청북도 괴산군 청천면 괴산로공림길 104",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 389,
+      "name": "석천암",
+      "sido": "충북",
+      "sigungu": "괴산군",
+      "address": "충청북도 괴산군 청천면 삼송리 산24",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 390,
+      "name": "각연사",
+      "sido": "충북",
+      "sigungu": "괴산군",
+      "address": "충청북도 괴산군 칠성면 태성리 38",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 391,
+      "name": "대경사",
+      "sido": "충북",
+      "sigungu": "음성군",
+      "address": "충청북도 음성군 소이면 비산리 566",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 392,
+      "name": "미타사",
+      "sido": "충북",
+      "sigungu": "음성군",
+      "address": "충청북도 음성군 소이면 비산리 874-2",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 393,
+      "name": "수도사",
+      "sido": "충북",
+      "sigungu": "음성군",
+      "address": "충청북도 음성군 소이면 충도리 78",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 394,
+      "name": "화암사",
+      "sido": "충북",
+      "sigungu": "음성군",
+      "address": "충청북도 음성군 원남면 덕정리 442-2",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 395,
+      "name": "가섭사",
+      "sido": "충북",
+      "sigungu": "음성군",
+      "address": "충청북도 음성군 음성읍 용산리 산1-2",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 396,
+      "name": "원통암",
+      "sido": "충북",
+      "sigungu": "단양군",
+      "address": "충청북도 단양군 대강면 황정리 산28",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 397,
+      "name": "구인사",
+      "sido": "충북",
+      "sigungu": "단양군",
+      "address": "충청북도 단양군 영춘면 백자리 132-1",
+      "denomination": "천태종"
+    },
+    {
+      "recordNo": 398,
+      "name": "미륵대흥사",
+      "sido": "충북",
+      "sigungu": "단양군",
+      "address": "충청북도 단양군 대강면 황정산로 423",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 399,
+      "name": "신원사",
+      "sido": "충남",
+      "sigungu": "공주시",
+      "address": "충청남도 공주시 계룡면 양화리 8",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 400,
+      "name": "갑사",
+      "sido": "충남",
+      "sigungu": "공주시",
+      "address": "충청남도 공주시 계룡면 중장리 52",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 401,
+      "name": "영은사",
+      "sido": "충남",
+      "sigungu": "공주시",
+      "address": "충청남도 공주시 금성동 11-3",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 402,
+      "name": "동학사",
+      "sido": "충남",
+      "sigungu": "공주시",
+      "address": "충청남도 공주시 반포면 학봉리 789",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 403,
+      "name": "마곡사",
+      "sido": "충남",
+      "sigungu": "공주시",
+      "address": "충청남도 공주시 사곡면 운암리 567",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 404,
+      "name": "동혈사",
+      "sido": "충남",
+      "sigungu": "공주시",
+      "address": "충청남도 공주시 의당면 월곡리 271",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 405,
+      "name": "신안사",
+      "sido": "충남",
+      "sigungu": "금산군",
+      "address": "충청남도 금산군 제원면 신안사로 970",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 406,
+      "name": "태고사",
+      "sido": "충남",
+      "sigungu": "금산군",
+      "address": "충청남도 금산군 진산면 청림동로 440",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 407,
+      "name": "보석사",
+      "sido": "충남",
+      "sigungu": "금산군",
+      "address": "충청남도 금산군 남이면 보석사1길 30",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 408,
+      "name": "서대사",
+      "sido": "충남",
+      "sigungu": "금산군",
+      "address": "충청남도 금산군 추부면 서대동기길 120",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 409,
+      "name": "영천암",
+      "sido": "충남",
+      "sigungu": "금산군",
+      "address": "충청남도 금산군 남이면 보석사1길 148",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 410,
+      "name": "미륵사",
+      "sido": "충남",
+      "sigungu": "금산군",
+      "address": "충청남도 금산군 복수면 동구들길 163",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 411,
+      "name": "용암사",
+      "sido": "충남",
+      "sigungu": "논산시",
+      "address": "충청남도 논산시 강경읍 강경로 66번길 28",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 412,
+      "name": "관촉사",
+      "sido": "충남",
+      "sigungu": "논산시",
+      "address": "충청남도 논산시 관촉로 1번길 25",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 413,
+      "name": "쌍계사",
+      "sido": "충남",
+      "sigungu": "논산시",
+      "address": "충청남도 논산시 양촌면 중산길 192",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 414,
+      "name": "송불암",
+      "sido": "충남",
+      "sigungu": "논산시",
+      "address": "충청남도 논산시 연산면 연산1길 5-5",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 415,
+      "name": "개태사",
+      "sido": "충남",
+      "sigungu": "논산시",
+      "address": "충청남도 논산시 연산면 계백로 2614-11",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 416,
+      "name": "영랑사",
+      "sido": "충남",
+      "sigungu": "당진시",
+      "address": "충청남도 당진시 고대면 진관리 529번지 일원",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 417,
+      "name": "영탑사",
+      "sido": "충남",
+      "sigungu": "당진시",
+      "address": "충청남도 당진시 면천면 성하리 560번지 일원",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 418,
+      "name": "보덕사",
+      "sido": "충남",
+      "sigungu": "당진시",
+      "address": "충청남도 당진시 석문면 삼화리207-36번지 일원",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 419,
+      "name": "윤창암",
+      "sido": "충남",
+      "sigungu": "보령시",
+      "address": "충청남도 보령시 남포면 창동1길 233-25",
+      "denomination": "법륜종"
+    },
+    {
+      "recordNo": 420,
+      "name": "중대암",
+      "sido": "충남",
+      "sigungu": "보령시",
+      "address": "충청남도 보령시 미산면 판미로 1178-39",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 421,
+      "name": "금강암",
+      "sido": "충남",
+      "sigungu": "보령시",
+      "address": "충청남도 보령시 미산면 보령호로 1139-102",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 422,
+      "name": "백운사",
+      "sido": "충남",
+      "sigungu": "보령시",
+      "address": "충청남도 보령시 성주면 심원계곡로 259-200",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 423,
+      "name": "선림사",
+      "sido": "충남",
+      "sigungu": "보령시",
+      "address": "충청남도 보령시 오천면 충청수영로 521-64",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 424,
+      "name": "금지암",
+      "sido": "충남",
+      "sigungu": "부여군",
+      "address": "충청남도 부여군 내산면 금지리 404-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 425,
+      "name": "조왕사",
+      "sido": "충남",
+      "sigungu": "부여군",
+      "address": "충청남도 부여군 부여읍 동남리 20-3",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 426,
+      "name": "고란사",
+      "sido": "충남",
+      "sigungu": "부여군",
+      "address": "충청남도 부여군 부여읍 쌍북리 산1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 427,
+      "name": "정각사",
+      "sido": "충남",
+      "sigungu": "부여군",
+      "address": "충청남도 부여군 석성면 정각리 354",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 428,
+      "name": "무량사",
+      "sido": "충남",
+      "sigungu": "부여군",
+      "address": "충청남도 부여군 외산면 만수리 116",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 429,
+      "name": "무진암",
+      "sido": "충남",
+      "sigungu": "부여군",
+      "address": "충청남도 부여군 외산면 만수리 124",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 430,
+      "name": "대조사",
+      "sido": "충남",
+      "sigungu": "부여군",
+      "address": "충청남도 부여군 임천면 구교리 761",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 431,
+      "name": "오덕사",
+      "sido": "충남",
+      "sigungu": "부여군",
+      "address": "충청남도 부여군 충화면 오덕리 284",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 432,
+      "name": "화암사",
+      "sido": "충남",
+      "sigungu": "부여군",
+      "address": "충청남도 부여군 외산면 화성리 478-1",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 433,
+      "name": "미암사",
+      "sido": "충남",
+      "sigungu": "부여군",
+      "address": "충청남도 부여군 내산면 성충로 미암길 128",
+      "denomination": "대각종"
+    },
+    {
+      "recordNo": 434,
+      "name": "개심사",
+      "sido": "충남",
+      "sigungu": "서산시",
+      "address": "충청남도 서산시 운산면 개심사로 321-86",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 435,
+      "name": "부석사",
+      "sido": "충남",
+      "sigungu": "서산시",
+      "address": "충청남도 서산시 부석면 부석사길 243",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 436,
+      "name": "서광사",
+      "sido": "충남",
+      "sigungu": "서산시",
+      "address": "충청남도 서산시 부춘산1로 44(읍내동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 437,
+      "name": "천장사",
+      "sido": "충남",
+      "sigungu": "서산시",
+      "address": "충청남도 서산시 고북면 고요동1길 93-98",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 438,
+      "name": "망일사",
+      "sido": "충남",
+      "sigungu": "서산시",
+      "address": "충청남도 서산시 대산읍 망일산로 831-134",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 439,
+      "name": "문수사",
+      "sido": "충남",
+      "sigungu": "서산시",
+      "address": "충청남도 서산시 운산면 문수골길 201",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 440,
+      "name": "일락사",
+      "sido": "충남",
+      "sigungu": "서산시",
+      "address": "충청남도 서산시 해미면 일락골길 501",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 441,
+      "name": "송덕암",
+      "sido": "충남",
+      "sigungu": "서산시",
+      "address": "충청남도 서산시 해미면 대곡리 602-1",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 442,
+      "name": "죽사",
+      "sido": "충남",
+      "sigungu": "서산시",
+      "address": "충청남도 서산시 인지면 갓고개길 242-24",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 443,
+      "name": "간월암",
+      "sido": "충남",
+      "sigungu": "서산시",
+      "address": "충청남도 서산시 부석면 간월도1길 119-29",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 444,
+      "name": "영수암",
+      "sido": "충남",
+      "sigungu": "서천군",
+      "address": "충청남도 서천군 종천면 충서로 143번길",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 445,
+      "name": "봉서사",
+      "sido": "충남",
+      "sigungu": "서천군",
+      "address": "충청남도 서천군 한산면 건지산길 122",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 446,
+      "name": "봉곡사",
+      "sido": "충남",
+      "sigungu": "아산시",
+      "address": "충청남도 아산시 도송로632번길 138(유곡리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 447,
+      "name": "용담사",
+      "sido": "충남",
+      "sigungu": "아산시",
+      "address": "충청남도 아산시 송악면 평촌리 산2-11",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 448,
+      "name": "인취사",
+      "sido": "충남",
+      "sigungu": "아산시",
+      "address": "충청남도 아산시 서부남로790번길 20-52(읍내리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 449,
+      "name": "세심사",
+      "sido": "충남",
+      "sigungu": "아산시",
+      "address": "충청남도 아산시 염치읍 산양리 221",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 450,
+      "name": "오봉사",
+      "sido": "충남",
+      "sigungu": "아산시",
+      "address": "충청남도 아산시 설화산길 156(장존동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 451,
+      "name": "대련사",
+      "sido": "충남",
+      "sigungu": "예산군",
+      "address": "충청남도 예산군 광시면 동산2길119",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 452,
+      "name": "수덕사",
+      "sido": "충남",
+      "sigungu": "예산군",
+      "address": "충청남도 예산군 덕산면 수덕사안길 79",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 453,
+      "name": "보덕사",
+      "sido": "충남",
+      "sigungu": "예산군",
+      "address": "충청남도 예산군 덕산면 가야산로 400-74",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 454,
+      "name": "법륜사",
+      "sido": "충남",
+      "sigungu": "예산군",
+      "address": "충청남도 예산군 삽교읍 도청대로 835-45",
+      "denomination": "법륜종"
+    },
+    {
+      "recordNo": 455,
+      "name": "화암사",
+      "sido": "충남",
+      "sigungu": "예산군",
+      "address": "충청남도 예산군 심앙면 용궁1길 21-29",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 456,
+      "name": "향천사",
+      "sido": "충남",
+      "sigungu": "예산군",
+      "address": "충청남도 예산군 예산읍 향천사로 117-20",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 457,
+      "name": "광덕사",
+      "sido": "충남",
+      "sigungu": "천안시",
+      "address": "충청남도 천안시 동남구 광덕면 광덕사길 30",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 458,
+      "name": "은석사",
+      "sido": "충남",
+      "sigungu": "천안시",
+      "address": "충청남도 천안시 동남구 북면 은지리 산1-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 459,
+      "name": "만일사",
+      "sido": "충남",
+      "sigungu": "천안시",
+      "address": "충청남도 천안시 서북구 성거읍 천흥4길 503",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 460,
+      "name": "성불사",
+      "sido": "충남",
+      "sigungu": "천안시",
+      "address": "충청남도 천안시 동남구 성불사길 144",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 461,
+      "name": "장곡사",
+      "sido": "충남",
+      "sigungu": "청양군",
+      "address": "충청남도 청양군 대치면 장곡길 241",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 462,
+      "name": "정혜사",
+      "sido": "충남",
+      "sigungu": "청양군",
+      "address": "충청남도 청양군 장평면 상지길 165-10",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 463,
+      "name": "봉정사",
+      "sido": "충남",
+      "sigungu": "청양군",
+      "address": "충청남도 청양군 비봉면 신원리 산113",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 464,
+      "name": "태국사",
+      "sido": "충남",
+      "sigungu": "태안군",
+      "address": "충청남도 태안군 근흥면 정죽리 1078",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 465,
+      "name": "태을암",
+      "sido": "충남",
+      "sigungu": "태안군",
+      "address": "충청남도 태안군 태안읍 동문리 817-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 466,
+      "name": "흥주사",
+      "sido": "충남",
+      "sigungu": "태안군",
+      "address": "충청남도 태안군 태안읍 상옥리 1154",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 467,
+      "name": "고산사",
+      "sido": "충남",
+      "sigungu": "홍성군",
+      "address": "충청남도 홍성군 결성면 만해로127번길 35-99(무량리492)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 468,
+      "name": "정암사",
+      "sido": "충남",
+      "sigungu": "홍성군",
+      "address": "충청남도 홍성군 광천읍 오서길625(담산리883-4)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 469,
+      "name": "석련사",
+      "sido": "충남",
+      "sigungu": "홍성군",
+      "address": "충청남도 홍성군 구항면 구성북로160번길 76(오봉리171-2)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 470,
+      "name": "내원사",
+      "sido": "충남",
+      "sigungu": "홍성군",
+      "address": "충청남도 홍성군 장곡면 장곡길438번길 435(광성리 966)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 471,
+      "name": "산혜암",
+      "sido": "충남",
+      "sigungu": "홍성군",
+      "address": "충청남도 홍성군 홍성읍 홍덕서로185-22(월산리625-13)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 472,
+      "name": "용봉사",
+      "sido": "충남",
+      "sigungu": "홍성군",
+      "address": "충청남도 홍성군 홍북읍 용봉산1길 109(신경리 510-24)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 473,
+      "name": "구절암",
+      "sido": "충남",
+      "sigungu": "홍성군",
+      "address": "충청남도 홍성군 구항면 거북로218번길 163(지정리570-1)",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 474,
+      "name": "문수사",
+      "sido": "전북",
+      "sigungu": "고창군",
+      "address": "전라북도 고창군 고수면 칠성길 135",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 475,
+      "name": "상원사",
+      "sido": "전북",
+      "sigungu": "고창군",
+      "address": "전라북도 고창군 고창읍 상원사길 214",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 476,
+      "name": "용화사",
+      "sido": "전북",
+      "sigungu": "고창군",
+      "address": "전라북도 고창군 대산면 연화길 88-56",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 477,
+      "name": "소요사",
+      "sido": "전북",
+      "sigungu": "고창군",
+      "address": "전라북도 고창군 부안면 질마재로 226-236",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 478,
+      "name": "도솔암",
+      "sido": "전북",
+      "sigungu": "고창군",
+      "address": "전라북도 고창군 아산면 도솔길 294",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 479,
+      "name": "석상암",
+      "sido": "전북",
+      "sigungu": "고창군",
+      "address": "전라북도 고창군 아산면 선운사로 242-73",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 480,
+      "name": "선운사",
+      "sido": "전북",
+      "sigungu": "고창군",
+      "address": "전라북도 고창군 아산면 선운사로 250",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 481,
+      "name": "참당암",
+      "sido": "전북",
+      "sigungu": "고창군",
+      "address": "전라북도 고창군 아산면 도솔길 194-77",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 482,
+      "name": "지장암",
+      "sido": "전북",
+      "sigungu": "군산시",
+      "address": "전라북도 군산시 개정면 원아산2길 135",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 483,
+      "name": "불주사",
+      "sido": "전북",
+      "sigungu": "군산시",
+      "address": "전라북도 군산시 나포면 군둔길 226",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 484,
+      "name": "운심사",
+      "sido": "전북",
+      "sigungu": "군산시",
+      "address": "전라북도 군산시 대야면 남흥길 90-28",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 485,
+      "name": "상주사",
+      "sido": "전북",
+      "sigungu": "군산시",
+      "address": "전라북도 군산시 서수면 함안로 544",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 486,
+      "name": "성흥사",
+      "sido": "전북",
+      "sigungu": "군산시",
+      "address": "전라북도 군산시 성산면 둔덕리 산26-5",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 487,
+      "name": "은적사",
+      "sido": "전북",
+      "sigungu": "군산시",
+      "address": "전라북도 군산시 설림3길 49(소룡동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 488,
+      "name": "보천사",
+      "sido": "전북",
+      "sigungu": "군산시",
+      "address": "전라북도 군산시 서수면 내무장길 249",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 489,
+      "name": "혜봉사",
+      "sido": "전북",
+      "sigungu": "김제시",
+      "address": "전라북도 김제시 금구면 양시로 142-13",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 490,
+      "name": "학선암",
+      "sido": "전북",
+      "sigungu": "김제시",
+      "address": "전라북도 김제시 금산면 구성3길 522",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 491,
+      "name": "금산사",
+      "sido": "전북",
+      "sigungu": "김제시",
+      "address": "전라북도 김제시 금산면 모악15길 1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 492,
+      "name": "청룡사",
+      "sido": "전북",
+      "sigungu": "김제시",
+      "address": "전라북도 김제시 금산면 모악15길 80-122",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 493,
+      "name": "쌍룡사",
+      "sido": "전북",
+      "sigungu": "김제시",
+      "address": "전라북도 김제시 금산면 금산사1길 70-11",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 494,
+      "name": "귀신사",
+      "sido": "전북",
+      "sigungu": "김제시",
+      "address": "전라북도 김제시 금산면 청도6길 40",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 495,
+      "name": "조앙사",
+      "sido": "전북",
+      "sigungu": "김제시",
+      "address": "전라북도 김제시 만경읍 화포3길 63-12",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 496,
+      "name": "성모암",
+      "sido": "전북",
+      "sigungu": "김제시",
+      "address": "전라북도 김제시 만경읍 화포3길 54-9",
+      "denomination": "진묵대사유적진흥회"
+    },
+    {
+      "recordNo": 497,
+      "name": "원각사",
+      "sido": "전북",
+      "sigungu": "김제시",
+      "address": "전라북도 김제시 사정거리1길 20(요촌동)",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 498,
+      "name": "용봉사",
+      "sido": "전북",
+      "sigungu": "김제시",
+      "address": "전라북도 김제시 용지면 봉의로 205",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 499,
+      "name": "망해사",
+      "sido": "전북",
+      "sigungu": "김제시",
+      "address": "전라북도 김제시 진봉면 심포10길 94",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 500,
+      "name": "청운사",
+      "sido": "전북",
+      "sigungu": "김제시",
+      "address": "전라북도 김제시 청하면 청공로 185-80",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 501,
+      "name": "문수사",
+      "sido": "전북",
+      "sigungu": "김제시",
+      "address": "전라북도 김제시 황산5길 158 (황산동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 502,
+      "name": "흥복사",
+      "sido": "전북",
+      "sigungu": "김제시",
+      "address": "전라북도 김제시 승반길 103 (흥사동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 503,
+      "name": "미륵암",
+      "sido": "전북",
+      "sigungu": "남원시",
+      "address": "전라북도 남원시 노송로 1188-5(노암동)",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 504,
+      "name": "선원사",
+      "sido": "전북",
+      "sigungu": "남원시",
+      "address": "전라북도 남원시 용성로 151(도통동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 505,
+      "name": "선국사",
+      "sido": "전북",
+      "sigungu": "남원시",
+      "address": "전라북도 남원시 산성길 239(산곡동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 506,
+      "name": "실상사",
+      "sido": "전북",
+      "sigungu": "남원시",
+      "address": "전라북도 남원시 산내면 입석길 94-129",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 507,
+      "name": "귀정사",
+      "sido": "전북",
+      "sigungu": "남원시",
+      "address": "전라북도 남원시 산동면 대상2길 246",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 508,
+      "name": "창덕암",
+      "sido": "전북",
+      "sigungu": "남원시",
+      "address": "전라북도 남원시 산동면 중절길 108",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 509,
+      "name": "승련사",
+      "sido": "전북",
+      "sigungu": "남원시",
+      "address": "전라북도 남원시 산동면 요천로 2675-90",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 510,
+      "name": "심경암",
+      "sido": "전북",
+      "sigungu": "남원시",
+      "address": "전라북도 남원시 탑골길 71(신촌동)",
+      "denomination": "관음종"
+    },
+    {
+      "recordNo": 511,
+      "name": "덕음암",
+      "sido": "전북",
+      "sigungu": "남원시",
+      "address": "전라북도 남원시 소리길 122-24(어현동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 512,
+      "name": "대복사",
+      "sido": "전북",
+      "sigungu": "남원시",
+      "address": "전라북도 남원시 대복사길 61(왕정동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 513,
+      "name": "연화사",
+      "sido": "전북",
+      "sigungu": "남원시",
+      "address": "전라북도 남원시 이백면 응령길 168",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 514,
+      "name": "용담사",
+      "sido": "전북",
+      "sigungu": "남원시",
+      "address": "전라북도 남원시 주천면 원천로 165-26",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 515,
+      "name": "관음사",
+      "sido": "전북",
+      "sigungu": "남원시",
+      "address": "전라북도 남원시 보절면 관음사길 82",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 516,
+      "name": "극락암",
+      "sido": "전북",
+      "sigungu": "남원시",
+      "address": "전라북도 남원시 양림길 58-42(어현동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 517,
+      "name": "백련사",
+      "sido": "전북",
+      "sigungu": "남원시",
+      "address": "전라북도 남원시 인월면 인월중군길 550",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 518,
+      "name": "향산사",
+      "sido": "전북",
+      "sigungu": "무주군",
+      "address": "전라북도 무주군 무주읍 향한로 27-2",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 519,
+      "name": "북고사",
+      "sido": "전북",
+      "sigungu": "무주군",
+      "address": "전라북도 무주군 무주읍 북고사길 67",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 520,
+      "name": "백련사",
+      "sido": "전북",
+      "sigungu": "무주군",
+      "address": "전라북도 무주군 설천면 백련사길 580",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 521,
+      "name": "원통사",
+      "sido": "전북",
+      "sigungu": "무주군",
+      "address": "전라북도 무주군 안성면 원통사로 676",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 522,
+      "name": "안국사",
+      "sido": "전북",
+      "sigungu": "무주군",
+      "address": "전라북도 무주군 적상면 산성로 1050",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 523,
+      "name": "월명암",
+      "sido": "전북",
+      "sigungu": "부안군",
+      "address": "전라북도 부안군 변산면 내변산로 236-180",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 524,
+      "name": "성황사",
+      "sido": "전북",
+      "sigungu": "부안군",
+      "address": "전라북도 부안군 부안읍 서림공원길 92",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 525,
+      "name": "개암사",
+      "sido": "전북",
+      "sigungu": "부안군",
+      "address": "전라북도 부안군 상서면 개암로 248",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 526,
+      "name": "내원암",
+      "sido": "전북",
+      "sigungu": "부안군",
+      "address": "전라북도 부안군 위도면 내원암길 42",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 527,
+      "name": "내소사",
+      "sido": "전북",
+      "sigungu": "부안군",
+      "address": "전라북도 부안군 진서면 내소사로 243",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 528,
+      "name": "용화사",
+      "sido": "전북",
+      "sigungu": "부안군",
+      "address": "전라북도 부안군 행안면 미륵골길 43",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 529,
+      "name": "실상사",
+      "sido": "전북",
+      "sigungu": "부안군",
+      "address": "전라북도 부안군 변산면 실상길 122",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 530,
+      "name": "만일사",
+      "sido": "전북",
+      "sigungu": "순창군",
+      "address": "전라북도 순창군 구림면 안심길 103-134",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 531,
+      "name": "구암사",
+      "sido": "전북",
+      "sigungu": "순창군",
+      "address": "전라북도 순창군 복흥면 봉덕길 131-144",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 532,
+      "name": "대모암",
+      "sido": "전북",
+      "sigungu": "순창군",
+      "address": "전라북도 순창군 순창읍 장류로 197-22",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 533,
+      "name": "실상암",
+      "sido": "전북",
+      "sigungu": "순창군",
+      "address": "전라북도 순창군 순창읍 금산로 56",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 534,
+      "name": "강천사",
+      "sido": "전북",
+      "sigungu": "순창군",
+      "address": "전라북도 순창군 팔덕면 강천산길 270",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 535,
+      "name": "일광사",
+      "sido": "전북",
+      "sigungu": "순창군",
+      "address": "전라북도 순창군 적성면 담순로 2168-33",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 536,
+      "name": "화암사",
+      "sido": "전북",
+      "sigungu": "완주군",
+      "address": "전라북도 완주군 경천면 화암사길 271",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 537,
+      "name": "대원사",
+      "sido": "전북",
+      "sigungu": "완주군",
+      "address": "전라북도 완주군 구이면 모악산길 243",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 538,
+      "name": "학림사",
+      "sido": "전북",
+      "sigungu": "완주군",
+      "address": "전라북도 완주군 봉동읍 추동로 231",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 539,
+      "name": "정수사",
+      "sido": "전북",
+      "sigungu": "완주군",
+      "address": "전라북도 완주군 상관면 정수사길 18",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 540,
+      "name": "위봉사",
+      "sido": "전북",
+      "sigungu": "완주군",
+      "address": "전라북도 완주군 소양면 위봉길 53",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 541,
+      "name": "송광사",
+      "sido": "전북",
+      "sigungu": "완주군",
+      "address": "전라북도 완주군 소양면 송광수만로 255-16",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 542,
+      "name": "원등사",
+      "sido": "전북",
+      "sigungu": "완주군",
+      "address": "전라북도 완주군 소양면 원등산길 386",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 543,
+      "name": "봉서사",
+      "sido": "전북",
+      "sigungu": "완주군",
+      "address": "전라북도 완주군 용진읍 봉서안길 313",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 544,
+      "name": "안심사",
+      "sido": "전북",
+      "sigungu": "완주군",
+      "address": "전라북도 완주군 운주면 안심길 372",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 545,
+      "name": "단암사",
+      "sido": "전북",
+      "sigungu": "완주군",
+      "address": "전라북도 완주군 소양면 죽절리 688",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 546,
+      "name": "사자암",
+      "sido": "전북",
+      "sigungu": "익산시",
+      "address": "전라북도 익산시 금마면 구룡길 57-125",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 547,
+      "name": "심곡사",
+      "sido": "전북",
+      "sigungu": "익산시",
+      "address": "전라북도 익산시 낭산면 장암길 113",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 548,
+      "name": "석불사",
+      "sido": "전북",
+      "sigungu": "익산시",
+      "address": "전라북도 익산시 삼기면 진북로 273",
+      "denomination": "화엄종"
+    },
+    {
+      "recordNo": 549,
+      "name": "태봉사",
+      "sido": "전북",
+      "sigungu": "익산시",
+      "address": "전라북도 익산시 삼기면 진북로 347-23",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 550,
+      "name": "남원사",
+      "sido": "전북",
+      "sigungu": "익산시",
+      "address": "전라북도 익산시 여산면 서촌1길 34-3",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 551,
+      "name": "백운사",
+      "sido": "전북",
+      "sigungu": "익산시",
+      "address": "전라북도 익산시 여산면 천호산길 155-23",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 552,
+      "name": "문수사",
+      "sido": "전북",
+      "sigungu": "익산시",
+      "address": "전라북도 익산시 여산면 천호산길 140",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 553,
+      "name": "자명사",
+      "sido": "전북",
+      "sigungu": "익산시",
+      "address": "전라북도 익산시 용안면 을동길 76-12",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 554,
+      "name": "숭림사",
+      "sido": "전북",
+      "sigungu": "익산시",
+      "address": "전라북도 익산시 웅포면 백제로 495-57",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 555,
+      "name": "상이암",
+      "sido": "전북",
+      "sigungu": "임실군",
+      "address": "전라북도 임실군 성수면 성수산길 658",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 556,
+      "name": "신흥사",
+      "sido": "전북",
+      "sigungu": "임실군",
+      "address": "전라북도 임실군 관촌면 상월로 889-19",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 557,
+      "name": "해월암",
+      "sido": "전북",
+      "sigungu": "임실군",
+      "address": "전라북도 임실군 오수면 오수8길 49-30",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 558,
+      "name": "죽림암",
+      "sido": "전북",
+      "sigungu": "임실군",
+      "address": "전라북도 임실군 임실읍 호반로 79-53",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 559,
+      "name": "원흥사",
+      "sido": "전북",
+      "sigungu": "장수군",
+      "address": "전라북도 장수군 산서면 원흥길 15-8",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 560,
+      "name": "영월암",
+      "sido": "전북",
+      "sigungu": "장수군",
+      "address": "전라북도 장수군 산서면 봉서로 182-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 561,
+      "name": "미륵암",
+      "sido": "전북",
+      "sigungu": "장수군",
+      "address": "전라북도 장수군 산서면 초장길 51-54",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 562,
+      "name": "성관사",
+      "sido": "전북",
+      "sigungu": "장수군",
+      "address": "전라북도 장수군 장계면 장무로 492-8",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 563,
+      "name": "팔성사",
+      "sido": "전북",
+      "sigungu": "장수군",
+      "address": "전라북도 장수군 장수읍 비행기로 1455-94",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 564,
+      "name": "신광사",
+      "sido": "전북",
+      "sigungu": "장수군",
+      "address": "전라북도 장수군 천천면 신광길 31",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 565,
+      "name": "서고사",
+      "sido": "전북",
+      "sigungu": "전주시",
+      "address": "전라북도 전주시 덕진구 정여립로 1010-90",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 566,
+      "name": "일출암",
+      "sido": "전북",
+      "sigungu": "전주시",
+      "address": "전라북도 전주시 덕진구 왜망실1길 120",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 567,
+      "name": "약수암",
+      "sido": "전북",
+      "sigungu": "전주시",
+      "address": "전라북도 전주시 덕진구 도당산로 46-10",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 568,
+      "name": "선린사",
+      "sido": "전북",
+      "sigungu": "전주시",
+      "address": "전라북도 전주시 덕진구 한배미6길 55",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 569,
+      "name": "실상사",
+      "sido": "전북",
+      "sigungu": "전주시",
+      "address": "전라북도 전주시 덕진구 어은로 89-11",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 570,
+      "name": "승암사",
+      "sido": "전북",
+      "sigungu": "전주시",
+      "address": "전라북도 전주시 완산구 바람쐬는길 47-13",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 571,
+      "name": "동고사",
+      "sido": "전북",
+      "sigungu": "전주시",
+      "address": "전라북도 전주시 완산구 낙수정2길 103-100",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 572,
+      "name": "남고사",
+      "sido": "전북",
+      "sigungu": "전주시",
+      "address": "전라북도 전주시 완산구 남고산성1길 53-88",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 573,
+      "name": "불정사",
+      "sido": "전북",
+      "sigungu": "전주시",
+      "address": "전라북도 전주시 완산구 남고산성1길 53-140",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 574,
+      "name": "학소암",
+      "sido": "전북",
+      "sigungu": "전주시",
+      "address": "전라북도 전주시 완산구 평화7길 49-67",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 575,
+      "name": "정혜사",
+      "sido": "전북",
+      "sigungu": "전주시",
+      "address": "전라북도 전주시 완산구 외칠봉1길 36",
+      "denomination": "보문종"
+    },
+    {
+      "recordNo": 576,
+      "name": "유선사",
+      "sido": "전북",
+      "sigungu": "정읍시",
+      "address": "전라북도 정읍시 고부면 영원로 644-224",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 577,
+      "name": "법인사",
+      "sido": "전북",
+      "sigungu": "정읍시",
+      "address": "전라북도 정읍시 상신경1길 97",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 578,
+      "name": "내장사",
+      "sido": "전북",
+      "sigungu": "정읍시",
+      "address": "전라북도 정읍시 내장산로 1253",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 579,
+      "name": "남산사",
+      "sido": "전북",
+      "sigungu": "정읍시",
+      "address": "전라북도 정읍시 북면 정신로 183-64",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 580,
+      "name": "보림사",
+      "sido": "전북",
+      "sigungu": "정읍시",
+      "address": "전라북도 정읍시 북면 보림1길 497",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 581,
+      "name": "일광사",
+      "sido": "전북",
+      "sigungu": "정읍시",
+      "address": "전라북도 정읍시 성황산길 50",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 582,
+      "name": "정혜사",
+      "sido": "전북",
+      "sigungu": "정읍시",
+      "address": "전라북도 정읍시 죽림 2길 28",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 583,
+      "name": "정토사",
+      "sido": "전북",
+      "sigungu": "정읍시",
+      "address": "전라북도 정읍시 정우면 정신로 832-20",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 584,
+      "name": "석탄사",
+      "sido": "전북",
+      "sigungu": "정읍시",
+      "address": "전라북도 정읍시 칠보면 허궁실 2길 186-125",
+      "denomination": "심우회"
+    },
+    {
+      "recordNo": 585,
+      "name": "다천사",
+      "sido": "전북",
+      "sigungu": "정읍시",
+      "address": "전라북도 정읍시 태인면 태흥1길 59",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 586,
+      "name": "보흥사",
+      "sido": "전북",
+      "sigungu": "진안군",
+      "address": "전라북도 진안군 마령면 원강정1길 16-133",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 587,
+      "name": "금당사",
+      "sido": "전북",
+      "sigungu": "진안군",
+      "address": "전라북도 진안군 마령면 마이산남로 217",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 588,
+      "name": "은수사",
+      "sido": "전북",
+      "sigungu": "진안군",
+      "address": "전라북도 진안군 마령면 마이산남로 406",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 589,
+      "name": "탑사",
+      "sido": "전북",
+      "sigungu": "진안군",
+      "address": "전라북도 진안군 마령면 마이산남로 367",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 590,
+      "name": "옥천암",
+      "sido": "전북",
+      "sigungu": "진안군",
+      "address": "전라북도 진안군 용담면 주용로 227-164",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 591,
+      "name": "천황사",
+      "sido": "전북",
+      "sigungu": "진안군",
+      "address": "전라북도 진안군 정천면 수암길 54",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 592,
+      "name": "고림사",
+      "sido": "전북",
+      "sigungu": "진안군",
+      "address": "전라북도 진안군 진안읍 상역로 174-96",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 593,
+      "name": "고성사",
+      "sido": "전남",
+      "sigungu": "강진군",
+      "address": "전라남도 강진군 강진읍 남성리 산4",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 594,
+      "name": "옥련사",
+      "sido": "전남",
+      "sigungu": "강진군",
+      "address": "전라남도 강진군 강진읍 덕남리 484-24",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 595,
+      "name": "금곡사",
+      "sido": "전남",
+      "sigungu": "강진군",
+      "address": "전라남도 강진군 군동면 파산리 1012-2",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 596,
+      "name": "화방사",
+      "sido": "전남",
+      "sigungu": "강진군",
+      "address": "전라남도 강진군 군동면 화산리 544",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 597,
+      "name": "정수사",
+      "sido": "전남",
+      "sigungu": "강진군",
+      "address": "전라남도 강진군 대구면 용운리 26",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 598,
+      "name": "백련사",
+      "sido": "전남",
+      "sigungu": "강진군",
+      "address": "전라남도 강진군 도암면 만덕리 246",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 599,
+      "name": "무위사",
+      "sido": "전남",
+      "sigungu": "강진군",
+      "address": "전라남도 강진군 성전면 월하리 1174",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 600,
+      "name": "송광암",
+      "sido": "전남",
+      "sigungu": "고흥군",
+      "address": "전라남도 고흥군 금산면 어전리 산74",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 601,
+      "name": "흥덕사",
+      "sido": "전남",
+      "sigungu": "고흥군",
+      "address": "전라남도 고흥군 동강면 장덕리 699-2",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 602,
+      "name": "수도암",
+      "sido": "전남",
+      "sigungu": "고흥군",
+      "address": "전라남도 고흥군 두원면 운곡길 204",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 603,
+      "name": "봉래사",
+      "sido": "전남",
+      "sigungu": "고흥군",
+      "address": "전라남도 고흥군 봉래면 신금리 산66",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 604,
+      "name": "능가사",
+      "sido": "전남",
+      "sigungu": "고흥군",
+      "address": "전라남도 고흥군 점암면 팔봉길 21",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 605,
+      "name": "금탑사",
+      "sido": "전남",
+      "sigungu": "고흥군",
+      "address": "전라남도 고흥군 포두면 금탑로 842",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 606,
+      "name": "서산사",
+      "sido": "전남",
+      "sigungu": "곡성군",
+      "address": "전라남도 곡성군 곡성읍 교촌리 184-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 607,
+      "name": "도림사",
+      "sido": "전남",
+      "sigungu": "곡성군",
+      "address": "전라남도 곡성군 곡성읍 월봉리 327",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 608,
+      "name": "관음사",
+      "sido": "전남",
+      "sigungu": "곡성군",
+      "address": "전라남도 곡성군 오산면 신세리 2",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 609,
+      "name": "수도암",
+      "sido": "전남",
+      "sigungu": "곡성군",
+      "address": "전라남도 곡성군 옥과면 설옥 613",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 610,
+      "name": "태안사",
+      "sido": "전남",
+      "sigungu": "곡성군",
+      "address": "전라남도 곡성군 죽곡면 원달리 20",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 611,
+      "name": "성륜사",
+      "sido": "전남",
+      "sigungu": "곡성군",
+      "address": "전라남도 곡성군 옥과면 미술관로 287",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 612,
+      "name": "천태암",
+      "sido": "전남",
+      "sigungu": "곡성군",
+      "address": "전라남도 곡성군 목사동면 대신로 381-336",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 613,
+      "name": "보광사",
+      "sido": "전남",
+      "sigungu": "광양시",
+      "address": "전라남도 광양시 광양읍 서북4길 30",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 614,
+      "name": "백운사",
+      "sido": "전남",
+      "sigungu": "광양시",
+      "address": "전라남도 광양시 옥룡면 백운사길 352",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 615,
+      "name": "성불사",
+      "sido": "전남",
+      "sigungu": "광양시",
+      "address": "전라남도 광양시 봉강면 성불로 1150-183",
+      "denomination": "용화종"
+    },
+    {
+      "recordNo": 616,
+      "name": "천은사",
+      "sido": "전남",
+      "sigungu": "구례군",
+      "address": "전라남도 구례군 광의면 방광리 70",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 617,
+      "name": "화엄사",
+      "sido": "전남",
+      "sigungu": "구례군",
+      "address": "전라남도 구례군 마산면 황전리 12",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 618,
+      "name": "사성암",
+      "sido": "전남",
+      "sigungu": "구례군",
+      "address": "전라남도 구례군 문척면 죽마리 산4",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 619,
+      "name": "연곡사",
+      "sido": "전남",
+      "sigungu": "구례군",
+      "address": "전라남도 구례군 토지면 내동리 산54-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 620,
+      "name": "봉명암",
+      "sido": "전남",
+      "sigungu": "구례군",
+      "address": "전라남도 구례군 구례읍 학교길 51",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 621,
+      "name": "다보사",
+      "sido": "전남",
+      "sigungu": "나주시",
+      "address": "전라남도 나주시 경현동 629",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 622,
+      "name": "죽림사",
+      "sido": "전남",
+      "sigungu": "나주시",
+      "address": "전라남도 나주시 남평읍 풍림리 산1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 623,
+      "name": "태평사",
+      "sido": "전남",
+      "sigungu": "나주시",
+      "address": "전라남도 나주시 노안면 영평리 산37-1",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 624,
+      "name": "불회사",
+      "sido": "전남",
+      "sigungu": "나주시",
+      "address": "전라남도 나주시 다도면 마산리 999",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 625,
+      "name": "문성암",
+      "sido": "전남",
+      "sigungu": "나주시",
+      "address": "전라남도 나주시 다도면 암정리 899-2",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 626,
+      "name": "운흥사",
+      "sido": "전남",
+      "sigungu": "나주시",
+      "address": "전라남도 나주시 다도면 암정리 972",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 627,
+      "name": "복암사",
+      "sido": "전남",
+      "sigungu": "나주시",
+      "address": "전라남도 나주시 다시면 가운리 419",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 628,
+      "name": "심향사",
+      "sido": "전남",
+      "sigungu": "나주시",
+      "address": "전라남도 나주시 대호동 825",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 629,
+      "name": "미륵사",
+      "sido": "전남",
+      "sigungu": "나주시",
+      "address": "전라남도 나주시 봉황면 철천리 산124",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 630,
+      "name": "보광사",
+      "sido": "전남",
+      "sigungu": "담양군",
+      "address": "전라남도 담양군 금성면 외추리 산171-2",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 631,
+      "name": "용화사",
+      "sido": "전남",
+      "sigungu": "담양군",
+      "address": "전라남도 담양군 담양읍 남산리106",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 632,
+      "name": "용추사",
+      "sido": "전남",
+      "sigungu": "담양군",
+      "address": "전라남도 담양군 용면 용연리833",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 633,
+      "name": "보리암",
+      "sido": "전남",
+      "sigungu": "담양군",
+      "address": "전라남도 담양군 용면 월계리 산81-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 634,
+      "name": "용흥사",
+      "sido": "전남",
+      "sigungu": "담양군",
+      "address": "전라남도 담양군 월산면 용흥리 574",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 635,
+      "name": "달성사",
+      "sido": "전남",
+      "sigungu": "목포시",
+      "address": "전라남도 목포시 유달로 173",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 636,
+      "name": "법천사",
+      "sido": "전남",
+      "sigungu": "무안군",
+      "address": "전라남도 무안군 몽탄면 달산리 산144-4",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 637,
+      "name": "약사사",
+      "sido": "전남",
+      "sigungu": "무안군",
+      "address": "전라남도 무안군 무안읍 성동리 842-9",
+      "denomination": "법화종"
+    },
+    {
+      "recordNo": 638,
+      "name": "도덕사",
+      "sido": "전남",
+      "sigungu": "무안군",
+      "address": "전라남도 무안군 무안읍 성암리 135-14",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 639,
+      "name": "원갑사",
+      "sido": "전남",
+      "sigungu": "무안군",
+      "address": "전라남도 무안군 해제면 산길리 676",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 640,
+      "name": "목우암",
+      "sido": "전남",
+      "sigungu": "무안군",
+      "address": "전라남도 무안군 몽탄면 달산리 956",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 641,
+      "name": "대원사",
+      "sido": "전남",
+      "sigungu": "보성군",
+      "address": "전라남도 보성군 문덕면 죽산리 831번지",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 642,
+      "name": "송광사포교당",
+      "sido": "전남",
+      "sigungu": "보성군",
+      "address": "전라남도 보성군 벌교읍 벌교리 208",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 643,
+      "name": "일월사",
+      "sido": "전남",
+      "sigungu": "보성군",
+      "address": "전라남도 보성군 율어면 유신리 553",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 644,
+      "name": "금둔사",
+      "sido": "전남",
+      "sigungu": "순천시",
+      "address": "전라남도 순천시 낙안면 상송리 산25",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 645,
+      "name": "동화사",
+      "sido": "전남",
+      "sigungu": "순천시",
+      "address": "전라남도 순천시 별량면 대룡리 282",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 646,
+      "name": "도선암",
+      "sido": "전남",
+      "sigungu": "순천시",
+      "address": "전라남도 순천시 상사면 비촌리 705",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 647,
+      "name": "정혜사",
+      "sido": "전남",
+      "sigungu": "순천시",
+      "address": "전라남도 순천시 서면 청소리 716",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 648,
+      "name": "향림사",
+      "sido": "전남",
+      "sigungu": "순천시",
+      "address": "전라남도 순천시 석현동 230",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 649,
+      "name": "송광사",
+      "sido": "전남",
+      "sigungu": "순천시",
+      "address": "전라남도 순천시 송광면 신평리 12",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 650,
+      "name": "선암사",
+      "sido": "전남",
+      "sigungu": "순천시",
+      "address": "전라남도 순천시 승주읍 죽학리 802",
+      "denomination": "조계종/태고종"
+    },
+    {
+      "recordNo": 651,
+      "name": "흥륜사",
+      "sido": "전남",
+      "sigungu": "순천시",
+      "address": "전라남도 순천시 조곡동 278-2",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 652,
+      "name": "금산사",
+      "sido": "전남",
+      "sigungu": "신안군",
+      "address": "전라남도 신안군 압해읍 가룡길 130",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 653,
+      "name": "서산사",
+      "sido": "전남",
+      "sigungu": "신안군",
+      "address": "전라남도 신안군 비금면 서산길 260",
+      "denomination": "선각종"
+    },
+    {
+      "recordNo": 654,
+      "name": "일심사",
+      "sido": "전남",
+      "sigungu": "신안군",
+      "address": "전라남도 신안군 지도읍 읍내길 67-13",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 655,
+      "name": "석천사",
+      "sido": "전남",
+      "sigungu": "여수시",
+      "address": "전라남도 여수시 충민사길 62",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 656,
+      "name": "은적사",
+      "sido": "전남",
+      "sigungu": "여수시",
+      "address": "전라남도 여수시 돌산읍 돌산로 1168-58",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 657,
+      "name": "향일암",
+      "sido": "전남",
+      "sigungu": "여수시",
+      "address": "전라남도 여수시 돌산읍 향일암로 60",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 658,
+      "name": "한산사",
+      "sido": "전남",
+      "sigungu": "여수시",
+      "address": "전라남도 여수시 구봉산길 114",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 659,
+      "name": "흥국사",
+      "sido": "전남",
+      "sigungu": "여수시",
+      "address": "전라남도 여수시 흥국사길 160",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 660,
+      "name": "용문사",
+      "sido": "전남",
+      "sigungu": "여수시",
+      "address": "전라남도 여수시 화양면 용문사길 91",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 661,
+      "name": "연흥사",
+      "sido": "전남",
+      "sigungu": "영광군",
+      "address": "전라남도 영광군 군남면 육창로 2",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 662,
+      "name": "불갑사",
+      "sido": "전남",
+      "sigungu": "영광군",
+      "address": "전라남도 영광군 불갑면 모악리 8",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 663,
+      "name": "도갑사",
+      "sido": "전남",
+      "sigungu": "영암군",
+      "address": "전라남도 영암군 군서면 도갑사로 306",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 664,
+      "name": "천황사",
+      "sido": "전남",
+      "sigungu": "영암군",
+      "address": "전라남도 영암군 영암읍 천황사로 280-82",
+      "denomination": "법화종"
+    },
+    {
+      "recordNo": 665,
+      "name": "학서암",
+      "sido": "전남",
+      "sigungu": "완도군",
+      "address": "전라남도 완도군 생일면 유서리 산 89-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 666,
+      "name": "신흥사",
+      "sido": "전남",
+      "sigungu": "완도군",
+      "address": "전라남도 완도군 완도읍 군내리 168",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 667,
+      "name": "백양사",
+      "sido": "전남",
+      "sigungu": "장성군",
+      "address": "전라남도 장성군 북하면 약수리 26",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 668,
+      "name": "천관사",
+      "sido": "전남",
+      "sigungu": "장흥군",
+      "address": "전라남도 장흥군 관산읍 농안리 740",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 669,
+      "name": "보림사",
+      "sido": "전남",
+      "sigungu": "장흥군",
+      "address": "전라남도 장흥군 유치면 봉덕리 45",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 670,
+      "name": "신흥사",
+      "sido": "전남",
+      "sigungu": "장흥군",
+      "address": "전라남도 장흥군 장흥읍 연산리 89-8",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 671,
+      "name": "쌍계사",
+      "sido": "전남",
+      "sigungu": "진도군",
+      "address": "전라남도 진도군 의신면 운림산방로 299-30",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 672,
+      "name": "용천사",
+      "sido": "전남",
+      "sigungu": "함평군",
+      "address": "전라남도 함평군 해보면 용천사길 209",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 673,
+      "name": "보광사",
+      "sido": "전남",
+      "sigungu": "함평군",
+      "address": "전라남도 함평군 함평읍 한재골길 26-32",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 674,
+      "name": "은적사",
+      "sido": "전남",
+      "sigungu": "해남군",
+      "address": "전라남도 해남군 마산면 은적사길 404",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 675,
+      "name": "성도사",
+      "sido": "전남",
+      "sigungu": "해남군",
+      "address": "전라남도 해남군 북평면 백도로 543 산 49-6",
+      "denomination": "원효종"
+    },
+    {
+      "recordNo": 676,
+      "name": "태영사",
+      "sido": "전남",
+      "sigungu": "해남군",
+      "address": "전라남도 해남군 북평면 천태산길 191",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 677,
+      "name": "성도암",
+      "sido": "전남",
+      "sigungu": "해남군",
+      "address": "전라남도 해남군 북평면 동해리 689",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 678,
+      "name": "대흥사",
+      "sido": "전남",
+      "sigungu": "해남군",
+      "address": "전라남도 해남군 삼산면 대흥사길 400",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 679,
+      "name": "미황사",
+      "sido": "전남",
+      "sigungu": "해남군",
+      "address": "전라남도 해남군 송지면 미황사길 164",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 680,
+      "name": "진흥사",
+      "sido": "전남",
+      "sigungu": "해남군",
+      "address": "전라남도 해남군 현산면 입제길 442",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 681,
+      "name": "서동사",
+      "sido": "전남",
+      "sigungu": "해남군",
+      "address": "전라남도 해남군 화원면 절골길 244",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 682,
+      "name": "도장사",
+      "sido": "전남",
+      "sigungu": "해남군",
+      "address": "전라남도 해남군 황산면 내산길 143",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 683,
+      "name": "유마사",
+      "sido": "전남",
+      "sigungu": "화순군",
+      "address": "전라남도 화순군 남면 유마리 321",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 684,
+      "name": "운주사",
+      "sido": "전남",
+      "sigungu": "화순군",
+      "address": "전라남도 화순군 도암면 대초리 20",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 685,
+      "name": "규봉암",
+      "sido": "전남",
+      "sigungu": "화순군",
+      "address": "전라남도 화순군 이서면 영평리 산897",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 686,
+      "name": "쌍봉사",
+      "sido": "전남",
+      "sigungu": "화순군",
+      "address": "전라남도 화순군 이양면 증리 741",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 687,
+      "name": "개천사",
+      "sido": "전남",
+      "sigungu": "화순군",
+      "address": "전라남도 화순군 춘양면 가동리 산480",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 688,
+      "name": "만연사",
+      "sido": "전남",
+      "sigungu": "화순군",
+      "address": "전라남도 화순군 화순읍 동구리 179",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 689,
+      "name": "옴천사",
+      "sido": "전남",
+      "sigungu": "강진군",
+      "address": "전라남도 강진군 옴천면 개산리 391",
+      "denomination": "선각종"
+    },
+    {
+      "recordNo": 690,
+      "name": "죽림정사",
+      "sido": "전남",
+      "sigungu": "구례군",
+      "address": "전라남도 구례군 용방면 죽정리 824",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 691,
+      "name": "백련사",
+      "sido": "전남",
+      "sigungu": "구례군",
+      "address": "전라남도 구례군 용방면 죽정리 825",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 692,
+      "name": "법흥사",
+      "sido": "전남",
+      "sigungu": "영암군",
+      "address": "전라남도 영암군 금정면 연지길 121",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 693,
+      "name": "경흥사",
+      "sido": "경북",
+      "sigungu": "경산시",
+      "address": "경상북도 경산시 남천면 모골길 196-55",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 694,
+      "name": "하양포교당",
+      "sido": "경북",
+      "sigungu": "경산시",
+      "address": "경상북도 경산시 하양읍 도리3길 12",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 695,
+      "name": "보문사 (구 경산포교당)",
+      "sido": "경북",
+      "sigungu": "경산시",
+      "address": "경상북도 경산시 장산로26길 20 (삼북동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 696,
+      "name": "안흥사",
+      "sido": "경북",
+      "sigungu": "경산시",
+      "address": "경상북도 경산시 남매로 86 (상방동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 697,
+      "name": "불굴사",
+      "sido": "경북",
+      "sigungu": "경산시",
+      "address": "경상북도 경산시 와촌면 불굴사길 205",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 698,
+      "name": "원효암",
+      "sido": "경북",
+      "sigungu": "경산시",
+      "address": "경상북도 경산시 와촌면 갓바위로 386-73",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 699,
+      "name": "선본사",
+      "sido": "경북",
+      "sigungu": "경산시",
+      "address": "경상북도 경산시 와촌면 갓바위로 699",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 700,
+      "name": "천성암",
+      "sido": "경북",
+      "sigungu": "경산시",
+      "address": "경상북도 경산시 와촌면 갓바위로 216-111",
+      "denomination": "법화종"
+    },
+    {
+      "recordNo": 701,
+      "name": "반룡사",
+      "sido": "경북",
+      "sigungu": "경산시",
+      "address": "경상북도 경산시 용성면 용전1길 60",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 702,
+      "name": "제석사",
+      "sido": "경북",
+      "sigungu": "경산시",
+      "address": "경상북도 경산시 자인면 북사안길 18",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 703,
+      "name": "혜광사",
+      "sido": "경북",
+      "sigungu": "경산시",
+      "address": "경상북도 경산시 장산로24길 7 (삼북동)",
+      "denomination": "영화종"
+    },
+    {
+      "recordNo": 704,
+      "name": "환성사",
+      "sido": "경북",
+      "sigungu": "경산시",
+      "address": "경상북도 경산시 하양읍 환성로 392-30",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 705,
+      "name": "골굴사",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 양북면 기림로 101-5",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 706,
+      "name": "금정사",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 서면 천촌원당길 232",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 707,
+      "name": "기림사",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 양북면 기림로 437-4",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 708,
+      "name": "도덕암",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 안강읍 옥산서원길 403-177",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 709,
+      "name": "망월사",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 포석로 682-17(배동)",
+      "denomination": "원효종"
+    },
+    {
+      "recordNo": 710,
+      "name": "백율사",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 산업로 4214-110(동천동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 711,
+      "name": "보덕암",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 양남면 국구암길 222",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 712,
+      "name": "보리사",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 갯마을길 41-30(배반동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 713,
+      "name": "분황사",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 분황로 94-11(구황동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 714,
+      "name": "불국사",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 불국로 385(진현동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 715,
+      "name": "석굴암",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 불국로 873-243(진현동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 716,
+      "name": "연지암",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 외동읍 활성길 133-3",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 717,
+      "name": "주사암",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 서면 도계서오길 251-355",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 718,
+      "name": "천룡사",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 내남면 백운대길 101-309",
+      "denomination": "대각회"
+    },
+    {
+      "recordNo": 719,
+      "name": "천룡사",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 서면 백운대길 101-388",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 720,
+      "name": "중생사",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 윗내리길 29-12",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 721,
+      "name": "흥륜사",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 국당3길 5",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 722,
+      "name": "관음사",
+      "sido": "경북",
+      "sigungu": "고령군",
+      "address": "경상북도 고령군 고령읍 주산순환길 147",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 723,
+      "name": "반룡사",
+      "sido": "경북",
+      "sigungu": "고령군",
+      "address": "경상북도 고령군 쌍림면 반룡사길 87",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 724,
+      "name": "대둔사",
+      "sido": "경북",
+      "sigungu": "구미시",
+      "address": "경상북도 구미시 옥성면 산촌옥관로 691-78",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 725,
+      "name": "도리사",
+      "sido": "경북",
+      "sigungu": "구미시",
+      "address": "경상북도 구미시 해평면 도리사로 526",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 726,
+      "name": "보천사",
+      "sido": "경북",
+      "sigungu": "구미시",
+      "address": "경상북도 구미시 해평면 해평4로 86",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 727,
+      "name": "수다사",
+      "sido": "경북",
+      "sigungu": "구미시",
+      "address": "경상북도 구미시 무을면 수다사길183",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 728,
+      "name": "약사암",
+      "sido": "경북",
+      "sigungu": "구미시",
+      "address": "경상북도 구미시 금오산로 433-3",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 729,
+      "name": "원각사",
+      "sido": "경북",
+      "sigungu": "구미시",
+      "address": "경상북도 구미시 선산읍 선주로9길 7-15",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 730,
+      "name": "죽장사(구 서황사)",
+      "sido": "경북",
+      "sigungu": "구미시",
+      "address": "경상북도 구미시 선산읍 죽장2길 90",
+      "denomination": "무소속"
+    },
+    {
+      "recordNo": 731,
+      "name": "해운사",
+      "sido": "경북",
+      "sigungu": "구미시",
+      "address": "경상북도 구미시 금오산로 434-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 732,
+      "name": "신흥암",
+      "sido": "대구",
+      "sigungu": "군위군",
+      "address": "경상북도 군위군 우보면 고산길 262",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 733,
+      "name": "압곡사",
+      "sido": "대구",
+      "sigungu": "군위군",
+      "address": "경상북도 군위군 고로면 현리낙전길 836-144",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 734,
+      "name": "지보사",
+      "sido": "대구",
+      "sigungu": "군위군",
+      "address": "경상북도 군위군 군위읍 상곡길 233",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 735,
+      "name": "인각사",
+      "sido": "대구",
+      "sigungu": "군위군",
+      "address": "경상북도 군위군 고로면 삼국유사로 250",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 736,
+      "name": "법주사",
+      "sido": "대구",
+      "sigungu": "군위군",
+      "address": "경상북도 군위군 소보면 달산3길 215",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 737,
+      "name": "수태사",
+      "sido": "대구",
+      "sigungu": "군위군",
+      "address": "경상북도 군위군 의흥면 지호2길 202",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 738,
+      "name": "석굴암(구 제2석굴암)",
+      "sido": "대구",
+      "sigungu": "군위군",
+      "address": "경상북도 군위군 부계면 남산4길 24",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 739,
+      "name": "계림사",
+      "sido": "경북",
+      "sigungu": "김천시",
+      "address": "경상북도 김천시 개령면 동부1길 212",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 740,
+      "name": "신흥사",
+      "sido": "경북",
+      "sigungu": "김천시",
+      "address": "경상북도 김천시 농소면 연명2길 257-212",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 741,
+      "name": "고방사",
+      "sido": "경북",
+      "sigungu": "김천시",
+      "address": "경상북도 김천시 농소면 벽봉로 1444-143",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 742,
+      "name": "봉곡사",
+      "sido": "경북",
+      "sigungu": "김천시",
+      "address": "경상북도 김천시 대덕면 조룡길 1224-5",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 743,
+      "name": "직지사",
+      "sido": "경북",
+      "sigungu": "김천시",
+      "address": "경상북도 김천시 대항면 직지사길 95",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 744,
+      "name": "용화사",
+      "sido": "경북",
+      "sigungu": "김천시",
+      "address": "경상북도 김천시 봉산면 봉산1로 160",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 745,
+      "name": "청암사",
+      "sido": "경북",
+      "sigungu": "김천시",
+      "address": "경상북도 김천시 증산면 평촌2길 335-48",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 746,
+      "name": "구화사",
+      "sido": "경북",
+      "sigungu": "김천시",
+      "address": "경상북도 김천시 구화산길 329",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 747,
+      "name": "봉암사",
+      "sido": "경북",
+      "sigungu": "문경시",
+      "address": "경상북도 문경시 가은읍 원북길 313",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 748,
+      "name": "원적사",
+      "sido": "경북",
+      "sigungu": "문경시",
+      "address": "경상북도 문경시 농암면 우복동길 212-33",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 749,
+      "name": "심원사",
+      "sido": "경북",
+      "sigungu": "문경시",
+      "address": "경상북도 문경시 농암면 청화로 380-101",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 750,
+      "name": "혜국사",
+      "sido": "경북",
+      "sigungu": "문경시",
+      "address": "경상북도 문경시 문경읍 새재로 1052-220",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 751,
+      "name": "운암사",
+      "sido": "경북",
+      "sigungu": "문경시",
+      "address": "경상북도 문경시 불정길 149-123",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 752,
+      "name": "김용사",
+      "sido": "경북",
+      "sigungu": "문경시",
+      "address": "경상북도 문경시 산북면 김용길 372",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 753,
+      "name": "대승사",
+      "sido": "경북",
+      "sigungu": "문경시",
+      "address": "경상북도 문경시 산북면 대승사길 283",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 754,
+      "name": "청량사",
+      "sido": "경북",
+      "sigungu": "봉화군",
+      "address": "경상북도 봉화군 명호면 청량산길 199-152",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 755,
+      "name": "축서사",
+      "sido": "경북",
+      "sigungu": "봉화군",
+      "address": "경상북도 봉화군 물야면 월계길 739",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 756,
+      "name": "지림사",
+      "sido": "경북",
+      "sigungu": "봉화군",
+      "address": "경상북도 봉화군 물야면 문수로 449-66",
+      "denomination": "무소속"
+    },
+    {
+      "recordNo": 757,
+      "name": "천성사",
+      "sido": "경북",
+      "sigungu": "봉화군",
+      "address": "경상북도 봉화군 봉성면 꿀덩이길 93",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 758,
+      "name": "홍제암",
+      "sido": "경북",
+      "sigungu": "봉화군",
+      "address": "경상북도 봉화군 소천면 홍점길 295-85",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 759,
+      "name": "각화사",
+      "sido": "경북",
+      "sigungu": "봉화군",
+      "address": "경상북도 봉화군 춘양면 각화산길 251",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 760,
+      "name": "남장사",
+      "sido": "경북",
+      "sigungu": "상주시",
+      "address": "경상북도 상주시 남장1길 259-22 (남장동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 761,
+      "name": "북장사",
+      "sido": "경북",
+      "sigungu": "상주시",
+      "address": "경상북도 상주시 내서면 북장1길 317",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 762,
+      "name": "동해사",
+      "sido": "경북",
+      "sigungu": "상주시",
+      "address": "경상북도 상주시 서곡3길 173 (서곡동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 763,
+      "name": "상락사",
+      "sido": "경북",
+      "sigungu": "상주시",
+      "address": "경상북도 상주시 서성4길 19 (서성동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 764,
+      "name": "연수암",
+      "sido": "경북",
+      "sigungu": "상주시",
+      "address": "경상북도 상주시 연원7길 127 (연원동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 765,
+      "name": "광덕사",
+      "sido": "경북",
+      "sigungu": "상주시",
+      "address": "경상북도 상주시 외남면 구서2길 138",
+      "denomination": "법화종"
+    },
+    {
+      "recordNo": 766,
+      "name": "황령사",
+      "sido": "경북",
+      "sigungu": "상주시",
+      "address": "경상북도 상주시 은척면 성주로 225",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 767,
+      "name": "청룡사",
+      "sido": "경북",
+      "sigungu": "상주시",
+      "address": "경상북도 상주시 중동면 갱다불길 39-43",
+      "denomination": "법화종"
+    },
+    {
+      "recordNo": 768,
+      "name": "용흥사",
+      "sido": "경북",
+      "sigungu": "상주시",
+      "address": "경상북도 상주시 지천1길 223-35(지천동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 769,
+      "name": "갑장사",
+      "sido": "경북",
+      "sigungu": "상주시",
+      "address": "경상북도 상주시 지천1길 215-187 (지천동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 770,
+      "name": "용화사",
+      "sido": "경북",
+      "sigungu": "상주시",
+      "address": "경상북도 상주시 함창읍 증촌2길 10-13",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 771,
+      "name": "신흥사",
+      "sido": "경북",
+      "sigungu": "상주시",
+      "address": "경상북도 상주시 화북면 중벌2길 32",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 772,
+      "name": "청계사",
+      "sido": "경북",
+      "sigungu": "상주시",
+      "address": "경상북도 상주시 화서면 하송3길 213",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 773,
+      "name": "극락암",
+      "sido": "경북",
+      "sigungu": "상주시",
+      "address": "경상북도 상주시 모서면 쇠실길 46",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 774,
+      "name": "임정사",
+      "sido": "경북",
+      "sigungu": "성주군",
+      "address": "경상북도 성주군 성주읍 성주읍5길 24-35",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 775,
+      "name": "감응사",
+      "sido": "경북",
+      "sigungu": "성주군",
+      "address": "경상북도 성주군 월항면 대산1길 234",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 776,
+      "name": "선석사",
+      "sido": "경북",
+      "sigungu": "성주군",
+      "address": "경상북도 성주군 월항면 세종대왕자태실로 616-33",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 777,
+      "name": "심원사",
+      "sido": "경북",
+      "sigungu": "성주군",
+      "address": "경상북도 성주군 수륜면 가야산식물원길 17-56",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 778,
+      "name": "용담사",
+      "sido": "경북",
+      "sigungu": "안동시",
+      "address": "경상북도 안동시 길안면 미내소일길 138",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 779,
+      "name": "선찰사",
+      "sido": "경북",
+      "sigungu": "안동시",
+      "address": "경상북도 안동시 길안면 웃장터길 91-17",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 780,
+      "name": "모운사",
+      "sido": "경북",
+      "sigungu": "안동시",
+      "address": "경상북도 안동시 남후면 모운사길 83",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 781,
+      "name": "일출암(구 일출암)",
+      "sido": "경북",
+      "sigungu": "안동시",
+      "address": "경상북도 안동시 녹전면 일출길 207",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 782,
+      "name": "용수사",
+      "sido": "경북",
+      "sigungu": "안동시",
+      "address": "경상북도 안동시 도산면 용수길 284-9",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 783,
+      "name": "영봉사",
+      "sido": "경북",
+      "sigungu": "안동시",
+      "address": "경상북도 안동시 북후면 구둠실길 171",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 784,
+      "name": "석탑사",
+      "sido": "경북",
+      "sigungu": "안동시",
+      "address": "경상북도 안동시 북후면 산북로 260-14",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 785,
+      "name": "봉서사",
+      "sido": "경북",
+      "sigungu": "안동시",
+      "address": "경상북도 안동시 북후면 북평로 1057-114",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 786,
+      "name": "옥산사",
+      "sido": "경북",
+      "sigungu": "안동시",
+      "address": "경상북도 안동시 북후면 벽절길 137",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 787,
+      "name": "광흥사",
+      "sido": "경북",
+      "sigungu": "안동시",
+      "address": "경상북도 안동시 서후면 광흥사길 105",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 788,
+      "name": "개목사",
+      "sido": "경북",
+      "sigungu": "안동시",
+      "address": "경상북도 안동시 서후면 개목사길 362",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 789,
+      "name": "봉정사",
+      "sido": "경북",
+      "sigungu": "안동시",
+      "address": "경상북도 안동시 서후면 봉정사길 222",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 790,
+      "name": "석수암",
+      "sido": "경북",
+      "sigungu": "안동시",
+      "address": "경상북도 안동시 제비원로 370-13(안기동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 791,
+      "name": "유하사",
+      "sido": "경북",
+      "sigungu": "안동시",
+      "address": "경상북도 안동시 와룡면 어은길 39",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 792,
+      "name": "연미사",
+      "sido": "경북",
+      "sigungu": "안동시",
+      "address": "경상북도 안동시 제비원로 672 (이천동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 793,
+      "name": "봉황사",
+      "sido": "경북",
+      "sigungu": "안동시",
+      "address": "경상북도 안동시 임동면 봉황사길 152",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 794,
+      "name": "서악사",
+      "sido": "경북",
+      "sigungu": "안동시",
+      "address": "경상북도 안동시 서악길 67-14 (태화동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 795,
+      "name": "유금사",
+      "sido": "경북",
+      "sigungu": "영덕군",
+      "address": "경상북도 영덕군 병곡면 유금길 213-26",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 796,
+      "name": "장육사",
+      "sido": "경북",
+      "sigungu": "영덕군",
+      "address": "경상북도 영덕군 창수면 장육사1길 172",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 797,
+      "name": "부석사",
+      "sido": "경북",
+      "sigungu": "영주시",
+      "address": "경상북도 영주시 부석면 부석사로 345",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 798,
+      "name": "성혈사",
+      "sido": "경북",
+      "sigungu": "영주시",
+      "address": "경상북도 영주시 순흥면 죽계로 459-99",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 799,
+      "name": "초암사",
+      "sido": "경북",
+      "sigungu": "영주시",
+      "address": "경상북도 영주시 순흥면 죽계로315번길 330",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 800,
+      "name": "영주포교당",
+      "sido": "경북",
+      "sigungu": "영주시",
+      "address": "경상북도 영주시 중앙로63번길 41-10 (영주동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 801,
+      "name": "흑석사",
+      "sido": "경북",
+      "sigungu": "영주시",
+      "address": "경상북도 영주시 이산면 이산로 390-40",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 802,
+      "name": "진월사",
+      "sido": "경북",
+      "sigungu": "영주시",
+      "address": "경상북도 영주시 평은면 문평로 638-250",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 803,
+      "name": "비로사",
+      "sido": "경북",
+      "sigungu": "영주시",
+      "address": "경상북도 영주시 풍기읍 삼가로 661-29",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 804,
+      "name": "희방사",
+      "sido": "경북",
+      "sigungu": "영주시",
+      "address": "경상북도 영주시 풍기읍 죽령로1720번길 278",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 805,
+      "name": "유석사",
+      "sido": "경북",
+      "sigungu": "영주시",
+      "address": "경상북도 영주시 풍기읍 죽령로1360번길 289",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 806,
+      "name": "영성사",
+      "sido": "경북",
+      "sigungu": "영양군",
+      "address": "경상북도 영양군 영양읍 현리 460-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 807,
+      "name": "영천포교당",
+      "sido": "경북",
+      "sigungu": "영천시",
+      "address": "경상북도 영천시 서문길 69(교촌동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 808,
+      "name": "죽림사",
+      "sido": "경북",
+      "sigungu": "영천시",
+      "address": "경상북도 영천시 금호읍 죽방길 279-57",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 809,
+      "name": "신흥사",
+      "sido": "경북",
+      "sigungu": "영천시",
+      "address": "경상북도 영천시 금호읍 금호로 360-29",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 810,
+      "name": "영지사",
+      "sido": "경북",
+      "sigungu": "영천시",
+      "address": "경상북도 영천시 대창면 영지길 471",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 811,
+      "name": "신녕포교당",
+      "sido": "경북",
+      "sigungu": "영천시",
+      "address": "경상북도 영천시 신녕면 동산길 11",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 812,
+      "name": "부귀사(구 부귀암)",
+      "sido": "경북",
+      "sigungu": "영천시",
+      "address": "경상북도 영천시 신녕면 칠밭골길 446",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 813,
+      "name": "수도사",
+      "sido": "경북",
+      "sigungu": "영천시",
+      "address": "경상북도 영천시 신녕면 치산관광길 404",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 814,
+      "name": "진불암",
+      "sido": "경북",
+      "sigungu": "영천시",
+      "address": "경상북도 영천시 신녕면 치산관광길 404-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 815,
+      "name": "한광사",
+      "sido": "경북",
+      "sigungu": "영천시",
+      "address": "경상북도 영천시 신녕면 왕산대길 159",
+      "denomination": "법왕종"
+    },
+    {
+      "recordNo": 816,
+      "name": "거동사",
+      "sido": "경북",
+      "sigungu": "영천시",
+      "address": "경상북도 영천시 자양면 사곡길 77-81",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 817,
+      "name": "묘각사",
+      "sido": "경북",
+      "sigungu": "영천시",
+      "address": "경상북도 영천시 자양면 용화길 499",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 818,
+      "name": "은해사",
+      "sido": "경북",
+      "sigungu": "영천시",
+      "address": "경상북도 영천시 청통면 청통로 951",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 819,
+      "name": "봉림사",
+      "sido": "경북",
+      "sigungu": "영천시",
+      "address": "경상북도 영천시 화북면 천문로 2149-368",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 820,
+      "name": "한천사",
+      "sido": "경북",
+      "sigungu": "예천군",
+      "address": "경상북도 예천군 감천면 한천사길 142",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 821,
+      "name": "보문사",
+      "sido": "경북",
+      "sigungu": "예천군",
+      "address": "경상북도 예천군 보문면 보문사길 243",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 822,
+      "name": "명봉사",
+      "sido": "경북",
+      "sigungu": "예천군",
+      "address": "경상북도 예천군 상리면 석항명봉로 881-106",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 823,
+      "name": "서악사",
+      "sido": "경북",
+      "sigungu": "예천군",
+      "address": "경상북도 예천군 예천읍 대심1길 160",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 824,
+      "name": "동악사",
+      "sido": "경북",
+      "sigungu": "예천군",
+      "address": "경상북도 예천군 예천읍 충효로 448",
+      "denomination": "대한미륵불교"
+    },
+    {
+      "recordNo": 825,
+      "name": "장안사",
+      "sido": "경북",
+      "sigungu": "예천군",
+      "address": "경상북도 예천군 용궁면 회룡대길 168",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 826,
+      "name": "용문사",
+      "sido": "경북",
+      "sigungu": "예천군",
+      "address": "경상북도 예천군 용문면 용문사길 285-30",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 827,
+      "name": "청룡사",
+      "sido": "경북",
+      "sigungu": "예천군",
+      "address": "경상북도 예천군 용문면 선동길 510",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 828,
+      "name": "불영사",
+      "sido": "경북",
+      "sigungu": "울진군",
+      "address": "경상북도 울진군 서면 불영사길 48",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 829,
+      "name": "정수사",
+      "sido": "경북",
+      "sigungu": "의성군",
+      "address": "경상북도 의성군 구천면 장국길 195",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 830,
+      "name": "수정사",
+      "sido": "경북",
+      "sigungu": "의성군",
+      "address": "경상북도 의성군 금성면 수정사길 420",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 831,
+      "name": "대곡사",
+      "sido": "경북",
+      "sigungu": "의성군",
+      "address": "경상북도 의성군 다인면 대곡사길 80",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 832,
+      "name": "고운사",
+      "sido": "경북",
+      "sigungu": "의성군",
+      "address": "경상북도 의성군 단촌면 고운사길 415",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 833,
+      "name": "만장사",
+      "sido": "경북",
+      "sigungu": "의성군",
+      "address": "경상북도 의성군 비안면 모산길 109",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 834,
+      "name": "주월사",
+      "sido": "경북",
+      "sigungu": "의성군",
+      "address": "경상북도 의성군 사곡면 양지실업길 115",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 835,
+      "name": "지장사",
+      "sido": "경북",
+      "sigungu": "의성군",
+      "address": "경상북도 의성군 안사면 월소1길 148",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 836,
+      "name": "옥련사",
+      "sido": "경북",
+      "sigungu": "의성군",
+      "address": "경상북도 의성군 안평면 옥련사길 130",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 837,
+      "name": "운람사",
+      "sido": "경북",
+      "sigungu": "의성군",
+      "address": "경상북도 의성군 안평면 신안2길 223",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 838,
+      "name": "관음사",
+      "sido": "경북",
+      "sigungu": "의성군",
+      "address": "경상북도 의성군 의성읍 중리안길 16",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 839,
+      "name": "대산사",
+      "sido": "경북",
+      "sigungu": "청도군",
+      "address": "경상북도 청도군 각남면 옥산길 248-170",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 840,
+      "name": "용천사",
+      "sido": "경북",
+      "sigungu": "청도군",
+      "address": "경상북도 청도군 각북면 헐티로 1375-9",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 841,
+      "name": "대비사",
+      "sido": "경북",
+      "sigungu": "청도군",
+      "address": "경상북도 청도군 금천면 박곡길 590",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 842,
+      "name": "불령사",
+      "sido": "경북",
+      "sigungu": "청도군",
+      "address": "경상북도 청도군 매전면 용산3길 99-8",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 843,
+      "name": "운문사",
+      "sido": "경북",
+      "sigungu": "청도군",
+      "address": "경상북도 청도군 운문면 운문사길 264",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 844,
+      "name": "보현사",
+      "sido": "경북",
+      "sigungu": "청도군",
+      "address": "경상북도 청도군 청도읍 앞산공원길 14",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 845,
+      "name": "적천사",
+      "sido": "경북",
+      "sigungu": "청도군",
+      "address": "경상북도 청도군 청도읍 원동길 304",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 846,
+      "name": "대운암",
+      "sido": "경북",
+      "sigungu": "청도군",
+      "address": "경상북도 청도군 청도읍 청매로 117-320",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 847,
+      "name": "신둔사",
+      "sido": "경북",
+      "sigungu": "청도군",
+      "address": "경상북도 청도군 화양읍 화양남산길 355",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 848,
+      "name": "덕사",
+      "sido": "경북",
+      "sigungu": "청도군",
+      "address": "경상북도 청도군 화양읍 소라길 16-107",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 849,
+      "name": "대적사",
+      "sido": "경북",
+      "sigungu": "청도군",
+      "address": "경상북도 청도군 화양읍 송금길 113",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 850,
+      "name": "죽림사",
+      "sido": "경북",
+      "sigungu": "청도군",
+      "address": "경상북도 청도군 화양읍 홍도길 205-5",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 851,
+      "name": "대전사",
+      "sido": "경북",
+      "sigungu": "청송군",
+      "address": "경상북도 청송군 부동면 공원길 226",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 852,
+      "name": "보광사",
+      "sido": "경북",
+      "sigungu": "청송군",
+      "address": "경상북도 청송군 청송읍 현충로 51-352",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 853,
+      "name": "청송포교당",
+      "sido": "경북",
+      "sigungu": "청송군",
+      "address": "경상북도 청송군 청송읍 중앙로 267-11",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 854,
+      "name": "수정사",
+      "sido": "경북",
+      "sigungu": "청송군",
+      "address": "경상북도 청송군 파천면 송강길 268",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 855,
+      "name": "대둔사",
+      "sido": "경북",
+      "sigungu": "칠곡군",
+      "address": "경상북도 칠곡군 가산면 가산로1길 272-59",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 856,
+      "name": "금곡사",
+      "sido": "경북",
+      "sigungu": "칠곡군",
+      "address": "경상북도 칠곡군 가산면 금화길 107",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 857,
+      "name": "도덕암",
+      "sido": "경북",
+      "sigungu": "칠곡군",
+      "address": "경상북도 칠곡군 동명면 한티로 260",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 858,
+      "name": "송림사",
+      "sido": "경북",
+      "sigungu": "칠곡군",
+      "address": "경상북도 칠곡군 동명면 송림길 73",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 859,
+      "name": "선봉사",
+      "sido": "경북",
+      "sigungu": "칠곡군",
+      "address": "경상북도 칠곡군 북삼읍 금오동천로 84",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 860,
+      "name": "영명사",
+      "sido": "경북",
+      "sigungu": "칠곡군",
+      "address": "경상북도 칠곡군 북삼읍 금오동천로 84",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 861,
+      "name": "해봉사",
+      "sido": "경북",
+      "sigungu": "포항시",
+      "address": "경상북도 포항시 남구 호미곶면 명월길 304-16",
+      "denomination": "법화종"
+    },
+    {
+      "recordNo": 862,
+      "name": "선암사",
+      "sido": "경북",
+      "sigungu": "포항시",
+      "address": "경상북도 포항시 남구 동해면 정동길417번길 97-37",
+      "denomination": "미륵종"
+    },
+    {
+      "recordNo": 863,
+      "name": "몽운사",
+      "sido": "경북",
+      "sigungu": "포항시",
+      "address": "경상북도 포항시 남구 동해면 조항산길9번길 75",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 864,
+      "name": "일출선원",
+      "sido": "경북",
+      "sigungu": "포항시",
+      "address": "경상북도 포항시 남구 동해면 정동길 551-74",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 865,
+      "name": "진불사",
+      "sido": "경북",
+      "sigungu": "포항시",
+      "address": "경상북도 포항시 남구 동해면 흥환길 26번길 101",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 866,
+      "name": "오어사",
+      "sido": "경북",
+      "sigungu": "포항시",
+      "address": "경상북도 포항시 남구 오천읍 오어로 1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 867,
+      "name": "고석사",
+      "sido": "경북",
+      "sigungu": "포항시",
+      "address": "경상북도 포항시 남구 장기면 방산로 526",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 868,
+      "name": "무학사",
+      "sido": "경북",
+      "sigungu": "포항시",
+      "address": "경상북도 포항시 북구 죽장면 면봉산길 430",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 869,
+      "name": "보경사",
+      "sido": "경북",
+      "sigungu": "포항시",
+      "address": "경상북도 포항시 북구 송라면 보경로 523",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 870,
+      "name": "법광사",
+      "sido": "경북",
+      "sigungu": "포항시",
+      "address": "경상북도 포항시 북구 신광면 상읍길 290",
+      "denomination": "법화종"
+    },
+    {
+      "recordNo": 871,
+      "name": "임허사",
+      "sido": "경북",
+      "sigungu": "포항시",
+      "address": "경상북도 포항시 북구 흥해읍 동해대로 1548-4",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 872,
+      "name": "천곡사",
+      "sido": "경북",
+      "sigungu": "포항시",
+      "address": "경상북도 포항시 북구 흥해읍 도음로 476",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 873,
+      "name": "죽림사",
+      "sido": "경북",
+      "sigungu": "포항시",
+      "address": "경상북도 포항시 북구 탑산길10번길 11-4 (용흥동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 874,
+      "name": "감산사",
+      "sido": "경북",
+      "sigungu": "경주시",
+      "address": "경상북도 경주시 외동읍 앞등길 117-20",
+      "denomination": "조계종대각회"
+    },
+    {
+      "recordNo": 875,
+      "name": "세진암",
+      "sido": "경남",
+      "sigungu": "거제시",
+      "address": "경상남도 거제시 거제면 동상3길 31-6(동상리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 876,
+      "name": "총명사",
+      "sido": "경남",
+      "sigungu": "거제시",
+      "address": "경상남도 거제시 신부로4길 40",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 877,
+      "name": "신광사",
+      "sido": "경남",
+      "sigungu": "거제시",
+      "address": "경상남도 거제시 사등면 오량2길 108",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 878,
+      "name": "고견사",
+      "sido": "경남",
+      "sigungu": "거창군",
+      "address": "경상남도 거창군 가조면 의상봉길 1049",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 879,
+      "name": "금봉암",
+      "sido": "경남",
+      "sigungu": "거창군",
+      "address": "경상남도 거창군고제면 용초길 310-428",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 880,
+      "name": "연수사",
+      "sido": "경남",
+      "sigungu": "거창군",
+      "address": "경상남도 거창군 남상면 연수사길 115-103",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 881,
+      "name": "송계사",
+      "sido": "경남",
+      "sigungu": "거창군",
+      "address": "경상남도 거창군 북상면 송계사길 321",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 882,
+      "name": "옥천사",
+      "sido": "경남",
+      "sigungu": "고성군",
+      "address": "경상남도 고성군 개천면 연화산1로 471-9",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 883,
+      "name": "장의사",
+      "sido": "경남",
+      "sigungu": "고성군",
+      "address": "경상남도 고성군 거류면 신용9길 295",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 884,
+      "name": "문수암",
+      "sido": "경남",
+      "sigungu": "고성군",
+      "address": "경상남도 고성군 상리면 무선2길 808",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 885,
+      "name": "계승사",
+      "sido": "경남",
+      "sigungu": "고성군",
+      "address": "경상남도 고성군 영현면 대법3길 236",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 886,
+      "name": "운흥사",
+      "sido": "경남",
+      "sigungu": "고성군",
+      "address": "경상남도 고성군 하이면 와룡2길 248-28",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 887,
+      "name": "원명사",
+      "sido": "경남",
+      "sigungu": "김해시",
+      "address": "경상남도 김해시 대동면 대동로529번길 83",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 888,
+      "name": "영구암",
+      "sido": "경남",
+      "sigungu": "김해시",
+      "address": "경상남도 김해시 신어산길 169(삼방동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 889,
+      "name": "은하사",
+      "sido": "경남",
+      "sigungu": "김해시",
+      "address": "경상남도 김해시 신어산길 167(삼방동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 890,
+      "name": "성조암",
+      "sido": "경남",
+      "sigungu": "김해시",
+      "address": "경상남도 김해시 활천로 121-57(삼정동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 891,
+      "name": "백운암",
+      "sido": "경남",
+      "sigungu": "김해시",
+      "address": "경상남도 김해시 상동면 여차로471번안길 16-133(여차리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 892,
+      "name": "모은암",
+      "sido": "경남",
+      "sigungu": "김해시",
+      "address": "경상남도 김해시 생림면 마사로 36-228(생철리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 893,
+      "name": "구천암",
+      "sido": "경남",
+      "sigungu": "김해시",
+      "address": "경상남도 김해시 생림면 마사로229번길 58-175",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 894,
+      "name": "해은사",
+      "sido": "경남",
+      "sigungu": "김해시",
+      "address": "경상남도 김해시 가야로 405번안길 210-162",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 895,
+      "name": "흥부암",
+      "sido": "경남",
+      "sigungu": "김해시",
+      "address": "경상남도 김해시 전하로 269-74",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 896,
+      "name": "장유암",
+      "sido": "경남",
+      "sigungu": "김해시",
+      "address": "경상남도 김해시 대청계곡길 170-563(대청리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 897,
+      "name": "선지사",
+      "sido": "경남",
+      "sigungu": "김해시",
+      "address": "경상남도 김해시 주촌면 서부로 1743번길 28(선지리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 898,
+      "name": "화방사",
+      "sido": "경남",
+      "sigungu": "남해군",
+      "address": "경상남도 남해군 고현면 화방사길 128-6",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 899,
+      "name": "법흥사",
+      "sido": "경남",
+      "sigungu": "남해군",
+      "address": "경상남도 남해군 남해읍 망운로 10번길 45-10",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 900,
+      "name": "망운사",
+      "sido": "경남",
+      "sigungu": "남해군",
+      "address": "경상남도 남해군 남해읍 남서대로 2240번길",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 901,
+      "name": "보리암",
+      "sido": "경남",
+      "sigungu": "남해군",
+      "address": "경상남도 남해군 상주면 보리암로 665",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 902,
+      "name": "용문사",
+      "sido": "경남",
+      "sigungu": "남해군",
+      "address": "경상남도 남해군 이동면 용문사길 166-11",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 903,
+      "name": "운대암",
+      "sido": "경남",
+      "sigungu": "남해군",
+      "address": "경상남도 남해군 창선면 창선로 153번길 240",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 904,
+      "name": "의림사",
+      "sido": "경남",
+      "sigungu": "창원시",
+      "address": "경상남도 창원시 마산합포구 진북면 의림로 382",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 905,
+      "name": "정법사",
+      "sido": "경남",
+      "sigungu": "창원시",
+      "address": "경상남도 창원시 마산합포구 몽고정길 46(부림동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 906,
+      "name": "성덕암",
+      "sido": "경남",
+      "sigungu": "창원시",
+      "address": "경상남도 창원시 마산합포구 성호서7길 46(추산동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 907,
+      "name": "광산사",
+      "sido": "경남",
+      "sigungu": "창원시",
+      "address": "경상남도 창원시 마산회원구 내서읍 광려로 542(신감리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 908,
+      "name": "무봉사",
+      "sido": "경남",
+      "sigungu": "밀양시",
+      "address": "경상남도 밀양시 영남루1길 16-11(내일동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 909,
+      "name": "표충사",
+      "sido": "경남",
+      "sigungu": "밀양시",
+      "address": "경상남도 밀양시 단장면 표충로 1338(구천리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 910,
+      "name": "홍제사",
+      "sido": "경남",
+      "sigungu": "밀양시",
+      "address": "경상남도 밀양시 무안면 동부동안길 4(무안리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 911,
+      "name": "대법사",
+      "sido": "경남",
+      "sigungu": "밀양시",
+      "address": "경상남도 밀양시 무안면 무안서로163-158(중산리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 912,
+      "name": "석골사",
+      "sido": "경남",
+      "sigungu": "밀양시",
+      "address": "경상남도 밀양시 산내면 원서3길 167(원서리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 913,
+      "name": "만어사",
+      "sido": "경남",
+      "sigungu": "밀양시",
+      "address": "경상남도 밀양시 삼랑진읍 용전리 산 41",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 914,
+      "name": "부은사",
+      "sido": "경남",
+      "sigungu": "밀양시",
+      "address": "경상남도 밀양시 삼랑진읍 천태로451-94",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 915,
+      "name": "다솔사",
+      "sido": "경남",
+      "sigungu": "사천시",
+      "address": "경상남도 사천시 곤명면 다솔사길 417",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 916,
+      "name": "백천사",
+      "sido": "경남",
+      "sigungu": "사천시",
+      "address": "경상남도 사천시 백천길 326-2",
+      "denomination": "관음회조계종"
+    },
+    {
+      "recordNo": 917,
+      "name": "심적사",
+      "sido": "경남",
+      "sigungu": "산청군",
+      "address": "경상남도 산청군 산청읍 웅석봉로 495",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 918,
+      "name": "지곡사",
+      "sido": "경남",
+      "sigungu": "산청군",
+      "address": "경상남도 산청군 산청읍 웅석봉로 396",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 919,
+      "name": "심적정사",
+      "sido": "경남",
+      "sigungu": "산청군",
+      "address": "경상남도 산청군 산청읍 꽃봉산로133번길 15",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 920,
+      "name": "대원사",
+      "sido": "경남",
+      "sigungu": "산청군",
+      "address": "경상남도 산청군 삼장면 평촌유평로 453",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 921,
+      "name": "법계사",
+      "sido": "경남",
+      "sigungu": "산청군",
+      "address": "경상남도 산청군 시천면 지리산대로 320-292",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 922,
+      "name": "정취암",
+      "sido": "경남",
+      "sigungu": "산청군",
+      "address": "경상남도 산청군 신등면 둔철산로 675-87",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 923,
+      "name": "율곡사",
+      "sido": "경남",
+      "sigungu": "산청군",
+      "address": "경상남도 산청군 신등면 율곡사길 182",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 924,
+      "name": "내원사",
+      "sido": "경남",
+      "sigungu": "산청군",
+      "address": "경상남도 산청군삼장면 대하내원로 256",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 925,
+      "name": "용화사",
+      "sido": "경남",
+      "sigungu": "양산시",
+      "address": "경상남도 양산시 물금읍 원동로 199-133",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 926,
+      "name": "원효암",
+      "sido": "경남",
+      "sigungu": "양산시",
+      "address": "경상남도 양산시 상북면 천성산길 727-82",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 927,
+      "name": "홍룡사",
+      "sido": "경남",
+      "sigungu": "양산시",
+      "address": "경상남도 양산시 상북면 홍룡로 372",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 928,
+      "name": "미타암",
+      "sido": "경남",
+      "sigungu": "양산시",
+      "address": "경상남도 양산시 주진로 379-61(소주동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 929,
+      "name": "신흥사",
+      "sido": "경남",
+      "sigungu": "양산시",
+      "address": "경상남도 양산시 원동면 원동로 2282-111",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 930,
+      "name": "계원사",
+      "sido": "경남",
+      "sigungu": "양산시",
+      "address": "경상남도 양산시 중앙우회로 66-64",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 931,
+      "name": "내원사",
+      "sido": "경남",
+      "sigungu": "양산시",
+      "address": "경상남도 양산시 하북면 내원로 207",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 932,
+      "name": "통도사",
+      "sido": "경남",
+      "sigungu": "양산시",
+      "address": "경상남도 양산시 하북면 통도사로 108",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 933,
+      "name": "법천사",
+      "sido": "경남",
+      "sigungu": "양산시",
+      "address": "경상남도 양산시 동면 금산2길 210",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 934,
+      "name": "백련암",
+      "sido": "경남",
+      "sigungu": "의령군",
+      "address": "경상남도 의령군 가례면 자굴산로 1150-142(개승리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 935,
+      "name": "운암사",
+      "sido": "경남",
+      "sigungu": "의령군",
+      "address": "경상남도 의령군 부림면 고루로 945-107(경산리 837)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 936,
+      "name": "유학사",
+      "sido": "경남",
+      "sigungu": "의령군",
+      "address": "경상남도 의령군 부림면 여배로5길 2(묵방리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 937,
+      "name": "수도사",
+      "sido": "경남",
+      "sigungu": "의령군",
+      "address": "경상남도 의령군 용덕면 덕암로 581-137",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 938,
+      "name": "청곡사",
+      "sido": "경남",
+      "sigungu": "진주시",
+      "address": "경상남도 진주시 금산면 월아산로 1440번길 138(갈전리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 939,
+      "name": "호국사",
+      "sido": "경남",
+      "sigungu": "진주시",
+      "address": "경상남도 진주시 남강로 626-71(남성동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 940,
+      "name": "두방사",
+      "sido": "경남",
+      "sigungu": "진주시",
+      "address": "경상남도 진주시 문산읍 동부로 781번길 267(상문리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 941,
+      "name": "의곡사",
+      "sido": "경남",
+      "sigungu": "진주시",
+      "address": "경상남도 진주시 의곡길 72(상봉동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 942,
+      "name": "연화사",
+      "sido": "경남",
+      "sigungu": "진주시",
+      "address": "경상남도 진주시 향교로 42번길 13(옥봉동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 943,
+      "name": "성전사",
+      "sido": "경남",
+      "sigungu": "진주시",
+      "address": "경상남도 진주시 이반성면 장안로 65번길 291(장안리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 944,
+      "name": "응석사",
+      "sido": "경남",
+      "sigungu": "진주시",
+      "address": "경상남도 진주시 집현면 응석로 435(정평리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 945,
+      "name": "총림선원",
+      "sido": "경남",
+      "sigungu": "진주시",
+      "address": "경상남도 진주시 망진산길 71(망경동)",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 946,
+      "name": "성흥사",
+      "sido": "경남",
+      "sigungu": "창원시",
+      "address": "경상남도 창원시 진해구 대장로 273(대장동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 947,
+      "name": "청련사",
+      "sido": "경남",
+      "sigungu": "창녕군",
+      "address": "경상남도 창녕군 계성면 계성화왕산로 288-102",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 948,
+      "name": "삼성암",
+      "sido": "경남",
+      "sigungu": "창녕군",
+      "address": "경상남도 창녕군 계성면 북암길 147",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 949,
+      "name": "법화사",
+      "sido": "경남",
+      "sigungu": "창녕군",
+      "address": "경상남도 창녕군 영산면 적지길 184",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 950,
+      "name": "창녕포교당",
+      "sido": "경남",
+      "sigungu": "창녕군",
+      "address": "경상남도 창녕군 창녕읍 신당2길 4-3",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 951,
+      "name": "석불사",
+      "sido": "경남",
+      "sigungu": "창녕군",
+      "address": "경상남도 창녕군 창녕읍 화왕산로 135-71",
+      "denomination": "법화종"
+    },
+    {
+      "recordNo": 952,
+      "name": "도성암",
+      "sido": "경남",
+      "sigungu": "창녕군",
+      "address": "경상남도 창녕군 창녕읍 자하곡길 147",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 953,
+      "name": "관룡사",
+      "sido": "경남",
+      "sigungu": "창녕군",
+      "address": "경상남도 창녕군 창녕읍 화왕산관룡사길 171",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 954,
+      "name": "극락암",
+      "sido": "경남",
+      "sigungu": "창녕군",
+      "address": "경상남도 창녕군 창녕읍 새말길 142",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 955,
+      "name": "각료암",
+      "sido": "경남",
+      "sigungu": "창녕군",
+      "address": "경상남도 창녕군 성산면 안심산림길 376",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 956,
+      "name": "불곡사",
+      "sido": "경남",
+      "sigungu": "창원시",
+      "address": "경상남도 창원시 성산구 대암로 55(대방동)",
+      "denomination": "법화종"
+    },
+    {
+      "recordNo": 957,
+      "name": "우곡사",
+      "sido": "경남",
+      "sigungu": "창원시",
+      "address": "경상남도 창원시 의창구 동읍 자여로 459(단계리)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 958,
+      "name": "성주사",
+      "sido": "경남",
+      "sigungu": "창원시",
+      "address": "경상남도 창원시 성산구 곰절길 191(천선동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 959,
+      "name": "안정사",
+      "sido": "경남",
+      "sigungu": "통영시",
+      "address": "경상남도 통영시 광도면 안정1길 363(안정리)",
+      "denomination": "법화종"
+    },
+    {
+      "recordNo": 960,
+      "name": "용화사",
+      "sido": "경남",
+      "sigungu": "통영시",
+      "address": "경상남도 통영시 봉수로 107-82(봉평동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 961,
+      "name": "양천암",
+      "sido": "경남",
+      "sigungu": "하동군",
+      "address": "경상남도 하동군 북천면 상촌길 184-128",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 962,
+      "name": "한산사",
+      "sido": "경남",
+      "sigungu": "하동군",
+      "address": "경상남도 하동군 악양면 평사리길 59-102",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 963,
+      "name": "학방암",
+      "sido": "경남",
+      "sigungu": "하동군",
+      "address": "경상남도 하동군 양보면 상고개로 377-59",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 964,
+      "name": "칠불사",
+      "sido": "경남",
+      "sigungu": "하동군",
+      "address": "경상남도 하동군 화개면 범왕길 528",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 965,
+      "name": "쌍계사",
+      "sido": "경남",
+      "sigungu": "하동군",
+      "address": "경상남도 하동군 화개면 쌍계사길 59",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 966,
+      "name": "원효암",
+      "sido": "경남",
+      "sigungu": "함안군",
+      "address": "경상남도 함안군 군북면 사촌4길 863",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 967,
+      "name": "장춘사",
+      "sido": "경남",
+      "sigungu": "함안군",
+      "address": "경상남도 함안군 칠북면 북원로 110-1",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 968,
+      "name": "금대암",
+      "sido": "경남",
+      "sigungu": "함양군",
+      "address": "경상남도 함양군 마천면 천왕봉로 1035-528",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 969,
+      "name": "영원사",
+      "sido": "경남",
+      "sigungu": "함양군",
+      "address": "경상남도 함양군 마천면 마천삼정로 544-659",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 970,
+      "name": "벽송사",
+      "sido": "경남",
+      "sigungu": "함양군",
+      "address": "경상남도 함양군 마천면 광점길 27-177",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 971,
+      "name": "상연대",
+      "sido": "경남",
+      "sigungu": "함양군",
+      "address": "경상남도 함양군 백전면 백운산길 3-291",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 972,
+      "name": "영각사",
+      "sido": "경남",
+      "sigungu": "함양군",
+      "address": "경상남도 함양군 서상면 덕유월성로 567",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 973,
+      "name": "용추사",
+      "sido": "경남",
+      "sigungu": "함양군",
+      "address": "경상남도 함양군 안의면 용추계곡로 623",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 974,
+      "name": "보림사",
+      "sido": "경남",
+      "sigungu": "함양군",
+      "address": "경상남도 함양군 함양읍 상림3길 32",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 975,
+      "name": "안국사",
+      "sido": "경남",
+      "sigungu": "함양군",
+      "address": "경상남도 함양군 마천면 천왕봉로 1035-337",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 976,
+      "name": "해인사",
+      "sido": "경남",
+      "sigungu": "합천군",
+      "address": "경상남도 합천군 가야면 해인사길 12",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 977,
+      "name": "연호사",
+      "sido": "경남",
+      "sigungu": "합천군",
+      "address": "경상남도 합천군 합천읍 죽죽길 80",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 978,
+      "name": "용궁사",
+      "sido": "경남",
+      "sigungu": "밀양시",
+      "address": "경상남도 밀양시 용두로 31-8 (가곡동)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 979,
+      "name": "칠성사",
+      "sido": "경남",
+      "sigungu": "하동군",
+      "address": "경상남도 하동군 악양면 신흥길 121-120",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 980,
+      "name": "천왕사",
+      "sido": "제주",
+      "sigungu": "제주시",
+      "address": "제주도 제주시 1100로 2528-11(노형동 산 20-17)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 981,
+      "name": "불탑사",
+      "sido": "제주",
+      "sigungu": "제주시",
+      "address": "제주도 제주시 원당로16길 41(삼양1동 696)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 982,
+      "name": "관음사",
+      "sido": "제주",
+      "sigungu": "제주시",
+      "address": "제주도 제주시 산록북로 660(아라동 387)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 983,
+      "name": "월정사",
+      "sido": "제주",
+      "sigungu": "제주시",
+      "address": "제주도 제주시 아연로 216-5(오라2동 656-2)",
+      "denomination": "선학원"
+    },
+    {
+      "recordNo": 984,
+      "name": "제석사",
+      "sido": "제주",
+      "sigungu": "제주시",
+      "address": "제주도 제주시 신성로10길 23(이동2동 1014-3)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 985,
+      "name": "보덕사",
+      "sido": "제주",
+      "sigungu": "제주시",
+      "address": "제주도 제주시 독짓골8길 26(도남동 80-2)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 986,
+      "name": "법화사",
+      "sido": "제주",
+      "sigungu": "서귀포시",
+      "address": "제주도 서귀포시 하원북로35번길 15-28(하원동 1071)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 987,
+      "name": "약천사",
+      "sido": "제주",
+      "sigungu": "서귀포시",
+      "address": "제주도 서귀포시 이어도로 293-28(대포동 1165)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 988,
+      "name": "남국선원",
+      "sido": "제주",
+      "sigungu": "서귀포시",
+      "address": "제주도 서귀포시 돈내코로 296-127(상효동 산1-1)",
+      "denomination": "대각회"
+    },
+    {
+      "recordNo": 989,
+      "name": "선광사",
+      "sido": "제주",
+      "sigungu": "서귀포시",
+      "address": "제주도 서귀포시 남원읍 태위로 510(남원읍 남원리 2493)",
+      "denomination": "태고종"
+    },
+    {
+      "recordNo": 990,
+      "name": "월성사",
+      "sido": "제주",
+      "sigungu": "제주시",
+      "address": "제주도 제주시 한경면 용고로 63(한경면 고산리 2923)",
+      "denomination": "조계종"
+    },
+    {
+      "recordNo": 991,
+      "name": "월영사",
+      "sido": "제주",
+      "sigungu": "제주시",
+      "address": "제주도 제주시 애월읍 하귀동남2길 40-16(애월읍 상귀리 329)",
+      "denomination": "태고종"
+    }
+  ]
+}

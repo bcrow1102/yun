@@ -1,3 +1,12 @@
+import {
+    templeNationwideReport,
+    templeNationwideSeeds,
+    type LocalDataTempleSource,
+    type McstTempleSource,
+    type TempleNationwideSeed,
+    type TempleSeedMatchStatus,
+} from "./nationwide-seed";
+
 export const SIDO_LIST = [
     "전체",
     "서울",
@@ -36,8 +45,8 @@ export type TempleLocationV1 = {
     address: string;
     sido: Sido;
     sigungu: string;
-    latitude?: number;
-    longitude?: number;
+    latitude?: number | null;
+    longitude?: number | null;
 };
 
 export type TemplePublicTransitV1 = {
@@ -128,6 +137,7 @@ export type Temple = {
      */
     name: string;
     hanja?: string;
+    aliases?: string[];
 
     /**
      * 객관적인 위치 정보. area는 넓은 권역 탐색용이며 거리 판단에는
@@ -183,11 +193,21 @@ export type Temple = {
     representative: boolean;
     published: boolean;
     updatedAt?: string;
+
+    /**
+     * 전국 전통사찰 seed의 공식 source 연결 정보. 원본 좌표는 사용자
+     * 기능에서 사용하지 않고 location의 WGS84 좌표만 사용한다.
+     */
+    externalSources?: {
+        mcstTraditionalTemple: McstTempleSource;
+        localData?: LocalDataTempleSource;
+    };
+    seedMatchStatus?: TempleSeedMatchStatus;
 };
 
 export type TempleSlug = Temple["slug"];
 
-export const temples: Temple[] = [
+const curatedTemples: Temple[] = [
     {
         slug: "jogyesa",
         name: "조계사",
@@ -468,6 +488,181 @@ export const temples: Temple[] = [
     },
 ];
 
+function getTempleArea(sido: Sido): TempleArea {
+    if (["서울", "인천", "경기"].includes(sido)) {
+        return "수도권";
+    }
+
+    if (sido === "강원") {
+        return "강원";
+    }
+
+    if (["대전", "세종", "충북", "충남"].includes(sido)) {
+        return "충청";
+    }
+
+    if (["광주", "전북", "전남"].includes(sido)) {
+        return "호남";
+    }
+
+    if (sido === "제주") {
+        return "제주";
+    }
+
+    return "영남";
+}
+
+function getSeedSido(seed: TempleNationwideSeed): Sido {
+    if (
+        !SIDO_LIST.some(
+            (sido): sido is Sido =>
+                sido !== "전체" && sido === seed.sido,
+        )
+    ) {
+        throw new Error(`지원하지 않는 시도 값입니다: ${seed.sido}`);
+    }
+
+    return seed.sido as Sido;
+}
+
+function getSeedSource(seed: TempleNationwideSeed) {
+    return {
+        mcstTraditionalTemple: seed.mcst,
+        localData: seed.localData,
+    };
+}
+
+function createTempleFromSeed(seed: TempleNationwideSeed): Temple {
+    const sido = getSeedSido(seed);
+
+    return {
+        slug: seed.slug,
+        name: seed.name,
+        aliases: seed.aliases,
+        location: {
+            sido,
+            sigungu: seed.sigungu,
+            address: seed.address,
+            latitude: seed.latitude,
+            longitude: seed.longitude,
+        },
+        area: getTempleArea(sido),
+        summary: seed.address,
+        order: seed.denomination,
+        tags: ["전통사찰"],
+        keywords: [
+            seed.name,
+            ...(seed.aliases ?? []),
+            seed.sido,
+            seed.sigungu,
+            seed.sigungu.replace(/(시|군|구)$/, ""),
+            seed.address,
+            seed.denomination,
+            "전통사찰",
+        ],
+        representative: false,
+        published: true,
+        externalSources: getSeedSource(seed),
+        seedMatchStatus: seed.matchStatus,
+    };
+}
+
+function mergeTempleNationwideSeeds() {
+    if (templeNationwideReport.validationFailureCount > 0) {
+        throw new Error(
+            "Temple nationwide seed 검증 실패",
+        );
+    }
+
+    const curatedBySlug = new Map(
+        curatedTemples.map((temple) => [temple.slug, temple]),
+    );
+    const seenSeedSlugs = new Set<string>();
+
+    for (const seed of templeNationwideSeeds) {
+        if (seenSeedSlugs.has(seed.slug)) {
+            throw new Error(`중복 nationwide Temple slug: ${seed.slug}`);
+        }
+
+        seenSeedSlugs.add(seed.slug);
+
+        if (seed.existingSlug && !curatedBySlug.has(seed.existingSlug)) {
+            throw new Error(
+                `기존 Temple을 찾을 수 없습니다: ${seed.existingSlug}`,
+            );
+        }
+
+        if (
+            !seed.existingSlug &&
+            curatedTemples.some(
+                (temple) =>
+                    temple.name === seed.name &&
+                    temple.location.sido === seed.sido &&
+                    temple.location.sigungu === seed.sigungu,
+            )
+        ) {
+            throw new Error(
+                `기존 Temple과 중복되는 신규 seed: ${seed.slug}`,
+            );
+        }
+    }
+
+    const seedByExistingSlug = new Map(
+        templeNationwideSeeds
+            .filter((seed) => seed.existingSlug)
+            .map((seed) => [seed.existingSlug as string, seed]),
+    );
+
+    const preservedTemples = curatedTemples.map((temple) => {
+        const seed = seedByExistingSlug.get(temple.slug);
+
+        if (!seed) {
+            return temple;
+        }
+
+        return {
+            ...temple,
+            aliases: [
+                ...new Set([
+                    ...(temple.aliases ?? []),
+                    ...(seed.aliases ?? []),
+                ]),
+            ],
+            location: {
+                ...temple.location,
+                sido: getSeedSido(seed),
+                sigungu: seed.sigungu,
+                address: seed.address,
+                latitude:
+                    seed.latitude ?? temple.location.latitude ?? null,
+                longitude:
+                    seed.longitude ?? temple.location.longitude ?? null,
+            },
+            keywords: [
+                ...new Set([
+                    ...temple.keywords,
+                    ...(seed.aliases ?? []),
+                    seed.address,
+                    seed.denomination,
+                ]),
+            ],
+            externalSources: getSeedSource(seed),
+            seedMatchStatus: seed.matchStatus,
+        } satisfies Temple;
+    });
+
+    const newTemples = templeNationwideSeeds
+        .filter((seed) => !seed.existingSlug)
+        .map(createTempleFromSeed);
+
+    return [...preservedTemples, ...newTemples];
+}
+
+/**
+ * 지역 탐색, 전역 검색과 모든 relation이 함께 참조하는 단일 canonical.
+ */
+export const temples: Temple[] = mergeTempleNationwideSeeds();
+
 /**
  * 검색어 비교를 위해 영문 대소문자와 공백 차이를 제거한다.
  */
@@ -483,6 +678,7 @@ export function getTempleSearchText(temple: Temple) {
         [
             temple.name,
             temple.hanja,
+            ...(temple.aliases ?? []),
             temple.location.sido,
             temple.area,
             temple.location.sigungu,
