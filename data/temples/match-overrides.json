@@ -35,6 +35,12 @@
     "localDataSourceId": "localdata:6410000:3910000-105",
     "reason": "MCST 덕목리 주소와 일치하는 심복사 레코드"
   },
+  "283": {
+    "localDataSourceId": "localdata:6530000:4231000-002",
+    "adoptAddress": false,
+    "adoptCoordinates": false,
+    "reason": "설악산 계조암의 도로명 기반 LOCALDATA source identity만 연결"
+  },
   "281": {
     "localDataSourceId": "localdata:6530000:6530000-001",
     "aliases": ["대한불교조계종 감로사"],
@@ -44,6 +50,12 @@
     "localDataSourceId": "localdata:4351000:CDFD1002",
     "reason": "MCST 파일이리와 LOCALDATA 화일리의 행정지명 표기 차이, 산323 일치"
   },
+  "299": {
+    "localDataSourceId": "localdata:6530000:4191000-001",
+    "adoptAddress": false,
+    "adoptCoordinates": false,
+    "reason": "원주시 행구동 보문사 source identity만 연결하고 MCST 주소/종단 유지"
+  },
   "306": {
     "localDataSourceId": "localdata:6530000:4301000-002",
     "reason": "MCST 상로리 72-1과 LOCALDATA 상노리 72번지 1호 표기 차이"
@@ -52,6 +64,18 @@
     "localDataSourceId": "localdata:6430000:4480000-002",
     "aliases": ["대한불교천태종 총본산 구인사"],
     "reason": "같은 구인사이며 LOCALDATA 명칭에 종단/총본산 설명이 접두됨"
+  },
+  "458": {
+    "localDataSourceId": "localdata:4490000:CDFD1003",
+    "adoptAddress": false,
+    "adoptCoordinates": false,
+    "reason": "천안 은석산 은석사의 MCST 지번에 가장 가까운 source identity만 연결"
+  },
+  "465": {
+    "localDataSourceId": "localdata:6440000:4620000-001",
+    "adoptAddress": false,
+    "adoptCoordinates": false,
+    "reason": "태안 백화산 태을암의 도로명 source identity만 연결"
   },
   "603": {
     "localDataSourceId": "localdata:6130000:5845000-006",
@@ -63,6 +87,12 @@
     "aliases": ["태평사(제88호)"],
     "reason": "동일 노안면 영평리 주소이며 LOCALDATA에 지정번호가 붙음"
   },
+  "635": {
+    "localDataSourceId": "localdata:5780000:CDFD1002",
+    "adoptAddress": false,
+    "adoptCoordinates": false,
+    "reason": "비정상 과거 행정지역 표기가 있는 목포 달성사 source identity만 연결"
+  },
   "636": {
     "localDataSourceId": "localdata:5880000:CDFD1004",
     "aliases": ["무안 법천사"],
@@ -73,10 +103,24 @@
     "aliases": ["무안 약사사"],
     "reason": "동일 무안읍 약사사이며 LOCALDATA에 지역명이 접두됨"
   },
+  "638": {
+    "localDataSourceId": "localdata:6130000:5880000-004",
+    "adoptAddress": false,
+    "adoptCoordinates": false,
+    "aliases": ["도덕사(제86호)"],
+    "reason": "무안 도덕사 source identity 연결, 지정번호 포함 LOCALDATA 명칭은 alias로만 보존"
+  },
   "639": {
     "localDataSourceId": "localdata:5880000:CDFD1003",
     "aliases": ["무안 원갑사"],
     "reason": "동일 무안군 해제면 원갑사이며 LOCALDATA에 지역명이 접두됨"
+  },
+  "675": {
+    "localDataSourceId": "localdata:6130000:5870000-009",
+    "adoptAddress": false,
+    "adoptCoordinates": false,
+    "aliases": ["성도사(제84호)"],
+    "reason": "해남 성도사 source identity 연결, 지정번호 포함 LOCALDATA 명칭은 alias로만 보존"
   },
   "695": {
     "localDataSourceId": "localdata:6470000:5130000-010",
@@ -87,6 +131,12 @@
     "localDataSourceId": "localdata:6470000:5050000-005",
     "aliases": ["백률사"],
     "reason": "MCST 백율사와 LOCALDATA 백률사는 동일 주소의 표기 차이"
+  },
+  "715": {
+    "localDataSourceId": "localdata:6470000:5050000-002",
+    "adoptAddress": false,
+    "adoptCoordinates": false,
+    "reason": "경주 토함산 석굴암 source identity만 연결하며 주소/좌표는 채택하지 않음"
   },
   "718": {
     "localDataSourceId": "localdata:5050000:CDFD1011",

@@ -5,123 +5,17 @@
     "existingCanonicalMergeCount": 6,
     "newCanonicalCount": 985,
     "matchedWithCoordinatesCount": 874,
-    "matchedWithoutCoordinatesCount": 51,
-    "officialUnmatchedCount": 66,
+    "matchedWithoutCoordinatesCount": 59,
+    "officialUnmatchedCount": 58,
     "coordinatesPresentCount": 874,
     "coordinatesMissingCount": 117,
-    "localDataLinkedCount": 925,
-    "aliasCount": 21,
+    "localDataLinkedCount": 933,
+    "aliasCount": 23,
     "duplicateCount": 0,
     "validationFailureCount": 0,
     "statusTotal": 991
   },
-  "ambiguousMatches": [
-    {
-      "recordNo": 283,
-      "name": "계조암",
-      "sido": "강원",
-      "sigungu": "속초시",
-      "reason": "동점에 가까운 LOCALDATA 후보가 여러 개임",
-      "candidates": [
-        {
-          "sourceId": "localdata:4231000:CDFD1002",
-          "name": "계조암",
-          "address": "강원특별자치도 속초시 설악동 산 40",
-          "score": 33
-        },
-        {
-          "sourceId": "localdata:6530000:4231000-002",
-          "name": "계조암",
-          "address": "강원특별자치도 속초시 설악산로 1140-115 (설악동)",
-          "score": 33
-        }
-      ]
-    },
-    {
-      "recordNo": 299,
-      "name": "보문사",
-      "sido": "강원",
-      "sigungu": "원주시",
-      "reason": "동점에 가까운 LOCALDATA 후보가 여러 개임",
-      "candidates": [
-        {
-          "sourceId": "localdata:4191000:CDFD1007",
-          "name": "보문사",
-          "address": "강원특별자치도 원주시 행구동 산 105",
-          "score": 33
-        },
-        {
-          "sourceId": "localdata:6530000:4191000-001",
-          "name": "보문사",
-          "address": "강원특별자치도 원주시 행구동 산105번지",
-          "score": 33
-        }
-      ]
-    },
-    {
-      "recordNo": 458,
-      "name": "은석사",
-      "sido": "충남",
-      "sigungu": "천안시",
-      "reason": "동점에 가까운 LOCALDATA 후보가 여러 개임",
-      "candidates": [
-        {
-          "sourceId": "localdata:4490000:CDFD1003",
-          "name": "은석사",
-          "address": "충청남도 천안시 동남구 북면 은지리 산 1-4",
-          "score": 74
-        },
-        {
-          "sourceId": "localdata:6440000:4490000-002",
-          "name": "은석사",
-          "address": "충청남도 천안시 동남구 북면 박문수길 174-1",
-          "score": 66
-        }
-      ]
-    },
-    {
-      "recordNo": 465,
-      "name": "태을암",
-      "sido": "충남",
-      "sigungu": "태안군",
-      "reason": "동점에 가까운 LOCALDATA 후보가 여러 개임",
-      "candidates": [
-        {
-          "sourceId": "localdata:4620000:CDFD1002",
-          "name": "태을암",
-          "address": "충청남도 태안군 태안읍 동문리 산 42",
-          "score": 66
-        },
-        {
-          "sourceId": "localdata:6440000:4620000-001",
-          "name": "태을암",
-          "address": "충청남도 태안군 태안읍 원이로 78-132",
-          "score": 66
-        }
-      ]
-    },
-    {
-      "recordNo": 715,
-      "name": "석굴암",
-      "sido": "경북",
-      "sigungu": "경주시",
-      "reason": "동점에 가까운 LOCALDATA 후보가 여러 개임",
-      "candidates": [
-        {
-          "sourceId": "localdata:5050000:CDFD1002",
-          "name": "석굴암",
-          "address": "경상북도 경주시 진현동 999",
-          "score": 33
-        },
-        {
-          "sourceId": "localdata:6470000:5050000-002",
-          "name": "석굴암",
-          "address": "경상북도 경주시 물미길 22-6 (진현동)",
-          "score": 33
-        }
-      ]
-    }
-  ],
+  "ambiguousMatches": [],
   "unmatchedSuggestions": [
     {
       "recordNo": 2,
@@ -626,48 +520,6 @@
       "candidates": []
     },
     {
-      "recordNo": 635,
-      "name": "달성사",
-      "sido": "전남",
-      "sigungu": "목포시",
-      "address": "전라남도 목포시 유달로 173",
-      "candidates": [
-        {
-          "sourceId": "localdata:5780000:CDFD1002",
-          "name": "달성사",
-          "address": "전남광주통합특별시 목포시 죽교동 317",
-          "score": 0
-        },
-        {
-          "sourceId": "localdata:5780000:CDFD1001",
-          "name": "달성사",
-          "address": "전남광주통합특별시 목포시 죽교동 317",
-          "score": 0
-        },
-        {
-          "sourceId": "localdata:6130000:5780000-001",
-          "name": "달성사",
-          "address": "전남광주통합특별시 목포시 죽교동 317",
-          "score": 0
-        }
-      ]
-    },
-    {
-      "recordNo": 638,
-      "name": "도덕사",
-      "sido": "전남",
-      "sigungu": "무안군",
-      "address": "전라남도 무안군 무안읍 성암리 135-14",
-      "candidates": [
-        {
-          "sourceId": "localdata:6130000:5880000-004",
-          "name": "도덕사(제86호)",
-          "address": "전남광주통합특별시 무안군 무안읍 성암리 산 164-7번지",
-          "score": 66
-        }
-      ]
-    },
-    {
       "recordNo": 640,
       "name": "목우암",
       "sido": "전남",
@@ -732,21 +584,6 @@
       "sigungu": "신안군",
       "address": "전라남도 신안군 지도읍 읍내길 67-13",
       "candidates": []
-    },
-    {
-      "recordNo": 675,
-      "name": "성도사",
-      "sido": "전남",
-      "sigungu": "해남군",
-      "address": "전라남도 해남군 북평면 백도로 543 산 49-6",
-      "candidates": [
-        {
-          "sourceId": "localdata:6130000:5870000-009",
-          "name": "성도사(제84호)",
-          "address": "전남광주통합특별시 해남군 북평면 백도로 543-134",
-          "score": 66
-        }
-      ]
     },
     {
       "recordNo": 691,

@@ -27,12 +27,12 @@
     "existingCanonicalMergeCount": 6,
     "newCanonicalCount": 985,
     "matchedWithCoordinatesCount": 874,
-    "matchedWithoutCoordinatesCount": 51,
-    "officialUnmatchedCount": 66,
+    "matchedWithoutCoordinatesCount": 59,
+    "officialUnmatchedCount": 58,
     "coordinatesPresentCount": 874,
     "coordinatesMissingCount": 117,
-    "localDataLinkedCount": 925,
-    "aliasCount": 21,
+    "localDataLinkedCount": 933,
+    "aliasCount": 23,
     "duplicateCount": 0,
     "validationFailureCount": 0,
     "statusTotal": 991
@@ -6863,12 +6863,20 @@
       "denomination": "조계종",
       "latitude": null,
       "longitude": null,
-      "matchStatus": "official_unmatched",
+      "matchStatus": "matched_without_coordinates",
       "mcst": {
         "recordNo": 283,
         "asOf": "2026-06-01",
         "address": "강원도 속초시 설악동 216",
         "denomination": "조계종"
+      },
+      "localData": {
+        "sourceId": "localdata:6530000:4231000-002",
+        "localGovCode": "6530000",
+        "managementNo": "4231000-002",
+        "coordinateSystem": "EPSG:5174",
+        "updatedAt": "2011-11-23 13:45:48",
+        "matchMethod": "manual-override"
       }
     },
     {
@@ -7239,12 +7247,20 @@
       "denomination": "조계종",
       "latitude": null,
       "longitude": null,
-      "matchStatus": "official_unmatched",
+      "matchStatus": "matched_without_coordinates",
       "mcst": {
         "recordNo": 299,
         "asOf": "2026-06-01",
         "address": "강원도 원주시 행구동 90-2",
         "denomination": "조계종"
+      },
+      "localData": {
+        "sourceId": "localdata:6530000:4191000-001",
+        "localGovCode": "6530000",
+        "managementNo": "4191000-001",
+        "coordinateSystem": "EPSG:5174",
+        "updatedAt": "2011-11-22 14:18:16",
+        "matchMethod": "manual-override"
       }
     },
     {
@@ -11186,12 +11202,20 @@
       "denomination": "조계종",
       "latitude": null,
       "longitude": null,
-      "matchStatus": "official_unmatched",
+      "matchStatus": "matched_without_coordinates",
       "mcst": {
         "recordNo": 458,
         "asOf": "2026-06-01",
         "address": "충청남도 천안시 동남구 북면 은지리 산1-1",
         "denomination": "조계종"
+      },
+      "localData": {
+        "sourceId": "localdata:4490000:CDFD1003",
+        "localGovCode": "4490000",
+        "managementNo": "CDFD1003",
+        "coordinateSystem": "EPSG:5174",
+        "updatedAt": "2011-11-11 10:13:27",
+        "matchMethod": "manual-override"
       }
     },
     {
@@ -11353,12 +11377,20 @@
       "denomination": "조계종",
       "latitude": null,
       "longitude": null,
-      "matchStatus": "official_unmatched",
+      "matchStatus": "matched_without_coordinates",
       "mcst": {
         "recordNo": 465,
         "asOf": "2026-06-01",
         "address": "충청남도 태안군 태안읍 동문리 817-1",
         "denomination": "조계종"
+      },
+      "localData": {
+        "sourceId": "localdata:6440000:4620000-001",
+        "localGovCode": "6440000",
+        "managementNo": "4620000-001",
+        "coordinateSystem": "EPSG:5174",
+        "updatedAt": "2014-01-28 18:10:55",
+        "matchMethod": "manual-override"
       }
     },
     {
@@ -15545,12 +15577,20 @@
       "denomination": "조계종",
       "latitude": null,
       "longitude": null,
-      "matchStatus": "official_unmatched",
+      "matchStatus": "matched_without_coordinates",
       "mcst": {
         "recordNo": 635,
         "asOf": "2026-06-01",
         "address": "전라남도 목포시 유달로 173",
         "denomination": "조계종"
+      },
+      "localData": {
+        "sourceId": "localdata:5780000:CDFD1002",
+        "localGovCode": "5780000",
+        "managementNo": "CDFD1002",
+        "coordinateSystem": "EPSG:5174",
+        "updatedAt": "2021-09-10 09:59:15",
+        "matchMethod": "manual-override"
       }
     },
     {
@@ -15612,18 +15652,29 @@
     {
       "slug": "traditional-temple-0638",
       "name": "도덕사",
+      "aliases": [
+        "도덕사(제86호)"
+      ],
       "sido": "전남",
       "sigungu": "무안군",
       "address": "전라남도 무안군 무안읍 성암리 135-14",
       "denomination": "조계종",
       "latitude": null,
       "longitude": null,
-      "matchStatus": "official_unmatched",
+      "matchStatus": "matched_without_coordinates",
       "mcst": {
         "recordNo": 638,
         "asOf": "2026-06-01",
         "address": "전라남도 무안군 무안읍 성암리 135-14",
         "denomination": "조계종"
+      },
+      "localData": {
+        "sourceId": "localdata:6130000:5880000-004",
+        "localGovCode": "6130000",
+        "managementNo": "5880000-004",
+        "coordinateSystem": "EPSG:5174",
+        "updatedAt": "2005-10-19 14:19:12",
+        "matchMethod": "manual-override"
       }
     },
     {
@@ -16492,18 +16543,29 @@
     {
       "slug": "traditional-temple-0675",
       "name": "성도사",
+      "aliases": [
+        "성도사(제84호)"
+      ],
       "sido": "전남",
       "sigungu": "해남군",
       "address": "전라남도 해남군 북평면 백도로 543 산 49-6",
       "denomination": "원효종",
       "latitude": null,
       "longitude": null,
-      "matchStatus": "official_unmatched",
+      "matchStatus": "matched_without_coordinates",
       "mcst": {
         "recordNo": 675,
         "asOf": "2026-06-01",
         "address": "전라남도 해남군 북평면 백도로 543 산 49-6",
         "denomination": "원효종"
+      },
+      "localData": {
+        "sourceId": "localdata:6130000:5870000-009",
+        "localGovCode": "6130000",
+        "managementNo": "5870000-009",
+        "coordinateSystem": "EPSG:5174",
+        "updatedAt": "2014-01-06 09:29:14",
+        "matchMethod": "manual-override"
       }
     },
     {
@@ -17481,12 +17543,20 @@
       "denomination": "조계종",
       "latitude": null,
       "longitude": null,
-      "matchStatus": "official_unmatched",
+      "matchStatus": "matched_without_coordinates",
       "mcst": {
         "recordNo": 715,
         "asOf": "2026-06-01",
         "address": "경상북도 경주시 불국로 873-243(진현동)",
         "denomination": "조계종"
+      },
+      "localData": {
+        "sourceId": "localdata:6470000:5050000-002",
+        "localGovCode": "6470000",
+        "managementNo": "5050000-002",
+        "coordinateSystem": "EPSG:5174",
+        "updatedAt": "2013-12-31 16:30:30",
+        "matchMethod": "manual-override"
       }
     },
     {

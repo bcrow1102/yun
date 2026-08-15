@@ -19,14 +19,14 @@
 | 기존 canonical 병합 | 6 |
 | 신규 canonical | 985 |
 | A (좌표 있음) | 874 |
-| B (좌표 없음) | 51 |
-| C (안전한 LOCALDATA match 없음) | 66 |
-| LOCALDATA 연결 | 925 |
-| alias | 21 |
+| B (좌표 없음) | 59 |
+| C (안전한 LOCALDATA match 없음) | 58 |
+| LOCALDATA 연결 | 933 |
+| alias | 23 |
 | 중복 | 0 |
 | 검증 실패 | 0 |
 
-`A + B + C = 991`이다. C도 MCST 공식 canonical로 생성되며 좌표는 null이다.
+`874 + 59 + 58 = 991`이다. C도 MCST 공식 canonical로 생성되며 좌표는 null이다.
 
 ## Reproduction and review
 
@@ -40,4 +40,4 @@
 
 ## Manual review remaining
 
-LOCALDATA 후보의 주소가 MCST 주소와 충돌해 C로 남긴 주요 복수 후보는 계조암(#283), 보문사(#299), 은석사(#458), 태을암(#465), 석굴암(#715)이다. 나머지 C 역시 강제 연결하지 않았으며 검토 파일에 후보와 사유를 보존한다.
+검증된 source-only match 8건은 MCST name/address와 기존 좌표를 유지한 채 LOCALDATA identity만 연결했다. 나머지 C 58건은 강제 연결하지 않았으며 검토 파일에 후보와 사유를 보존한다.

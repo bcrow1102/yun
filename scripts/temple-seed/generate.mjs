@@ -418,8 +418,16 @@ const records = mcst.records.map((official) => {
         ? { ...official, sigungu: locationCorrection.sigungu }
         : official;
     const match = chooseLocalData(normalizedOfficial);
-    const coordinates = convertCoordinates(match.record);
     const override = overrides[String(official.recordNo)];
+    const sourceCoordinates = convertCoordinates(match.record);
+    const coordinates =
+        override?.adoptCoordinates === false
+            ? {
+                  latitude: null,
+                  longitude: null,
+                  failure: undefined,
+              }
+            : sourceCoordinates;
 
     if (coordinates.failure) {
         failures.push({
@@ -515,7 +523,10 @@ const records = mcst.records.map((official) => {
         aliases: override?.aliases,
         sido: official.sido,
         sigungu: normalizedOfficial.sigungu,
-        address: chooseAddress(normalizedOfficial, match.record),
+        address:
+            override?.adoptAddress === false
+                ? official.address
+                : chooseAddress(normalizedOfficial, match.record),
         denomination: official.denomination,
         latitude: coordinates.latitude,
         longitude: coordinates.longitude,
