@@ -1,0 +1,1948 @@
+.toolPage {
+    min-height: calc(100vh - 82px);
+    padding: 24px 42px 40px;
+    background: #f4f6f8;
+    color: #252a31;
+}
+
+.toolHeader {
+    width: min(1460px, 100%);
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+.titleGroup {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    min-width: 0;
+}
+
+.title {
+    margin: 0;
+    flex-shrink: 0;
+    font-size: 27px;
+    line-height: 1.25;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+}
+
+.description {
+    margin: 0;
+    color: #707780;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.privacy {
+    flex-shrink: 0;
+    padding: 8px 12px;
+    border: 1px solid #dde3e9;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #68717b;
+    font-size: 11px;
+}
+
+.workspace {
+    width: min(1460px, 100%);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(610px, 0.92fr) minmax(560px, 1.08fr);
+    gap: 20px;
+    align-items: start;
+}
+
+.editorPanel,
+.previewPanel {
+    overflow: hidden;
+    border: 1px solid #dde2e7;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(20, 31, 44, 0.025);
+}
+
+.panelHeader {
+    min-height: 66px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    border-bottom: 1px solid #e6e9ed;
+}
+
+.panelHeader h2 {
+    margin: 0;
+    color: #272c33;
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+}
+
+.panelHeader p {
+    margin: 2px 0 0;
+    color: #878e97;
+    font-size: 11px;
+    line-height: 1.45;
+}
+
+.clearButton {
+    flex-shrink: 0;
+    padding: 4px 0;
+    border: 0;
+    background: transparent;
+    color: #717985;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.clearButton:hover {
+    color: #2f5f95;
+}
+
+.editorBody {
+    padding: 17px 18px 18px;
+}
+
+.formSection+.formSection {
+    margin-top: 20px;
+}
+
+.sectionTitleRow {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.sectionTitleRow h3 {
+    margin: 0;
+    color: #30353c;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.sectionTitleRow span {
+    color: #9298a0;
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+/* 꼬리표 규격 */
+
+.sizeOptions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 7px;
+}
+
+.sizeButton {
+    height: 46px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #d9dfe5;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #4d555f;
+    cursor: pointer;
+}
+
+.sizeButton strong {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.sizeButton span {
+    color: #9299a2;
+    font-size: 10px;
+}
+
+.sizeButton:hover {
+    border-color: #aebdce;
+    background: #fafcfe;
+}
+
+.sizeButtonActive {
+    border-color: #6c91bd;
+    background: #f2f7fc;
+    box-shadow: inset 0 0 0 1px rgba(70, 116, 166, 0.08);
+}
+
+.sizeButtonActive strong {
+    color: #255c98;
+}
+
+.sizeButtonActive span {
+    color: #5e7895;
+}
+
+/* 가족 정보 */
+
+.peopleBox {
+    overflow: hidden;
+    border: 1px solid #dde2e7;
+    border-radius: 8px;
+}
+
+.columnLabels {
+    min-height: 27px;
+    padding: 0 10px;
+    display: grid;
+    grid-template-columns: 66px 1fr 1.15fr 0.85fr;
+    gap: 7px;
+    align-items: center;
+    border-bottom: 1px solid #e4e8ec;
+    background: #f7f8fa;
+    color: #858c95;
+    font-size: 9px;
+}
+
+.personRow {
+    min-height: 41px;
+    padding: 4px 10px;
+    display: grid;
+    grid-template-columns: 66px 1fr 1.15fr 0.85fr;
+    gap: 7px;
+    align-items: center;
+    border-bottom: 1px solid #edf0f2;
+}
+
+.personRow:last-child {
+    border-bottom: 0;
+}
+
+.representativeRow {
+    background: #fbfdff;
+}
+
+.personLabel {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    color: #525961;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.personLabel em {
+    color: #4375aa;
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.personRow input {
+    width: 100%;
+    min-width: 0;
+    height: 31px;
+    padding: 0 9px;
+    border: 1px solid #dce1e6;
+    border-radius: 6px;
+    outline: none;
+    background: #ffffff;
+    color: #292e35;
+    font-size: 11px;
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.personRow input::placeholder,
+.prayerInput::placeholder {
+    color: #b2b7bd;
+}
+
+.personRow input:focus,
+.prayerInput:focus {
+    border-color: #6b93bf;
+    box-shadow: 0 0 0 3px rgba(70, 121, 178, 0.08);
+}
+
+/* 발원문 */
+
+.prayerInput {
+    width: 100%;
+    min-height: 58px;
+    padding: 9px 11px;
+    resize: vertical;
+    border: 1px solid #dce1e6;
+    border-radius: 7px;
+    outline: none;
+    background: #ffffff;
+    color: #292e35;
+    font-family: inherit;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* 꼬리표 배경색 */
+
+.colorOptions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.colorButton {
+    height: 34px;
+    padding: 0 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #dce1e6;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #555d66;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.colorButton:hover {
+    border-color: #b7c3cf;
+}
+
+.colorButtonActive {
+    border-color: #7e9fc2;
+    background: #f5f9fd;
+    color: #315f90;
+}
+
+.swatch {
+    width: 14px;
+    height: 14px;
+    display: block;
+    border: 1px solid rgba(50, 57, 65, 0.12);
+    border-radius: 50%;
+}
+
+.whiteSwatch {
+    background: #ffffff;
+}
+
+.yellowSwatch {
+    background: #fff4c7;
+}
+
+.pinkSwatch {
+    background: #f8dedf;
+}
+
+.greenSwatch {
+    background: #e5efdc;
+}
+
+/* 하단 동작 */
+
+.actionBar {
+    margin-top: 20px;
+    padding-top: 15px;
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 8px;
+    border-top: 1px solid #e7eaed;
+}
+
+.previewButton,
+.addButton {
+    height: 42px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.previewButton {
+    border: 1px solid #cfd6dd;
+    background: #ffffff;
+    color: #4e5863;
+}
+
+.previewButton:hover {
+    background: #f7f9fa;
+}
+
+.addButton {
+    border: 1px solid #2d639e;
+    background: #326da9;
+    color: #ffffff;
+}
+
+.addButton:hover {
+    background: #2b6199;
+}
+
+/* 오른쪽 미리보기 */
+
+.savedCount {
+    flex-shrink: 0;
+    padding: 6px 9px;
+    border-radius: 6px;
+    background: #f2f5f8;
+    color: #66717d;
+    font-size: 10px;
+}
+
+.previewStage {
+    position: relative;
+    min-height: 680px;
+    padding: 32px 42px;
+    display: grid;
+    place-items: center;
+    background: #eef1f4;
+}
+
+.tagPlaceholder {
+    width: 270px;
+    aspect-ratio: 62 / 174;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d5d9de;
+    background: #ffffff;
+    box-shadow: 0 12px 30px rgba(37, 47, 58, 0.08);
+    text-align: center;
+}
+
+.tagPlaceholder>span {
+    margin-bottom: 12px;
+    color: #8c939b;
+    font-size: 9px;
+}
+
+.tagPlaceholder strong {
+    color: #565e67;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.tagPlaceholder p {
+    margin: 8px 0 0;
+    color: #a0a6ad;
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+/* 중간 화면 */
+
+@media (max-width: 1180px) {
+    .workspace {
+        grid-template-columns: 1fr;
+    }
+
+    .previewStage {
+        min-height: 620px;
+    }
+}
+
+/* 모바일 */
+
+@media (max-width: 720px) {
+    .toolPage {
+        padding: 22px 16px 40px;
+    }
+
+    .toolHeader {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .titleGroup {
+        display: block;
+    }
+
+    .title {
+        font-size: 25px;
+    }
+
+    .description {
+        margin-top: 6px;
+        font-size: 12px;
+    }
+
+    .privacy {
+        width: 100%;
+    }
+
+    .panelHeader {
+        min-height: 62px;
+        padding: 13px 15px;
+    }
+
+    .editorBody {
+        padding: 15px;
+    }
+
+    .sectionTitleRow {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    .sizeButton {
+        padding: 0 9px;
+    }
+
+    .columnLabels {
+        display: none;
+    }
+
+    .personRow {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding: 10px;
+    }
+
+    .personLabel {
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .actionBar {
+        grid-template-columns: 1fr;
+    }
+
+    .previewStage {
+        min-height: 570px;
+        padding: 28px 20px;
+    }
+
+    .tagPlaceholder {
+        width: 230px;
+    }
+}
+
+/* 저장된 꼬리표 목록 */
+
+.savedSection {
+    margin-top: 18px;
+    padding-top: 15px;
+    border-top: 1px solid #e7eaed;
+}
+
+.savedSectionHeader {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.savedSectionHeader h3 {
+    margin: 0;
+    color: #30353c;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.savedSectionHeader span {
+    color: #73808d;
+    font-size: 10px;
+}
+
+.savedList {
+    display: grid;
+    gap: 6px;
+}
+
+.savedItem {
+    min-height: 44px;
+    padding: 6px 8px;
+    display: grid;
+    grid-template-columns: 26px 1fr auto;
+    gap: 8px;
+    align-items: center;
+    border: 1px solid #e0e5ea;
+    border-radius: 7px;
+    background: #fafbfc;
+}
+
+.savedIndex {
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #edf2f7;
+    color: #527093;
+    font-size: 9px;
+}
+
+.savedInfo {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.savedInfo strong {
+    overflow: hidden;
+    color: #343a42;
+    font-size: 11px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.savedInfo span {
+    color: #8a929b;
+    font-size: 9px;
+}
+
+.savedActions {
+    display: flex;
+    gap: 4px;
+}
+
+.savedActions button,
+.backButton {
+    padding: 5px 8px;
+    border: 1px solid #d7dde4;
+    border-radius: 5px;
+    background: #ffffff;
+    color: #646e79;
+    font-size: 9px;
+    cursor: pointer;
+}
+
+.savedActions button:hover,
+.backButton:hover {
+    border-color: #9fb1c4;
+    color: #315f90;
+}
+
+/* 공통 꼬리표 렌더러
+   실시간 미리보기 / A4 미리보기 / 실제 인쇄가 같은 내부 조판을 사용한다. */
+
+.previewStageLabel {
+    position: absolute;
+    top: 14px;
+    left: 18px;
+    z-index: 2;
+    color: #727c87;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.tagRenderer {
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid #c8ced5;
+    color: #292d31;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.previewTagRenderer {
+    padding: 2.8em 1.8em 2.2em;
+    box-shadow: 0 12px 30px rgba(37, 47, 58, 0.08);
+}
+
+.previewTagRenderer.tagSize_small {
+    width: 250px;
+    min-height: 505px;
+}
+
+.previewTagRenderer.tagSize_medium {
+    width: 270px;
+    min-height: 590px;
+}
+
+.previewTagRenderer.tagSize_large {
+    width: 300px;
+    min-height: 640px;
+}
+
+.printTagRenderer {
+    width: 100%;
+    height: 100%;
+    padding: 1.7em 1.15em 1.45em;
+    box-shadow: none;
+}
+
+.tagColor_white {
+    background: #ffffff;
+}
+
+.tagColor_yellow {
+    background: #fff7d8;
+}
+
+.tagColor_pink {
+    background: #fae7e8;
+}
+
+.tagColor_green {
+    background: #edf4e8;
+}
+
+/* 현재는 안전한 한국어 fallback 조합만 사용한다.
+   실제 배포 폰트 3종은 다음 폰트 검토 단계에서 확정한다. */
+
+.font_classic {
+    font-family: "Noto Serif KR", "Nanum Myeongjo", "Batang", serif;
+}
+
+.font_soft {
+    font-family: "Nanum Myeongjo", "Noto Serif KR", "Batang", serif;
+}
+
+.font_sans {
+    font-family: "Pretendard", "Noto Sans KR", "Malgun Gothic", sans-serif;
+}
+
+/* 글자 크기 5단계.
+   내부 타이포그래피가 em 단위를 사용하므로 한 단계 조절이 전체 조판에 같이 반영된다. */
+
+.previewTagRenderer.textSize_0 {
+    font-size: 8.8px;
+}
+
+.previewTagRenderer.textSize_1 {
+    font-size: 9.4px;
+}
+
+.previewTagRenderer.textSize_2 {
+    font-size: 10px;
+}
+
+.previewTagRenderer.textSize_3 {
+    font-size: 10.6px;
+}
+
+.previewTagRenderer.textSize_4 {
+    font-size: 11.2px;
+}
+
+.printTagRenderer.textSize_0 {
+    font-size: 5.1px;
+}
+
+.printTagRenderer.textSize_1 {
+    font-size: 5.4px;
+}
+
+.printTagRenderer.textSize_2 {
+    font-size: 5.8px;
+}
+
+.printTagRenderer.textSize_3 {
+    font-size: 6.1px;
+}
+
+.printTagRenderer.textSize_4 {
+    font-size: 6.5px;
+}
+
+.textEmphasis strong {
+    font-weight: 700 !important;
+}
+
+.tagContent {
+    position: relative;
+    box-sizing: border-box;
+    flex: 1;
+    min-height: 0;
+    padding: 6.1em 0 7em;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+/* 상·하단 장식의 보이지 않는 안전선 사이에서만 실제 내용이 흐른다.
+   tagContent의 상·하 padding이 물리적 안전영역이고, 이 래퍼가 그 경계를
+   넘어가는 대표자·가족·발원문을 장식 영역으로 그리지 못하게 막는다. */
+.tagFlow {
+    box-sizing: border-box;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    overflow: hidden;
+}
+
+/* 발원문이 있으면 남는 세로 공간을 가족↔발원문 사이에서 받는다.
+   발원문이 없을 때는 기존처럼 사람 영역을 안전영역 안에서 중앙에 둔다. */
+.tagFlowWithPrayer {
+    justify-content: flex-start;
+}
+
+.tagFlowWithoutPrayer {
+    justify-content: center;
+    justify-content: safe center;
+}
+
+.emptyTagGuide {
+    margin: auto;
+    padding: 1.2em 1.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55em;
+    border: 1px dashed rgba(91, 101, 112, 0.18);
+    border-radius: 8px;
+    background: rgba(248, 249, 250, 0.72);
+    color: #9aa2aa;
+    text-align: center;
+}
+
+.emptyTagGuide strong {
+    color: #6f7881;
+    font-size: 1.15em;
+    font-weight: 500;
+}
+
+.emptyTagGuide span {
+    font-size: 0.78em;
+}
+
+/* 상단 연등 그래픽 자리
+   중앙 내용 흐름에서 분리해 꼬리표 상단 여백에 고정한다. */
+
+.topGraphicSlot {
+    position: absolute;
+    top: 0.3em;
+    right: 0;
+    left: 0;
+    z-index: 0;
+    height: 4.7em;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    color: #a1a6aa;
+}
+
+.topGraphicSlot img {
+    display: block;
+    width: auto;
+    height: 100%;
+    max-width: 48%;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* 상단 장식은 전체 화면에서 기존보다 10% 더 낮춘다.
+   슬롯 높이는 유지해 장식 하단의 보이지 않는 안전영역은 그대로 보존한다. */
+.previewTagRenderer .topGraphicSlot img {
+    transform: scale(0.405);
+    transform-origin: top center;
+}
+
+/* 대표자 1~2: 세로쓰기 */
+
+.leaderArea {
+    min-height: 15.2em;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.oneLeader {
+    gap: 0;
+}
+
+.twoLeaders {
+    gap: 3em;
+}
+
+.leaderPerson {
+    width: 8.8em;
+    display: grid;
+    grid-template-columns: 2.4em 4em 2.4em;
+    align-items: start;
+    justify-content: center;
+    writing-mode: horizontal-tb;
+}
+
+.leaderPerson strong,
+.leaderPerson small,
+.leaderDharma {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    justify-self: center;
+}
+
+.leaderPerson small {
+    grid-column: 1;
+    color: #686f76;
+    font-size: 0.9em;
+    line-height: 1.25;
+    letter-spacing: 0.04em;
+}
+
+.leaderPerson strong {
+    grid-column: 2;
+    grid-row: 1;
+    color: #292d31;
+    font-size: 2.2em;
+    line-height: 1.15;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+}
+
+.leaderDharma {
+    grid-column: 3;
+    grid-row: 1;
+    color: #747b82;
+    font-size: 0.9em;
+    line-height: 1.25;
+}
+
+/* 자녀 1~6: 2열 × 최대 3행 */
+
+.childrenArea {
+    width: 100%;
+    margin-top: 0.65em;
+    padding: 1.05em 0.6em 1.1em;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1em 1.8em;
+    flex-shrink: 0;
+}
+
+.childPerson {
+    min-width: 0;
+    text-align: center;
+}
+
+.childPerson strong {
+    display: block;
+    overflow: hidden;
+    color: #33383d;
+    font-size: 1.2em;
+    line-height: 1.35;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.childPerson span {
+    display: block;
+    margin-top: 0.3em;
+    overflow: hidden;
+    color: #777e85;
+    font-size: 0.7em;
+    line-height: 1.35;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 발원문
+   하단 고정 대신 가족 수에 따라 자동으로 조금씩 위·아래 균형을 바꾼다. */
+
+.tagPrayer {
+    min-height: 0;
+    padding: 1.15em 0.8em 0;
+    overflow: visible;
+    color: #3f4449;
+    font-size: 1em;
+    line-height: 1.55;
+    text-align: center;
+    word-break: keep-all;
+    white-space: pre-wrap;
+    /* 발원문 자체는 가족 수가 늘어도 축소·소실시키지 않는다. */
+    flex: 0 0 auto;
+}
+
+/* 발원문 앞 여백은 고정 margin이 아니라 실제 flex 여백으로 둔다.
+   가족 행이나 발원문이 늘어나면 이 빈 공간이 먼저 0까지 줄어든다. */
+.prayerSpacer {
+    display: block;
+    min-height: 0;
+    flex: 1 1 4.2em;
+}
+
+.layout_sparse .prayerSpacer {
+    flex-basis: 4.2em;
+}
+
+.layout_normal .prayerSpacer {
+    flex-basis: 2.4em;
+}
+
+.layout_full .prayerSpacer {
+    flex-basis: 1em;
+}
+
+.layout_sparse .tagPrayer,
+.layout_normal .tagPrayer,
+.layout_full .tagPrayer {
+    margin-top: 0;
+}
+
+/* 하단 연꽃 + 촛불 그래픽 자리
+   중앙 내용 흐름에서 분리해 꼬리표 하단 여백에 고정한다. */
+
+.bottomGraphicSlot {
+    position: absolute;
+    right: 0;
+    bottom: 0.25em;
+    left: 0;
+    z-index: 0;
+    height: 5.7em;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    color: #a1a6aa;
+}
+
+.bottomGraphicSlot img {
+    display: block;
+    width: 92%;
+    height: auto;
+    max-height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* 큰 입력 미리보기에서만 하단 장식을 한 단계 작게 보이게 한다. */
+.previewTagRenderer .bottomGraphicSlot img {
+    transform: scale(0.74);
+    transform-origin: bottom center;
+}
+
+/* 인원이 적을수록 대표자 블록을 조금 더 응축하고 전체 덩어리를 중앙에 모은다. */
+
+/* 가족 행이 늘어날수록 사람 영역의 ‘빈 공간’만 단계적으로 압축한다.
+   글자 크기와 상·하단 그래픽 안전영역은 바꾸지 않는다. */
+.layout_sparse .leaderArea {
+    min-height: 13.6em;
+}
+
+.layout_normal .leaderArea {
+    min-height: 12.4em;
+}
+
+.layout_full .leaderArea {
+    min-height: 11.2em;
+}
+
+.layout_normal .childrenArea {
+    margin-top: 0.5em;
+}
+
+.layout_full .childrenArea {
+    margin-top: 0.3em;
+    padding-top: 0.7em;
+    padding-bottom: 0.7em;
+    gap: 0.6em 1.4em;
+}
+
+/* 규격별 상단 장식↔대표자 최소 안전거리.
+   가족 수와 압축 단계에 관계없이 대표자는 이 경계보다 위로 올라가지 않는다.
+   남는 공간이 줄어들면 prayerSpacer가 먼저 수축한다. */
+.tagSize_small .tagFlow {
+    padding-top: 1.4em;
+}
+
+.tagSize_medium .tagFlow {
+    padding-top: 1.6em;
+}
+
+.tagSize_large .tagFlow {
+    padding-top: 1.8em;
+}
+
+/* 소형은 같은 구조를 유지하되 장식용 여백과 그래픽을 조금 더 압축한다. */
+
+.tagSize_small .tagContent {
+    padding-top: 5.4em;
+    padding-bottom: 6.2em;
+}
+
+.tagSize_small .topGraphicSlot {
+    top: 0.25em;
+    height: 4.2em;
+}
+
+.tagSize_small.layout_sparse .leaderArea {
+    min-height: 12.2em;
+}
+
+.tagSize_small.layout_normal .leaderArea {
+    min-height: 11em;
+}
+
+.tagSize_small.layout_full .leaderArea {
+    min-height: 9.8em;
+}
+
+.tagSize_small .childrenArea {
+    margin-top: 0.35em;
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    gap: 0.75em 1.2em;
+}
+
+.tagSize_small.layout_normal .childrenArea {
+    margin-top: 0.25em;
+}
+
+.tagSize_small.layout_full .childrenArea {
+    margin-top: 0.15em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    gap: 0.45em 1em;
+}
+
+.tagSize_small.layout_sparse .prayerSpacer {
+    flex-basis: 3em;
+}
+
+.tagSize_small.layout_normal .prayerSpacer {
+    flex-basis: 1.6em;
+}
+
+.tagSize_small.layout_full .prayerSpacer {
+    flex-basis: 0.5em;
+}
+
+.tagSize_small .bottomGraphicSlot {
+    bottom: 0.2em;
+    height: 5em;
+}
+
+/* 대형은 넉넉한 높이를 장식과 중앙 내용 사이의 여백으로 사용한다. */
+
+.tagSize_large .tagContent {
+    padding-top: 6.5em;
+    padding-bottom: 7.5em;
+}
+
+.tagSize_large .topGraphicSlot {
+    top: 0.35em;
+    height: 5.2em;
+}
+
+.tagSize_large .bottomGraphicSlot {
+    bottom: 0.3em;
+    height: 6.2em;
+}
+
+.manualBlankTag .tagContent {
+    padding: 0;
+}
+
+.tagSize_large.layout_sparse .leaderArea {
+    min-height: 14.2em;
+}
+
+.tagSize_large.layout_normal .leaderArea {
+    min-height: 13.2em;
+}
+
+.tagSize_large.layout_full .leaderArea {
+    min-height: 12.2em;
+}
+
+.tagSize_large.layout_normal .childrenArea {
+    margin-top: 0.55em;
+}
+
+.tagSize_large.layout_full .childrenArea {
+    margin-top: 0.4em;
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    gap: 0.7em 1.5em;
+}
+
+.tagSize_large.layout_sparse .prayerSpacer {
+    flex-basis: 4.8em;
+}
+
+.tagSize_large.layout_normal .prayerSpacer {
+    flex-basis: 3.4em;
+}
+
+.tagSize_large.layout_full .prayerSpacer {
+    flex-basis: 1.8em;
+}
+
+/* A4 배치 미리보기 / 실제 인쇄 전용 조판 보정
+   입력 미리보기는 그대로 두고, 긴 인쇄 꼬리표에서만 본문 비중을 높인다. */
+
+.printTagRenderer .tagContent {
+    padding-top: 5.25em;
+    padding-bottom: 6em;
+}
+
+.printTagRenderer.tagSize_small .tagContent {
+    padding-top: 4.65em;
+    padding-bottom: 5.35em;
+}
+
+/* A4 배치 미리보기와 실제 인쇄도 수정 화면과 같은 규격별
+   상단 안전거리 비율을 사용한다. */
+.printTagRenderer.tagSize_small .tagFlow {
+    padding-top: 1.4em;
+}
+
+.printTagRenderer.tagSize_small.layout_normal .leaderArea {
+    min-height: 10.2em;
+}
+
+.printTagRenderer.tagSize_small.layout_full .leaderArea {
+    min-height: 8.6em;
+}
+
+.printTagRenderer.tagSize_small.layout_normal .childrenArea {
+    margin-top: 0.2em;
+}
+
+.printTagRenderer.tagSize_small.layout_full .childrenArea {
+    margin-top: 0.1em;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
+    gap: 0.35em 1em;
+}
+
+
+/* 중형 인쇄는 상단 장식과 대표자 사이의 최소 거리를 다시 확보한다.
+   대표자 위치는 가족 수와 무관하게 상단 안전선 아래에 고정하고,
+   하단 5.5em은 하단 그래픽이 침범할 수 없는 물리적 안전영역으로 유지한다. */
+.printTagRenderer.tagSize_medium .tagContent {
+    padding-top: 5.9em;
+    padding-bottom: 5.5em;
+}
+
+/* 중형도 압축 단계와 무관하게 같은 최소 안전거리 아래에서 시작한다. */
+.printTagRenderer.tagSize_medium .tagFlow {
+    padding-top: 1.6em;
+}
+
+/* 위쪽 고정 간격을 확보한 만큼 대표자 블록 내부의 비어 있는 최소 높이를 회수한다.
+   특히 6명 이상인 full 조판은 대표자 아래의 빈 높이를 더 줄여
+   가족 행과 발원문이 실제 내용 영역 안에 남도록 한다. */
+.printTagRenderer.tagSize_medium.layout_sparse .leaderArea {
+    min-height: 12.8em;
+}
+
+.printTagRenderer.tagSize_medium.layout_normal .leaderArea {
+    min-height: 11em;
+}
+
+.printTagRenderer.tagSize_medium.layout_full .leaderArea {
+    min-height: 9.4em;
+}
+
+/* 대형은 넉넉한 높이를 유지하면서 가장 완만한 상단 안전거리를 둔다. */
+.printTagRenderer.tagSize_large .tagFlow {
+    padding-top: 1.8em;
+}
+
+.printTagRenderer.tagSize_large .tagContent {
+    padding-top: 5.6em;
+    padding-bottom: 6.45em;
+}
+
+/* 글자 기준을 키워도 장식이 같이 커지지 않도록 인쇄 렌더러에서 낮춘다.
+   기존 인쇄 장식 크기에서 추가로 10% 축소한다. */
+.printTagRenderer .topGraphicSlot img {
+    transform: scale(0.55);
+    transform-origin: top center;
+}
+
+.printTagRenderer .bottomGraphicSlot img {
+    transform: scale(0.76);
+    transform-origin: bottom center;
+}
+
+/* A4 배치 미리보기 / 실제 인쇄에서 대표자 1~2의 가로 뼈대만 압축한다.
+   인쇄용 글자 확대에 따라 em 기반 폭과 간격까지 커지면서 좁은 꼬리표에서
+   대표자 블록이 좌우 안전폭을 넘는 현상을 막고 정확히 중앙에 유지한다. */
+.printTagRenderer .leaderPerson {
+    width: 7em;
+    grid-template-columns: 1.5em 4em 1.5em;
+}
+
+.printTagRenderer .twoLeaders {
+    gap: 1.5em;
+}
+
+/* 인쇄에서는 각 규격의 실제 세로 비율에 맞춰 가족 행 압축량을 다르게 둔다. */
+.printTagRenderer.tagSize_medium .childrenArea {
+    margin-top: 0.75em;
+}
+
+.printTagRenderer.tagSize_medium.layout_normal .childrenArea {
+    margin-top: 0.45em;
+}
+
+.printTagRenderer.tagSize_medium.layout_full .childrenArea {
+    margin-top: 0.2em;
+    padding-top: 0.45em;
+    padding-bottom: 0.45em;
+    gap: 0.4em 1.2em;
+}
+
+.printTagRenderer.tagSize_large .childrenArea {
+    margin-top: 1.2em;
+}
+
+.printTagRenderer.tagSize_large.layout_normal .childrenArea {
+    margin-top: 0.95em;
+}
+
+.printTagRenderer.tagSize_large.layout_full .childrenArea {
+    margin-top: 0.65em;
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
+    gap: 0.7em 1.45em;
+}
+
+/* 중형은 상단 대표자 위치를 유지한 채 가족 행이 늘어날수록
+   발원문 앞의 가변 여백부터 적극적으로 회수한다. */
+
+.printTagRenderer.tagSize_medium.layout_sparse .prayerSpacer {
+    flex-basis: 5em;
+}
+
+.printTagRenderer.tagSize_medium.layout_normal .prayerSpacer {
+    flex-basis: 2em;
+}
+
+.printTagRenderer.tagSize_medium.layout_full .prayerSpacer {
+    flex-basis: 0.25em;
+}
+
+/* 대형은 원래 높이가 넉넉하므로 같은 원리를 더 완만하게 적용한다. */
+.printTagRenderer.tagSize_large.layout_sparse .prayerSpacer {
+    flex-basis: 5em;
+}
+
+.printTagRenderer.tagSize_large.layout_normal .prayerSpacer {
+    flex-basis: 3.2em;
+}
+
+.printTagRenderer.tagSize_large.layout_full .prayerSpacer {
+    flex-basis: 1.4em;
+}
+
+/* 실제 물리 높이를 넘은 경우 화면의 A4 미리보기에서만 경고한다.
+   인쇄물에는 이 안내가 들어가지 않는다. */
+.contentOverflowWarning {
+    position: absolute;
+    right: 0.65em;
+    bottom: 6.15em;
+    left: 0.65em;
+    z-index: 3;
+    padding: 0.45em 0.55em;
+    border: 1px solid rgba(151, 112, 71, 0.28);
+    border-radius: 4px;
+    background: rgba(255, 250, 243, 0.94);
+    color: #7b5a3d;
+    font-size: 0.72em;
+    line-height: 1.35;
+    text-align: center;
+}
+
+/* 글자 설정 UI */
+
+.previewHeaderActions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.textSettingsButton {
+    height: 28px;
+    padding: 0 10px;
+    border: 1px solid #d5dce3;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #596571;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.textSettingsButton:hover {
+    border-color: #9fb3c8;
+    color: #315f90;
+}
+
+.previewPrimaryButton {
+    height: 30px;
+    padding: 0 13px;
+    border: 1px solid #2d639e;
+    border-radius: 6px;
+    background: #326da9;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.previewPrimaryButton:hover {
+    background: #2b6199;
+}
+
+.textSettingsPanel {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 10;
+    width: 260px;
+    padding: 14px;
+    border: 1px solid #d8dee5;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 10px 28px rgba(34, 45, 58, 0.12);
+}
+
+.textSettingGroup+.textSettingGroup {
+    margin-top: 13px;
+}
+
+.textSettingLabel {
+    display: block;
+    margin-bottom: 6px;
+    color: #666f79;
+    font-size: 9px;
+    font-weight: 600;
+}
+
+.fontPresetButtons {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5px;
+}
+
+.fontPresetButtons button,
+.emphasisButton {
+    min-height: 30px;
+    padding: 0 9px;
+    border: 1px solid #dce1e6;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #565f69;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.settingActive {
+    border-color: #7d9fc3 !important;
+    background: #f1f6fb !important;
+    color: #2e6095 !important;
+}
+
+.sizeControl {
+    display: grid;
+    grid-template-columns: 32px 1fr 32px;
+    gap: 5px;
+}
+
+.sizeControl button {
+    height: 30px;
+    border: 1px solid #dce1e6;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #46515c;
+    cursor: pointer;
+}
+
+.sizeControl button:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.sizeControl span {
+    display: grid;
+    place-items: center;
+    border: 1px solid #e1e5e9;
+    border-radius: 6px;
+    background: #f8f9fa;
+    color: #626c76;
+    font-size: 10px;
+}
+
+.resetTextButton {
+    width: 100%;
+    margin-top: 14px;
+    padding-top: 10px;
+    border: 0;
+    border-top: 1px solid #e7eaed;
+    background: transparent;
+    color: #747e88;
+    font-size: 9px;
+    cursor: pointer;
+}
+
+/* 전체 A4 인쇄 미리보기 */
+
+.printPreviewStage {
+    min-height: 680px;
+    padding: 20px;
+    background: #e9edf1;
+}
+
+.printPreviewToolbar {
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.printPreviewToolbar span {
+    color: #7a838d;
+    font-size: 10px;
+}
+
+.printPreviewToolbar button {
+    height: 34px;
+    padding: 0 14px;
+    border: 1px solid #2d639e;
+    border-radius: 6px;
+    background: #326da9;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.printPages {
+    display: grid;
+    gap: 22px;
+    justify-content: center;
+}
+
+.printPageWrap {
+    display: grid;
+    gap: 6px;
+}
+
+.printPageLabel {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+    color: #727c87;
+    font-size: 9px;
+}
+
+.printPageLabel strong {
+    font-weight: 600;
+}
+
+.printPageLabel span {
+    color: #8b949e;
+    font-size: 8px;
+    font-weight: 400;
+}
+
+.printSheet {
+    box-sizing: border-box;
+    width: 420px;
+    aspect-ratio: 210 / 297;
+    padding: 18px;
+    display: grid;
+    gap: 8px;
+    background: #ffffff;
+    box-shadow: 0 6px 24px rgba(40, 50, 60, 0.1);
+}
+
+.sheet_small {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+
+.sheet_medium {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: minmax(0, 1fr);
+}
+
+.sheet_large {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: minmax(0, 1fr);
+}
+
+/* 중형·대형은 A4 한 행 전체 높이를 강제로 채우지 않는다.
+   수정 화면에서 확정된 꼬리표 비율을 A4 배치 미리보기와 실제 인쇄에도 유지한다. */
+.sheet_medium,
+.sheet_large {
+    align-items: center;
+}
+
+.printTagRenderer.tagSize_medium {
+    height: auto;
+    aspect-ratio: 270 / 590;
+}
+
+.printTagRenderer.tagSize_large {
+    height: auto;
+    aspect-ratio: 300 / 640;
+}
+
+.emptyPrintSlot {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.manualBlankTag {
+    border-color: #bcc4cc;
+    background: #ffffff;
+}
+
+.manualBlankStructure {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+}
+
+.manualBlankLine {
+    position: absolute;
+    right: 14%;
+    left: 14%;
+    height: 1px;
+    background: rgba(65, 72, 79, 0.065);
+}
+
+.manualBlankLine:first-child {
+    top: 45%;
+}
+
+.manualBlankLine:last-child {
+    top: 76%;
+}
+
+.emptySlotScreenGuide {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    width: max-content;
+    max-width: calc(100% - 14px);
+    padding: 5px 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(104, 115, 126, 0.18);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 7px rgba(43, 53, 64, 0.05);
+    color: #8d969f;
+    text-align: center;
+    pointer-events: none;
+}
+
+.emptySlotScreenGuide strong {
+    color: #747e88;
+    font-size: 7px;
+    line-height: 1.2;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.emptySlotScreenGuide span {
+    font-size: 6px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+
+.sheetSlot {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    cursor: pointer;
+    outline: 1px solid transparent;
+    outline-offset: 2px;
+    transition:
+        outline-color 0.14s ease,
+        box-shadow 0.14s ease;
+}
+
+.sheetSlot:hover {
+    outline-color: rgba(74, 119, 168, 0.38);
+}
+
+.sheetSlotDraft {
+    cursor: default;
+}
+
+.sheetSlotDraft:hover {
+    outline-color: transparent;
+}
+
+.sheetSlot:focus-visible {
+    outline: 2px solid #5f8fbe;
+}
+
+.sheetSlotSelected {
+    outline: 2px solid #4f83b8;
+    box-shadow: 0 0 0 4px rgba(79, 131, 184, 0.1);
+}
+
+.slotSelectionUi {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    left: 5px;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    pointer-events: none;
+}
+
+.slotSelectionUi span,
+.slotSelectionUi button {
+    min-height: 18px;
+    padding: 0 5px;
+    border-radius: 4px;
+    font-size: 7px;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.slotSelectionUi span {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(48, 105, 164, 0.92);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.slotSelectionUi button {
+    border: 1px solid #5f8fbe;
+    background: rgba(255, 255, 255, 0.96);
+    color: #2f6397;
+    font-weight: 600;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.selectedTagNotice {
+    margin: -2px auto 12px;
+    width: min(420px, 100%);
+    min-height: 38px;
+    padding: 7px 9px 7px 11px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border: 1px solid #c8d9ea;
+    border-radius: 7px;
+    background: #f5f9fd;
+    color: #637181;
+    font-size: 9px;
+}
+
+.selectedTagNotice span {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.selectedTagNotice strong {
+    color: #315f90;
+    font-weight: 600;
+}
+
+.selectedTagNotice button {
+    flex-shrink: 0;
+    height: 25px;
+    padding: 0 9px;
+    border: 1px solid #7fa5c9;
+    border-radius: 5px;
+    background: #ffffff;
+    color: #315f90;
+    font-size: 9px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.screenPrintPages {
+    display: grid;
+}
+
+.actualPrintPages {
+    position: fixed;
+    top: 0;
+    left: -10000px;
+    width: 420px;
+    display: grid;
+    gap: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.printPreviewToolbar button:disabled {
+    border-color: #cbd2d9;
+    background: #d8dde2;
+    color: #8e969e;
+    cursor: default;
+}
+
+
+/* PC 배치 미리보기 전용 가로 확대
+   A4 비율과 세로 미리보기 영역은 유지하고 화면에서만 가로 활용도를 높인다. */
+@media screen and (min-width: 1181px) {
+    .printPreviewStage {
+        min-height: 680px;
+        padding: 6px 20px;
+    }
+
+    .screenPrintPages .printPageWrap {
+        gap: 4px;
+    }
+
+    .screenPrintPages .printSheet {
+        width: 460px;
+    }
+}
+
+@media (max-width: 720px) {
+    .previewStageLabel {
+        top: 12px;
+        left: 14px;
+    }
+
+    .textSettingsPanel {
+        top: 12px;
+        right: 12px;
+        left: 12px;
+        width: auto;
+    }
+
+    .printPreviewStage {
+        overflow-x: auto;
+        padding: 16px 12px 20px;
+    }
+
+    .printPreviewToolbar {
+        min-width: 420px;
+    }
+}
+
+/* 실제 브라우저 인쇄 */
+
+@page {
+    size: A4 portrait;
+    margin: 0;
+}
+
+@media print {
+    .contentOverflowWarning {
+        display: none !important;
+    }
+
+    body * {
+        visibility: hidden !important;
+    }
+
+    .actualPrintPages,
+    .actualPrintPages * {
+        visibility: visible !important;
+    }
+
+    .screenPrintPages {
+        display: none !important;
+    }
+
+    .actualPrintPages {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: grid !important;
+        gap: 0;
+    }
+
+    .printPageWrap {
+        page-break-after: always;
+        break-after: page;
+        gap: 0;
+    }
+
+    .printPageWrap:last-child {
+        page-break-after: auto;
+        break-after: auto;
+    }
+
+    .printPageLabel {
+        display: none;
+    }
+
+    .emptyPrintSlot {
+        display: block !important;
+    }
+
+    .emptySlotScreenGuide {
+        display: none !important;
+    }
+
+    .sheetSlot,
+    .sheetSlot:hover,
+    .sheetSlotSelected {
+        outline: 0 !important;
+        box-shadow: none !important;
+        cursor: default !important;
+    }
+
+    .slotSelectionUi,
+    .selectedTagNotice {
+        display: none !important;
+    }
+
+    .printSheet {
+        width: 210mm;
+        height: 297mm;
+        margin: 0;
+        padding: 12mm;
+        gap: 4mm;
+        box-shadow: none;
+    }
+
+    .printTagRenderer {
+        border-color: #c3cad1;
+    }
+
+    .manualBlankTag {
+        border-color: #b8c0c8;
+    }
+
+    .printTagRenderer.textSize_0 {
+        font-size: 9.7px;
+    }
+
+    .printTagRenderer.textSize_1 {
+        font-size: 10.3px;
+    }
+
+    .printTagRenderer.textSize_2 {
+        font-size: 11px;
+    }
+
+    .printTagRenderer.textSize_3 {
+        font-size: 11.7px;
+    }
+
+    .printTagRenderer.textSize_4 {
+        font-size: 12.3px;
+    }
+}

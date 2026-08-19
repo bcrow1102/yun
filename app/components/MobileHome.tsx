@@ -669,12 +669,12 @@ export default function MobileHome() {
                                 style={
                                     index === 0 && shouldRevealFirstHero
                                         ? {
-                                              clipPath: firstHeroRevealed
-                                                  ? "inset(0 0 0 0)"
-                                                  : "inset(0 0 100% 0)",
-                                              transition:
-                                                  "clip-path 760ms cubic-bezier(0.22, 1, 0.36, 1), opacity 1150ms cubic-bezier(0.42, 0, 0.58, 1)",
-                                          }
+                                            clipPath: firstHeroRevealed
+                                                ? "inset(0 0 0 0)"
+                                                : "inset(0 0 100% 0)",
+                                            transition:
+                                                "clip-path 760ms cubic-bezier(0.22, 1, 0.36, 1), opacity 1150ms cubic-bezier(0.42, 0, 0.58, 1)",
+                                        }
                                         : undefined
                                 }
                                 onClick={(event) => {
@@ -691,8 +691,8 @@ export default function MobileHome() {
                                         />
                                         <span
                                             className={`absolute inset-0 ${"overlay" in slide
-                                                    ? slide.overlay
-                                                    : "bg-gradient-to-r from-[#FFFDF8]/58 via-[#FFFDF8]/16 to-transparent"
+                                                ? slide.overlay
+                                                : "bg-gradient-to-r from-[#FFFDF8]/58 via-[#FFFDF8]/16 to-transparent"
                                                 }`}
                                             aria-hidden="true"
                                         />
@@ -704,13 +704,13 @@ export default function MobileHome() {
                                     style={
                                         index === 0 && shouldRevealFirstHero
                                             ? {
-                                                  opacity: firstHeroRevealed ? 1 : 0,
-                                                  transform: firstHeroRevealed
-                                                      ? "translateY(0)"
-                                                      : "translateY(12px)",
-                                                  transition:
-                                                      "opacity 460ms ease 140ms, transform 540ms cubic-bezier(0.22, 1, 0.36, 1) 140ms",
-                                              }
+                                                opacity: firstHeroRevealed ? 1 : 0,
+                                                transform: firstHeroRevealed
+                                                    ? "translateY(0)"
+                                                    : "translateY(12px)",
+                                                transition:
+                                                    "opacity 460ms ease 140ms, transform 540ms cubic-bezier(0.22, 1, 0.36, 1) 140ms",
+                                            }
                                             : undefined
                                     }
                                 >
@@ -733,8 +733,8 @@ export default function MobileHome() {
                                 type="button"
                                 onClick={() => setActiveSlide(index)}
                                 className={`h-2 rounded-full transition-all ${activeSlide === index
-                                        ? "w-6 bg-[#191F28]"
-                                        : "w-2 bg-[#191F28]/25"
+                                    ? "w-6 bg-[#191F28]"
+                                    : "w-2 bg-[#191F28]/25"
                                     }`}
                                 aria-label={`${index + 1}번째 소식 보기`}
                             />
@@ -879,7 +879,7 @@ export default function MobileHome() {
                             </span>
                         </Link>
 
-                        <Link href="/resources" className="relative mt-3 flex min-h-24 items-center justify-between overflow-hidden rounded-[18px] bg-[#FFFEFA] py-4 pl-5 pr-4 shadow-[0_1px_2px_rgba(37,42,49,0.035)]">
+                        <Link href="/downloads" className="relative mt-3 flex min-h-24 items-center justify-between overflow-hidden rounded-[18px] bg-[#FFFEFA] py-4 pl-5 pr-4 shadow-[0_1px_2px_rgba(37,42,49,0.035)]">
                             <span aria-hidden="true" className="absolute inset-y-4 left-0 w-1 rounded-r-full bg-[#F4F54A]" />
                             <span className="min-w-0 pr-4">
                                 <span className="block text-[11px] font-medium tracking-[0.02em] text-[#777900]">실무에 바로 쓰는 자료</span>
