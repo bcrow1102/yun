@@ -147,11 +147,12 @@ const scrollHeroItems = [
     {
       label: "부처님 이야기",
       href: "/stories",
-      image: "/images/stories/story-01-scene-1.webp",
+      image: "/images/stories/story-01-hero.webp",
       alt: "부처님 이야기 대표 삽화",
       position: "top-[9%] xl:top-[10%]",
       line: "-top-6 h-6",
       objectPosition: "center center",
+      objectFit: "cover",
     },
     {
       label: "홍보물 DIY",
@@ -160,7 +161,8 @@ const scrollHeroItems = [
       alt: "연등 행사 홍보물 DIY 완성 예시",
       position: "top-[1%]",
       line: "-top-14 h-14",
-      objectPosition: "center center",
+      objectPosition: "center top",
+      objectFit: "contain",
     },
   ],
 ] as const;
@@ -177,6 +179,7 @@ type ScrollHeroItemData = {
   position: string;
   line: string;
   objectPosition: string;
+  objectFit?: "cover" | "contain";
 };
 
 function ScrollHeroItem({
@@ -212,8 +215,11 @@ function ScrollHeroItem({
               src={item.image}
               alt={item.alt}
               draggable={false}
-              className="h-full w-full object-cover"
-              style={{ objectPosition: item.objectPosition }}
+              className="h-full w-full"
+              style={{
+                objectFit: item.objectFit ?? "cover",
+                objectPosition: item.objectPosition,
+              }}
             />
             <span className="absolute inset-0 bg-gradient-to-t from-[#191F28]/35 via-transparent to-transparent" />
             <span className="scroll-hero-label absolute bottom-3 left-3 flex items-center gap-1.5 text-[12px] font-medium text-white">
@@ -963,8 +969,31 @@ export default function Home() {
                   .scroll-hero-canvas { z-index: 2; top: 71.53px; left: 50%; height: calc(var(--scroll-progress) * 423.4px); width: 563.37px; transform: translateX(-50%); clip-path: inset(0); contain: paint; }
                   .scroll-hero-canvas-paper { z-index: 1; top: -69.4px; }
                   .scroll-hero-fabric-finish { z-index: 1; left: 156.2px; top: 0; height: 100%; width: 251.9px; background-color: rgba(232, 226, 211, .94); background-image: radial-gradient(ellipse 34% 20% at 24% 8%, rgba(255, 255, 255, .06), transparent 72%), radial-gradient(ellipse 30% 18% at 76% 15%, rgba(126, 103, 69, .024), transparent 74%), radial-gradient(ellipse 38% 20% at 28% 92%, rgba(122, 99, 66, .022), transparent 72%), radial-gradient(ellipse 32% 18% at 76% 96%, rgba(255, 255, 255, .045), transparent 74%), linear-gradient(90deg, rgba(105, 86, 57, .075), transparent 10%, transparent 90%, rgba(105, 86, 57, .075)), linear-gradient(180deg, rgba(104, 85, 57, .055), transparent 10%, transparent 90%, rgba(104, 85, 57, .05)); box-shadow: inset 1px 0 rgba(104, 85, 57, .15), inset -1px 0 rgba(104, 85, 57, .15), inset 0 1px rgba(255, 255, 255, .045), inset 0 -1px rgba(104, 85, 57, .085); }
-                  .scroll-hero-content { z-index: 2; left: 181.57px; top: 50.16px; height: 329px; width: 199.16px; overflow: hidden !important; clip-path: inset(0); contain: paint; }
-                  .scroll-hero-content > img { position: absolute; inset: 0; height: 100%; width: 100%; max-width: none; object-fit: cover; transform: none; }
+                  .scroll-hero-content {
+  z-index: 2;
+  left: 177.57px;
+  top: 46.16px;
+  height: 329px;
+  width: 199.16px;
+  box-sizing: content-box;
+
+  border: 4px solid rgba(221, 213, 198, .52);
+
+  overflow: hidden !important;
+  clip-path: inset(0);
+  contain: paint;
+}
+
+.scroll-hero-content > img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  max-width: none;
+  object-fit: cover;
+  transform: none;
+}
+  
                   .scroll-hero-bottom-rod { z-index: 3; top: calc(71.53px + var(--scroll-progress) * 423.4px); left: 50%; height: 44.8px; width: 563.37px; transform: translate(-50%, -1px); }
                   .scroll-hero-slot-third .scroll-hero-bottom-rod { transform: translate(-50%, -2px); }
                   .scroll-hero-bottom-rod-image { top: -493px; }
@@ -1528,7 +1557,7 @@ export default function Home() {
                     href="https://open.kakao.com/o/sulQHJGi"
                     target="_blank"
                     rel="noreferrer"
-                        className="group flex min-h-[56px] cursor-pointer items-center gap-2.5 border-t border-[#D9DAD4] px-0 text-left text-[#191F28]"
+                    className="group flex min-h-[56px] cursor-pointer items-center gap-2.5 border-t border-[#D9DAD4] px-0 text-left text-[#191F28]"
                   >
                     <KakaoIcon />
                     <span>

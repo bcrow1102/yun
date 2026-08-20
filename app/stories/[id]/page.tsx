@@ -165,6 +165,39 @@ const stories: Record<string, Story> = {
     },
 };
 
+function renderStoryParagraph(text: string) {
+    const parts = text
+        .split(/((?:“[^”]*”)|(?:"[^"]*"))/g)
+        .map((part) => part.trim())
+        .filter(Boolean);
+
+    return parts.map((part, index) => {
+        const isQuote =
+            (part.startsWith("“") && part.endsWith("”")) ||
+            (part.startsWith('"') && part.endsWith('"'));
+
+        if (isQuote) {
+            return (
+                <span
+                    key={`${part}-${index}`}
+                    className="mt-2 block text-[#374151]"
+                >
+                    {part}
+                </span>
+            );
+        }
+
+        return (
+            <span
+                key={`${part}-${index}`}
+                className="block"
+            >
+                {part}
+            </span>
+        );
+    });
+}
+
 export default async function StoryDetailPage({
     params,
 }: {
@@ -182,7 +215,6 @@ export default async function StoryDetailPage({
 
     return (
         <div className="min-h-screen bg-white text-[#252A31]">
-
             <main>
                 <section className="border-b border-[#E6EDE3] bg-[#F3F7F1]">
                     <div className="mx-auto max-w-4xl px-5 py-10 md:px-8 md:py-16">
@@ -206,14 +238,15 @@ export default async function StoryDetailPage({
                     </div>
                 </section>
 
-                <article className="mx-auto max-w-4xl px-4 py-8 md:px-8 md:py-12">
-                    <div className="space-y-12 md:space-y-16">
+                <article className="mx-auto max-w-6xl px-4 py-8 md:px-8 md:py-12">
+                    <div className="space-y-12 lg:space-y-10">
                         {story.scenes.map((scene) => (
                             <section
                                 key={scene.number}
-                                className="overflow-hidden rounded-[26px] border border-[#DDE7D9] bg-white"
+                                className="overflow-hidden rounded-[26px] border border-[#DDE7D9] bg-white lg:grid lg:grid-cols-[0.88fr_1.12fr] lg:items-center"
                             >
-                                <div className="px-5 py-7 md:px-10 md:py-10">
+                                {/* 모바일: 글 먼저 / PC: 오른쪽 */}
+                                <div className="px-5 py-7 md:px-10 md:py-10 lg:order-2 lg:px-9 lg:py-9 xl:px-10 xl:py-10">
                                     <span className="text-xs font-bold text-[#7A8B74]">
                                         {scene.number}
                                     </span>
@@ -228,75 +261,80 @@ export default async function StoryDetailPage({
                                                 key={paragraph}
                                                 className="text-[16px] leading-8 text-[#4E5968]"
                                             >
-                                                {paragraph}
+                                                {renderStoryParagraph(paragraph)}
                                             </p>
                                         ))}
                                     </div>
                                 </div>
 
-                                <div className="h-[260px] md:h-[390px]">
+                                {/* 모바일: 원본 비율 / PC: 모든 장면 동일 캔버스 */}
+                                <div className="lg:order-1 lg:self-center lg:overflow-hidden lg:bg-[#F2ECE0] lg:aspect-[1467/1072]">
                                     <img
                                         src={scene.image}
                                         alt={scene.title}
                                         loading="lazy"
                                         decoding="async"
-                                        className="h-full w-full object-cover"
+                                        className="block h-auto w-full lg:h-full lg:w-full lg:object-contain"
                                     />
                                 </div>
                             </section>
                         ))}
                     </div>
 
-                    <section className="mt-12 rounded-[24px] bg-[#FDFDC7] px-6 py-8 text-center md:mt-16 md:px-10 md:py-10">
-                        <span className="text-xs font-bold text-[#7A6D00]">
-                            오늘의 한 문장
-                        </span>
+                    <div className="mx-auto max-w-4xl">
+                        <section className="mt-12 rounded-[24px] bg-[#FDFDC7] px-6 py-8 text-center md:mt-16 md:px-10 md:py-10">
+                            <span className="text-xs font-bold text-[#7A6D00]">
+                                오늘의 한 문장
+                            </span>
 
-                        <p className="mx-auto mt-3 max-w-xl text-[21px] font-bold leading-9 tracking-[-0.025em] text-[#3D3800] md:text-[25px]">
-                            {story.quote}
-                        </p>
-                    </section>
+                            <p className="mx-auto mt-3 max-w-3xl break-keep text-[21px] font-bold leading-9 tracking-[-0.025em] text-[#3D3800] md:text-[25px]">
+                                {story.quote}
+                            </p>
+                        </section>
 
-                    <section className="mt-8 rounded-[22px] border border-[#E3E8EF] bg-[#F7F8FA] p-5 md:p-6">
-                        <h2 className="font-bold">이 이야기가 전하는 뜻</h2>
+                        <section className="mt-8 rounded-[22px] border border-[#E3E8EF] bg-[#F7F8FA] p-5 md:p-6">
+                            <h2 className="font-bold">
+                                이 이야기가 전하는 뜻
+                            </h2>
 
-                        <p className="mt-3 text-[15px] leading-7 text-[#667085]">
-                            {story.meaning}
-                        </p>
-                    </section>
+                            <p className="mt-3 text-[15px] leading-7 text-[#667085]">
+                                {story.meaning}
+                            </p>
+                        </section>
 
-                    <div className="mt-8 flex flex-col gap-3 border-t border-[#E7E9EC] pt-7 sm:flex-row sm:items-center sm:justify-between">
-                        <Link
-                            href="/stories"
-                            className="text-sm font-semibold text-[#667085]"
-                        >
-                            ← 전체 이야기
-                        </Link>
+                        <div className="mt-8 flex flex-col gap-3 border-t border-[#E7E9EC] pt-7 sm:flex-row sm:items-center sm:justify-between">
+                            <Link
+                                href="/stories"
+                                className="text-sm font-semibold text-[#667085]"
+                            >
+                                ← 전체 이야기
+                            </Link>
 
-                        <div className="flex flex-col gap-2 sm:flex-row">
-                            {previousStory && (
-                                <Link
-                                    href={`/stories/${previousStory.id}`}
-                                    className="rounded-xl border border-[#E3E8EF] bg-white px-4 py-3 text-center text-sm font-bold"
-                                >
-                                    ← 이전 이야기
-                                </Link>
-                            )}
+                            <div className="flex flex-col gap-2 sm:flex-row">
+                                {previousStory && (
+                                    <Link
+                                        href={`/stories/${previousStory.id}`}
+                                        className="rounded-xl border border-[#E3E8EF] bg-white px-4 py-3 text-center text-sm font-bold"
+                                    >
+                                        ← 이전 이야기
+                                    </Link>
+                                )}
 
-                            {nextStory && (
-                                <Link
-                                    href={`/stories/${nextStory.id}`}
-                                    className="rounded-xl bg-[#252A31] px-4 py-3 text-center text-sm font-bold text-white"
-                                >
-                                    다음 이야기 →
-                                </Link>
-                            )}
+                                {nextStory && (
+                                    <Link
+                                        href={`/stories/${nextStory.id}`}
+                                        className="rounded-xl bg-[#252A31] px-4 py-3 text-center text-sm font-bold text-white"
+                                    >
+                                        다음 이야기 →
+                                    </Link>
+                                )}
+                            </div>
                         </div>
-                    </div>
 
-                    <p className="mt-8 text-xs leading-6 text-[#8B95A1]">
-                        {story.source}
-                    </p>
+                        <p className="mt-8 text-xs leading-6 text-[#8B95A1]">
+                            {story.source}
+                        </p>
+                    </div>
                 </article>
             </main>
         </div>
