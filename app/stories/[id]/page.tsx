@@ -165,6 +165,11 @@ const stories: Record<string, Story> = {
     },
 };
 
+const overscanStoryImages = new Set([
+    "/images/stories/story-01-scene-2.webp",
+    "/images/stories/story-01-scene-3.webp",
+]);
+
 function renderStoryParagraph(text: string) {
     const parts = text
         .split(/((?:“[^”]*”)|(?:"[^"]*"))/g)
@@ -267,15 +272,17 @@ export default async function StoryDetailPage({
                                     </div>
                                 </div>
 
-                                {/* 모바일: 원본 비율 / PC: 모든 장면 동일 캔버스 */}
-                                <div className="lg:order-1 lg:self-center lg:overflow-hidden lg:bg-[#F2ECE0] lg:aspect-[1467/1072]">
-                                    <img
-                                        src={scene.image}
-                                        alt={scene.title}
-                                        loading="lazy"
-                                        decoding="async"
-                                        className="block h-auto w-full lg:h-full lg:w-full lg:object-contain"
-                                    />
+                                {/* 모바일·PC 모두 모든 장면에 동일한 전시 비율 적용 */}
+                                <div className="pl-3 lg:order-1 lg:self-center">
+                                    <div className="flex aspect-[4/3] items-center justify-center overflow-hidden bg-[#F2ECE0]">
+                                        <img
+                                            src={scene.image}
+                                            alt={scene.title}
+                                            loading="lazy"
+                                            decoding="async"
+                                            className={`block h-full w-full rounded-none object-cover object-center ${overscanStoryImages.has(scene.image) ? "scale-[1.04]" : ""}`}
+                                        />
+                                    </div>
                                 </div>
                             </section>
                         ))}
