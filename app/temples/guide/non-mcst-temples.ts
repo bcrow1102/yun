@@ -1089,5 +1089,61 @@ export const nonMcstTempleAdditions = [
                                                            "checkedAt":  "2026-08-20"
                                                        }
                             }
+    },
+    {
+        slug: "beomnyongsa-seoul",
+        name: "법룡사",
+        location: {
+            address: "서울특별시 강남구 광평로31길 56 (수서동)",
+            sido: "서울",
+            sigungu: "강남구",
+        },
+        area: "수도권",
+        summary: "서울특별시 강남구 광평로31길 56 (수서동)",
+        tags: [],
+        keywords: ["법룡사", "서울", "강남구"],
+        phone: "02-3411-8104",
+        website: "https://kbhiksuni.org/beopyongsa-temple/",
+        representative: false,
+        published: true,
+        externalSources: {
+            templeFoodOfficial: {
+                officialName: "법룡사",
+                officialUrl: "https://www.koreatemplefood.com/temple-food/special-temples/special-temples",
+                checkedAt: "2026-08-21",
+                verificationUrls: [
+                    "https://kbhiksuni.org/beopyongsa-temple/",
+                    "https://kbhiksuni.org/locate/",
+                    "https://kbhiksuni.org/about-temple-food-research-institute/",
+                ],
+            },
+        },
+    },
+    {
+        slug: "yeongseonsa-daejeon",
+        name: "영선사",
+        location: {
+            address: "대전광역시 서구 배재로91번길 22-11 (도마동)",
+            sido: "대전",
+            sigungu: "서구",
+        },
+        area: "충청",
+        summary: "대전광역시 서구 배재로91번길 22-11 (도마동)",
+        tags: [],
+        keywords: ["영선사", "대전", "서구"],
+        representative: false,
+        published: true,
+        externalSources: {
+            templeFoodOfficial: {
+                officialId: "7",
+                officialName: "영선사",
+                officialUrl: "https://www.koreatemplefood.com/about/institution/list?searchInstitution=7",
+                checkedAt: "2026-08-21",
+                verificationUrls: [
+                    "https://www.koreatemplefood.com/support/notice/detail/116",
+                    "https://www.koreatemplefood.com/support/notice/detail/127",
+                ],
+            },
+        },
     }
 ] satisfies Temple[];

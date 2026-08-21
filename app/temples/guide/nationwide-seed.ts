@@ -31,12 +31,19 @@ export type LocalDataTempleSource = {
         | "manual-unmatched";
 };
 
-export type TempleStayOfficialSource = {
-    officialId: string;
+export type OfficialTempleSource = {
     officialUrl: string;
     checkedAt: string;
     officialName?: string;
+    officialId?: string;
+    verificationUrls?: string[];
 };
+
+export type TempleStayOfficialSource = OfficialTempleSource & {
+    officialId: string;
+};
+
+export type TempleFoodOfficialSource = OfficialTempleSource;
 
 type TempleExternalSourceMetadata = {
     localData?: LocalDataTempleSource;
@@ -46,10 +53,17 @@ export type TempleExternalSources = TempleExternalSourceMetadata & (
     | {
         mcstTraditionalTemple: McstTempleSource;
         templeStayOfficial?: TempleStayOfficialSource;
+        templeFoodOfficial?: TempleFoodOfficialSource;
     }
     | {
         mcstTraditionalTemple?: McstTempleSource;
         templeStayOfficial: TempleStayOfficialSource;
+        templeFoodOfficial?: TempleFoodOfficialSource;
+    }
+    | {
+        mcstTraditionalTemple?: McstTempleSource;
+        templeStayOfficial?: TempleStayOfficialSource;
+        templeFoodOfficial: TempleFoodOfficialSource;
     }
 );
 
@@ -57,7 +71,11 @@ export function assertTempleExternalSources(
     sources: TempleExternalSources | undefined,
     templeLabel: string,
 ): asserts sources is TempleExternalSources {
-    if (!sources?.mcstTraditionalTemple && !sources?.templeStayOfficial) {
+    if (
+        !sources?.mcstTraditionalTemple &&
+        !sources?.templeStayOfficial &&
+        !sources?.templeFoodOfficial
+    ) {
         throw new Error(
             `Temple ${templeLabel} must have at least one canonical provenance source.`,
         );
