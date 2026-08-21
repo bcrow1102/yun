@@ -1,0 +1,547 @@
+{
+  "schemaVersion": 1,
+  "description": "Official Korean Temple Food source-family identity pilot. This staging file is not imported by production.",
+  "checkedAt": "2026-08-21",
+  "records": [
+    {
+      "source": "korean-temple-food",
+      "sourceEntityType": "shortExperience",
+      "canonicalKey": "korean-temple-food:short-experience:2376",
+      "shortExperienceSeq": "2376",
+      "shortExperienceScheduleSeqs": ["4448"],
+      "officialName": "9월20일(일)/10:00 ~ 11:30/사찰음식 한걸음_흑임자죽, 고구마사과생채",
+      "sourceDisplayName": "9월20일(일)/10:00 ~ 11:30/사찰음식 한걸음_흑임자죽, 고구마사과생채",
+      "officialUrl": "https://www.koreatemplefood.com/program/experience/short-experience/detail/2376",
+      "pilotSelection": "currentOrRecent",
+      "venueRelation": {
+        "status": "matched",
+        "venueOfficialId": "2",
+        "venueOfficialName": "한국사찰음식문화체험관"
+      },
+      "schedule": [
+        {
+          "shortExperienceScheduleSeq": "4448",
+          "date": "2026-09-20",
+          "startTime": "10:00",
+          "endTime": "11:30"
+        }
+      ],
+      "price": {
+        "currency": "KRW",
+        "chargeBasis": "person",
+        "amount": 20000
+      },
+      "applicationPeriodSource": {
+        "start": "2026-08-01(토) 10:00",
+        "end": "2026-09-17(목) 00:00"
+      },
+      "applicationUrl": "https://www.koreatemplefood.com/program/experience/short-experience/form/2376",
+      "sourceSnapshot": {
+        "checkedAt": "2026-08-21",
+        "applicationStatusText": "모집 중",
+        "appliedCount": 24,
+        "capacityCount": 24,
+        "waitingCount": 6
+      },
+      "checkedAt": "2026-08-21",
+      "lastSeenAt": "2026-08-21",
+      "sourceProvenance": {
+        "listUrl": "https://www.koreatemplefood.com/program/experience/short-experience/list",
+        "detailPageStatus": "available",
+        "observedSourceFields": [
+          "SHORT_EXPERIENCE_SEQ",
+          "SHORT_EXPERIENCE_SCHEDULE_SEQ"
+        ]
+      }
+    },
+    {
+      "source": "korean-temple-food",
+      "sourceEntityType": "shortExperience",
+      "canonicalKey": "korean-temple-food:short-experience:2379",
+      "shortExperienceSeq": "2379",
+      "shortExperienceScheduleSeqs": ["4451"],
+      "officialName": "9월20일(일)/14:00 ~ 16:00/사찰음식 두걸음_고구마샐러드, 새송이간장장아찌, 산초표고버섯전",
+      "sourceDisplayName": "9월20일(일)/14:00 ~ 16:00/사찰음식 두걸음_고구마샐러드, 새송이간장장아찌, 산초표고버섯전",
+      "officialUrl": "https://www.koreatemplefood.com/program/experience/short-experience/detail/2379",
+      "pilotSelection": "currentOrRecent",
+      "venueRelation": {
+        "status": "matched",
+        "venueOfficialId": "2",
+        "venueOfficialName": "한국사찰음식문화체험관"
+      },
+      "schedule": [
+        {
+          "shortExperienceScheduleSeq": "4451",
+          "date": "2026-09-20",
+          "startTime": "14:00",
+          "endTime": "16:00"
+        }
+      ],
+      "price": {
+        "currency": "KRW",
+        "chargeBasis": "person",
+        "amount": 30000
+      },
+      "applicationPeriodSource": {
+        "start": "2026-08-01(토) 10:00",
+        "end": "2026-09-17(목) 00:00"
+      },
+      "applicationUrl": "https://www.koreatemplefood.com/program/experience/short-experience/form/2379",
+      "sourceSnapshot": {
+        "checkedAt": "2026-08-21",
+        "applicationStatusText": "모집 중",
+        "appliedCount": 24,
+        "capacityCount": 24,
+        "waitingCount": 10
+      },
+      "checkedAt": "2026-08-21",
+      "lastSeenAt": "2026-08-21",
+      "sourceProvenance": {
+        "listUrl": "https://www.koreatemplefood.com/program/experience/short-experience/list",
+        "detailPageStatus": "available",
+        "observedSourceFields": [
+          "SHORT_EXPERIENCE_SEQ",
+          "SHORT_EXPERIENCE_SCHEDULE_SEQ"
+        ]
+      }
+    },
+    {
+      "source": "korean-temple-food",
+      "sourceEntityType": "shortExperience",
+      "canonicalKey": "korean-temple-food:short-experience:2298",
+      "shortExperienceSeq": "2298",
+      "shortExperienceScheduleSeqs": ["4370"],
+      "officialName": "8월18일(화)/14:00 ~ 16:00/스님손맛 반찬비법_사찰식채소만두, 오이나물볶음, 열무김치",
+      "sourceDisplayName": "8월18일(화)/14:00 ~ 16:00/스님손맛 반찬비법_사찰식채소만두, 오이나물볶음, 열무김치",
+      "officialUrl": "https://www.koreatemplefood.com/program/experience/short-experience/detail/2298",
+      "pilotSelection": "archive",
+      "venueRelation": {
+        "status": "matched",
+        "venueOfficialId": "2",
+        "venueOfficialName": "한국사찰음식문화체험관"
+      },
+      "schedule": [
+        {
+          "shortExperienceScheduleSeq": "4370",
+          "date": "2026-08-18",
+          "startTime": "14:00",
+          "endTime": "16:00"
+        }
+      ],
+      "applicationPeriodSource": {
+        "start": "2026-07-01(수) 10:00",
+        "end": "2026-08-15(토) 00:00"
+      },
+      "sourceSnapshot": {
+        "checkedAt": "2026-08-21",
+        "applicationStatusText": "모집 마감"
+      },
+      "checkedAt": "2026-08-21",
+      "lastSeenAt": "2026-08-21",
+      "sourceProvenance": {
+        "listUrl": "https://www.koreatemplefood.com/program/experience/short-experience/list?listType=list&page=11",
+        "detailPageStatus": "redirectsToList",
+        "observedSourceFields": [
+          "SHORT_EXPERIENCE_SEQ",
+          "SHORT_EXPERIENCE_SCHEDULE_SEQ"
+        ]
+      }
+    },
+    {
+      "source": "korean-temple-food",
+      "sourceEntityType": "shortExperience",
+      "canonicalKey": "korean-temple-food:short-experience:2092",
+      "shortExperienceSeq": "2092",
+      "shortExperienceScheduleSeqs": ["4161", "4162", "4163", "4164"],
+      "officialName": "3월(수)19:00 ~ 21:00/스님손맛 반찬비법",
+      "sourceDisplayName": "3월(수)19:00 ~ 21:00/스님손맛 반찬비법",
+      "officialUrl": "https://www.koreatemplefood.com/program/experience/short-experience/detail/2092",
+      "pilotSelection": "archive",
+      "venueRelation": {
+        "status": "matched",
+        "venueOfficialId": "2",
+        "venueOfficialName": "한국사찰음식문화체험관"
+      },
+      "schedule": [
+        {
+          "shortExperienceScheduleSeq": "4161",
+          "date": "2026-03-04",
+          "startTime": "19:00",
+          "endTime": "21:00"
+        },
+        {
+          "shortExperienceScheduleSeq": "4162",
+          "date": "2026-03-11",
+          "startTime": "19:00",
+          "endTime": "21:00"
+        },
+        {
+          "shortExperienceScheduleSeq": "4163",
+          "date": "2026-03-18",
+          "startTime": "19:00",
+          "endTime": "21:00"
+        },
+        {
+          "shortExperienceScheduleSeq": "4164",
+          "date": "2026-03-25",
+          "startTime": "19:00",
+          "endTime": "21:00"
+        }
+      ],
+      "applicationPeriodSource": {
+        "start": "2026-02-01(일) 10:00",
+        "end": "2026-03-22(일) 00:00"
+      },
+      "sourceSnapshot": {
+        "checkedAt": "2026-08-21",
+        "applicationStatusText": "모집 마감"
+      },
+      "checkedAt": "2026-08-21",
+      "lastSeenAt": "2026-08-21",
+      "sourceProvenance": {
+        "listUrl": "https://www.koreatemplefood.com/program/experience/short-experience/list?experienceTypeCodeList=MONTHLY%2CANYTIME&listType=list&page=1&searchCondition=TITLE&selectedDate=2026-02-04&selectedMonth=02&selectedYear=2026",
+        "detailPageStatus": "redirectsToList",
+        "observedSourceFields": [
+          "SHORT_EXPERIENCE_SEQ",
+          "SHORT_EXPERIENCE_SCHEDULE_SEQ"
+        ]
+      }
+    },
+    {
+      "source": "korean-temple-food",
+      "sourceEntityType": "regularCourseRun",
+      "canonicalKey": "korean-temple-food:regular-course-run:314",
+      "regularCourseSeq": "207",
+      "regularCourseScheduleSeq": "314",
+      "officialName": "사찰음식정규강좌 고급 27기(금요일_오전)",
+      "sourceDisplayName": "사찰음식정규강좌 고급 27기(금요일_오전)",
+      "officialUrl": "https://www.koreatemplefood.com/program/course/regular-course/detail/314",
+      "pilotSelection": "currentOrRecent",
+      "venueRelation": {
+        "status": "matched",
+        "venueOfficialId": "1",
+        "venueOfficialName": "사찰음식교육관 향적세계",
+        "sourceDisplayName": "사찰음식교육관 [향적세계]"
+      },
+      "coursePeriodSource": {
+        "start": "2026년 09월 04일(금) 10:00",
+        "end": "2026년 11월 27일(금) 13:00",
+        "weekCount": 12
+      },
+      "price": {
+        "currency": "KRW",
+        "chargeBasis": "course",
+        "amount": 700000
+      },
+      "applicationPeriodSource": {
+        "start": "2026년 07월 21일(화) 10:00",
+        "end": "2026년 08월 31일(월) 23:00"
+      },
+      "applicationUrl": "https://www.koreatemplefood.com/program/course/regular-course/form/314",
+      "sourceSnapshot": {
+        "checkedAt": "2026-08-21",
+        "applicationStatusText": "모집 중",
+        "appliedCount": 24,
+        "capacityCount": 24
+      },
+      "checkedAt": "2026-08-21",
+      "lastSeenAt": "2026-08-21",
+      "sourceProvenance": {
+        "listUrl": "https://www.koreatemplefood.com/program/course/regular-course/list",
+        "detailPageStatus": "available",
+        "observedSourceFields": [
+          "REGULAR_COURSE_SEQ",
+          "REGULAR_COURSE_SCHEDULE_SEQ"
+        ]
+      }
+    },
+    {
+      "source": "korean-temple-food",
+      "sourceEntityType": "regularCourseRun",
+      "canonicalKey": "korean-temple-food:regular-course-run:315",
+      "regularCourseSeq": "208",
+      "regularCourseScheduleSeq": "315",
+      "officialName": "사찰음식정규강좌 승가 고급 9기(금요일_오후)",
+      "sourceDisplayName": "사찰음식정규강좌 승가 고급 9기(금요일_오후)",
+      "officialUrl": "https://www.koreatemplefood.com/program/course/regular-course/detail/315",
+      "pilotSelection": "currentOrRecent",
+      "venueRelation": {
+        "status": "matched",
+        "venueOfficialId": "1",
+        "venueOfficialName": "사찰음식교육관 향적세계",
+        "sourceDisplayName": "사찰음식교육관 [향적세계]"
+      },
+      "coursePeriodSource": {
+        "start": "2026년 09월 04일(금) 14:00",
+        "end": "2026년 12월 04일(금) 17:00",
+        "weekCount": 12
+      },
+      "price": {
+        "currency": "KRW",
+        "chargeBasis": "course",
+        "amount": 100000
+      },
+      "applicationPeriodSource": {
+        "start": "2026년 07월 21일(화) 10:00",
+        "end": "2026년 08월 31일(월) 23:00"
+      },
+      "applicationUrl": "https://www.koreatemplefood.com/program/course/regular-course/form/315",
+      "sourceSnapshot": {
+        "checkedAt": "2026-08-21",
+        "applicationStatusText": "모집 중",
+        "appliedCount": 8,
+        "capacityCount": 24
+      },
+      "checkedAt": "2026-08-21",
+      "lastSeenAt": "2026-08-21",
+      "sourceProvenance": {
+        "listUrl": "https://www.koreatemplefood.com/program/course/regular-course/list",
+        "detailPageStatus": "available",
+        "observedSourceFields": [
+          "REGULAR_COURSE_SEQ",
+          "REGULAR_COURSE_SCHEDULE_SEQ"
+        ]
+      }
+    },
+    {
+      "source": "korean-temple-food",
+      "sourceEntityType": "regularCourseRun",
+      "canonicalKey": "korean-temple-food:regular-course-run:266",
+      "regularCourseSeq": "160",
+      "regularCourseScheduleSeq": "266",
+      "officialName": "사찰음식정규강좌 초급 43기(금)_오전",
+      "sourceDisplayName": "사찰음식정규강좌 초급 43기(금)_오전",
+      "officialUrl": "https://www.koreatemplefood.com/program/course/regular-course/detail/266",
+      "pilotSelection": "archive",
+      "venueRelation": {
+        "status": "matched",
+        "venueOfficialId": "1",
+        "venueOfficialName": "사찰음식교육관 향적세계",
+        "sourceDisplayName": "사찰음식교육관 [향적세계]"
+      },
+      "coursePeriodSource": {
+        "start": "2026년 02월 27일(금) 10:00",
+        "end": "2026년 05월 15일(금) 13:00",
+        "weekCount": 12
+      },
+      "price": {
+        "currency": "KRW",
+        "chargeBasis": "course",
+        "amount": 600000
+      },
+      "applicationPeriodSource": {
+        "start": "2026년 01월 09일(금) 09:00",
+        "end": "2026년 02월 20일(금) 00:00"
+      },
+      "sourceSnapshot": {
+        "checkedAt": "2026-08-21",
+        "applicationStatusText": "모집 마감",
+        "appliedCount": 24,
+        "capacityCount": 24
+      },
+      "checkedAt": "2026-08-21",
+      "lastSeenAt": "2026-08-21",
+      "sourceProvenance": {
+        "listUrl": "https://www.koreatemplefood.com/program/course/regular-course/list?page=10",
+        "detailPageStatus": "redirectsToList",
+        "observedSourceFields": [
+          "REGULAR_COURSE_SEQ",
+          "REGULAR_COURSE_SCHEDULE_SEQ"
+        ]
+      }
+    },
+    {
+      "source": "korean-temple-food",
+      "sourceEntityType": "regularCourseRun",
+      "canonicalKey": "korean-temple-food:regular-course-run:267",
+      "regularCourseSeq": "161",
+      "regularCourseScheduleSeq": "267",
+      "officialName": "사찰음식정규강좌 승가9기 초급",
+      "sourceDisplayName": "사찰음식정규강좌 승가9기 초급",
+      "officialUrl": "https://www.koreatemplefood.com/program/course/regular-course/detail/267",
+      "pilotSelection": "archive",
+      "venueRelation": {
+        "status": "matched",
+        "venueOfficialId": "1",
+        "venueOfficialName": "사찰음식교육관 향적세계",
+        "sourceDisplayName": "사찰음식교육관 [향적세계]"
+      },
+      "coursePeriodSource": {
+        "start": "2026년 02월 27일(금) 14:00",
+        "end": "2026년 05월 15일(금) 17:00",
+        "weekCount": 12
+      },
+      "price": {
+        "currency": "KRW",
+        "chargeBasis": "course",
+        "amount": 100000
+      },
+      "applicationPeriodSource": {
+        "start": "2026년 01월 09일(금) 09:00",
+        "end": "2026년 02월 21일(토) 13:00"
+      },
+      "sourceSnapshot": {
+        "checkedAt": "2026-08-21",
+        "applicationStatusText": "모집 마감",
+        "appliedCount": 11,
+        "capacityCount": 24
+      },
+      "checkedAt": "2026-08-21",
+      "lastSeenAt": "2026-08-21",
+      "sourceProvenance": {
+        "listUrl": "https://www.koreatemplefood.com/program/course/regular-course/list?page=10",
+        "detailPageStatus": "redirectsToList",
+        "observedSourceFields": [
+          "REGULAR_COURSE_SEQ",
+          "REGULAR_COURSE_SCHEDULE_SEQ"
+        ]
+      }
+    },
+    {
+      "source": "korean-temple-food",
+      "sourceEntityType": "groupExperience",
+      "canonicalKey": "korean-temple-food:group-experience:12",
+      "groupExperienceSeq": "12",
+      "officialName": "[단체체험] 사찰음식만들기(오후/13:30~15:30)",
+      "sourceDisplayName": "[단체체험] 사찰음식만들기(오후/13:30~15:30)",
+      "officialUrl": "https://www.koreatemplefood.com/program/experience/group-experience/list",
+      "pilotSelection": "currentList",
+      "venueRelation": {
+        "status": "matched",
+        "venueOfficialId": "1",
+        "venueOfficialName": "사찰음식교육관 향적세계",
+        "sourceDisplayName": "사찰음식교육관 [향적세계]"
+      },
+      "timeSource": {
+        "display": "2시간",
+        "startTime": "13:30",
+        "endTime": "15:30"
+      },
+      "minimumParticipants": 10,
+      "price": {
+        "currency": "KRW",
+        "chargeBasis": "person",
+        "amount": 70000
+      },
+      "applicationUrl": "https://www.koreatemplefood.com/program/experience/group-experience/form/12",
+      "checkedAt": "2026-08-21",
+      "lastSeenAt": "2026-08-21",
+      "sourceProvenance": {
+        "listUrl": "https://www.koreatemplefood.com/program/experience/group-experience/list",
+        "detailPageStatus": "notProvided",
+        "observedSourceFields": ["GROUP_EXPERIENCE_SEQ"]
+      }
+    },
+    {
+      "source": "korean-temple-food",
+      "sourceEntityType": "groupExperience",
+      "canonicalKey": "korean-temple-food:group-experience:11",
+      "groupExperienceSeq": "11",
+      "officialName": "[단체체험/최소 10인이상, 최대 24명] 사찰음식만들기(오후/14:00~17:00)",
+      "sourceDisplayName": "[단체체험/최소 10인이상, 최대 24명] 사찰음식만들기(오후/14:00~17:00)",
+      "officialUrl": "https://www.koreatemplefood.com/program/experience/group-experience/list",
+      "pilotSelection": "currentList",
+      "venueRelation": {
+        "status": "matched",
+        "venueOfficialId": "2",
+        "venueOfficialName": "한국사찰음식문화체험관"
+      },
+      "timeSource": {
+        "display": "3시간",
+        "startTime": "14:00",
+        "endTime": "17:00"
+      },
+      "minimumParticipants": 10,
+      "maximumParticipants": 24,
+      "price": {
+        "currency": "KRW",
+        "chargeBasis": "person",
+        "amount": 40000
+      },
+      "applicationUrl": "https://www.koreatemplefood.com/program/experience/group-experience/form/11",
+      "checkedAt": "2026-08-21",
+      "lastSeenAt": "2026-08-21",
+      "sourceProvenance": {
+        "listUrl": "https://www.koreatemplefood.com/program/experience/group-experience/list",
+        "detailPageStatus": "notProvided",
+        "observedSourceFields": ["GROUP_EXPERIENCE_SEQ"]
+      }
+    },
+    {
+      "source": "korean-temple-food",
+      "sourceEntityType": "groupExperience",
+      "canonicalKey": "korean-temple-food:group-experience:9",
+      "groupExperienceSeq": "9",
+      "officialName": "[단체체험/최소 10인이상, 최대 24명]사찰음식만들기(오후/14:00~16:00)",
+      "sourceDisplayName": "[단체체험/최소 10인이상, 최대 24명]사찰음식만들기(오후/14:00~16:00)",
+      "officialUrl": "https://www.koreatemplefood.com/program/experience/group-experience/list",
+      "pilotSelection": "currentList",
+      "venueRelation": {
+        "status": "matched",
+        "venueOfficialId": "2",
+        "venueOfficialName": "한국사찰음식문화체험관"
+      },
+      "timeSource": {
+        "display": "2시간",
+        "startTime": "14:00",
+        "endTime": "16:00"
+      },
+      "minimumParticipants": 10,
+      "maximumParticipants": 24,
+      "price": {
+        "currency": "KRW",
+        "chargeBasis": "person",
+        "amount": 30000
+      },
+      "applicationUrl": "https://www.koreatemplefood.com/program/experience/group-experience/form/9",
+      "checkedAt": "2026-08-21",
+      "lastSeenAt": "2026-08-21",
+      "sourceProvenance": {
+        "listUrl": "https://www.koreatemplefood.com/program/experience/group-experience/list",
+        "detailPageStatus": "notProvided",
+        "observedSourceFields": ["GROUP_EXPERIENCE_SEQ"]
+      }
+    },
+    {
+      "source": "korean-temple-food",
+      "sourceEntityType": "groupExperience",
+      "canonicalKey": "korean-temple-food:group-experience:1",
+      "groupExperienceSeq": "1",
+      "officialName": "[단체체험/최소 10인이상, 최대 24명]사찰음식만들기(오전/10:00~11:30)",
+      "sourceDisplayName": "[단체체험/최소 10인이상, 최대 24명]사찰음식만들기(오전/10:00~11:30)",
+      "officialUrl": "https://www.koreatemplefood.com/program/experience/group-experience/list",
+      "pilotSelection": "currentList",
+      "venueRelation": {
+        "status": "matched",
+        "venueOfficialId": "2",
+        "venueOfficialName": "한국사찰음식문화체험관"
+      },
+      "timeSource": {
+        "display": "1시간",
+        "startTime": "10:00",
+        "endTime": "11:30"
+      },
+      "minimumParticipants": 10,
+      "maximumParticipants": 24,
+      "price": {
+        "currency": "KRW",
+        "chargeBasis": "person",
+        "amount": 20000
+      },
+      "applicationUrl": "https://www.koreatemplefood.com/program/experience/group-experience/form/1",
+      "validationIssues": [
+        {
+          "code": "durationDisplayConflict",
+          "detail": "공식 목록의 체험 시간은 1시간이지만 제목과 설명의 10:00~11:30은 1시간 30분이다. 원문을 보존하고 하나로 교정하지 않았다."
+        }
+      ],
+      "checkedAt": "2026-08-21",
+      "lastSeenAt": "2026-08-21",
+      "sourceProvenance": {
+        "listUrl": "https://www.koreatemplefood.com/program/experience/group-experience/list",
+        "detailPageStatus": "notProvided",
+        "observedSourceFields": ["GROUP_EXPERIENCE_SEQ"]
+      }
+    }
+  ]
+}
