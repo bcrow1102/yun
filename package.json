@@ -10,7 +10,10 @@
     "temples:sources": "node scripts/temple-seed/extract-sources.mjs",
     "temples:seed": "node scripts/temple-seed/generate.mjs",
     "temples:seed:check": "node scripts/temple-seed/generate.mjs --check",
-    "temples:validate": "node scripts/temple-seed/validate.mjs"
+    "temples:validate": "node scripts/temple-seed/validate.mjs",
+    "templestay:programs:build": "node scripts/build-official-templestay-programs.mjs",
+    "templestay:programs:check": "node scripts/build-official-templestay-programs.mjs --check",
+    "test:search-contract": "node --test tests/search-temple-stay-contract.test.cjs"
   },
   "dependencies": {
     "next": "16.2.12",

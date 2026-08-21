@@ -81,7 +81,8 @@ export default async function SearchPage({
                                             {groupedResults[category].map((item) => {
                                                 const content = <><span className="min-w-0"><strong className="block text-[15px] font-medium">{item.title}</strong><span className="mt-1 block text-sm leading-6 text-[#667085]">{item.description}</span></span><span className="ml-4 shrink-0 text-[#B0B8C1]">{item.external ? "↗" : "→"}</span></>;
                                                 const className = "flex items-center justify-between border-b border-[#EEF0F2] px-5 py-4 last:border-b-0 hover:bg-[#FFFFF0]";
-                                                return item.external ? <a key={item.title} href={item.href} target="_blank" rel="noreferrer" className={className}>{content}</a> : <Link key={item.title} href={item.href} className={className}>{content}</Link>;
+                                                const resultKey = `${item.category}:${item.href}`;
+                                                return item.external ? <a key={resultKey} href={item.href} target="_blank" rel="noreferrer" className={className}>{content}</a> : <Link key={resultKey} href={item.href} className={className}>{content}</Link>;
                                             })}
                                         </div>
                                     </section>

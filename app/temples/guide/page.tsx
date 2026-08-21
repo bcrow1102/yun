@@ -15,11 +15,12 @@ import {
     temples,
     type Temple,
 } from "./temples";
-import { getTempleStaysByTempleSlug } from "../stay/data";
+import { getTempleStayOperatorsByTempleSlug } from "../stay/operators";
 import { getTempleFoodsByTempleSlug } from "../food/data";
 import { getEventsByTempleSlug } from "../../events/data";
 
 const FEATURED_TEMPLE_COUNT = 6;
+const MOBILE_FEATURED_TEMPLE_COUNT = 3;
 const TEXT_LIST_BATCH_SIZE = 12;
 
 const TEMPLE_TRAIT_PRIORITY = [
@@ -146,15 +147,16 @@ function selectVisibleTempleTraits(
 }
 
 function getTempleConnections(temple: Temple): TempleConnection[] {
-    const templeStay = getTempleStaysByTempleSlug(temple.slug)[0];
+    const templeStayOperator =
+        getTempleStayOperatorsByTempleSlug(temple.slug)[0];
     const templeFood = getTempleFoodsByTempleSlug(temple.slug)[0];
     const event = getEventsByTempleSlug(temple.slug)[0];
     const connections: TempleConnection[] = [];
 
-    if (templeStay) {
+    if (templeStayOperator) {
         connections.push({
             label: "템플스테이",
-            href: `/temples/stay/${templeStay.id}`,
+            href: templeStayOperator.officialUrl,
         });
     }
 
@@ -308,7 +310,7 @@ function TempleCategoryNav() {
 
     return (
         <nav
-            className="sticky top-16 z-20 border-b border-[#E7E9EC] bg-white/95 backdrop-blur md:hidden"
+            className="temple-category-nav sticky top-14 z-20 border-b border-[#E7E9EC] bg-white/95 backdrop-blur md:hidden"
             aria-label="사찰 서비스"
         >
             <div className="mx-auto grid max-w-6xl grid-cols-3 gap-1 px-4 py-2.5 md:px-8">
@@ -663,7 +665,7 @@ export default function TempleGuidePage() {
                     {filteredTemples.length > 0 ? (
                         <>
                             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                                {featuredTemples.map((temple) => {
+                                {featuredTemples.map((temple, index) => {
                                     const visibleTraits =
                                         selectVisibleTempleTraits(
                                             temple.tags,
@@ -671,24 +673,28 @@ export default function TempleGuidePage() {
                                         );
                                     const connections =
                                         getTempleConnections(temple);
+                                    const representativeImage =
+                                        temple.representativeImage;
 
                                     return (
                                         <article
                                             key={temple.slug}
-                                            className="group flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#E3E8EF] bg-white text-left transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(25,31,40,0.08)]"
+                                            className={`group min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#E3E8EF] bg-white text-left transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(25,31,40,0.08)] ${
+                                                index <
+                                                MOBILE_FEATURED_TEMPLE_COUNT
+                                                    ? "flex"
+                                                    : "hidden md:flex"
+                                            }`}
                                         >
                                             <Link
                                                 href={`/temples/guide/${temple.slug}`}
                                                 className="flex min-w-0 flex-1 flex-col"
                                             >
                                                 <span className="flex h-40 items-center justify-center bg-[#F3F7F1]">
-                                                    {temple.image ? (
+                                                    {representativeImage ? (
                                                         <img
-                                                            src={temple.image}
-                                                            alt={
-                                                                temple.imageAlt ??
-                                                                `${temple.name} 전경`
-                                                            }
+                                                            src={representativeImage.src}
+                                                            alt={representativeImage.alt}
                                                             className="h-full w-full object-cover"
                                                         />
                                                     ) : (

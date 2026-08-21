@@ -13,10 +13,15 @@ import {
     templeFoodPrograms,
 } from "../temples/food/data";
 import {
-    getTempleStayDisplayInfo,
-    getTempleStaysByTempleSlug,
-    templeStayPrograms,
-} from "../temples/stay/data";
+    getTempleForOperator,
+    getTempleStayOperatorByOfficialId,
+    getTempleStayOperatorSearchValues,
+    templeStayOperators,
+} from "../temples/stay/operators";
+import {
+    getListedTempleStayPrograms,
+    type TempleStayProgramType,
+} from "../temples/stay/programs";
 
 export type SearchItem = {
     category: string;
@@ -39,6 +44,22 @@ type SearchEntityType =
 type SearchCandidate = SearchItem & {
     entityType: SearchEntityType;
     searchText: string;
+    templeStaySubtype?: "operator" | "program";
+    programType?: TempleStayProgramType;
+    programNameSearchText?: string;
+    contextSearchText?: string;
+};
+
+const programTypeAliases: Record<string, TempleStayProgramType> = {
+    당일형: "day",
+    체험형: "experience",
+    휴식형: "rest",
+};
+
+const programTypeLabels: Record<TempleStayProgramType, string> = {
+    day: "당일형",
+    experience: "체험형",
+    rest: "휴식형",
 };
 
 const entityTypeAliases: Record<string, SearchEntityType> = {
@@ -197,17 +218,12 @@ function createCandidate(
 }
 
 function getRelatedTempleMaps() {
-    const stayTemples = new Map<number, Temple>();
     const eventTemples = new Map<EventData, Temple[]>();
     const foodTemples = new Map<number, Temple>();
 
     for (const temple of temples) {
         if (!temple.published) {
             continue;
-        }
-
-        for (const stay of getTempleStaysByTempleSlug(temple.slug)) {
-            stayTemples.set(stay.id, temple);
         }
 
         for (const event of getEventsByTempleSlug(temple.slug)) {
@@ -221,7 +237,7 @@ function getRelatedTempleMaps() {
         }
     }
 
-    return { stayTemples, eventTemples, foodTemples };
+    return { eventTemples, foodTemples };
 }
 
 function getEventSearchValues(event: EventData) {
@@ -256,8 +272,7 @@ function getEventSearchValues(event: EventData) {
 
 function buildSearchCandidates() {
     const publishedTemples = temples.filter((temple) => temple.published);
-    const { stayTemples, eventTemples, foodTemples } =
-        getRelatedTempleMaps();
+    const { eventTemples, foodTemples } = getRelatedTempleMaps();
 
     const legacyCandidates = legacySearchItems.map(
         ({ entityType, ...item }) =>
@@ -278,26 +293,22 @@ function buildSearchCandidates() {
         ),
     );
 
-    const stayCandidates = templeStayPrograms.map((stay) => {
-        const { templeName, location } =
-            getTempleStayDisplayInfo(stay);
-        const relatedTemple = stayTemples.get(stay.id);
+    const operatorCandidates = templeStayOperators.map((operator) => {
+        const relatedTemple = getTempleForOperator(operator);
+        const shortSigungu = stripAdministrativeSuffix(
+            operator.sigungu,
+        );
 
-        return createCandidate(
+        return {
+            ...createCandidate(
             {
                 category: "템플스테이",
-                title: stay.name,
-                description: `${templeName} · ${location} · ${stay.duration} ${stay.type}`,
-                href: `/temples/stay/${stay.id}`,
-                keywords: [
-                    stay.name,
-                    stay.temple,
-                    stay.location,
-                    stay.type,
-                    stay.duration,
-                    stay.price,
-                    stay.description,
-                ].join(" "),
+                title: operator.officialName,
+                description: `${operator.sido} ${shortSigungu} · 템플스테이 운영처`,
+                href: operator.officialUrl,
+                keywords:
+                    getTempleStayOperatorSearchValues(operator).join(" "),
+                external: true,
             },
             "templeStay",
             relatedTemple
@@ -306,8 +317,68 @@ function buildSearchCandidates() {
                     ...getLocationSearchValues(relatedTemple),
                 ]
                 : [],
-        );
+            ),
+            templeStaySubtype: "operator" as const,
+        };
     });
+
+    const programCandidates = getListedTempleStayPrograms()
+        .filter((program) => program.detailStatus === "available")
+        .map((program) => {
+            const operator = getTempleStayOperatorByOfficialId(
+                program.operatorOfficialId,
+            );
+
+            if (!operator) {
+                throw new Error(
+                    `템플스테이 Program Operator relation을 찾을 수 없습니다: ${program.officialProgramId}`,
+                );
+            }
+
+            const relatedTemple = getTempleForOperator(operator);
+            const shortSigungu = stripAdministrativeSuffix(operator.sigungu);
+            const contextValues = [
+                operator.officialName,
+                operator.sido,
+                operator.sigungu,
+                shortSigungu,
+                operator.address,
+                relatedTemple?.name,
+                ...(relatedTemple?.aliases ?? []),
+                relatedTemple?.location.sido,
+                relatedTemple?.location.sigungu,
+                relatedTemple
+                    ? stripAdministrativeSuffix(relatedTemple.location.sigungu)
+                    : undefined,
+                relatedTemple?.location.address,
+            ].filter((value): value is string => Boolean(value));
+            const programNameSearchText = normalizeSearchValue(
+                program.programName,
+            );
+            const contextSearchText = contextValues
+                .map(normalizeSearchValue)
+                .join(" ");
+            const programTypeLabel = program.programType
+                ? programTypeLabels[program.programType]
+                : "유형 미확인";
+
+            return {
+                category: "템플스테이",
+                title: program.programName,
+                description: `${operator.officialName} · ${operator.sido} ${shortSigungu} · ${programTypeLabel}`,
+                href: program.officialUrl,
+                keywords: [program.programName, ...contextValues].join(" "),
+                external: true,
+                entityType: "templeStay" as const,
+                templeStaySubtype: "program" as const,
+                programType: program.programType,
+                programNameSearchText,
+                contextSearchText,
+                // Type aliases are intentionally absent. They are consumed as
+                // structured filters in searchYeon(), not matched as text.
+                searchText: `${programNameSearchText} ${contextSearchText}`,
+            };
+        });
 
     const eventCandidates = events.map((event) => {
         const relatedTemples = eventTemples.get(event) ?? [];
@@ -364,7 +435,8 @@ function buildSearchCandidates() {
             (candidate) => candidate.entityType === "job",
         ),
         ...templeCandidates,
-        ...stayCandidates,
+        ...operatorCandidates,
+        ...programCandidates,
         ...foodCandidates,
         ...eventCandidates,
         ...legacyCandidates.filter(
@@ -418,15 +490,60 @@ export function searchYeon(query: string): SearchItem[] {
                 Boolean(entityType),
             ),
     );
-    const searchTokens = tokens.filter(
-        (token) => !entityTypeAliases[token],
+    const requestedProgramTypes = new Set(
+        tokens
+            .map((token) => programTypeAliases[token])
+            .filter((programType): programType is TempleStayProgramType =>
+                Boolean(programType),
+            ),
     );
+    const searchTokens = tokens.filter(
+        (token) =>
+            !entityTypeAliases[token] && !programTypeAliases[token],
+    );
+    const hasProgramNameSignal = searchCandidates.some(
+        (candidate) =>
+            candidate.templeStaySubtype === "program" &&
+            searchTokens.every((token) =>
+                candidate.searchText.includes(token),
+            ) &&
+            searchTokens.some(
+                (token) =>
+                    candidate.programNameSearchText?.includes(token) &&
+                    !candidate.contextSearchText?.includes(token),
+            ),
+    );
+    const programMode =
+        requestedProgramTypes.size > 0 || hasProgramNameSignal;
 
     return searchCandidates
         .filter((candidate) => {
             if (
+                programMode &&
+                candidate.templeStaySubtype !== "program"
+            ) {
+                return false;
+            }
+
+            if (
+                !programMode &&
+                candidate.templeStaySubtype === "program"
+            ) {
+                return false;
+            }
+
+            if (
                 requestedEntityTypes.size > 0 &&
                 !requestedEntityTypes.has(candidate.entityType)
+            ) {
+                return false;
+            }
+
+            if (
+                candidate.templeStaySubtype === "program" &&
+                requestedProgramTypes.size > 0 &&
+                (!candidate.programType ||
+                    !requestedProgramTypes.has(candidate.programType))
             ) {
                 return false;
             }

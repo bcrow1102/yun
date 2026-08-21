@@ -149,7 +149,7 @@ check(
 
 const relationFiles = await Promise.all(
     [
-        "app/temples/stay/data.ts",
+        "app/temples/stay/operators.ts",
         "app/events/data.ts",
         "app/temples/food/data.ts",
     ].map((file) => readFile(path.join(root, file), "utf8")),

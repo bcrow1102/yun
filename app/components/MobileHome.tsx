@@ -84,21 +84,6 @@ const jobs = [
     },
 ];
 
-const templeStays = [
-    {
-        id: 1,
-        name: "월정사 숲속 힐링",
-        location: "강원 평창",
-        duration: "1박 2일",
-    },
-    {
-        id: 2,
-        name: "해인사 명상 수련",
-        location: "경남 합천",
-        duration: "2박 3일",
-    },
-];
-
 function LotusIcon() {
     return (
         <svg viewBox="0 0 32 32" fill="none" className="h-6 w-6">
@@ -971,17 +956,6 @@ export default function MobileHome() {
                                 </span>
                             </Link>
                         ))}
-                        {templeStays.map((stay) => (
-                            <Link key={stay.name} href={`/temples/stay/${stay.id}`} className="flex min-h-16 items-center justify-between gap-4 py-2.5 text-left">
-                                <span className="min-w-0 flex-1">
-                                    <span className="block truncate text-xs font-normal text-[#8B95A1]">템플스테이 · {stay.location}</span>
-                                    <span className="mt-1 block truncate text-[15px] font-medium text-[#252A31]">{stay.name}</span>
-                                </span>
-                                <span className="shrink-0 text-[#A1A99B]">
-                                    <ChevronIcon />
-                                </span>
-                            </Link>
-                        ))}
                     </div>
                 </section>
 
@@ -1192,7 +1166,7 @@ export default function MobileHome() {
                 <section className="hidden">
                     <div className="mb-3 flex items-center justify-between px-1">
                         <h2 className="text-xl font-bold tracking-[-0.035em]">
-                            추천 템플스테이
+                            템플스테이 운영처
                         </h2>
 
                         <Link
@@ -1203,35 +1177,12 @@ export default function MobileHome() {
                         </Link>
                     </div>
 
-                    <div className="space-y-3">
-                        {templeStays.map((stay) => (
-                            <Link
-                                key={stay.name}
-                                href={`/temples/stay/${stay.id}`}
-                                className="flex w-full overflow-hidden rounded-[22px] border border-[#E7E9EC] bg-white text-left"
-                            >
-                                <span className="h-[104px] w-[112px] shrink-0">
-                                    <TempleImage />
-                                </span>
-
-                                <span className="flex min-w-0 flex-1 items-center justify-between px-4">
-                                    <span className="min-w-0">
-                                        <strong className="block truncate text-[15px] font-semibold text-[#252A31]">
-                                            {stay.name}
-                                        </strong>
-
-                                        <span className="mt-1.5 block text-xs text-[#667085]">
-                                            {stay.location} · {stay.duration}
-                                        </span>
-                                    </span>
-
-                                    <span className="ml-2 text-[#B0B8C1]">
-                                        <ChevronIcon />
-                                    </span>
-                                </span>
-                            </Link>
-                        ))}
-                    </div>
+                    <Link
+                        href="/temples/stay"
+                        className="block rounded-[20px] border border-[#E7E9EC] bg-white p-4 text-sm text-[#667085]"
+                    >
+                        전국 템플스테이 운영처 찾기 →
+                    </Link>
                 </section>
 
                 <section className="hidden">

@@ -418,7 +418,7 @@ export default function NewTempleStayPage() {
                                     required
                                     value={formData.programName}
                                     onChange={handleTextChange("programName")}
-                                    placeholder="예: 월정사 숲속 힐링 템플스테이"
+                                    placeholder="프로그램명을 입력해 주세요"
                                     className={inputClassName}
                                 />
                             </label>

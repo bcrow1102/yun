@@ -202,7 +202,7 @@ export default function DownloadsPage() {
         <div className="mx-auto max-w-6xl px-5 py-11 md:px-8 md:py-16">
           <Link
             href="/"
-            className="mb-7 inline-flex items-center gap-2 text-sm font-medium text-[#667085] transition-colors hover:text-[#252A31] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B9BA28] focus-visible:ring-offset-2"
+            className="mb-7 inline-flex items-center gap-2 text-sm font-medium text-[#667085] transition-colors hover:text-[#252A31] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B9BA28] focus-visible:ring-offset-2 md:hidden"
             aria-label="홈으로 돌아가기"
           >
             <svg

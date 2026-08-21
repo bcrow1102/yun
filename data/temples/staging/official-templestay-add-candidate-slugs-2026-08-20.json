@@ -1,0 +1,395 @@
+{
+  "schemaVersion": 1,
+  "purpose": "공식 템플스테이 ADD_CANDIDATE 34개의 production 반영 전 canonical slug 명시적 확정",
+  "sourceDataset": "data/temples/staging/official-templestay-unmatched-investigation-2026-08-20.json",
+  "checkedAt": "2026-08-20",
+  "records": [
+    {
+      "officialName": "관문사",
+      "sido": "서울",
+      "sigungu": "서초구",
+      "proposedSlug": "gwanmunsa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 간결한 사찰명 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Gwanmunsa"
+    },
+    {
+      "officialName": "광제사",
+      "sido": "세종",
+      "sigungu": "세종시",
+      "proposedSlug": "gwangjesa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 간결한 사찰명 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "gwangjesa"
+    },
+    {
+      "officialName": "국제선센터",
+      "sido": "서울",
+      "sigungu": "양천구",
+      "proposedSlug": "gukje-seon-center",
+      "reason": "고유한 시설 명칭을 유지하되 긴 합성어의 가독성을 위해 단어 경계에 하이픈을 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "InternationalSeonCenter",
+      "romanizationNote": "officialId를 복사하지 않고 한국어 명칭 국제선센터를 기준으로 표기"
+    },
+    {
+      "officialName": "금강정사",
+      "sido": "경기",
+      "sigungu": "광명시",
+      "proposedSlug": "geumgangjeongsa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 간결한 사찰명 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Kumkangjeongsa",
+      "romanizationNote": "officialId의 구표기보다 현재 서비스에서 읽기 쉬운 geumgang 표기를 사용"
+    },
+    {
+      "officialName": "금룡사",
+      "sido": "제주",
+      "sigungu": "제주시",
+      "proposedSlug": "geumnyongsa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 간결한 사찰명 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Kumyongsa",
+      "romanizationNote": "officialId의 Kumyong 표기를 그대로 쓰지 않고 한국어 명칭의 현대 로마자 표기를 사용"
+    },
+    {
+      "officialName": "금수암",
+      "sido": "경남",
+      "sigungu": "산청군",
+      "proposedSlug": "geumsuam",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 간결한 사찰명 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "geumsuam"
+    },
+    {
+      "officialName": "길상사",
+      "sido": "서울",
+      "sigungu": "성북구",
+      "proposedSlug": "gilsangsa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 간결한 사찰명 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Kilsangsa",
+      "romanizationNote": "officialId의 Kilsangsa보다 한국어 명칭과 일관된 gilsangsa를 사용"
+    },
+    {
+      "officialName": "대광사(성남)",
+      "sido": "경기",
+      "sigungu": "성남시",
+      "proposedSlug": "daegwangsa-seongnam",
+      "reason": "신규 후보 안에 동명 대광사가 두 곳 있어 성남 지역 식별자를 추가",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Daegwangsa_sn"
+    },
+    {
+      "officialName": "대광사(창원)",
+      "sido": "경남",
+      "sigungu": "창원시",
+      "proposedSlug": "daegwangsa-changwon",
+      "reason": "신규 후보 안에 동명 대광사가 두 곳 있어 창원 지역 식별자를 추가",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Daegwangsa_cw"
+    },
+    {
+      "officialName": "도림사(대구)",
+      "sido": "대구",
+      "sigungu": "동구",
+      "proposedSlug": "dorimsa-daegu",
+      "reason": "전남 곡성의 기존 도림사와 구분하기 위해 널리 이해되는 광역 지역명 대구를 추가",
+      "existingSameNameTempleSlugs": ["traditional-temple-0607"],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "dorimsa_dg"
+    },
+    {
+      "officialName": "망경산사",
+      "sido": "강원",
+      "sigungu": "영월군",
+      "proposedSlug": "manggyeongsansa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 간결한 사찰명 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Manggyeongsansa"
+    },
+    {
+      "officialName": "명주사",
+      "sido": "강원",
+      "sigungu": "원주시",
+      "proposedSlug": "myeongjusa-wonju",
+      "reason": "강원 양양의 기존 명주사와 구분하기 위해 시 지역명 원주를 추가",
+      "existingSameNameTempleSlugs": ["traditional-temple-0289"],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Myeongjoosa",
+      "romanizationNote": "officialId의 joosa 대신 기존 Yeon slug 형태와 가까운 jusa 표기를 사용"
+    },
+    {
+      "officialName": "무각사",
+      "sido": "광주",
+      "sigungu": "서구",
+      "proposedSlug": "mugaksa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 간결한 사찰명 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Mugaksa"
+    },
+    {
+      "officialName": "문수암",
+      "sido": "경남",
+      "sigungu": "산청군",
+      "proposedSlug": "munsuam-sancheong",
+      "reason": "옥천·진천·고성의 기존 문수암들과 구분하기 위해 군 지역명 산청을 추가",
+      "existingSameNameTempleSlugs": [
+        "traditional-temple-0367",
+        "traditional-temple-0382",
+        "traditional-temple-0884"
+      ],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Munsuam"
+    },
+    {
+      "officialName": "백련사(가평)",
+      "sido": "경기",
+      "sigungu": "가평군",
+      "proposedSlug": "baengnyeonsa-gapyeong",
+      "reason": "기존 7개 백련사와 구분하기 위해 군 지역명 가평을 추가",
+      "existingSameNameTempleSlugs": [
+        "traditional-temple-0125",
+        "traditional-temple-0231",
+        "traditional-temple-0343",
+        "traditional-temple-0517",
+        "traditional-temple-0520",
+        "traditional-temple-0598",
+        "traditional-temple-0691"
+      ],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Baekryunsa_ga",
+      "romanizationNote": "백련의 표기는 발음과 읽기 쉬움을 반영한 baengnyeon을 사용"
+    },
+    {
+      "officialName": "백제사",
+      "sido": "제주",
+      "sigungu": "제주시",
+      "proposedSlug": "baekjesa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 간결한 사찰명 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Baekjesa"
+    },
+    {
+      "officialName": "보덕관음사",
+      "sido": "경기",
+      "sigungu": "용인시",
+      "proposedSlug": "bodeokgwaneumsa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 전체 사찰명의 간결한 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "bdg1133"
+    },
+    {
+      "officialName": "봉인사",
+      "sido": "경기",
+      "sigungu": "남양주시",
+      "proposedSlug": "bonginsa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 간결한 사찰명 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Bonginsa"
+    },
+    {
+      "officialName": "붓다선원",
+      "sido": "경남",
+      "sigungu": "거창군",
+      "proposedSlug": "buddaseonwon",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 전체 명칭의 간결한 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "budda"
+    },
+    {
+      "officialName": "삼운사",
+      "sido": "강원",
+      "sigungu": "춘천시",
+      "proposedSlug": "samunsa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 간결한 사찰명 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Samwoonsa",
+      "romanizationNote": "officialId의 woonsa보다 짧고 일관된 unsa 표기를 사용"
+    },
+    {
+      "officialName": "석불사",
+      "sido": "서울",
+      "sigungu": "마포구",
+      "proposedSlug": "seokbulsa-mapo",
+      "reason": "익산·창녕의 기존 석불사들과 구분하기 위해 구 지역명 마포를 추가",
+      "existingSameNameTempleSlugs": [
+        "traditional-temple-0548",
+        "traditional-temple-0951"
+      ],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Seokbulsa"
+    },
+    {
+      "officialName": "수진사",
+      "sido": "경기",
+      "sigungu": "남양주시",
+      "proposedSlug": "sujinsa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 간결한 사찰명 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Sujinsa"
+    },
+    {
+      "officialName": "연등국제선원",
+      "sido": "인천",
+      "sigungu": "강화군",
+      "proposedSlug": "yeondeung-gukje-seonwon",
+      "reason": "고유한 전체 명칭을 보존하되 긴 합성어의 가독성을 위해 의미 단위에 하이픈을 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "LotusLanternInternationalMeditationCenter",
+      "romanizationNote": "긴 공식 영문명이나 officialId 대신 한국어 canonical 명칭을 직접 로마자화"
+    },
+    {
+      "officialName": "연운사",
+      "sido": "경기",
+      "sigungu": "김포시",
+      "proposedSlug": "yeonunsa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 간결한 사찰명 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Yeonunsa"
+    },
+    {
+      "officialName": "육지장사",
+      "sido": "경기",
+      "sigungu": "양주시",
+      "proposedSlug": "yukjijangsa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 간결한 사찰명 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Yukjijangsa"
+    },
+    {
+      "officialName": "이제사",
+      "sido": "충남",
+      "sigungu": "공주시",
+      "proposedSlug": "ijesa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 간결한 사찰명 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "ijesa"
+    },
+    {
+      "officialName": "자비선사",
+      "sido": "경북",
+      "sigungu": "성주군",
+      "proposedSlug": "jabiseonsa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 전체 명칭의 간결한 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Jabisunsa",
+      "romanizationNote": "officialId의 sunsa보다 한국어 명칭 선사의 표기에 가까운 seonsa를 사용"
+    },
+    {
+      "officialName": "정토사",
+      "sido": "경기",
+      "sigungu": "성남시",
+      "proposedSlug": "jeongtosa-seongnam",
+      "reason": "전북 정읍의 기존 정토사와 구분하기 위해 시 지역명 성남을 추가",
+      "existingSameNameTempleSlugs": ["traditional-temple-0583"],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Jungtosa",
+      "romanizationNote": "officialId의 Jungto보다 한국어 명칭과 일관된 jeongto 표기를 사용"
+    },
+    {
+      "officialName": "지장정사",
+      "sido": "충남",
+      "sigungu": "논산시",
+      "proposedSlug": "jijangjeongsa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 전체 사찰명의 간결한 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Jijangjeongsa"
+    },
+    {
+      "officialName": "청계사",
+      "sido": "경남",
+      "sigungu": "하동군",
+      "proposedSlug": "cheonggyesa-hadong",
+      "reason": "경기 의왕·경북 상주의 기존 청계사들과 구분하기 위해 군 지역명 하동을 추가",
+      "existingSameNameTempleSlugs": [
+        "traditional-temple-0235",
+        "traditional-temple-0772"
+      ],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "chunggyesa",
+      "romanizationNote": "officialId의 chunggye보다 한국어 명칭과 일관된 cheonggye 표기를 사용"
+    },
+    {
+      "officialName": "학림사",
+      "sido": "충남",
+      "sigungu": "공주시",
+      "proposedSlug": "hakrimsa-gongju",
+      "reason": "서울 노원·세종·전북 완주의 기존 학림사들과 구분하기 위해 시 지역명 공주를 추가",
+      "existingSameNameTempleSlugs": [
+        "traditional-temple-0019",
+        "traditional-temple-0160",
+        "traditional-temple-0538"
+      ],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Hakrimsa",
+      "romanizationNote": "엄격한 발음 표기보다 사찰이 사용하는 Hakrimsa 표기를 유지"
+    },
+    {
+      "officialName": "현덕사",
+      "sido": "강원",
+      "sigungu": "강릉시",
+      "proposedSlug": "hyeondeoksa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 간결한 사찰명 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Hyundeoksa",
+      "romanizationNote": "officialId의 Hyun보다 한국어 현과 일관된 hyeon 표기를 사용"
+    },
+    {
+      "officialName": "홍법사",
+      "sido": "부산",
+      "sigungu": "금정구",
+      "proposedSlug": "hongbeopsa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 간결한 사찰명 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Hongbeopsa"
+    },
+    {
+      "officialName": "화운사",
+      "sido": "경기",
+      "sigungu": "용인시",
+      "proposedSlug": "hwaunsa",
+      "reason": "기존 canonical에 동명 사찰과 동일 slug가 없어 간결한 사찰명 로마자를 사용",
+      "existingSameNameTempleSlugs": [],
+      "collisionStatus": "CLEAR",
+      "sourceOfficialId": "Hwaunsa"
+    }
+  ],
+  "report": {
+    "targetCount": 34,
+    "recordCount": 34,
+    "simpleNameSlugCount": 24,
+    "regionQualifiedSlugCount": 10,
+    "existingSlugCollisionCount": 0,
+    "candidateSlugCollisionCount": 0,
+    "normalizedCollisionCount": 0,
+    "traditionalTempleNamespaceCount": 0,
+    "duplicateRecordCount": 0,
+    "missingProposedSlugCount": 0
+  }
+}

@@ -31,6 +31,39 @@ export type LocalDataTempleSource = {
         | "manual-unmatched";
 };
 
+export type TempleStayOfficialSource = {
+    officialId: string;
+    officialUrl: string;
+    checkedAt: string;
+    officialName?: string;
+};
+
+type TempleExternalSourceMetadata = {
+    localData?: LocalDataTempleSource;
+};
+
+export type TempleExternalSources = TempleExternalSourceMetadata & (
+    | {
+        mcstTraditionalTemple: McstTempleSource;
+        templeStayOfficial?: TempleStayOfficialSource;
+    }
+    | {
+        mcstTraditionalTemple?: McstTempleSource;
+        templeStayOfficial: TempleStayOfficialSource;
+    }
+);
+
+export function assertTempleExternalSources(
+    sources: TempleExternalSources | undefined,
+    templeLabel: string,
+): asserts sources is TempleExternalSources {
+    if (!sources?.mcstTraditionalTemple && !sources?.templeStayOfficial) {
+        throw new Error(
+            `Temple ${templeLabel} must have at least one canonical provenance source.`,
+        );
+    }
+}
+
 export type TempleNationwideSeed = {
     slug: string;
     existingSlug?: string;

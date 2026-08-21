@@ -6,7 +6,7 @@ import {
     temples,
     type TemplePublicTransitV1,
 } from "../temples";
-import { getTempleStaysByTempleSlug } from "../../stay/data";
+import { getTempleStayOperatorsByTempleSlug } from "../../stay/operators";
 import { getEventsByTempleSlug } from "../../../events/data";
 import { getTempleFoodsByTempleSlug } from "../../food/data";
 
@@ -305,9 +305,11 @@ export default async function TempleDetailPage({
         notFound();
     }
 
-    const templeStays = getTempleStaysByTempleSlug(temple.slug);
+    const templeStayOperators =
+        getTempleStayOperatorsByTempleSlug(temple.slug);
     const relatedEvents = getEventsByTempleSlug(temple.slug);
     const templeFoods = getTempleFoodsByTempleSlug(temple.slug);
+    const representativeImage = temple.representativeImage;
 
     const hasTransportInformation =
         temple.publicTransit?.accessPoint ||
@@ -391,13 +393,10 @@ export default async function TempleDetailPage({
 
                         <div className="overflow-hidden rounded-[26px] border border-[#DDE7D9] bg-white">
                             <div className="flex h-60 items-center justify-center bg-[#EAF2E7]">
-                                {temple.image ? (
+                                {representativeImage ? (
                                     <img
-                                        src={temple.image}
-                                        alt={
-                                            temple.imageAlt ??
-                                            `${temple.name} 전경`
-                                        }
+                                        src={representativeImage.src}
+                                        alt={representativeImage.alt}
                                         className="h-full w-full object-cover"
                                     />
                                 ) : (
@@ -405,9 +404,31 @@ export default async function TempleDetailPage({
                                 )}
                             </div>
 
-                            {temple.imageSource && (
+                            {representativeImage && (
                                 <p className="px-4 py-3 text-xs text-[#8B95A1]">
-                                    이미지 출처: {temple.imageSource}
+                                    사진:{" "}
+                                    <a
+                                        href={representativeImage.sourceUrl}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="hover:underline"
+                                    >
+                                        {representativeImage.source}
+                                    </a>{" "}
+                                    ·{" "}
+                                    <a
+                                        href={representativeImage.licenseUrl}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="hover:underline"
+                                    >
+                                        {representativeImage.license}
+                                    </a>
+                                    {representativeImage.changes && (
+                                        <>
+                                            {" "}· {representativeImage.changes}
+                                        </>
+                                    )}
                                 </p>
                             )}
                         </div>
@@ -433,34 +454,39 @@ export default async function TempleDetailPage({
                                     </p>
                                 )}
 
-                                {templeStays.length > 0 && (
+                                {templeStayOperators.length > 0 && (
                                     <div className="mt-7 border-t border-[#EEF0F2] pt-6">
                                         <p className="text-sm font-medium text-[#7A8B74]">
                                             이 사찰의 템플스테이
                                         </p>
 
                                         <div className="mt-3 divide-y divide-[#EEF0F2]">
-                                            {templeStays.map((program) => (
-                                                <Link
-                                                    key={program.id}
-                                                    href={`/temples/stay/${program.id}`}
-                                                    className="group block min-h-11 py-2 first:pt-0 last:pb-0"
-                                                >
-                                                    <span className="inline-flex items-center gap-1 text-[15px] font-medium text-[#252A31] transition-colors group-hover:text-[#61705B]">
-                                                        {program.name}
-                                                        <span
-                                                            aria-hidden="true"
-                                                            className="transition-transform group-hover:translate-x-0.5"
-                                                        >
-                                                            →
+                                            {templeStayOperators.map(
+                                                (operator) => (
+                                                    <a
+                                                        key={operator.officialId}
+                                                        href={operator.officialUrl}
+                                                        target="_blank"
+                                                        rel="noreferrer"
+                                                        className="group block min-h-11 py-2 first:pt-0 last:pb-0"
+                                                    >
+                                                        <span className="inline-flex items-center gap-1 text-[15px] font-medium text-[#252A31] transition-colors group-hover:text-[#61705B]">
+                                                            {operator.officialName} 템플스테이 안내
+                                                            <span
+                                                                aria-hidden="true"
+                                                                className="transition-transform group-hover:translate-x-0.5"
+                                                            >
+                                                                ↗
+                                                            </span>
                                                         </span>
-                                                    </span>
 
-                                                    <span className="mt-1 block text-sm text-[#8B95A1]">
-                                                        {program.type} · {program.duration}
-                                                    </span>
-                                                </Link>
-                                            ))}
+                                                        <span className="mt-1 block text-sm text-[#8B95A1]">
+                                                            공식 템플스테이 운영처
+                                                        </span>
+                                                    </a>
+                                                ),
+                                            )}
+
                                         </div>
                                     </div>
                                 )}

@@ -1,0 +1,2065 @@
+{
+  "schemaVersion": 1,
+  "purpose": "공식 템플스테이 UNMATCHED 34개 운영사찰의 Temple canonical 보완 적합성 조사",
+  "sourceDataset": "data/temples/staging/official-templestay-operators-2026-08-20.json",
+  "checkedAt": "2026-08-20",
+  "report": {
+    "targetCount": 34,
+    "recordCount": 34,
+    "counts": {
+      "ADD_CANDIDATE": 34,
+      "EXISTING_CANONICAL": 0,
+      "NEEDS_REVIEW": 0,
+      "NOT_TEMPLE": 0
+    },
+    "statusTotal": 34,
+    "duplicateOfficialIdCount": 0,
+    "officialDetailHttp200Count": 34,
+    "canonicalTempleCount": 991,
+    "mcstTraditionalTempleCount": 991,
+    "localDataRecordCount": 1907
+  },
+  "records": [
+    {
+      "officialName": "관문사",
+      "address": "서울특별시 서초구 바우뫼로7길 111",
+      "officialId": "Gwanmunsa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Gwanmunsa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "관문사",
+      "aliases": [],
+      "verifiedAddress": "서울특별시 서초구 바우뫼로7길 111",
+      "sido": "서울",
+      "sigungu": "서초구",
+      "latitude": 37.473712,
+      "longitude": 127.02227,
+      "order": "대한불교천태종",
+      "website": null,
+      "phone": "02-3460-5319",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Gwanmunsa",
+          "externalSourceId": "Gwanmunsa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        },
+        {
+          "source": "서울특별시 서초구 소식",
+          "sourceUrl": "https://seocho.newstool.co.kr/pdf/seocho_202303.pdf",
+          "supports": "대한불교천태종 관문사 명칭과 서초구 소재"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "광제사",
+      "address": "세종특별자치시 모롱지로 94",
+      "officialId": "gwangjesa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=gwangjesa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "광제사",
+      "aliases": [],
+      "verifiedAddress": "세종특별자치시 모롱지로 94",
+      "sido": "세종",
+      "sigungu": "세종시",
+      "latitude": 36.4678,
+      "longitude": 127.2144,
+      "order": "대한불교조계종",
+      "website": null,
+      "phone": "010-8540-3190",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=gwangjesa",
+          "externalSourceId": "gwangjesa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        },
+        {
+          "source": "대한불교조계종",
+          "sourceUrl": "https://www.buddhism.or.kr/board/file_down.php?baidx=293574",
+          "supports": "광제사와 세종 전통문화체험관의 종단 운영 관계 및 주소"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "국제선센터",
+      "address": "서울특별시 양천구 목동동로 167",
+      "officialId": "InternationalSeonCenter",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=InternationalSeonCenter",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "국제선센터",
+      "aliases": [],
+      "verifiedAddress": "서울특별시 양천구 목동동로 167",
+      "sido": "서울",
+      "sigungu": "양천구",
+      "latitude": 37.520885,
+      "longitude": 126.870064,
+      "order": "대한불교조계종",
+      "website": "http://www.seoncenter.or.kr",
+      "phone": "010-6728-2242",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=InternationalSeonCenter",
+          "externalSourceId": "InternationalSeonCenter",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        },
+        {
+          "source": "대한불교조계종",
+          "sourceUrl": "https://www.buddhism.or.kr/m/pogyo/sub4/sub4-2-t1.php",
+          "supports": "국제선센터의 종단 소속, 불교교육·도량 기능, 동일 주소"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "금강정사",
+      "address": "경기도 광명시 설월로 58",
+      "officialId": "Kumkangjeongsa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Kumkangjeongsa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "금강정사",
+      "aliases": [],
+      "verifiedAddress": "경기도 광명시 설월로 58",
+      "sido": "경기",
+      "sigungu": "광명시",
+      "latitude": 37.441529,
+      "longitude": 126.872945,
+      "order": null,
+      "website": "https://www.sejon.org",
+      "phone": "02-898-8200",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Kumkangjeongsa",
+          "externalSourceId": "Kumkangjeongsa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        },
+        {
+          "source": "금강정사 공식 웹사이트",
+          "sourceUrl": "https://www.sejon.org",
+          "supports": "금강정사의 현재 사찰 운영과 공식 웹사이트"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "금룡사",
+      "address": "제주특별자치도 제주시 구좌읍 김녕로 148-11",
+      "officialId": "Kumyongsa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Kumyongsa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "금룡사",
+      "aliases": [],
+      "verifiedAddress": "제주특별자치도 제주시 구좌읍 김녕로 148-11",
+      "sido": "제주",
+      "sigungu": "제주시",
+      "latitude": null,
+      "longitude": null,
+      "order": null,
+      "website": null,
+      "phone": "064-783-3663",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Kumyongsa",
+          "externalSourceId": "Kumyongsa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "금수암",
+      "address": "경상남도 산청군 금서면 새터길 57-98",
+      "officialId": "geumsuam",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=geumsuam",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "금수암",
+      "aliases": [],
+      "verifiedAddress": "경상남도 산청군 금서면 새터길 57-98",
+      "sido": "경남",
+      "sigungu": "산청군",
+      "latitude": 35.41,
+      "longitude": 127.83,
+      "order": null,
+      "website": null,
+      "phone": "010-3898-8838",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=geumsuam",
+          "externalSourceId": "geumsuam",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [
+          {
+            "sourceId": "localdata:3260000:CDFD1029",
+            "name": "금수암",
+            "roadAddress": "부산광역시 서구 꽃마을로87번길 18  (서대신동3가)",
+            "lotAddress": "부산광역시 서구 서대신동3가 31-242 7통5반",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          }
+        ],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "길상사",
+      "address": "서울특별시 성북구 선잠로5길 68",
+      "officialId": "Kilsangsa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Kilsangsa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "길상사",
+      "aliases": [],
+      "verifiedAddress": "서울특별시 성북구 선잠로5길 68",
+      "sido": "서울",
+      "sigungu": "성북구",
+      "latitude": 37.598777,
+      "longitude": 126.99424,
+      "order": "대한불교조계종",
+      "website": "https://www.gilsangsa.or.kr/",
+      "phone": "02-3672-5945 / 010-9677-5945",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Kilsangsa",
+          "externalSourceId": "Kilsangsa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        },
+        {
+          "source": "대한불교조계종 불교대학 주소록",
+          "sourceUrl": "https://www.buddhism.or.kr/m/pogyo/sub4/sub4-2-t1.php",
+          "supports": "길상사의 종단 교육도량 기능과 동일 주소"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "대광사(성남)",
+      "address": "경기도 성남시 분당구 구미로185번길 30",
+      "officialId": "Daegwangsa_sn",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Daegwangsa_sn",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "대광사",
+      "aliases": [
+        "대광사(성남)"
+      ],
+      "verifiedAddress": "경기도 성남시 분당구 구미로185번길 30",
+      "sido": "경기",
+      "sigungu": "성남시",
+      "latitude": 37.346976,
+      "longitude": 127.127639,
+      "order": "대한불교천태종",
+      "website": null,
+      "phone": "031-715-3000",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Daegwangsa_sn",
+          "externalSourceId": "Daegwangsa_sn",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        },
+        {
+          "source": "성남시의회 교육문화체육국 주요업무보고",
+          "sourceUrl": "https://www.sncouncil.go.kr/attach/record/SEONGNAM/appendix/a08/A0029666.pdf",
+          "supports": "대한불교천태종 분당대광사 명칭과 동일 주소"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "대광사(창원)",
+      "address": "경상남도 창원시 진해구 진해대로 303",
+      "officialId": "Daegwangsa_cw",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Daegwangsa_cw",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "대광사",
+      "aliases": [
+        "대광사(창원)"
+      ],
+      "verifiedAddress": "경상남도 창원시 진해구 진해대로 303",
+      "sido": "경남",
+      "sigungu": "창원시",
+      "latitude": 35.170914,
+      "longitude": 128.658506,
+      "order": null,
+      "website": null,
+      "phone": "055-545-9595",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Daegwangsa_cw",
+          "externalSourceId": "Daegwangsa_cw",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "도림사(대구)",
+      "address": "대구광역시 동구 인산로 242",
+      "officialId": "dorimsa_dg",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=dorimsa_dg",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "도림사",
+      "aliases": [
+        "도림사(대구)"
+      ],
+      "verifiedAddress": "대구광역시 동구 인산로 242",
+      "sido": "대구",
+      "sigungu": "동구",
+      "latitude": 35.9480242,
+      "longitude": 128.7320188,
+      "order": "대한불교조계종",
+      "website": null,
+      "phone": "010 - 9256 - 7276",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=dorimsa_dg",
+          "externalSourceId": "dorimsa_dg",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [
+          {
+            "slug": "traditional-temple-0607",
+            "name": "도림사",
+            "sido": "전남",
+            "sigungu": "곡성군",
+            "address": "전남광주통합특별시 곡성군 곡성읍 도림로 175",
+            "sameRegion": false
+          }
+        ],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [
+          {
+            "sourceId": "localdata:5835000:CDFD1001",
+            "name": "도림사",
+            "roadAddress": "전남광주통합특별시 곡성군 곡성읍 도림로 175",
+            "lotAddress": "전남광주통합특별시 곡성군 곡성읍 월봉리 327",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          }
+        ],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "망경산사",
+      "address": "강원특별자치도 영월군 망경대산길 135-6",
+      "officialId": "Manggyeongsansa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Manggyeongsansa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "망경산사",
+      "aliases": [],
+      "verifiedAddress": "강원특별자치도 영월군 망경대산길 135-6",
+      "sido": "강원",
+      "sigungu": "영월군",
+      "latitude": 37.1553401335778,
+      "longitude": 128.609863334613,
+      "order": "대한불교조계종",
+      "website": null,
+      "phone": "033-374-8007",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Manggyeongsansa",
+          "externalSourceId": "Manggyeongsansa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "명주사",
+      "address": "강원특별자치도 원주시 신림면 물안길 62",
+      "officialId": "Myeongjoosa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Myeongjoosa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "명주사",
+      "aliases": [],
+      "verifiedAddress": "강원특별자치도 원주시 신림면 물안길 62",
+      "sido": "강원",
+      "sigungu": "원주시",
+      "latitude": 37.257081,
+      "longitude": 128.12864,
+      "order": null,
+      "website": null,
+      "phone": "033-761-7885",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Myeongjoosa",
+          "externalSourceId": "Myeongjoosa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [
+          {
+            "slug": "traditional-temple-0289",
+            "name": "명주사",
+            "sido": "강원",
+            "sigungu": "양양군",
+            "address": "강원도 양양군 현북면 어성전리 488",
+            "sameRegion": false
+          }
+        ],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [
+          {
+            "sourceId": "localdata:4351000:CDFD1003",
+            "name": "명주사",
+            "roadAddress": null,
+            "lotAddress": "강원특별자치도 양양군 현북면 어성전리 488",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:6530000:4351000-001",
+            "name": "명주사",
+            "roadAddress": "강원특별자치도 양양군 현북면 어성전길 93-31",
+            "lotAddress": "강원특별자치도 양양군 현북면 어성전리 488번지",
+            "businessStatus": "영업/정상",
+            "detailedStatus": null,
+            "sameAddress": false
+          }
+        ],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "무각사",
+      "address": "광주광역시 서구 운천로 230",
+      "officialId": "Mugaksa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Mugaksa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "무각사",
+      "aliases": [],
+      "verifiedAddress": "광주광역시 서구 운천로 230",
+      "sido": "광주",
+      "sigungu": "서구",
+      "latitude": 35.153171,
+      "longitude": 126.856727,
+      "order": null,
+      "website": null,
+      "phone": "062-383-0107",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Mugaksa",
+          "externalSourceId": "Mugaksa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "문수암",
+      "address": "경상남도 산청군 시천면 마근담길 173-17",
+      "officialId": "Munsuam",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Munsuam",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "문수암",
+      "aliases": [],
+      "verifiedAddress": "경상남도 산청군 시천면 마근담길 173-17",
+      "sido": "경남",
+      "sigungu": "산청군",
+      "latitude": 35.28852,
+      "longitude": 127.853804,
+      "order": null,
+      "website": null,
+      "phone": "055-973-5820",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Munsuam",
+          "externalSourceId": "Munsuam",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [
+          {
+            "slug": "traditional-temple-0367",
+            "name": "문수암",
+            "sido": "충북",
+            "sigungu": "옥천군",
+            "address": "충청북도 옥천군 청성면 도장1길 33",
+            "sameRegion": false
+          },
+          {
+            "slug": "traditional-temple-0382",
+            "name": "문수암",
+            "sido": "충북",
+            "sigungu": "진천군",
+            "address": "충청북도 진천군 진천읍 금사로 252-106",
+            "sameRegion": false
+          },
+          {
+            "slug": "traditional-temple-0884",
+            "name": "문수암",
+            "sido": "경남",
+            "sigungu": "고성군",
+            "address": "경상남도 고성군 상리면 무선2길 808",
+            "sameRegion": false
+          }
+        ],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [
+          {
+            "sourceId": "localdata:4430000:CDFD1005",
+            "name": "문수암",
+            "roadAddress": "충청북도 옥천군 청성면 도장1길 33",
+            "lotAddress": "충청북도 옥천군 청성면 도장리 127-1",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:4450000:CDFD1004",
+            "name": "문수암",
+            "roadAddress": "충청북도 진천군 진천읍 금사로 252-106",
+            "lotAddress": "충청북도 진천군 진천읍 지암리 267-1",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:5420000:CDFD1005",
+            "name": "문수암",
+            "roadAddress": "경상남도 고성군 상리면 무선2길 494",
+            "lotAddress": "경상남도 고성군 상리면 무선리 134",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:6430000:4430000-003",
+            "name": "문수암",
+            "roadAddress": "충청북도 옥천군 청성면 도장1길 33",
+            "lotAddress": "충청북도 옥천군 청성면 도장리 127 - 1",
+            "businessStatus": "영업/정상",
+            "detailedStatus": null,
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:6430000:4450000-002",
+            "name": "문수암",
+            "roadAddress": "충청북도 진천군 진천읍 금사로 252-106",
+            "lotAddress": "충청북도 진천군 진천읍 지암리 267 - 1",
+            "businessStatus": "영업/정상",
+            "detailedStatus": null,
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:6480000:5420000-004",
+            "name": "문수암",
+            "roadAddress": "경상남도 고성군 상리면 무선2길 808",
+            "lotAddress": "경상남도 고성군 상리면 무선리 134",
+            "businessStatus": "영업/정상",
+            "detailedStatus": null,
+            "sameAddress": false
+          }
+        ],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "백련사(가평)",
+      "address": "경기도 가평군 상면 샘골길 159-50",
+      "officialId": "Baekryunsa_ga",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Baekryunsa_ga",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "백련사",
+      "aliases": [
+        "백련사(가평)"
+      ],
+      "verifiedAddress": "경기도 가평군 상면 샘골길 159-50",
+      "sido": "경기",
+      "sigungu": "가평군",
+      "latitude": 37.78352,
+      "longitude": 127.349362,
+      "order": null,
+      "website": null,
+      "phone": "010-3081-0208",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Baekryunsa_ga",
+          "externalSourceId": "Baekryunsa_ga",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [
+          {
+            "slug": "traditional-temple-0125",
+            "name": "백련사",
+            "sido": "인천",
+            "sigungu": "강화군",
+            "address": "인천광역시 강화군 하점면 고려산로61번길 270",
+            "sameRegion": false
+          },
+          {
+            "slug": "traditional-temple-0231",
+            "name": "백련사",
+            "sido": "경기",
+            "sigungu": "용인시",
+            "address": "경기도 용인시 처인구 포곡읍 에버랜드로456번길 290",
+            "sameRegion": false
+          },
+          {
+            "slug": "traditional-temple-0343",
+            "name": "백련사",
+            "sido": "충북",
+            "sigungu": "제천시",
+            "address": "충청북도 제천시 봉양읍 명암로5길 414",
+            "sameRegion": false
+          },
+          {
+            "slug": "traditional-temple-0517",
+            "name": "백련사",
+            "sido": "전북",
+            "sigungu": "남원시",
+            "address": "전북특별자치도 남원시 인월면 인월중군길 550",
+            "sameRegion": false
+          },
+          {
+            "slug": "traditional-temple-0520",
+            "name": "백련사",
+            "sido": "전북",
+            "sigungu": "무주군",
+            "address": "전북특별자치도 무주군 설천면 백련사길 580",
+            "sameRegion": false
+          },
+          {
+            "slug": "traditional-temple-0598",
+            "name": "백련사",
+            "sido": "전남",
+            "sigungu": "강진군",
+            "address": "전라남도 강진군 도암면 만덕리 246",
+            "sameRegion": false
+          },
+          {
+            "slug": "traditional-temple-0691",
+            "name": "백련사",
+            "sido": "전남",
+            "sigungu": "구례군",
+            "address": "전라남도 구례군 용방면 죽정리 825",
+            "sameRegion": false
+          }
+        ],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [
+          {
+            "sourceId": "localdata:3080000:CDFD1004",
+            "name": "백련사",
+            "roadAddress": "서울특별시 강북구 4.19로20길 142, 백련사 (수유동)",
+            "lotAddress": "서울특별시 강북구 수유동 산 127-1 백련사",
+            "businessStatus": "취소/말소/만료/정지/중지",
+            "detailedStatus": "취소",
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:3570000:CDFD1004",
+            "name": "백련사",
+            "roadAddress": "인천광역시 강화군 하점면 고려산로61번길 270",
+            "lotAddress": "인천광역시 강화군 하점면 부근리 231",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:4400000:CDFD1005",
+            "name": "백련사",
+            "roadAddress": "충청북도 제천시 봉양읍 명암로5길 414",
+            "lotAddress": "충청북도 제천시 봉양읍 명암리 325",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:5840000:CDFD1006",
+            "name": "백련사",
+            "roadAddress": "전남광주통합특별시 구례군 구례읍 사동길 129-8 (백련사)",
+            "lotAddress": "전남광주통합특별시 구례군 구례읍 산성리 495",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:5865000:CDFD1002",
+            "name": "백련사",
+            "roadAddress": null,
+            "lotAddress": "전남광주통합특별시 강진군 도암면 만덕리 246",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:6130000:5865000-004",
+            "name": "백련사",
+            "roadAddress": "전남광주통합특별시 강진군 도암면 백련사길 145",
+            "lotAddress": "전남광주통합특별시 강진군 도암면 만덕리 246",
+            "businessStatus": "영업/정상",
+            "detailedStatus": null,
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:6280000:3570000-004",
+            "name": "백련사",
+            "roadAddress": null,
+            "lotAddress": "인천광역시 강화군 하점면 부근리",
+            "businessStatus": "영업/정상",
+            "detailedStatus": null,
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:6410000:4050000-101",
+            "name": "백련사",
+            "roadAddress": "경기도 용인시 처인구 포곡읍 에버랜드로456번길 290",
+            "lotAddress": "경기도 용인시 처인구 포곡읍 가실리 산 43",
+            "businessStatus": "영업/정상",
+            "detailedStatus": null,
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:6430000:4400000-002",
+            "name": "백련사",
+            "roadAddress": "충청북도 제천시 봉양읍 명암로5길 414",
+            "lotAddress": "충청북도 제천시 봉양읍 명암리 325",
+            "businessStatus": "영업/정상",
+            "detailedStatus": null,
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:6540000:4701000-016",
+            "name": "백련사",
+            "roadAddress": "전북특별자치도 남원시 인월면 인월중군길 550",
+            "lotAddress": "전북특별자치도 남원시 인월면 중군리 278",
+            "businessStatus": "영업/정상",
+            "detailedStatus": null,
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:6540000:4741000-001",
+            "name": "백련사",
+            "roadAddress": "전북특별자치도 무주군 설천면 백련사길 580",
+            "lotAddress": "전북특별자치도 무주군 설천면 삼공리 산 107",
+            "businessStatus": "영업/정상",
+            "detailedStatus": null,
+            "sameAddress": false
+          }
+        ],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "백제사",
+      "address": "제주특별자치도 제주시 애월읍 광령남6길 54",
+      "officialId": "Baekjesa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Baekjesa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "백제사",
+      "aliases": [],
+      "verifiedAddress": "제주특별자치도 제주시 애월읍 광령남6길 54",
+      "sido": "제주",
+      "sigungu": "제주시",
+      "latitude": null,
+      "longitude": null,
+      "order": null,
+      "website": null,
+      "phone": "064-746-8009",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Baekjesa",
+          "externalSourceId": "Baekjesa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "보덕관음사",
+      "address": "경기도 용인시 처인구 운학로 187",
+      "officialId": "bdg1133",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=bdg1133",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "보덕관음사",
+      "aliases": [],
+      "verifiedAddress": "경기도 용인시 처인구 운학로 187",
+      "sido": "경기",
+      "sigungu": "용인시",
+      "latitude": 37.202151,
+      "longitude": 127.2651442,
+      "order": null,
+      "website": null,
+      "phone": "010-4345-6612",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=bdg1133",
+          "externalSourceId": "bdg1133",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "봉인사",
+      "address": "경기도 남양주시 진건읍 사릉로156번길 295",
+      "officialId": "Bonginsa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Bonginsa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "봉인사",
+      "aliases": [],
+      "verifiedAddress": "경기도 남양주시 진건읍 사릉로156번길 295",
+      "sido": "경기",
+      "sigungu": "남양주시",
+      "latitude": 37.6620316759319,
+      "longitude": 127.217732441922,
+      "order": "대한불교원효종",
+      "website": null,
+      "phone": "031-528-5585",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Bonginsa",
+          "externalSourceId": "Bonginsa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "붓다선원",
+      "address": "경상남도 거창군 웅양면 개화길 397-115",
+      "officialId": "budda",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=budda",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "붓다선원",
+      "aliases": [],
+      "verifiedAddress": "경상남도 거창군 웅양면 개화길 397-115",
+      "sido": "경남",
+      "sigungu": "거창군",
+      "latitude": 35.87665,
+      "longitude": 127.89463,
+      "order": null,
+      "website": null,
+      "phone": "010-2204-3722",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=budda",
+          "externalSourceId": "budda",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "삼운사",
+      "address": "강원특별자치도 춘천시 후석로441번길 12",
+      "officialId": "Samwoonsa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Samwoonsa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "삼운사",
+      "aliases": [],
+      "verifiedAddress": "강원특별자치도 춘천시 후석로441번길 12",
+      "sido": "강원",
+      "sigungu": "춘천시",
+      "latitude": 37.888245,
+      "longitude": 127.741669,
+      "order": null,
+      "website": null,
+      "phone": "033-253-6542",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Samwoonsa",
+          "externalSourceId": "Samwoonsa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "석불사",
+      "address": "서울특별시 마포구 마포대로4다길 23-6",
+      "officialId": "Seokbulsa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Seokbulsa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "석불사",
+      "aliases": [],
+      "verifiedAddress": "서울특별시 마포구 마포대로4다길 23-6",
+      "sido": "서울",
+      "sigungu": "마포구",
+      "latitude": 37.535701,
+      "longitude": 126.944622,
+      "order": "대한불교조계종",
+      "website": null,
+      "phone": "02-712-1765",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Seokbulsa",
+          "externalSourceId": "Seokbulsa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [
+          {
+            "slug": "traditional-temple-0548",
+            "name": "석불사",
+            "sido": "전북",
+            "sigungu": "익산시",
+            "address": "전북특별자치도 익산시 삼기면 진북로 273",
+            "sameRegion": false
+          },
+          {
+            "slug": "traditional-temple-0951",
+            "name": "석불사",
+            "sido": "경남",
+            "sigungu": "창녕군",
+            "address": "경상남도 창녕군 창녕읍 화왕산로 135-71",
+            "sameRegion": false
+          }
+        ],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [
+          {
+            "sourceId": "localdata:4681000:CDFD1009",
+            "name": "석불사",
+            "roadAddress": "전북특별자치도 익산시 삼기면 진북로 273",
+            "lotAddress": "전북특별자치도 익산시 삼기면 연동리 산 220-2",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:5410000:CDFD1007",
+            "name": "석불사",
+            "roadAddress": "경상남도 창녕군 창녕읍 화왕산로 135-71",
+            "lotAddress": "경상남도 창녕군 창녕읍 말흘리 398-1",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:6480000:5410000-007",
+            "name": "석불사",
+            "roadAddress": "경상남도 창녕군 창녕읍 화왕산로 135-71",
+            "lotAddress": "경상남도 창녕군 창녕읍 말흘리 398 - 1",
+            "businessStatus": "영업/정상",
+            "detailedStatus": null,
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:6540000:4681000-009",
+            "name": "석불사",
+            "roadAddress": "전북특별자치도 익산시 삼기면 진북로 273",
+            "lotAddress": "전북특별자치도 익산시 삼기면 연동리 산 220 - 2",
+            "businessStatus": "영업/정상",
+            "detailedStatus": null,
+            "sameAddress": false
+          }
+        ],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "수진사",
+      "address": "경기도 남양주시 천마산로 115-13",
+      "officialId": "Sujinsa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Sujinsa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "수진사",
+      "aliases": [],
+      "verifiedAddress": "경기도 남양주시 천마산로 115-13",
+      "sido": "경기",
+      "sigungu": "남양주시",
+      "latitude": 37.6714929,
+      "longitude": 127.2505875,
+      "order": null,
+      "website": null,
+      "phone": "031-591-3364",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Sujinsa",
+          "externalSourceId": "Sujinsa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "연등국제선원",
+      "address": "인천광역시 강화군 길상면 강화동로 349-60",
+      "officialId": "LotusLanternInternationalMeditationCenter",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=LotusLanternInternationalMeditationCenter",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "연등국제선원",
+      "aliases": [],
+      "verifiedAddress": "인천광역시 강화군 길상면 강화동로 349-60",
+      "sido": "인천",
+      "sigungu": "강화군",
+      "latitude": 37.671092,
+      "longitude": 126.483156,
+      "order": null,
+      "website": null,
+      "phone": "032-937-7033",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=LotusLanternInternationalMeditationCenter",
+          "externalSourceId": "LotusLanternInternationalMeditationCenter",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "연운사",
+      "address": "경기도 김포시 양촌읍 석모로5번길 48-11",
+      "officialId": "Yeonunsa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Yeonunsa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "연운사",
+      "aliases": [],
+      "verifiedAddress": "경기도 김포시 양촌읍 석모로5번길 48-11",
+      "sido": "경기",
+      "sigungu": "김포시",
+      "latitude": 37.64968,
+      "longitude": 126.6492,
+      "order": "대한불교조계종",
+      "website": null,
+      "phone": "031-986-7117",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Yeonunsa",
+          "externalSourceId": "Yeonunsa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "육지장사",
+      "address": "경기도 양주시 백석읍 기산로471번길 190",
+      "officialId": "Yukjijangsa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Yukjijangsa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "육지장사",
+      "aliases": [],
+      "verifiedAddress": "경기도 양주시 백석읍 기산로471번길 190",
+      "sido": "경기",
+      "sigungu": "양주시",
+      "latitude": 37.783737,
+      "longitude": 126.944019,
+      "order": null,
+      "website": null,
+      "phone": "031-871-0101",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Yukjijangsa",
+          "externalSourceId": "Yukjijangsa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "이제사",
+      "address": "충남 공주시 사곡면 다복골길 73-6",
+      "officialId": "ijesa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=ijesa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "이제사",
+      "aliases": [],
+      "verifiedAddress": "충남 공주시 사곡면 다복골길 73-6",
+      "sido": "충남",
+      "sigungu": "공주시",
+      "latitude": 36.4906085464854,
+      "longitude": 127.020715739326,
+      "order": null,
+      "website": null,
+      "phone": "010-2498-5038",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=ijesa",
+          "externalSourceId": "ijesa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "자비선사",
+      "address": "경상북도 성주군 수륜면 계정길 208",
+      "officialId": "Jabisunsa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Jabisunsa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "자비선사",
+      "aliases": [],
+      "verifiedAddress": "경상북도 성주군 수륜면 계정길 208",
+      "sido": "경북",
+      "sigungu": "성주군",
+      "latitude": 35.794116,
+      "longitude": 128.2204782,
+      "order": null,
+      "website": "https://www.jabisun.org/",
+      "phone": "054-931-8874",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Jabisunsa",
+          "externalSourceId": "Jabisunsa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        },
+        {
+          "source": "자비선사 공식 웹사이트",
+          "sourceUrl": "https://www.jabisun.org/",
+          "supports": "자비선 명상도량의 현재 운영과 공식 웹사이트"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "정토사",
+      "address": "경기도 성남시 수정구 옛골로 42번길 3",
+      "officialId": "Jungtosa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Jungtosa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "정토사",
+      "aliases": [],
+      "verifiedAddress": "경기도 성남시 수정구 옛골로 42번길 3",
+      "sido": "경기",
+      "sigungu": "성남시",
+      "latitude": 37.425581,
+      "longitude": 127.067702,
+      "order": null,
+      "website": null,
+      "phone": "031-723-9796",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Jungtosa",
+          "externalSourceId": "Jungtosa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [
+          {
+            "slug": "traditional-temple-0583",
+            "name": "정토사",
+            "sido": "전북",
+            "sigungu": "정읍시",
+            "address": "전북특별자치도 정읍시 정우면 정신로 832-20",
+            "sameRegion": false
+          }
+        ],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [
+          {
+            "sourceId": "localdata:4691000:CDFD1004",
+            "name": "정토사",
+            "roadAddress": null,
+            "lotAddress": "전북특별자치도 정읍시 정우면 산북리 산 28",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:6540000:4691000-008",
+            "name": "정토사",
+            "roadAddress": "전북특별자치도 정읍시 정우면 정신로 832-20",
+            "lotAddress": "전북특별자치도 정읍시 정우면 산북리 28",
+            "businessStatus": "영업/정상",
+            "detailedStatus": null,
+            "sameAddress": false
+          }
+        ],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "지장정사",
+      "address": "충청남도 논산시 노성면 화곡안길 103",
+      "officialId": "Jijangjeongsa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Jijangjeongsa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "지장정사",
+      "aliases": [],
+      "verifiedAddress": "충청남도 논산시 노성면 화곡안길 103",
+      "sido": "충남",
+      "sigungu": "논산시",
+      "latitude": 36.329674,
+      "longitude": 127.113004,
+      "order": null,
+      "website": null,
+      "phone": "041-732-0106",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Jijangjeongsa",
+          "externalSourceId": "Jijangjeongsa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [
+          {
+            "sourceId": "localdata:3260000:CDFD1017",
+            "name": "지장정사",
+            "roadAddress": null,
+            "lotAddress": "부산광역시 서구 서대신동3가 458-5 1통2반",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          }
+        ],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "청계사",
+      "address": "경남 하동군 옥종면 안계길 67-182",
+      "officialId": "chunggyesa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=chunggyesa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "청계사",
+      "aliases": [],
+      "verifiedAddress": "경남 하동군 옥종면 안계길 67-182",
+      "sido": "경남",
+      "sigungu": "하동군",
+      "latitude": 35.21485,
+      "longitude": 127.85661,
+      "order": "대한불교조계종",
+      "website": null,
+      "phone": "010-4600-1884",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=chunggyesa",
+          "externalSourceId": "chunggyesa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [
+          {
+            "slug": "traditional-temple-0235",
+            "name": "청계사",
+            "sido": "경기",
+            "sigungu": "의왕시",
+            "address": "경기도 의왕시 청계로 475 (청계동)",
+            "sameRegion": false
+          },
+          {
+            "slug": "traditional-temple-0772",
+            "name": "청계사",
+            "sido": "경북",
+            "sigungu": "상주시",
+            "address": "경상북도 상주시 화서면 하송3길 213",
+            "sameRegion": false
+          }
+        ],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [
+          {
+            "sourceId": "localdata:4030000:CDFD1001",
+            "name": "청계사",
+            "roadAddress": "경기도 의왕시 청계로 475 (청계동)",
+            "lotAddress": "경기도 의왕시 청계동 11",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:5110000:CDFD1009",
+            "name": "청계사",
+            "roadAddress": "경상북도 상주시 화서면 하송3길 213",
+            "lotAddress": "경상북도 상주시 화서면 하송리 310-2",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:6410000:4030000-101",
+            "name": "청계사",
+            "roadAddress": "경기도 의왕시 청계로 475 (청계동)",
+            "lotAddress": "경기도 의왕시 청계동 11",
+            "businessStatus": "영업/정상",
+            "detailedStatus": null,
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:6470000:5110000-011",
+            "name": "청계사",
+            "roadAddress": "경상북도 상주시 화서면 하송3길 213",
+            "lotAddress": "경상북도 상주시 화서면 하송리 310-2",
+            "businessStatus": "영업/정상",
+            "detailedStatus": null,
+            "sameAddress": false
+          }
+        ],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "학림사",
+      "address": "충청남도 공주시 반포면 제석골길 35-45",
+      "officialId": "Hakrimsa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Hakrimsa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "학림사",
+      "aliases": [],
+      "verifiedAddress": "충청남도 공주시 반포면 제석골길 35-45",
+      "sido": "충남",
+      "sigungu": "공주시",
+      "latitude": 36.364858,
+      "longitude": 127.247555,
+      "order": null,
+      "website": null,
+      "phone": "042-825-0515",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Hakrimsa",
+          "externalSourceId": "Hakrimsa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [
+          {
+            "slug": "traditional-temple-0019",
+            "name": "학림사",
+            "sido": "서울",
+            "sigungu": "노원구",
+            "address": "서울특별시 노원구 덕릉로129가길 241 (상계동)",
+            "sameRegion": false
+          },
+          {
+            "slug": "traditional-temple-0160",
+            "name": "학림사",
+            "sido": "세종",
+            "sigungu": "서면",
+            "address": "세종특별자치시 연서면 와룡로 353",
+            "sameRegion": false
+          },
+          {
+            "slug": "traditional-temple-0538",
+            "name": "학림사",
+            "sido": "전북",
+            "sigungu": "완주군",
+            "address": "전북특별자치도 완주군 봉동읍 추동로 231",
+            "sameRegion": false
+          }
+        ],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [
+          {
+            "sourceId": "localdata:3100000:CDFD1002",
+            "name": "학림사",
+            "roadAddress": "서울특별시 노원구 덕릉로129가길 241 (상계동)",
+            "lotAddress": "서울특별시 노원구 상계동 1",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:4721000:CDFD1007",
+            "name": "학림사",
+            "roadAddress": null,
+            "lotAddress": "전북특별자치도 완주군 봉동읍 은하리 942",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:5690000:CDFD1006",
+            "name": "학림사",
+            "roadAddress": "세종특별자치시 연서면 와룡로 353",
+            "lotAddress": "세종특별자치시 연서면 신대리 268-1",
+            "businessStatus": "영업/정상",
+            "detailedStatus": "지정",
+            "sameAddress": false
+          },
+          {
+            "sourceId": "localdata:6540000:4721000-005",
+            "name": "학림사",
+            "roadAddress": "전북특별자치도 완주군 봉동읍 추동로 231",
+            "lotAddress": "전북특별자치도 완주군 봉동읍 은하리 942",
+            "businessStatus": "영업/정상",
+            "detailedStatus": null,
+            "sameAddress": false
+          }
+        ],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "현덕사",
+      "address": "강원특별자치도 강릉시 연곡면 싸리골길 170",
+      "officialId": "Hyundeoksa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Hyundeoksa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "현덕사",
+      "aliases": [],
+      "verifiedAddress": "강원특별자치도 강릉시 연곡면 싸리골길 170",
+      "sido": "강원",
+      "sigungu": "강릉시",
+      "latitude": 37.859497,
+      "longitude": 128.703536,
+      "order": null,
+      "website": null,
+      "phone": "033-661-5878",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Hyundeoksa",
+          "externalSourceId": "Hyundeoksa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "홍법사",
+      "address": "부산광역시 금정구 두구로33번길 202",
+      "officialId": "Hongbeopsa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Hongbeopsa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "홍법사",
+      "aliases": [],
+      "verifiedAddress": "부산광역시 금정구 두구로33번길 202",
+      "sido": "부산",
+      "sigungu": "금정구",
+      "latitude": 35.303408,
+      "longitude": 129.110226,
+      "order": null,
+      "website": null,
+      "phone": "051-508-0345",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Hongbeopsa",
+          "externalSourceId": "Hongbeopsa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    },
+    {
+      "officialName": "화운사",
+      "address": "경기도 용인시 처인구 동백죽전대로 111-14",
+      "officialId": "Hwaunsa",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Hwaunsa",
+      "classification": "ADD_CANDIDATE",
+      "canonicalName": "화운사",
+      "aliases": [],
+      "verifiedAddress": "경기도 용인시 처인구 동백죽전대로 111-14",
+      "sido": "경기",
+      "sigungu": "용인시",
+      "latitude": 37.251784,
+      "longitude": 127.161727,
+      "order": null,
+      "website": null,
+      "phone": "031-337-2576",
+      "evidence": [
+        {
+          "source": "한국불교문화사업단 템플스테이 공식",
+          "sourceUrl": "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Hwaunsa",
+          "externalSourceId": "Hwaunsa",
+          "supports": "공식 운영사찰명·주소·전화와 현재 운영 상세, 공식 상세 지도 좌표"
+        },
+        {
+          "source": "전통사찰 현황(991개소, 2026.6.1.기준)",
+          "sourceUrl": "https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pDataCD=0417000000&pSeq=2150&pType=03",
+          "supports": "2026-06-01 기준 전통사찰 991개 원천에 동일 지역 canonical이 없음"
+        },
+        {
+          "source": "행정안전부_LOCALDATA_문화_전통사찰",
+          "sourceUrl": "https://file.localdata.go.kr/file/traditional_temples/info",
+          "supports": "LOCALDATA 전통사찰 원천에서 동일 주소 레코드가 없음을 재검사"
+        }
+      ],
+      "canonicalRecheck": {
+        "exactOrAliasCandidates": [],
+        "sameRegionCandidateCount": 0,
+        "canonicalExactAddressCandidates": [],
+        "localDataExactNameCandidates": [],
+        "localDataExactAddressCandidates": []
+      },
+      "note": "공식 템플스테이 운영사찰로 현재 운영과 장소가 확인되며, 연의 생활 불교 Temple 범위에 해당한다. Temple 991 및 그 전통사찰 원천에 동일 지역·주소 canonical이 없어 신규 canonical 검토 대상으로 분류했다.",
+      "checkedAt": "2026-08-20"
+    }
+  ]
+}

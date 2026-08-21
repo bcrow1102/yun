@@ -1,11 +1,16 @@
 import {
+    assertTempleExternalSources,
     templeNationwideReport,
     templeNationwideSeeds,
-    type LocalDataTempleSource,
-    type McstTempleSource,
+    type TempleExternalSources,
     type TempleNationwideSeed,
     type TempleSeedMatchStatus,
 } from "./nationwide-seed";
+import {
+    templeRepresentativeImages,
+    type TempleRepresentativeImage,
+} from "../../../data/temples/representative-images";
+import { nonMcstTempleAdditions } from "./non-mcst-temples";
 
 export const SIDO_LIST = [
     "전체",
@@ -181,11 +186,9 @@ export type Temple = {
     parking?: TempleParking;
 
     /**
-     * 이미지 정보
+     * 대표 이미지 정보
      */
-    image?: string;
-    imageAlt?: string;
-    imageSource?: string;
+    representativeImage?: TempleRepresentativeImage;
 
     /**
      * 운영 상태
@@ -195,17 +198,32 @@ export type Temple = {
     updatedAt?: string;
 
     /**
-     * 전국 전통사찰 seed의 공식 source 연결 정보. 원본 좌표는 사용자
+     * canonical Temple의 공식 source 연결 정보. 원본 source 좌표는 사용자
      * 기능에서 사용하지 않고 location의 WGS84 좌표만 사용한다.
      */
-    externalSources?: {
-        mcstTraditionalTemple: McstTempleSource;
-        localData?: LocalDataTempleSource;
-    };
+    externalSources?: TempleExternalSources;
     seedMatchStatus?: TempleSeedMatchStatus;
 };
 
 export type TempleSlug = Temple["slug"];
+
+const templeStayOfficialTempleProvenanceFixture = {
+    name: "관문사",
+    externalSources: {
+        templeStayOfficial: {
+            officialId: "Gwanmunsa",
+            officialUrl: "https://www.templestay.com/fe/MI000000000000000019/temple/introView.do?templeId=Gwanmunsa",
+            officialName: "관문사",
+            checkedAt: "2026-08-20",
+        },
+    },
+} satisfies Pick<Temple, "name"> &
+    Required<Pick<Temple, "externalSources">>;
+
+assertTempleExternalSources(
+    templeStayOfficialTempleProvenanceFixture.externalSources,
+    templeStayOfficialTempleProvenanceFixture.name,
+);
 
 const curatedTemples: Temple[] = [
     {
@@ -525,7 +543,7 @@ function getSeedSido(seed: TempleNationwideSeed): Sido {
     return seed.sido as Sido;
 }
 
-function getSeedSource(seed: TempleNationwideSeed) {
+function getSeedSource(seed: TempleNationwideSeed): TempleExternalSources {
     return {
         mcstTraditionalTemple: seed.mcst,
         localData: seed.localData,
@@ -574,9 +592,18 @@ function mergeTempleNationwideSeeds() {
         );
     }
 
-    const curatedBySlug = new Map(
-        curatedTemples.map((temple) => [temple.slug, temple]),
+    const canonicalBaseTemples = [
+        ...curatedTemples,
+        ...nonMcstTempleAdditions,
+    ];
+    const canonicalBaseBySlug = new Map(
+        canonicalBaseTemples.map((temple) => [temple.slug, temple]),
     );
+
+    if (canonicalBaseBySlug.size !== canonicalBaseTemples.length) {
+        throw new Error("중복 canonical base Temple slug가 있습니다.");
+    }
+
     const seenSeedSlugs = new Set<string>();
 
     for (const seed of templeNationwideSeeds) {
@@ -586,7 +613,10 @@ function mergeTempleNationwideSeeds() {
 
         seenSeedSlugs.add(seed.slug);
 
-        if (seed.existingSlug && !curatedBySlug.has(seed.existingSlug)) {
+        if (
+            seed.existingSlug &&
+            !canonicalBaseBySlug.has(seed.existingSlug)
+        ) {
             throw new Error(
                 `기존 Temple을 찾을 수 없습니다: ${seed.existingSlug}`,
             );
@@ -594,7 +624,7 @@ function mergeTempleNationwideSeeds() {
 
         if (
             !seed.existingSlug &&
-            curatedTemples.some(
+            canonicalBaseTemples.some(
                 (temple) =>
                     temple.name === seed.name &&
                     temple.location.sido === seed.sido &&
@@ -613,7 +643,7 @@ function mergeTempleNationwideSeeds() {
             .map((seed) => [seed.existingSlug as string, seed]),
     );
 
-    const preservedTemples = curatedTemples.map((temple) => {
+    const preservedTemples = canonicalBaseTemples.map((temple) => {
         const seed = seedByExistingSlug.get(temple.slug);
 
         if (!seed) {
@@ -655,7 +685,27 @@ function mergeTempleNationwideSeeds() {
         .filter((seed) => !seed.existingSlug)
         .map(createTempleFromSeed);
 
-    return [...preservedTemples, ...newTemples];
+    const mergedTemples = [...preservedTemples, ...newTemples].map((temple) => {
+        const representativeImage =
+            templeRepresentativeImages[temple.slug];
+
+        return representativeImage
+            ? { ...temple, representativeImage }
+            : temple;
+    });
+
+    const mergedSlugs = new Set<string>();
+
+    for (const temple of mergedTemples) {
+        if (mergedSlugs.has(temple.slug)) {
+            throw new Error(`중복 canonical Temple slug: ${temple.slug}`);
+        }
+
+        mergedSlugs.add(temple.slug);
+        assertTempleExternalSources(temple.externalSources, temple.slug);
+    }
+
+    return mergedTemples;
 }
 
 /**

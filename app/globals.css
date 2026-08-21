@@ -150,7 +150,8 @@ html {
   }
 
   .mobile-home-shell,
-  .mobile-site-header {
+  .mobile-site-header,
+  .temple-category-nav {
     display: block !important;
   }
 

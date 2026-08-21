@@ -54,21 +54,6 @@ const latestJobs = [
   },
 ];
 
-const recommendedTempleStays = [
-  {
-    id: 1,
-    name: "월정사 숲속 힐링",
-    location: "강원 평창",
-    image: "/images/temple-stay/woljeongsa-forest.webp",
-  },
-  {
-    id: 2,
-    name: "해인사 명상 수련",
-    location: "경남 합천",
-    image: "/images/temple-stay/haeinsa-meditation.webp",
-  },
-];
-
 const featureSlides = [
   {
     eyebrow: "마음이 쉬어가는 시간",
@@ -1196,14 +1181,6 @@ export default function Home() {
                   <span aria-hidden="true" />
                   <ArrowIcon className="h-[18px] w-[18px] shrink-0 text-[#667085] transition-transform duration-200 ease-out group-hover:translate-x-1" />
                 </Link>
-                {recommendedTempleStays.map((stay) => (
-                  <Link key={stay.id} href={`/temples/stay/${stay.id}`} className="group grid min-h-[72px] grid-cols-[minmax(132px,0.36fr)_minmax(0,1fr)_84px_20px] items-center gap-6 border-b border-[#E1E3DE] py-4">
-                    <span className="text-[13px] font-normal tracking-[0.04em] text-[#667085]">템플스테이 · {stay.location}</span>
-                    <span className="min-w-0 truncate text-[17px] font-medium tracking-[-0.02em] text-[#191F28]">{stay.name}</span>
-                    <span aria-hidden="true" />
-                    <ArrowIcon className="h-[18px] w-[18px] shrink-0 text-[#667085] transition-transform duration-200 ease-out group-hover:translate-x-1" />
-                  </Link>
-                ))}
               </div>
             </div>
           </section>
@@ -1312,15 +1289,6 @@ export default function Home() {
                 </span>
                 <ArrowIcon className="h-4 w-4 shrink-0 text-[#8B95A1]" />
               </Link>
-              {recommendedTempleStays.map((stay) => (
-                <Link key={stay.id} href={`/temples/stay/${stay.id}`} className="flex items-center justify-between gap-4 px-5 py-4 transition hover:bg-[#FAF9F6]">
-                  <span>
-                    <span className="block text-xs font-normal text-[#8B95A1]">템플스테이 · {stay.location}</span>
-                    <span className="mt-1 block text-[15px] font-normal text-[#191F28]">{stay.name}</span>
-                  </span>
-                  <ArrowIcon className="h-4 w-4 shrink-0 text-[#8B95A1]" />
-                </Link>
-              ))}
             </div>
           </section>
 
@@ -1454,7 +1422,7 @@ export default function Home() {
 
               <div className="p-6">
                 <div className="mb-4 flex items-center justify-between">
-                  <h2 className="text-lg font-semibold">추천 템플스테이</h2>
+                  <h2 className="text-lg font-semibold">템플스테이 운영처</h2>
                   <Link
                     href="/temples/stay"
                     className="text-sm font-normal text-[#8B95A1] hover:text-[#191F28]"
@@ -1462,29 +1430,12 @@ export default function Home() {
                     전체보기
                   </Link>
                 </div>
-                <div className="grid grid-cols-2 gap-3">
-                  {recommendedTempleStays.map((stay) => (
-                    <Link
-                      key={stay.id}
-                      href={`/temples/stay/${stay.id}`}
-                      className="group overflow-hidden rounded-2xl border border-[#ECEEF0]"
-                    >
-                      <img
-                        src={stay.image}
-                        alt={stay.name}
-                        className="h-[105px] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
-                      />
-                      <span className="block p-3.5">
-                        <strong className="block text-[14px] font-medium">
-                          {stay.name}
-                        </strong>
-                        <span className="mt-1 block text-xs font-normal text-[#667085]">
-                          {stay.location}
-                        </span>
-                      </span>
-                    </Link>
-                  ))}
-                </div>
+                <Link
+                  href="/temples/stay"
+                  className="block rounded-2xl border border-[#ECEEF0] p-5 text-sm leading-6 text-[#667085]"
+                >
+                  전국 템플스테이 운영처 찾기 →
+                </Link>
               </div>
             </div>
           </section>

@@ -28,7 +28,7 @@ function TempleCategoryNav() {
 
     return (
         <nav
-            className="sticky top-16 z-20 border-b border-[#E7E9EC] bg-white/95 backdrop-blur md:hidden"
+            className="temple-category-nav sticky top-14 z-20 border-b border-[#E7E9EC] bg-white/95 backdrop-blur md:hidden"
             aria-label="사찰 서비스"
         >
             <div className="mx-auto grid max-w-6xl grid-cols-3 gap-1 px-4 py-2.5 md:px-8">

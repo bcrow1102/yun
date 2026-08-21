@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 
 type SiteHeaderProps = {
     onSearchClick?: () => void;
-    variant?: "home" | "internal";
+    variant?: "home" | "internal" | "minimal";
 };
 
 const templeMenus = [
@@ -294,7 +294,8 @@ export default function SiteHeader({
 }: SiteHeaderProps) {
     const pathname = usePathname();
     const router = useRouter();
-    const compact = variant === "internal";
+    const compact = variant !== "home";
+    const minimal = variant === "minimal";
     const [hoveredNav, setHoveredNav] = useState<string | null>(null);
 
     const jobsActive = pathname.startsWith("/jobs");
@@ -319,8 +320,11 @@ export default function SiteHeader({
                         event.preventDefault();
                         window.location.assign("/");
                     }}
-                    className="flex shrink-0 items-center gap-2.5"
-                    aria-label="연 홈"
+                    className={`flex shrink-0 items-center gap-2.5 ${minimal
+                        ? "relative after:absolute after:-bottom-2 after:left-1/2 after:h-0.5 after:w-9 after:origin-center after:-translate-x-1/2 after:scale-x-0 after:rounded-full after:bg-[#F4F54A] after:transition-transform after:duration-200 after:ease-out hover:after:scale-x-100 focus-visible:after:scale-x-100"
+                        : ""
+                        }`}
+                    aria-label={minimal ? "홈으로" : "연 홈"}
                 >
                     <span className="text-[#191F28]">
                         <LotusIcon className={compact ? "h-8 w-8" : "h-9 w-9"} />
@@ -333,10 +337,11 @@ export default function SiteHeader({
                     </span>
                 </Link>
 
-                <nav
-                    className={`flex h-full items-center gap-7 ${compact ? "xl:gap-7" : "xl:gap-8"}`}
-                    aria-label="주요 메뉴"
-                >
+                {!minimal && (
+                    <nav
+                        className={`flex h-full items-center gap-7 ${compact ? "xl:gap-7" : "xl:gap-8"}`}
+                        aria-label="주요 메뉴"
+                    >
                     <NavLink
                         href="/jobs"
                         active={jobsActive}
@@ -419,7 +424,8 @@ export default function SiteHeader({
                                 }`}
                         />
                     </Link>
-                </nav>
+                    </nav>
+                )}
 
                 <div className="ml-5 flex shrink-0 items-center gap-2.5 pl-5">
                     <span

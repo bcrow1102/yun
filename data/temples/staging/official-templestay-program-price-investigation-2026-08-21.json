@@ -1,0 +1,2690 @@
+{
+  "schemaVersion": 1,
+  "purpose": "production Program 가격 roomOption 및 상태성 source programName 최소 모델 검토",
+  "source": {
+    "authority": "한국불교문화사업단 공식 템플스테이",
+    "nationwideStagingPath": "data/temples/staging/official-templestay-programs-2026-08-21.json",
+    "checkedAt": "2026-08-21",
+    "scopeNote": "전국 재수집 없이 기존 staging의 room-only 20개 상세만 재확인"
+  },
+  "report": {
+    "roomOnlyProgramCount": 20,
+    "roomStructureCounts": {
+      "parsed": 20,
+      "complex": 0
+    },
+    "roomStructureTypes": {
+      "personByAgePerNight": 9,
+      "personByAgePerProgram": 11,
+      "withMultipleRoomOptions": 16,
+      "withDisplayedAddOns": 4,
+      "withAgeDifferentiatedAmounts": 15,
+      "totalRoomOptionCount": 57,
+      "roomOptionsWithExplicitOccupancy": 49
+    },
+    "priceExceptionApplicability": {
+      "representable": 6,
+      "partiallyRepresentable": 167,
+      "complex": 0
+    },
+    "nationwidePriceStatusProjection": {
+      "parsed": 675,
+      "partial": 167,
+      "complex": 0,
+      "unavailable": 1
+    },
+    "stateNameProgramCount": 5
+  },
+  "proposedPriceModel": {
+    "principle": "기본 비교 정보만 제공하고 객실·인원·연령·옵션·예약 시점에 따른 최종 결제 금액은 공식 페이지에서 확인",
+    "requiredAxes": [
+      "chargeBasis: person | room",
+      "periodBasis: program | perNight"
+    ],
+    "priceStatusValues": [
+      "parsed",
+      "partial",
+      "complex",
+      "unavailable"
+    ],
+    "roomOptionFields": [
+      "name",
+      "chargeBasis",
+      "periodBasis",
+      "amounts",
+      "minOccupancy?",
+      "maxOccupancy?",
+      "eligibility?"
+    ],
+    "optionalAdjustmentFields": [
+      "name",
+      "amount",
+      "applicationBasis?: perSelection | perNight | perPerson",
+      "appliesWhen?"
+    ],
+    "stagingOnlyRoomFields": [
+      "sourceRoomOptionId",
+      "displayedMinimumParticipantLimit",
+      "displayedMaximumParticipantLimit",
+      "occupancySourceSummary"
+    ],
+    "occupancyWarning": "공식 카드의 '최대 N명'은 객실 물리 정원이 아니라 해당 선택지의 참가 제한/수용량일 수 있어 maxOccupancy로 승격하지 않음",
+    "avoid": [
+      "final-total-calculation",
+      "live-room-availability",
+      "live-remaining-capacity"
+    ]
+  },
+  "roomInvestigations": [
+    {
+      "officialProgramId": "14573",
+      "operatorOfficialId": "Naesosa",
+      "operatorName": "내소사",
+      "sourceDisplayName": "[휴식형] 멈춤과 쉼(상시)",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=14573",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 128937,
+        "attempts": 1
+      },
+      "periodBasis": "perNight",
+      "roomOptionCount": 2,
+      "multipleRoomOptions": true,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "123392",
+          "name": "일반",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 70000,
+            "teen": 60000,
+            "child": 50000,
+            "preschool": 40000
+          },
+          "displayedMaximumParticipantLimit": 25,
+          "occupancySourceSummary": "최대 25 명",
+          "periodBasis": "perNight"
+        },
+        {
+          "sourceRoomOptionId": "123393",
+          "name": "소래사:랑 회원전용(소래사랑유료회원 가입후 이용)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 60000
+          },
+          "displayedMaximumParticipantLimit": 2,
+          "occupancySourceSummary": "최대 2 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        }
+      ],
+      "displayedAddOns": [
+        {
+          "name": "1인실",
+          "amount": 30000,
+          "applicationBasis": "not-inferred"
+        }
+      ],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables",
+        "additional-charge-or-option"
+      ],
+      "reviewSignals": [
+        "eligibility-or-discount-rule"
+      ],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "partial"
+    },
+    {
+      "officialProgramId": "28977",
+      "operatorOfficialId": "Mihwangsa",
+      "operatorName": "미황사",
+      "sourceDisplayName": "2026 여름, 영웅 쉼 프로그램 (군인, 소방공무원 특별할인 템플스테이)",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=28977",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 117663,
+        "attempts": 1
+      },
+      "periodBasis": "program",
+      "roomOptionCount": 1,
+      "multipleRoomOptions": false,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "120475",
+          "name": "향적당",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 60000
+          },
+          "displayedMaximumParticipantLimit": 4,
+          "occupancySourceSummary": "최대 4 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        }
+      ],
+      "displayedAddOns": [
+        {
+          "name": "단독사용",
+          "amount": 20000,
+          "applicationBasis": "not-inferred"
+        }
+      ],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables",
+        "additional-charge-or-option"
+      ],
+      "reviewSignals": [
+        "eligibility-or-discount-rule"
+      ],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "partial"
+    },
+    {
+      "officialProgramId": "28529",
+      "operatorOfficialId": "Mihwangsa",
+      "operatorName": "미황사",
+      "sourceDisplayName": "2026 애쓰지 않는 여름 하루 (미황사에서~)",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=28529",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 120895,
+        "attempts": 1
+      },
+      "periodBasis": "perNight",
+      "roomOptionCount": 2,
+      "multipleRoomOptions": true,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "121199",
+          "name": "청운당",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 100000,
+            "teen": 80000,
+            "child": 50000
+          },
+          "displayedMaximumParticipantLimit": 8,
+          "occupancySourceSummary": "최대 8 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        },
+        {
+          "sourceRoomOptionId": "121200",
+          "name": "향적당",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 100000,
+            "teen": 80000,
+            "child": 50000
+          },
+          "displayedMaximumParticipantLimit": 3,
+          "occupancySourceSummary": "최대 3 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        }
+      ],
+      "displayedAddOns": [
+        {
+          "name": "1일단독사용",
+          "amount": 30000,
+          "applicationBasis": "not-inferred"
+        },
+        {
+          "name": "2일단독사용",
+          "amount": 50000,
+          "applicationBasis": "not-inferred"
+        }
+      ],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables",
+        "additional-charge-or-option"
+      ],
+      "reviewSignals": [],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "partial"
+    },
+    {
+      "officialProgramId": "16161",
+      "operatorOfficialId": "Seonunsa",
+      "operatorName": "선운사",
+      "sourceDisplayName": "[휴식형] [상시] 구름, 바람 그리고 休",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=16161",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 132281,
+        "attempts": 1
+      },
+      "periodBasis": "perNight",
+      "roomOptionCount": 3,
+      "multipleRoomOptions": true,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "123256",
+          "name": "디럭스 2인실 (2인~3인 신청가능, 1인 신청불가)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 90000,
+            "teen": 80000,
+            "child": 70000,
+            "preschool": 60000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 3,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 11,
+          "occupancySourceSummary": "최대 11 명",
+          "periodBasis": "perNight"
+        },
+        {
+          "sourceRoomOptionId": "123257",
+          "name": "스텐다드 ２～4인실",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 70000,
+            "teen": 60000,
+            "child": 50000,
+            "preschool": 40000
+          },
+          "minOccupancy": 4,
+          "maxOccupancy": 4,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 40,
+          "occupancySourceSummary": "최대 40 명",
+          "periodBasis": "perNight"
+        },
+        {
+          "sourceRoomOptionId": "123258",
+          "name": "디럭스 1인실",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 110000,
+            "teen": 100000,
+            "child": 90000
+          },
+          "minOccupancy": 1,
+          "maxOccupancy": 1,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 2,
+          "occupancySourceSummary": "최대 2 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        }
+      ],
+      "displayedAddOns": [],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables",
+        "additional-charge-or-option"
+      ],
+      "reviewSignals": [],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "partial"
+    },
+    {
+      "officialProgramId": "29089",
+      "operatorOfficialId": "Seonunsa",
+      "operatorName": "선운사",
+      "sourceDisplayName": "[휴식형] [상시] 고요함 속에 나타난 행복, 디지털 디톡스 '묵언' 수행",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=29089",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 124608,
+        "attempts": 1
+      },
+      "periodBasis": "perNight",
+      "roomOptionCount": 3,
+      "multipleRoomOptions": true,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "122884",
+          "name": "디럭스 2인실 (2인~3인 신청가능, 1인 신청불가)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 90000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 3,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 10,
+          "occupancySourceSummary": "최대 10 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        },
+        {
+          "sourceRoomOptionId": "122885",
+          "name": "스텐다드 ２～4인실",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 70000
+          },
+          "minOccupancy": 4,
+          "maxOccupancy": 4,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 50,
+          "occupancySourceSummary": "최대 50 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        },
+        {
+          "sourceRoomOptionId": "122886",
+          "name": "디럭스 1인실",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 110000
+          },
+          "minOccupancy": 1,
+          "maxOccupancy": 1,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 2,
+          "occupancySourceSummary": "최대 2 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        }
+      ],
+      "displayedAddOns": [],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables",
+        "additional-charge-or-option"
+      ],
+      "reviewSignals": [],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "partial"
+    },
+    {
+      "officialProgramId": "28593",
+      "operatorOfficialId": "Seonunsa",
+      "operatorName": "선운사",
+      "sourceDisplayName": "[체험형] [주말] 스님께 배우는 요가와 선명상, 모닥불 차담",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=28593",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 129459,
+        "attempts": 1
+      },
+      "periodBasis": "program",
+      "roomOptionCount": 3,
+      "multipleRoomOptions": true,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "122857",
+          "name": "스텐다드 ２～4인실",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 90000,
+            "teen": 80000,
+            "child": 70000,
+            "preschool": 60000
+          },
+          "minOccupancy": 4,
+          "maxOccupancy": 4,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 15,
+          "occupancySourceSummary": "최대 15 명",
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "122858",
+          "name": "디럭스 2인실 (2인~3인 신청가능, 1인 신청불가)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 110000,
+            "teen": 100000,
+            "child": 90000,
+            "preschool": 80000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 3,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 6,
+          "occupancySourceSummary": "최대 6 명",
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "122859",
+          "name": "디럭스 1인실",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 130000,
+            "teen": 120000,
+            "child": 110000
+          },
+          "minOccupancy": 1,
+          "maxOccupancy": 1,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 2,
+          "occupancySourceSummary": "최대 2 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        }
+      ],
+      "displayedAddOns": [],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables",
+        "additional-charge-or-option"
+      ],
+      "reviewSignals": [],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "partial"
+    },
+    {
+      "officialProgramId": "28928",
+      "operatorOfficialId": "Seonunsa",
+      "operatorName": "선운사",
+      "sourceDisplayName": "[체험형] [주말] 스님과 함께 트레킹+ 모닥불 + 연잎밥 체험",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=28928",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 127280,
+        "attempts": 1
+      },
+      "periodBasis": "program",
+      "roomOptionCount": 3,
+      "multipleRoomOptions": true,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "122850",
+          "name": "스텐다드 ２～4인실",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 100000,
+            "teen": 90000,
+            "child": 80000,
+            "preschool": 70000
+          },
+          "minOccupancy": 4,
+          "maxOccupancy": 4,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 50,
+          "occupancySourceSummary": "최대 50 명",
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "122851",
+          "name": "디럭스 2인실 (2인~3인 신청가능, 1인 신청불가)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 120000,
+            "teen": 110000,
+            "child": 100000,
+            "preschool": 90000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 3,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 10,
+          "occupancySourceSummary": "최대 10 명",
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "122852",
+          "name": "디럭스 1인실",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 140000,
+            "teen": 130000,
+            "child": 120000
+          },
+          "minOccupancy": 1,
+          "maxOccupancy": 1,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 2,
+          "occupancySourceSummary": "최대 2 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        }
+      ],
+      "displayedAddOns": [],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables",
+        "additional-charge-or-option"
+      ],
+      "reviewSignals": [],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "partial"
+    },
+    {
+      "officialProgramId": "28927",
+      "operatorOfficialId": "Seonunsa",
+      "operatorName": "선운사",
+      "sourceDisplayName": "[체험형] [주말] 스님께 배우는 요가와 선명상 + 모닥불 + 연잎밥 체험",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=28927",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 128615,
+        "attempts": 1
+      },
+      "periodBasis": "program",
+      "roomOptionCount": 3,
+      "multipleRoomOptions": true,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "122853",
+          "name": "스텐다드 ２～4인실",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 100000,
+            "teen": 90000,
+            "child": 80000,
+            "preschool": 70000
+          },
+          "minOccupancy": 4,
+          "maxOccupancy": 4,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 50,
+          "occupancySourceSummary": "최대 50 명",
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "122854",
+          "name": "디럭스 2인실 (2인~3인 신청가능, 1인 신청불가)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 120000,
+            "teen": 110000,
+            "child": 100000,
+            "preschool": 90000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 3,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 10,
+          "occupancySourceSummary": "최대 10 명",
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "122855",
+          "name": "디럭스 1인실",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 140000,
+            "teen": 130000,
+            "child": 120000
+          },
+          "minOccupancy": 1,
+          "maxOccupancy": 1,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 2,
+          "occupancySourceSummary": "최대 2 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        }
+      ],
+      "displayedAddOns": [],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables",
+        "additional-charge-or-option"
+      ],
+      "reviewSignals": [],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "partial"
+    },
+    {
+      "officialProgramId": "28945",
+      "operatorOfficialId": "Seonunsa",
+      "operatorName": "선운사",
+      "sourceDisplayName": "[체험형][추석특별]보름달 아래, 함께 모여 송편을 빚어요.",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=28945",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 127384,
+        "attempts": 1
+      },
+      "periodBasis": "program",
+      "roomOptionCount": 3,
+      "multipleRoomOptions": true,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "123506",
+          "name": "스텐다드 ２～4인실",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 70000,
+            "teen": 60000,
+            "child": 50000,
+            "preschool": 40000
+          },
+          "minOccupancy": 4,
+          "maxOccupancy": 4,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 50,
+          "occupancySourceSummary": "최대 50 명",
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "123507",
+          "name": "디럭스 2인실 (2인~3인 신청가능, 1인 신청불가)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 90000,
+            "teen": 80000,
+            "child": 70000,
+            "preschool": 60000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 3,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 6,
+          "occupancySourceSummary": "최대 6 명",
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "123508",
+          "name": "디럭스 1인실",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 110000,
+            "teen": 100000,
+            "child": 90000
+          },
+          "minOccupancy": 1,
+          "maxOccupancy": 1,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 2,
+          "occupancySourceSummary": "최대 2 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        }
+      ],
+      "displayedAddOns": [
+        {
+          "name": "1인실",
+          "amount": 20000,
+          "applicationBasis": "not-inferred"
+        }
+      ],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables",
+        "additional-charge-or-option"
+      ],
+      "reviewSignals": [],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "partial"
+    },
+    {
+      "officialProgramId": "29057",
+      "operatorOfficialId": "Yeonunsa",
+      "operatorName": "연운사",
+      "sourceDisplayName": "(1박2일) 마음이 머무는 하루, 연운사 카라반 템플스테이",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=29057",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 121202,
+        "attempts": 1
+      },
+      "periodBasis": "program",
+      "roomOptionCount": 1,
+      "multipleRoomOptions": false,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "121749",
+          "name": "카라반1",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 70000,
+            "teen": 70000,
+            "child": 70000,
+            "preschool": 70000
+          },
+          "displayedMaximumParticipantLimit": 4,
+          "occupancySourceSummary": "최대 4 명",
+          "periodBasis": "program"
+        }
+      ],
+      "displayedAddOns": [],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables",
+        "additional-charge-or-option"
+      ],
+      "reviewSignals": [],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "partial"
+    },
+    {
+      "officialProgramId": "15188",
+      "operatorOfficialId": "Yongmunsa_yang",
+      "operatorName": "용문사(양평)",
+      "sourceDisplayName": "(주중-휴식형)_나를 쉬어가다",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=15188",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 129774,
+        "attempts": 1
+      },
+      "periodBasis": "perNight",
+      "roomOptionCount": 3,
+      "multipleRoomOptions": true,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "122583",
+          "name": "빛채움당_주중 (2인실 신청시 선택)_방사 선택 기준 확인 요망",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 70000,
+            "teen": 70000,
+            "child": 70000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 2,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 20,
+          "occupancySourceSummary": "최대 20 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        },
+        {
+          "sourceRoomOptionId": "122584",
+          "name": "빛채움당_주중 (1인실 신청시 선택)_방사 선택 기준 확인 요망",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 80000,
+            "teen": 80000,
+            "child": 80000
+          },
+          "minOccupancy": 1,
+          "maxOccupancy": 1,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 20,
+          "occupancySourceSummary": "최대 20 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        },
+        {
+          "sourceRoomOptionId": "122585",
+          "name": "선월당 ,수월당_주중 (3~4인실 신청시 선택)_방사 선택 기준 확인 요망",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 60000,
+            "teen": 60000,
+            "child": 60000
+          },
+          "minOccupancy": 3,
+          "maxOccupancy": 4,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 25,
+          "occupancySourceSummary": "최대 25 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        }
+      ],
+      "displayedAddOns": [],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables",
+        "additional-charge-or-option"
+      ],
+      "reviewSignals": [],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "partial"
+    },
+    {
+      "officialProgramId": "1802",
+      "operatorOfficialId": "Yongmunsa_yang",
+      "operatorName": "용문사(양평)",
+      "sourceDisplayName": "(주말-체험형)_나를 챙기다",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=1802",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 131074,
+        "attempts": 1
+      },
+      "periodBasis": "program",
+      "roomOptionCount": 3,
+      "multipleRoomOptions": true,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "123094",
+          "name": "빛채움당_주말 (2인실 신청시 선택)_방사 선택 기준 확인 요망",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 80000,
+            "teen": 80000,
+            "child": 80000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 2,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 25,
+          "occupancySourceSummary": "최대 25 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "123095",
+          "name": "빛채움당_주말 (1인실 신청시 선택)_방사 선택 기준 확인 요망",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 90000,
+            "teen": 90000,
+            "child": 90000
+          },
+          "minOccupancy": 1,
+          "maxOccupancy": 1,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 15,
+          "occupancySourceSummary": "최대 15 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "123096",
+          "name": "선월당 ,수월당_주말 (3~4인실 신청시 선택)_방사 선택 기준 확인 요망",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 70000,
+            "teen": 70000,
+            "child": 70000
+          },
+          "minOccupancy": 3,
+          "maxOccupancy": 4,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 35,
+          "occupancySourceSummary": "최대 35 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        }
+      ],
+      "displayedAddOns": [],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables"
+      ],
+      "reviewSignals": [],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "parsed"
+    },
+    {
+      "officialProgramId": "21961",
+      "operatorOfficialId": "chunggyesa",
+      "operatorName": "청계사",
+      "sourceDisplayName": "청계水에 茶를 우리다",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=21961",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 170790,
+        "attempts": 1
+      },
+      "periodBasis": "perNight",
+      "roomOptionCount": 2,
+      "multipleRoomOptions": true,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "123516",
+          "name": "1인실",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 80000
+          },
+          "minOccupancy": 1,
+          "maxOccupancy": 1,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 6,
+          "occupancySourceSummary": "최대 6 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        },
+        {
+          "sourceRoomOptionId": "123517",
+          "name": "다인실(2~4인)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 60000,
+            "teen": 50000,
+            "child": 40000,
+            "preschool": 10000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 4,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 16,
+          "occupancySourceSummary": "최대 16 명",
+          "periodBasis": "perNight"
+        }
+      ],
+      "displayedAddOns": [],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables",
+        "additional-charge-or-option"
+      ],
+      "reviewSignals": [
+        "single-use-supplement"
+      ],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "partial"
+    },
+    {
+      "officialProgramId": "24185",
+      "operatorOfficialId": "chunggyesa",
+      "operatorName": "청계사",
+      "sourceDisplayName": "\"선명상\" 템플스테이(1박2일형)",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=24185",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 169488,
+        "attempts": 1
+      },
+      "periodBasis": "program",
+      "roomOptionCount": 2,
+      "multipleRoomOptions": true,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "123518",
+          "name": "1인실",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 90000
+          },
+          "minOccupancy": 1,
+          "maxOccupancy": 1,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 6,
+          "occupancySourceSummary": "최대 6 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "123519",
+          "name": "다인실(2~4인)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 70000,
+            "teen": 50000,
+            "child": 40000,
+            "preschool": 10000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 4,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 16,
+          "occupancySourceSummary": "최대 16 명",
+          "periodBasis": "program"
+        }
+      ],
+      "displayedAddOns": [],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables",
+        "additional-charge-or-option"
+      ],
+      "reviewSignals": [
+        "single-use-supplement"
+      ],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "partial"
+    },
+    {
+      "officialProgramId": "22729",
+      "operatorOfficialId": "chunggyesa",
+      "operatorName": "청계사",
+      "sourceDisplayName": "\"선명상\" 템플스테이(2박3일형)",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=22729",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 186758,
+        "attempts": 1
+      },
+      "periodBasis": "program",
+      "roomOptionCount": 2,
+      "multipleRoomOptions": true,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "123520",
+          "name": "1인실",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 180000
+          },
+          "minOccupancy": 1,
+          "maxOccupancy": 1,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 6,
+          "occupancySourceSummary": "최대 6 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "123521",
+          "name": "다인실(2~4인)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 140000,
+            "teen": 100000,
+            "child": 80000,
+            "preschool": 20000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 4,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 16,
+          "occupancySourceSummary": "최대 16 명",
+          "periodBasis": "program"
+        }
+      ],
+      "displayedAddOns": [],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables",
+        "additional-charge-or-option"
+      ],
+      "reviewSignals": [
+        "single-use-supplement"
+      ],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "partial"
+    },
+    {
+      "officialProgramId": "27600",
+      "operatorOfficialId": "Haeinsa",
+      "operatorName": "해인사",
+      "sourceDisplayName": "'해인삼매 선명상' 내 마음을 찾아서( 목,금,토 2박3일)-9/17,10/15은 1인실 마감입니다.",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=27600",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 140071,
+        "attempts": 1
+      },
+      "periodBasis": "program",
+      "roomOptionCount": 5,
+      "multipleRoomOptions": true,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "115019",
+          "name": "1인 침대",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 200000
+          },
+          "minOccupancy": 1,
+          "maxOccupancy": 1,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 5,
+          "occupancySourceSummary": "최대 5 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "115020",
+          "name": "2인 침대 (2인 기본신청(1인 신청 불가) *아래 표는 1인 가격)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 170000,
+            "teen": 150000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 2,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 6,
+          "occupancySourceSummary": "최대 6 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "115021",
+          "name": "다인실 (2층침대방-최대4인 *아래표는 1인 가격)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 140000,
+            "teen": 120000,
+            "child": 120000
+          },
+          "maxOccupancy": 4,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 5,
+          "occupancySourceSummary": "최대 5 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "115022",
+          "name": "휴휴정사(vip) - 2인침대(2인 기본신청 (1인 신청 불가) *아래표는 1인 가격)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 200000,
+            "teen": 180000,
+            "child": 180000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 2,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 5,
+          "occupancySourceSummary": "최대 5 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "115023",
+          "name": "3인 온돌방(기본3인신청(1인 또는 2인 신청 불가)) -온돌 방 예약시 사무실로 문의바랍니다, *아래표는 1인 가격 *방이 부족시 선착순 배정 후 추후 연락",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 160000,
+            "teen": 140000,
+            "child": 140000
+          },
+          "minOccupancy": 3,
+          "maxOccupancy": 3,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 6,
+          "occupancySourceSummary": "최대 6 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        }
+      ],
+      "displayedAddOns": [],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables"
+      ],
+      "reviewSignals": [],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "parsed"
+    },
+    {
+      "officialProgramId": "15480",
+      "operatorOfficialId": "Haeinsa",
+      "operatorName": "해인사",
+      "sourceDisplayName": "주 중 (월-금) 휴식형-11/13일은 1인실 마감입니다.",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=15480",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 140194,
+        "attempts": 1
+      },
+      "periodBasis": "perNight",
+      "roomOptionCount": 7,
+      "multipleRoomOptions": true,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "123163",
+          "name": "다인실 (2층침대방-최대4인 *아래표는 1인 가격)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 70000,
+            "teen": 60000,
+            "child": 60000
+          },
+          "maxOccupancy": 4,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 16,
+          "occupancySourceSummary": "최대 16 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        },
+        {
+          "sourceRoomOptionId": "123164",
+          "name": "3인 온돌방(기본3인신청(1인 또는 2인 신청 불가)) -온돌 방 예약시 사무실로 문의바랍니다, *아래표는 1인 가격 *방이 부족시 선착순 배정 후 추후 연락",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 80000,
+            "teen": 70000,
+            "child": 70000
+          },
+          "minOccupancy": 3,
+          "maxOccupancy": 3,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 6,
+          "occupancySourceSummary": "최대 6 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        },
+        {
+          "sourceRoomOptionId": "123165",
+          "name": "2인온돌(2인기본신청) 온돌 방 예약시 사무실로 문의바랍니다, *아래표는 1인 가격 *방이 부족시 선착순 배정 후 추후 연락)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 85000,
+            "teen": 75000,
+            "child": 75000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 2,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 2,
+          "occupancySourceSummary": "최대 2 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        },
+        {
+          "sourceRoomOptionId": "123166",
+          "name": "2인 침대 (2인 기본신청(1인 신청 불가) *아래 표는 1인 가격)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 85000,
+            "teen": 75000,
+            "child": 75000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 2,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 6,
+          "occupancySourceSummary": "최대 6 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        },
+        {
+          "sourceRoomOptionId": "123167",
+          "name": "1인 침대",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 100000
+          },
+          "minOccupancy": 1,
+          "maxOccupancy": 1,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 7,
+          "occupancySourceSummary": "최대 7 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        },
+        {
+          "sourceRoomOptionId": "123168",
+          "name": "1인 온돌 *방이 부족시 선착순 배정 후 추후 연락",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 100000
+          },
+          "minOccupancy": 1,
+          "maxOccupancy": 1,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 2,
+          "occupancySourceSummary": "최대 2 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        },
+        {
+          "sourceRoomOptionId": "123169",
+          "name": "휴휴정사(vip) - 2인침대(2인 기본신청 (1인 신청 불가) *아래표는 1인 가격)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 100000,
+            "teen": 90000,
+            "child": 90000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 2,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 10,
+          "occupancySourceSummary": "최대 10 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        }
+      ],
+      "displayedAddOns": [],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables"
+      ],
+      "reviewSignals": [],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "parsed"
+    },
+    {
+      "officialProgramId": "13482",
+      "operatorOfficialId": "Haeinsa",
+      "operatorName": "해인사",
+      "sourceDisplayName": "주말 체험형",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=13482",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 141128,
+        "attempts": 1
+      },
+      "periodBasis": "program",
+      "roomOptionCount": 7,
+      "multipleRoomOptions": true,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "120010",
+          "name": "다인실 (2층침대방-최대4인 *아래표는 1인 가격)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 100000,
+            "teen": 90000,
+            "child": 90000
+          },
+          "maxOccupancy": 4,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 16,
+          "occupancySourceSummary": "최대 16 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "120011",
+          "name": "3인 온돌방(기본3인신청(1인 또는 2인 신청 불가)) -온돌 방 예약시 사무실로 문의바랍니다, *아래표는 1인 가격 *방이 부족시 선착순 배정 후 추후 연락",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 100000,
+            "teen": 90000,
+            "child": 90000
+          },
+          "minOccupancy": 3,
+          "maxOccupancy": 3,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 6,
+          "occupancySourceSummary": "최대 6 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "120012",
+          "name": "2인온돌(2인기본신청) 온돌 방 예약시 사무실로 문의바랍니다, *아래표는 1인 가격 *방이 부족시 선착순 배정 후 추후 연락)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 110000,
+            "teen": 100000,
+            "child": 100000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 2,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 2,
+          "occupancySourceSummary": "최대 2 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "120013",
+          "name": "2인 침대 (2인 기본신청(1인 신청 불가) *아래 표는 1인 가격)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 110000,
+            "teen": 100000,
+            "child": 100000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 2,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 6,
+          "occupancySourceSummary": "최대 6 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "120014",
+          "name": "1인 침대",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 130000
+          },
+          "minOccupancy": 1,
+          "maxOccupancy": 1,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 7,
+          "occupancySourceSummary": "최대 7 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "120015",
+          "name": "1인 온돌 *방이 부족시 선착순 배정 후 추후 연락",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 130000
+          },
+          "minOccupancy": 1,
+          "maxOccupancy": 1,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 2,
+          "occupancySourceSummary": "최대 2 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        },
+        {
+          "sourceRoomOptionId": "120016",
+          "name": "휴휴정사(vip) - 2인침대(2인 기본신청 (1인 신청 불가) *아래표는 1인 가격)",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 125000,
+            "teen": 115000,
+            "child": 115000
+          },
+          "minOccupancy": 2,
+          "maxOccupancy": 2,
+          "occupancyEvidence": "room-option-name",
+          "displayedMaximumParticipantLimit": 10,
+          "occupancySourceSummary": "최대 10 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "program"
+        }
+      ],
+      "displayedAddOns": [],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables"
+      ],
+      "reviewSignals": [],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "parsed"
+    },
+    {
+      "officialProgramId": "27685",
+      "operatorOfficialId": "Hyangiram",
+      "operatorName": "향일암",
+      "sourceDisplayName": "해를 품은 향일암 기행[휴식형]",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=27685",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 121470,
+        "attempts": 1
+      },
+      "periodBasis": "perNight",
+      "roomOptionCount": 1,
+      "multipleRoomOptions": false,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "115461",
+          "name": "향일암",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 100000,
+            "teen": 50000,
+            "child": 30000
+          },
+          "displayedMaximumParticipantLimit": 3,
+          "occupancySourceSummary": "최대 3 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        }
+      ],
+      "displayedAddOns": [],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables"
+      ],
+      "reviewSignals": [],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "parsed"
+    },
+    {
+      "officialProgramId": "20621",
+      "operatorOfficialId": "Hyangiram",
+      "operatorName": "향일암",
+      "sourceDisplayName": "해는 우리를 향하다.[체혐형]",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=20621",
+      "checkedAt": "2026-08-21",
+      "detailAccess": {
+        "httpStatus": 200,
+        "bodyBytes": 122039,
+        "attempts": 1
+      },
+      "periodBasis": "perNight",
+      "roomOptionCount": 1,
+      "multipleRoomOptions": false,
+      "roomOptions": [
+        {
+          "sourceRoomOptionId": "114818",
+          "name": "향일암",
+          "chargeBasis": "person",
+          "amounts": {
+            "adult": 120000,
+            "teen": 60000,
+            "child": 40000
+          },
+          "displayedMaximumParticipantLimit": 4,
+          "occupancySourceSummary": "최대 4 명 (미취학 불가)",
+          "eligibility": {
+            "preschoolAllowed": false
+          },
+          "periodBasis": "perNight"
+        }
+      ],
+      "displayedAddOns": [],
+      "knownExceptionTypes": [
+        "missing-general-price-section",
+        "room-selection-price-tables"
+      ],
+      "reviewSignals": [],
+      "structureStatus": "parsed",
+      "structureReasons": [],
+      "recommendedPriceStatus": "parsed"
+    }
+  ],
+  "priceExceptionApplicability": {
+    "exceptionProgramCount": 173,
+    "counts": {
+      "representable": 6,
+      "partiallyRepresentable": 167,
+      "complex": 0
+    },
+    "classifications": [
+      {
+        "officialProgramId": "26978",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "22728",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "212",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "19326",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "26327",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "2222",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "27485",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "14573",
+        "result": "partiallyRepresentable",
+        "reason": "room-options-parsed-but-additional-charge-remains-limited-exception"
+      },
+      {
+        "officialProgramId": "28304",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "15432",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "15431",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "9164",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28685",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "6530",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "27549",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "25842",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28225",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "23772",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "25618",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "26359",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28938",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28939",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28940",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28941",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "27139",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "6083",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "18550",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "18413",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28923",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28221",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "27481",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "24422",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "23463",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "20005",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "19430",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "19398",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "19366",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "4134",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28787",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "22498",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "27854",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28958",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "27882",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28758",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "27890",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "29059",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "29031",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28959",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28887",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28811",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "26314",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "26313",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "25526",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28277",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "27249",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "11586",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "3947",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "3946",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28977",
+        "result": "partiallyRepresentable",
+        "reason": "room-options-parsed-but-additional-charge-remains-limited-exception"
+      },
+      {
+        "officialProgramId": "28529",
+        "result": "partiallyRepresentable",
+        "reason": "room-options-parsed-but-additional-charge-remains-limited-exception"
+      },
+      {
+        "officialProgramId": "25428",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "1932",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "27372",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "13778",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "29080",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "25531",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "23439",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "602",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "27578",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "26233",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "6708",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "1993",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "29052",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "2414",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "6287",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "20615",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "8044",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28322",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "24344",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "22110",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28463",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "26426",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "29099",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "23279",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28269",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "23231",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "16161",
+        "result": "partiallyRepresentable",
+        "reason": "room-options-parsed-but-additional-charge-remains-limited-exception"
+      },
+      {
+        "officialProgramId": "29089",
+        "result": "partiallyRepresentable",
+        "reason": "room-options-parsed-but-additional-charge-remains-limited-exception"
+      },
+      {
+        "officialProgramId": "28593",
+        "result": "partiallyRepresentable",
+        "reason": "room-options-parsed-but-additional-charge-remains-limited-exception"
+      },
+      {
+        "officialProgramId": "28928",
+        "result": "partiallyRepresentable",
+        "reason": "room-options-parsed-but-additional-charge-remains-limited-exception"
+      },
+      {
+        "officialProgramId": "28927",
+        "result": "partiallyRepresentable",
+        "reason": "room-options-parsed-but-additional-charge-remains-limited-exception"
+      },
+      {
+        "officialProgramId": "28945",
+        "result": "partiallyRepresentable",
+        "reason": "room-options-parsed-but-additional-charge-remains-limited-exception"
+      },
+      {
+        "officialProgramId": "28212",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "29047",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "23371",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "20960",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "24332",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "20994",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "20993",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "2074",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "18408",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "20673",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "25846",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "23107",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "23106",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "1783",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "29057",
+        "result": "partiallyRepresentable",
+        "reason": "room-options-parsed-but-additional-charge-remains-limited-exception"
+      },
+      {
+        "officialProgramId": "6967",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "2161",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "2146",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "15188",
+        "result": "partiallyRepresentable",
+        "reason": "room-options-parsed-but-additional-charge-remains-limited-exception"
+      },
+      {
+        "officialProgramId": "1802",
+        "result": "representable",
+        "reason": "targeted-room-options-parsed"
+      },
+      {
+        "officialProgramId": "23296",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "23454",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28306",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "26017",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "26018",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "26019",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28989",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "23607",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "15464",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28256",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "26492",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "26483",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28334",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "15514",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "14606",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "14759",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "22094",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "22093",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "19106",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "19134",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "22092",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "19105",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "25977",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "25979",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "25975",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28224",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "27209",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "23651",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "22782",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28697",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "23933",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "21961",
+        "result": "partiallyRepresentable",
+        "reason": "room-options-parsed-but-additional-charge-remains-limited-exception"
+      },
+      {
+        "officialProgramId": "24185",
+        "result": "partiallyRepresentable",
+        "reason": "room-options-parsed-but-additional-charge-remains-limited-exception"
+      },
+      {
+        "officialProgramId": "22729",
+        "result": "partiallyRepresentable",
+        "reason": "room-options-parsed-but-additional-charge-remains-limited-exception"
+      },
+      {
+        "officialProgramId": "28826",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28827",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28156",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "27980",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "27773",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "2066",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "14392",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "26650",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "18358",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28925",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "19619",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "27600",
+        "result": "representable",
+        "reason": "targeted-room-options-parsed"
+      },
+      {
+        "officialProgramId": "15480",
+        "result": "representable",
+        "reason": "targeted-room-options-parsed"
+      },
+      {
+        "officialProgramId": "13482",
+        "result": "representable",
+        "reason": "targeted-room-options-parsed"
+      },
+      {
+        "officialProgramId": "17404",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "27685",
+        "result": "representable",
+        "reason": "targeted-room-options-parsed"
+      },
+      {
+        "officialProgramId": "20621",
+        "result": "representable",
+        "reason": "targeted-room-options-parsed"
+      },
+      {
+        "officialProgramId": "13572",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "13573",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "19446",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "1994",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "20008",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "23978",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "2213",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "28815",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "2212",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      },
+      {
+        "officialProgramId": "23413",
+        "result": "partiallyRepresentable",
+        "reason": "base-price-parsed-but-exception-detail-not-structured-in-existing-staging"
+      }
+    ]
+  },
+  "namePolicy": {
+    "separateProgramNameAndSourceDisplayName": true,
+    "normalizationScope": "명백한 현재 마감·잔여 객실 suffix를 provenance가 있는 개별 검토로만 제거하며 일반 단어 기반 자동 삭제는 하지 않음",
+    "preserve": [
+      "sourceDisplayName",
+      "checkedAt"
+    ]
+  },
+  "nameInvestigations": [
+    {
+      "officialProgramId": "28582",
+      "operatorOfficialId": "Daeheungsa",
+      "operatorName": "대흥사",
+      "programName": "2026 대흥사 사찰음식_ 내가 만든 절밥(1차 08.08(토), 2차 08.09(일), 3차 09.12(토), 4차 09.13(일)-당일 체험, 사회공익 나눔 템플스테이",
+      "sourceDisplayName": "2026 대흥사 사찰음식_ 내가 만든 절밥(1차 08.08(토), 2차 08.09(일), 3차 09.12(토), 4차 09.13(일)-당일 체험, 사회공익 나눔 템플스테이,선착순 마감 입니다~~",
+      "removedStatusText": ",선착순 마감 입니다~~",
+      "statusKind": "program-closed",
+      "decision": "manual-explicit-status-suffix-removal",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=28582",
+      "checkedAt": "2026-08-21"
+    },
+    {
+      "officialProgramId": "28959",
+      "operatorOfficialId": "Magoksa",
+      "operatorName": "마곡사",
+      "programName": "마곡사의 청춘시그널 1기 모집",
+      "sourceDisplayName": "마곡사의 청춘시그널 1기 모집[ ~ 8월 22일까지 - 남자 모집마감, 여 3명 선착순 모집중]",
+      "removedStatusText": "[ ~ 8월 22일까지 - 남자 모집마감, 여 3명 선착순 모집중]",
+      "statusKind": "gender-specific-recruitment-availability",
+      "decision": "manual-explicit-status-suffix-removal",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=28959",
+      "checkedAt": "2026-08-21"
+    },
+    {
+      "officialProgramId": "28887",
+      "operatorOfficialId": "Magoksa",
+      "operatorName": "마곡사",
+      "programName": "[체험형] 2026년 마곡사 한가위 스테이",
+      "sourceDisplayName": "[체험형] 2026년 마곡사 한가위 스테이 [남은 방사 0개]",
+      "removedStatusText": " [남은 방사 0개]",
+      "statusKind": "remaining-room-count",
+      "decision": "manual-explicit-status-suffix-removal",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=28887",
+      "checkedAt": "2026-08-21"
+    },
+    {
+      "officialProgramId": "27600",
+      "operatorOfficialId": "Haeinsa",
+      "operatorName": "해인사",
+      "programName": "'해인삼매 선명상' 내 마음을 찾아서( 목,금,토 2박3일)",
+      "sourceDisplayName": "'해인삼매 선명상' 내 마음을 찾아서( 목,금,토 2박3일)-9/17,10/15은 1인실 마감입니다.",
+      "removedStatusText": "-9/17,10/15은 1인실 마감입니다.",
+      "statusKind": "date-specific-room-closed",
+      "decision": "manual-explicit-status-suffix-removal",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=27600",
+      "checkedAt": "2026-08-21"
+    },
+    {
+      "officialProgramId": "15480",
+      "operatorOfficialId": "Haeinsa",
+      "operatorName": "해인사",
+      "programName": "주 중 (월-금) 휴식형",
+      "sourceDisplayName": "주 중 (월-금) 휴식형-11/13일은 1인실 마감입니다.",
+      "removedStatusText": "-11/13일은 1인실 마감입니다.",
+      "statusKind": "date-specific-room-closed",
+      "decision": "manual-explicit-status-suffix-removal",
+      "officialUrl": "https://www.templestay.com/fe/MI000000000000000062/reserve/view.do?templestaySeq=15480",
+      "checkedAt": "2026-08-21"
+    }
+  ],
+  "proposedProductionProgramModel": {
+    "identityAndRelation": [
+      "source",
+      "officialProgramId",
+      "operatorOfficialId"
+    ],
+    "name": [
+      "programName",
+      "sourceDisplayName"
+    ],
+    "classification": [
+      "programType?",
+      "officialProgramTypeCode?"
+    ],
+    "operation": [
+      "operationStartDate?",
+      "operationEndDate?",
+      "operationPeriodSource?",
+      "validationIssues?"
+    ],
+    "price": [
+      "status: parsed | partial | complex | unavailable",
+      "currency?: KRW",
+      "base?",
+      "roomOptions?",
+      "exceptions?"
+    ],
+    "optionalComparisonFacts": [
+      "constraints?",
+      "scheduleSummary?"
+    ],
+    "lifecycle": [
+      "listed",
+      "detailStatus",
+      "checkedAt",
+      "lastSeenAt"
+    ],
+    "officialSource": [
+      "officialUrl",
+      "source"
+    ],
+    "excluded": [
+      "selectableDateCountAtCheck",
+      "remainingCapacity",
+      "currentRoomAvailability",
+      "computedFinalPaymentAmount"
+    ]
+  },
+  "detailUnavailableCompatibility": {
+    "officialProgramId": "28166",
+    "safeFields": [
+      "officialProgramId",
+      "operatorOfficialId",
+      "programName",
+      "sourceDisplayName",
+      "listed",
+      "detailStatus",
+      "officialUrl",
+      "source",
+      "checkedAt",
+      "lastSeenAt",
+      "validationIssues"
+    ],
+    "omittedUnverifiedFields": [
+      "programType",
+      "officialProgramTypeCode",
+      "operationStartDate",
+      "operationEndDate",
+      "price",
+      "constraints",
+      "scheduleSummary"
+    ]
+  }
+}
