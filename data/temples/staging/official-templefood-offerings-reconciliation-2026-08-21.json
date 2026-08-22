@@ -8,7 +8,7 @@
     "collectionStartedAt": "2026-08-22T01:55:06.923Z",
     "collectionFinishedAt": "2026-08-22T01:55:30.090Z"
   },
-  "normalizedSnapshotFile": "official-templefood-offerings-normalized-snapshot-2026-08-21.json",
+  "normalizedSnapshotFile": "official-templefood-offerings.runtime.json",
   "regularCourseReconciliation": {
     "passSummaries": [
       {

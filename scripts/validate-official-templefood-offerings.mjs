@@ -11,7 +11,7 @@ const rawPath = path.join(
 );
 const normalizedPath = path.join(
     repositoryRoot,
-    "data/temples/staging/official-templefood-offerings-normalized-snapshot-2026-08-21.json",
+    "data/temples/generated/official-templefood-offerings.runtime.json",
 );
 const reconciliationPath = path.join(
     repositoryRoot,
@@ -19,7 +19,7 @@ const reconciliationPath = path.join(
 );
 const venuePath = path.join(
     repositoryRoot,
-    "data/temples/staging/official-templefood-venues-2026-08-21.json",
+    "data/temples/generated/official-templefood-venues.runtime.json",
 );
 
 const SOURCE = "korean-temple-food";

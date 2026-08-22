@@ -9,7 +9,7 @@ const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, "..");
 const venuePath = path.join(
     repositoryRoot,
-    "data/temples/staging/official-templefood-venues-2026-08-21.json",
+    "data/temples/generated/official-templefood-venues.runtime.json",
 );
 const rawOutputPath = path.join(
     repositoryRoot,
@@ -17,7 +17,7 @@ const rawOutputPath = path.join(
 );
 const normalizedOutputPath = path.join(
     repositoryRoot,
-    "data/temples/staging/official-templefood-offerings-normalized-snapshot-2026-08-21.json",
+    "data/temples/generated/official-templefood-offerings.runtime.json",
 );
 const reconciliationOutputPath = path.join(
     repositoryRoot,
@@ -1488,7 +1488,7 @@ async function main() {
     const normalizedSnapshot = {
         schemaVersion: 1,
         description:
-            "TempleFoodOffering normalized canonical staging snapshot. This file is not imported by production.",
+            "TempleFoodOffering production canonical runtime snapshot.",
         source: SOURCE,
         rawSnapshotFile: path.basename(rawOutputPath),
         rawArtifact,

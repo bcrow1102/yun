@@ -16,7 +16,7 @@ const pilotPath = path.join(
 );
 const venuePath = path.join(
     repositoryRoot,
-    "data/temples/staging/official-templefood-venues-2026-08-21.json",
+    "data/temples/generated/official-templefood-venues.runtime.json",
 );
 
 const EXPECTED_SOURCE = "korean-temple-food";

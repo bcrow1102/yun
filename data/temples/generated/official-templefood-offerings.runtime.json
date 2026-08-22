@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "description": "TempleFoodOffering normalized canonical staging snapshot. This file is not imported by production.",
+  "description": "TempleFoodOffering production canonical runtime snapshot.",
   "source": "korean-temple-food",
   "rawSnapshotFile": "official-templefood-offerings-raw-snapshot-2026-08-21.json",
   "rawArtifact": {

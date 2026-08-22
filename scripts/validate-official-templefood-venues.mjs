@@ -4,9 +4,9 @@ import { fileURLToPath } from "node:url";
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, "..");
-const stagingPath = path.join(
+const productionPath = path.join(
     repositoryRoot,
-    "data/temples/staging/official-templefood-venues-2026-08-21.json",
+    "data/temples/generated/official-templefood-venues.runtime.json",
 );
 const nationwideRuntimePath = path.join(
     repositoryRoot,
@@ -41,7 +41,7 @@ function isIsoDate(value) {
 }
 
 const [stagingSource, nationwideSource, nonMcstSource] = await Promise.all([
-    readFile(stagingPath, "utf8"),
+    readFile(productionPath, "utf8"),
     readFile(nationwideRuntimePath, "utf8"),
     readFile(nonMcstTemplePath, "utf8"),
 ]);
